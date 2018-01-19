@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_home" />
+        <item
+            android:id="@+id/nav_grab"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_grab" />
+        <item
+            android:id="@+id/nav_coupon"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_coupon" />
+
+        <item
+            android:id="@+id/nav_brands"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_brands" />
+
+        <item
+            android:id="@+id/nav_bank"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_bank" />
+
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_notification" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_settings" />
+
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_share" />
+
+        <item
+            android:id="@+id/nav_"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_share" />
+
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_feedback" />
+
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_help" />
+
+        <item
+            android:id="@+id/nav_sign"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_sign" />
+
+    </group>
+</menu>
