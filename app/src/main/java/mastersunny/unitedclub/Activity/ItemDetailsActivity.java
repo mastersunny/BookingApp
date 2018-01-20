@@ -37,6 +37,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
     public void initLayout() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
