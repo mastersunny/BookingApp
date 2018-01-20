@@ -17,4 +17,9 @@
     <string name="nav_feedback">Feedback</string>
     <string name="nav_help">Help &amp; Support</string>
     <string name="nav_sign">Sign In</string>
+    <string name="most_used">Most Used</string>
+    <string name="recharge">Recharge</string>
+    <string name="travel">Travel</string>
+    <string name="title_activity_item_details">ItemDetailsActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

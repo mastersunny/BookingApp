@@ -1,4 +1,4 @@
-package mastersunny.unitedclub;
+package mastersunny.unitedclub.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,14 +10,20 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import Adapter.AutoPagerAdapter;
-import Adapter.PagerAdapter;
-import Fragments.AutoScrollFragment;
-import Fragments.MostUsedFragment;
-import utils.AutoScrollViewPager;
+import java.util.ArrayList;
+
+import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
+import mastersunny.unitedclub.Adapter.PagerAdapter;
+import mastersunny.unitedclub.Adapter.PopularAdapter;
+import mastersunny.unitedclub.Fragments.AutoScrollFragment;
+import mastersunny.unitedclub.Fragments.MostUsedFragment;
+import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.utils.AutoScrollViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,12 +35,16 @@ public class MainActivity extends AppCompatActivity {
     private PagerAdapter pagerAdapter;
     private AutoPagerAdapter autoPagerAdapter;
     private AutoScrollViewPager autoScrollViewPager;
+    private PopularAdapter popularAdapter;
+    private RecyclerView popular_rv;
+    private ArrayList<String> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        list = new ArrayList<>();
         initLayout();
         setSupportActionBar(toolbar);
         setUpNavigationView();
@@ -48,6 +58,16 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         navigationView = findViewById(R.id.nav_view);
         autoScrollViewPager = findViewById(R.id.autoViewPager);
+
+        list = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            list.add("ddfhduifhuids " + i);
+        }
+
+        popular_rv = findViewById(R.id.popular_rv);
+        popular_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        popularAdapter = new PopularAdapter(this, list);
+        popular_rv.setAdapter(popularAdapter);
     }
 
     private void setUpNavigationView() {
@@ -80,10 +100,9 @@ public class MainActivity extends AppCompatActivity {
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new MostUsedFragment(), "Most Used");
-            pagerAdapter.addFragment(new MostUsedFragment(), "Most Used2");
-            pagerAdapter.addFragment(new MostUsedFragment(), "Most Used3");
-
+            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.most_used));
+            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.recharge));
+            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.travel));
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
             String[] titles = savedInstanceState.getStringArray("titles");

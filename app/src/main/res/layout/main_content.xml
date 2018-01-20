@@ -17,10 +17,17 @@
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_scrollFlags="scroll|enterAlways" />
 
-        <utils.AutoScrollViewPager
+        <mastersunny.unitedclub.utils.AutoScrollViewPager
             android:id="@+id/autoViewPager"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="140dp"
+            android:background="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/popular_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             app:layout_scrollFlags="scroll|enterAlways" />
 
