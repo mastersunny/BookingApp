@@ -20,7 +20,7 @@
         <utils.AutoScrollViewPager
             android:id="@+id/autoViewPager"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="160dp"
             android:background="@color/white"
             app:layout_scrollFlags="scroll|enterAlways" />
 

@@ -80,10 +80,9 @@ public class MainActivity extends AppCompatActivity {
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new MostUsedFragment(), "Most Used");
-            pagerAdapter.addFragment(new MostUsedFragment(), "Most Used2");
-            pagerAdapter.addFragment(new MostUsedFragment(), "Most Used3");
-
+            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.most_used));
+            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.recharge));
+            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.travel));
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
             String[] titles = savedInstanceState.getStringArray("titles");
