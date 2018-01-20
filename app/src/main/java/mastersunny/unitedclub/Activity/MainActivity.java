@@ -1,4 +1,4 @@
-package mastersunny.unitedclub;
+package mastersunny.unitedclub.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,13 +17,13 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-import Adapter.AutoPagerAdapter;
-import Adapter.MostUsedAdapter;
-import Adapter.PagerAdapter;
-import Adapter.PopularAdapter;
-import Fragments.AutoScrollFragment;
-import Fragments.MostUsedFragment;
-import utils.AutoScrollViewPager;
+import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
+import mastersunny.unitedclub.Adapter.PagerAdapter;
+import mastersunny.unitedclub.Adapter.PopularAdapter;
+import mastersunny.unitedclub.Fragments.AutoScrollFragment;
+import mastersunny.unitedclub.Fragments.MostUsedFragment;
+import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.utils.AutoScrollViewPager;
 
 public class MainActivity extends AppCompatActivity {
 

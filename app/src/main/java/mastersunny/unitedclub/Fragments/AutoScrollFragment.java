@@ -1,4 +1,4 @@
-package Fragments;
+package mastersunny.unitedclub.Fragments;
 
 import android.app.Activity;
 import android.content.Context;

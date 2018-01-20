@@ -1,4 +1,4 @@
-package Fragments;
+package mastersunny.unitedclub.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import Adapter.MostUsedAdapter;
-import Adapter.MoviesAdapter;
+import mastersunny.unitedclub.Adapter.MostUsedAdapter;
 import mastersunny.unitedclub.Model.Movie;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.R;
@@ -43,7 +40,7 @@ public class MostUsedFragment extends Fragment implements View.OnClickListener, 
     private SearchView searchView;
     private TextView no_client_message;
     private ArrayList<Movie> movies;
-    private MoviesAdapter moviesAdapter;
+    private MostUsedAdapter mostUsedAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -82,8 +79,8 @@ public class MostUsedFragment extends Fragment implements View.OnClickListener, 
     private void initLayout() {
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        moviesAdapter = new MoviesAdapter(movies, R.layout.list_item_movie, mActivity);
-        most_used_rv.setAdapter(moviesAdapter);
+        mostUsedAdapter = new MostUsedAdapter(mActivity, movies);
+        most_used_rv.setAdapter(mostUsedAdapter);
     }
 
     @Override
@@ -95,7 +92,7 @@ public class MostUsedFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
         movies.addAll(response.body().getResults());
-        moviesAdapter.notifyDataSetChanged();
+        mostUsedAdapter.notifyDataSetChanged();
     }
 
     @Override
