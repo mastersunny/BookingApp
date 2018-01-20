@@ -10,11 +10,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import Adapter.AutoPagerAdapter;
+import Adapter.MostUsedAdapter;
 import Adapter.PagerAdapter;
+import Adapter.PopularAdapter;
 import Fragments.AutoScrollFragment;
 import Fragments.MostUsedFragment;
 import utils.AutoScrollViewPager;
@@ -29,12 +35,16 @@ public class MainActivity extends AppCompatActivity {
     private PagerAdapter pagerAdapter;
     private AutoPagerAdapter autoPagerAdapter;
     private AutoScrollViewPager autoScrollViewPager;
+    private PopularAdapter popularAdapter;
+    private RecyclerView popular_rv;
+    private ArrayList<String> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        list = new ArrayList<>();
         initLayout();
         setSupportActionBar(toolbar);
         setUpNavigationView();
@@ -48,6 +58,16 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         navigationView = findViewById(R.id.nav_view);
         autoScrollViewPager = findViewById(R.id.autoViewPager);
+
+        list = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            list.add("ddfhduifhuids " + i);
+        }
+
+        popular_rv = findViewById(R.id.popular_rv);
+        popular_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        popularAdapter = new PopularAdapter(this, list);
+        popular_rv.setAdapter(popularAdapter);
     }
 
     private void setUpNavigationView() {
