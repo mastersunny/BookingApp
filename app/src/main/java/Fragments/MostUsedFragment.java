@@ -63,8 +63,8 @@ public class MostUsedFragment extends Fragment implements View.OnClickListener {
         }
 
         most_used_rv = view.findViewById(R.id.most_used_rv);
-        most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL,false));
-        mostUsedAdapter = new MostUsedAdapter(mActivity,list);
+        most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
+        mostUsedAdapter = new MostUsedAdapter(mActivity, list);
         most_used_rv.setAdapter(mostUsedAdapter);
     }
 
