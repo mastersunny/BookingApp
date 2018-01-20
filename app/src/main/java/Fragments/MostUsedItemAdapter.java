@@ -1,4 +1,4 @@
-package Adapter;
+package Fragments;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -12,15 +12,17 @@ import java.util.ArrayList;
 import mastersunny.unitedclub.R;
 
 /**
- * Created by sunnychowdhury on 1/19/18.
+ * Created by ASUS on 1/17/2018.
  */
 
-public class MostUsedAdapter extends RecyclerView.Adapter<MostUsedAdapter.MainHolder> {
+public class MostUsedItemAdapter extends RecyclerView.Adapter<MostUsedItemAdapter.MainHolder> {
 
-    private ArrayList<String> list;
+    public String TAG = "MostUsedItemAdapter";
+
     private Activity mActivity;
+    private ArrayList<String> list;
 
-    public MostUsedAdapter(Activity mActivity, ArrayList<String> list) {
+    public MostUsedItemAdapter(Activity mActivity, ArrayList<String> list) {
         this.mActivity = mActivity;
         this.list = list;
     }
@@ -34,7 +36,13 @@ public class MostUsedAdapter extends RecyclerView.Adapter<MostUsedAdapter.MainHo
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
         if (list != null) {
-            holder.textView.setText(list.get(position));
+            holder.item_message.setText(list.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
 
     }
@@ -46,11 +54,11 @@ public class MostUsedAdapter extends RecyclerView.Adapter<MostUsedAdapter.MainHo
 
     public static class MainHolder extends RecyclerView.ViewHolder {
 
-        private TextView textView;
+        private TextView item_message;
 
         public MainHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.item_message);
+            item_message = itemView.findViewById(R.id.item_message);
         }
     }
 }

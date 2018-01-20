@@ -24,6 +24,12 @@
             android:background="@color/white"
             app:layout_scrollFlags="scroll|enterAlways" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/popular_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" />
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
