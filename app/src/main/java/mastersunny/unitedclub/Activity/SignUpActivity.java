@@ -43,6 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Sign Up");
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
