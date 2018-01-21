@@ -1,5 +1,6 @@
 package mastersunny.unitedclub.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_settings:
                         break;
+                    case R.id.nav_sign:
+                        startActivity(new Intent(MainActivity.this, SignUpActivity.class));
                 }
                 drawerLayout.closeDrawers();
                 return true;

@@ -56,7 +56,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
                     getSupportActionBar().setDisplayShowTitleEnabled(true);
                 } else if (isShow) {
                     isShow = false;
-                    hideOption(R.id.action_info);
+
                 }
             }
         });
