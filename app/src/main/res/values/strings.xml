@@ -16,7 +16,8 @@
     <string name="nav_share">Share The App</string>
     <string name="nav_feedback">Feedback</string>
     <string name="nav_help">Help &amp; Support</string>
-    <string name="nav_sign">Sign In</string>
+    <string name="nav_signin">Sign In</string>
+    <string name="nav_signout">Sign Out</string>
     <string name="most_used">Most Used</string>
     <string name="recharge">Recharge</string>
     <string name="travel">Travel</string>

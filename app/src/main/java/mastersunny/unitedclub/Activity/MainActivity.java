@@ -14,9 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -42,11 +46,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView popular_rv;
     private ArrayList<String> list;
     private TextView view_all_popular;
+    private FirebaseAuth auth;
+    private FirebaseUser user;
+    private FirebaseAuth.AuthStateListener authListener;
+    private String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
 
         list = new ArrayList<>();
         initLayout();
@@ -74,6 +85,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         popular_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         popularAdapter = new PopularAdapter(this, list);
         popular_rv.setAdapter(popularAdapter);
+
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                Log.d(TAG, "user " + user.getEmail());
+                if (user == null)
+                    navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signin));
+                else
+                    navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signout));
+            }
+        };
     }
 
     private void setUpNavigationView() {
@@ -91,12 +114,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.nav_settings:
                         break;
                     case R.id.nav_sign:
-                        startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+                        if (user != null) {
+                            auth.signOut();
+                        } else {
+                            startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+                        }
                 }
                 drawerLayout.closeDrawers();
                 return true;
             }
         });
+
+        if (user == null)
+            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signin));
+        else
+            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signout));
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer);
         drawerLayout.setDrawerListener(toggle);
@@ -178,4 +210,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+
 }
