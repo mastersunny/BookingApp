@@ -15,6 +15,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -26,7 +28,7 @@ import mastersunny.unitedclub.Fragments.MostUsedFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.AutoScrollViewPager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DrawerLayout drawerLayout;
     private TabLayout tabLayout;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private PopularAdapter popularAdapter;
     private RecyclerView popular_rv;
     private ArrayList<String> list;
+    private TextView view_all_popular;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         navigationView = findViewById(R.id.nav_view);
         autoScrollViewPager = findViewById(R.id.autoViewPager);
+        view_all_popular = findViewById(R.id.view_all_popular);
+        view_all_popular.setOnClickListener(this);
 
         list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
@@ -163,5 +168,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         super.onBackPressed();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.view_all_popular:
+                startActivity(new Intent(MainActivity.this, PopularActivity.class));
+                break;
+        }
     }
 }

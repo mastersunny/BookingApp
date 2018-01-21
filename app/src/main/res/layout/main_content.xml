@@ -23,14 +23,28 @@
             android:background="@color/white"
             app:layout_scrollFlags="scroll|enterAlways" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_5"
             android:layout_marginLeft="@dimen/margin_5"
             android:layout_marginTop="@dimen/margin_10"
-            android:text="Popular Stories"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Popular Stories" />
+
+            <TextView
+                android:id="@+id/view_all_popular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="View All"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/popular_rv"
