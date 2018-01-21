@@ -4,11 +4,9 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:layout_marginBottom="@dimen/margin_1"
-    android:layout_marginTop="@dimen/margin_1"
     android:foreground="?selectableItemBackground"
     card_view:cardCornerRadius="@dimen/margin_5"
-    card_view:cardElevation="@dimen/margin_0">
+    card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
