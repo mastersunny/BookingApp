@@ -27,6 +27,7 @@ public class PopularActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Popular");
         popularDTOS = new ArrayList<>();
         initlayout();
     }
