@@ -21,6 +21,8 @@
         <activity
             android:name=".Activity.ItemDetailsActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".Activity.SignUpActivity" />
+        <activity android:name=".Activity.ResetPasswordActivity"></activity>
     </application>
 
 </manifest>
