@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://E:\AndroidStudio\unitedclub\UnitedClub.iml" filepath="E:\AndroidStudio\unitedclub\UnitedClub.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\AndroidStudio\unitedclub\app\app.iml" filepath="E:\AndroidStudio\unitedclub\app\app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/unitedclub.iml" filepath="$PROJECT_DIR$/unitedclub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UnitedClub.iml" filepath="$PROJECT_DIR$/UnitedClub.iml" />
     </modules>
   </component>
 </project>
