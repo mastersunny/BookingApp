@@ -28,7 +28,7 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
 
     @Override
     public MainHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.popular_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.popular_item_verical, parent, false);
         return new MainHolder(view);
     }
 
@@ -37,7 +37,7 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
         if (popularDTOS != null) {
             PopularDTO popularDTO = popularDTOS.get(position);
             holder.company_name.setText(popularDTO.getCompanyName());
-            holder.total_offer.setText(popularDTO.getTotalOffer());
+            holder.total_offer.setText(popularDTO.getTotalOffer() + "");
         }
     }
 
