@@ -21,6 +21,9 @@
     <string name="most_used">Most Used</string>
     <string name="recharge">Recharge</string>
     <string name="travel">Travel</string>
+    <string name="fashion">Fashion</string>
+    <string name="food">Food</string>
+    <string name="electronics">Electronics</string>
     <string name="title_activity_item_details">ItemDetailsActivity</string>
     <string name="action_settings">Settings</string>
     <string name="action_sign_in_short">Register</string>
