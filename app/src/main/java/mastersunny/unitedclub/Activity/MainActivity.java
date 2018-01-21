@@ -32,7 +32,7 @@ import mastersunny.unitedclub.Fragments.MostUsedFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.AutoScrollViewPager;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, FirebaseAuth.AuthStateListener {
 
     private DrawerLayout drawerLayout;
     private TabLayout tabLayout;
@@ -86,17 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         popularAdapter = new PopularAdapter(this, list);
         popular_rv.setAdapter(popularAdapter);
 
-        authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                Log.d(TAG, "user " + user.getEmail());
-                if (user == null)
-                    navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signin));
-                else
-                    navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signout));
-            }
-        };
+        auth.addAuthStateListener(this);
     }
 
     private void setUpNavigationView() {
@@ -212,4 +202,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null)
+            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signout));
+        else
+            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signin));
+    }
 }
