@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import mastersunny.unitedclub.R;
@@ -17,6 +18,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private int movieId;
+    public String TAG = "ItemDetailsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,34 +40,22 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
     public void initLayout() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(this);
-
-        AppBarLayout mAppBarLayout = findViewById(R.id.app_bar);
-        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    isShow = true;
-                    getSupportActionBar().setDisplayShowTitleEnabled(true);
-                } else if (isShow) {
-                    isShow = false;
-
-                }
-            }
-        });
 
     }
 
     @Override
     public void loadData() {
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
