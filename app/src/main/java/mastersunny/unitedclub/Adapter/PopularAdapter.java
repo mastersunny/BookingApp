@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.utils.Constants;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
@@ -45,9 +46,9 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHold
 
     public static class MainHolder extends RecyclerView.ViewHolder {
 
-
         public MainHolder(View itemView) {
             super(itemView);
+
         }
     }
 }
