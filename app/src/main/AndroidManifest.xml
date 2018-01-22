@@ -36,7 +36,11 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Activity.PopularActivity"></activity>
+        <activity android:name=".Activity.PopularActivity" />
+        <activity
+            android:name=".Activity.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
