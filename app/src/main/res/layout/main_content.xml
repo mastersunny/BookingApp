@@ -81,8 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_marginBottom="@dimen/margin_10"
-                android:layout_marginLeft="@dimen/margin_20"
-                android:layout_marginRight="@dimen/margin_20"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginTop="@dimen/margin_5"
                 android:background="@drawable/toolbar_background"
                 android:elevation="@dimen/margin_5"
@@ -92,7 +92,8 @@
                 <RelativeLayout
                     android:id="@+id/search_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_10">
 
                     <TextView
                         android:layout_width="wrap_content"
