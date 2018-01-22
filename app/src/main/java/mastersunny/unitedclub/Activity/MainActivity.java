@@ -32,6 +32,7 @@ import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
 import mastersunny.unitedclub.Fragments.AutoScrollFragment;
+import mastersunny.unitedclub.Fragments.AutoScrollFragment2;
 import mastersunny.unitedclub.Fragments.MostUsedFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.AutoScrollViewPager;
@@ -198,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         autoPagerAdapter = new AutoPagerAdapter(getSupportFragmentManager());
         autoPagerAdapter.addFragment(new AutoScrollFragment(), "");
-        autoPagerAdapter.addFragment(new AutoScrollFragment(), "");
+        autoPagerAdapter.addFragment(new AutoScrollFragment2(), "");
         autoPagerAdapter.addFragment(new AutoScrollFragment(), "");
         autoScrollViewPager.setAdapter(autoPagerAdapter);
         viewPager.setOffscreenPageLimit(3);
