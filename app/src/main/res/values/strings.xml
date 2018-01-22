@@ -23,6 +23,7 @@
     <string name="travel">Travel</string>
     <string name="fashion">Fashion</string>
     <string name="food">Food</string>
+    <string name="groceries">Groceries</string>
     <string name="electronics">Electronics</string>
     <string name="title_activity_item_details">ItemDetailsActivity</string>
     <string name="action_settings">Settings</string>

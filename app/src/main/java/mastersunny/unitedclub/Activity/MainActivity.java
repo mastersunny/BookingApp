@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.fashion));
             pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.food));
             pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.electronics));
+            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.groceries));
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
             String[] titles = savedInstanceState.getStringArray("titles");
