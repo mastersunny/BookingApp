@@ -10,16 +10,64 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
-        <FrameLayout
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/htab_collapse_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|enterAlways">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <mastersunny.unitedclub.utils.AutoScrollViewPager
-                android:id="@+id/autoViewPager"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:background="@color/white" />
+                android:layout_height="wrap_content"
+                android:paddingBottom="?android:attr/actionBarSize"
+                app:layout_collapseMode="parallax">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <mastersunny.unitedclub.utils.AutoScrollViewPager
+                        android:id="@+id/autoViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/popular_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/autoViewPager"
+                        android:layout_marginBottom="@dimen/margin_5"
+                        android:layout_marginLeft="@dimen/margin_5"
+                        android:layout_marginRight="@dimen/margin_5"
+                        android:layout_marginTop="@dimen/margin_10">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:text="Popular Stories"
+                            android:textSize="@dimen/text_size_12" />
+
+                        <TextView
+                            android:id="@+id/view_all_popular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="View All"
+                            android:textSize="@dimen/text_size_12"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/popular_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/popular_layout"
+                        app:layout_scrollFlags="scroll|enterAlways" />
+
+                </RelativeLayout>
+            </FrameLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -27,55 +75,26 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_20"
                 android:background="@drawable/toolbar_background"
-                android:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-        </FrameLayout>
+                android:gravity="top"
+                android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_5"
-            android:layout_marginLeft="@dimen/margin_5"
-            android:layout_marginRight="@dimen/margin_5"
-            android:layout_marginTop="@dimen/margin_10"
-            app:layout_scrollFlags="scroll|enterAlways">
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                android:scrollbars="horizontal"
+                app:layout_scrollFlags="enterAlways"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabIndicatorHeight="2dp"
+                app:tabMode="scrollable"
+                app:tabPaddingEnd="0dp"
+                app:tabPaddingStart="0dp"
+                app:tabTextAppearance="@style/MineCustomTabText" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="Popular Stories"
-                android:textSize="@dimen/text_size_12" />
-
-            <TextView
-                android:id="@+id/view_all_popular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="View All"
-                android:textSize="@dimen/text_size_12"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/popular_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:layout_scrollFlags="scroll|enterAlways" />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/white"
-            android:scrollbars="horizontal"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabIndicatorHeight="2dp"
-            app:tabMode="scrollable"
-            app:tabPaddingEnd="0dp"
-            app:tabPaddingStart="0dp"
-            app:tabTextAppearance="@style/MineCustomTabText" />
-
+        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
