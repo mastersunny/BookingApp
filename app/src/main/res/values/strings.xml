@@ -7,6 +7,10 @@
     <string name="closeDrawer">close_drawer</string>
 
     <string name="nav_home">Home</string>
+    <string name="stores">Stores</string>
+    <string name="search">Search</string>
+    <string name="categories">Categories</string>
+    <string name="profile">Profile</string>
     <string name="nav_grab">Grab of The day</string>
     <string name="nav_coupon">Coupon Finder</string>
     <string name="nav_brands">Brands</string>
