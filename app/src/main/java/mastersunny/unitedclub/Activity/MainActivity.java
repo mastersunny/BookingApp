@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 
 import mastersunny.unitedclub.Fragments.HomeFragment;
+import mastersunny.unitedclub.Fragments.SearchFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
 import mastersunny.unitedclub.R;
 
@@ -78,9 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 StoresFragment storiesFragment = new StoresFragment();
                 return storiesFragment;
             case 2:
-                /*// movies fragment
-                MoviesFragment moviesFragment = new MoviesFragment();
-                return moviesFragment;*/
+                SearchFragment searchFragment = new SearchFragment();
+                return searchFragment;
             case 3:
                /* // notifications fragment
                 NotificationsFragment notificationsFragment = new NotificationsFragment();
