@@ -218,6 +218,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.view_all_popular:
                 startActivity(new Intent(MainActivity.this, PopularActivity.class));
                 break;
+            case R.id.search_layout:
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
         }
     }
 
