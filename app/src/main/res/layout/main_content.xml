@@ -30,17 +30,65 @@
                     <mastersunny.unitedclub.utils.AutoScrollViewPager
                         android:id="@+id/autoViewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="160dp" />
+                        android:layout_height="180dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/coupon_finder_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/autoViewPager"
+                        android:padding="@dimen/margin_10">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/coupon_finder_img" />
+
+                        <TextView
+                            android:id="@+id/coupon_finder_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/margin_30"
+                            android:text="Coupon Finder" />
+
+                        <TextView
+                            android:id="@+id/grab_coupon_for_recharge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/coupon_finder_text"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/margin_10"
+                            android:text="Coupon Finder" />
+
+                        <TextView
+                            android:id="@+id/message"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/grab_coupon_for_recharge"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/margin_10"
+                            android:text="Coupon Finder" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:paddingBottom="@dimen/margin_5"
+                            android:paddingRight="@dimen/margin_5"
+                            android:text="COUPON FINDER"
+                            android:textSize="@dimen/text_size_12" />
+
+                    </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/popular_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/autoViewPager"
-                        android:layout_marginBottom="@dimen/margin_5"
-                        android:layout_marginLeft="@dimen/margin_5"
-                        android:layout_marginRight="@dimen/margin_5"
-                        android:layout_marginTop="@dimen/margin_10">
+                        android:layout_below="@+id/coupon_finder_layout"
+                        android:padding="@dimen/margin_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -86,7 +134,7 @@
                 android:layout_gravity="bottom"
                 android:background="@color/white"
                 android:scrollbars="horizontal"
-                app:layout_scrollFlags="enterAlways"
+                app:layout_collapseMode="pin"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabIndicatorHeight="2dp"
                 app:tabMode="scrollable"
