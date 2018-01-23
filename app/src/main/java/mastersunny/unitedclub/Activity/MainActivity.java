@@ -4,10 +4,13 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -35,106 +38,139 @@ import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
 import mastersunny.unitedclub.Fragments.AutoScrollFragment;
 import mastersunny.unitedclub.Fragments.AutoScrollFragment2;
+import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.MostUsedFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.AutoScrollViewPager;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, FirebaseAuth.AuthStateListener {
+public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private NavigationView navigationView;
-    private Toolbar toolbar;
-    private PagerAdapter pagerAdapter;
-    private AutoPagerAdapter autoPagerAdapter;
-    private AutoScrollViewPager autoScrollViewPager;
-    private PopularAdapter popularAdapter;
-    private RecyclerView popular_rv;
-    private ArrayList<String> list;
-    private TextView view_all_popular;
-    private FirebaseAuth auth;
-    private FirebaseUser user;
-    private String TAG = "MainActivity";
+    private BottomNavigationView bottomNavigationView;
+    public static int navItemIndex = 0;
+    private static final String TAG_HOME = "home";
+    private static final String TAG_STORIES = "stories";
+    private static final String TAG_SEARCH = "search";
+    private static final String TAG_CATEGORIES = "categories";
+    private static final String TAG_PROFILE = "profile";
+    public static String CURRENT_TAG = TAG_HOME;
+
+    private boolean shouldLoadHomeFragOnBackPress = true;
+    private Handler mHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-
-        list = new ArrayList<>();
-        initLayout();
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mHandler = new Handler();
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         setUpNavigationView();
-        setUpTabLayout(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_HOME;
+            loadHomeFragment();
+        }
     }
 
-    private void initLayout() {
-        toolbar = findViewById(R.id.toolbar);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        tabLayout = findViewById(R.id.tabLayout);
-        viewPager = findViewById(R.id.viewPager);
-        navigationView = findViewById(R.id.nav_view);
-        autoScrollViewPager = findViewById(R.id.autoViewPager);
-        view_all_popular = findViewById(R.id.view_all_popular);
-        view_all_popular.setOnClickListener(this);
+    private void loadHomeFragment() {
 
-        list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            list.add("ddfhduifhuids " + i);
+        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+            return;
         }
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Fragment fragment = getHomeFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        };
 
-        popular_rv = findViewById(R.id.popular_rv);
-        popular_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        popularAdapter = new PopularAdapter(this, list);
-        popular_rv.setAdapter(popularAdapter);
+        if (mPendingRunnable != null) {
+            mHandler.post(mPendingRunnable);
+        }
+    }
 
-        auth.addAuthStateListener(this);
+    private Fragment getHomeFragment() {
+        switch (navItemIndex) {
+            case 0:
+                // home
+                HomeFragment homeFragment = new HomeFragment();
+                return homeFragment;
+            case 1:
+               /* // photos
+                PhotosFragment photosFragment = new PhotosFragment();
+                return photosFragment;*/
+            case 2:
+                /*// movies fragment
+                MoviesFragment moviesFragment = new MoviesFragment();
+                return moviesFragment;*/
+            case 3:
+               /* // notifications fragment
+                NotificationsFragment notificationsFragment = new NotificationsFragment();
+                return notificationsFragment;*/
 
-        findViewById(R.id.search_layout).setOnClickListener(this);
+            case 4:
+                /*// settings fragment
+                SettingsFragment settingsFragment = new SettingsFragment();
+                return settingsFragment;*/
+            default:
+                return new HomeFragment();
+        }
     }
 
     private void setUpNavigationView() {
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.nav_home:
+                    case R.id.nav_bottom_home:
+                        navItemIndex = 0;
+                        CURRENT_TAG = TAG_HOME;
                         break;
-                    case R.id.nav_grab:
+                    case R.id.nav_bottom_stores:
+                        navItemIndex = 1;
+                        CURRENT_TAG = TAG_STORIES;
                         break;
-                    case R.id.nav_share:
+                    case R.id.nav_bottom_search:
+                        navItemIndex = 2;
+                        CURRENT_TAG = TAG_SEARCH;
                         break;
-                    case R.id.nav_settings:
+                    case R.id.nav_bottom_categories:
+                        navItemIndex = 3;
+                        CURRENT_TAG = TAG_CATEGORIES;
                         break;
-                    case R.id.nav_sign:
-                        if (user != null) {
-                            auth.signOut();
-                        } else {
-                            startActivity(new Intent(MainActivity.this, SignUpActivity.class));
-                        }
+                    case R.id.nav_bottom_profile:
+                        navItemIndex = 4;
+                        CURRENT_TAG = TAG_PROFILE;
+                        break;
+                    default:
+                        navItemIndex = 0;
                 }
-                drawerLayout.closeDrawers();
+
+                loadHomeFragment();
                 return true;
             }
         });
+    }
 
-        if (user == null)
-            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signin));
-        else
-            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signout));
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
-
-
+    @Override
+    public void onBackPressed() {
+        if (shouldLoadHomeFragOnBackPress) {
+            if (navItemIndex != 0) {
+                navItemIndex = 0;
+                CURRENT_TAG = TAG_HOME;
+                loadHomeFragment();
+                return;
+            }
+        }
+        super.onBackPressed();
     }
 
     @Override
@@ -142,93 +178,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    private void setUpTabLayout(Bundle savedInstanceState) {
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.most_used));
-            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.recharge));
-            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.travel));
-            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.fashion));
-            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.food));
-            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.electronics));
-            pagerAdapter.addFragment(new MostUsedFragment(), getResources().getString(R.string.groceries));
-        } else {
-            Integer count = savedInstanceState.getInt("tabsCount");
-            String[] titles = savedInstanceState.getStringArray("titles");
-            for (int i = 0; i < count; i++) {
-                pagerAdapter.addFragment(getFragment(i, savedInstanceState), titles[i]);
-            }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /*// Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_logout) {
+            Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
+            return true;
         }
 
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-
-        autoPagerAdapter = new AutoPagerAdapter(getSupportFragmentManager());
-        autoPagerAdapter.addFragment(new AutoScrollFragment(), "");
-        autoPagerAdapter.addFragment(new AutoScrollFragment2(), "");
-        autoPagerAdapter.addFragment(new AutoScrollFragment(), "");
-        autoScrollViewPager.setAdapter(autoPagerAdapter);
-        viewPager.setOffscreenPageLimit(3);
-        autoScrollViewPager.startAutoScroll();
-    }
-
-    private Fragment getFragment(int position, Bundle savedInstanceState) {
-        return savedInstanceState == null ? pagerAdapter.getItem(position) : getSupportFragmentManager().findFragmentByTag(getFragmentTag(position));
-    }
-
-    private String getFragmentTag(int position) {
-        String tag = "android:switcher:" + R.id.viewPager + ":" + position;
-        return tag;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawers();
-            return;
+        // user is in notifications fragment
+        // and selected 'Mark all as Read'
+        if (id == R.id.action_mark_all_read) {
+            Toast.makeText(getApplicationContext(), "All notifications marked as read!", Toast.LENGTH_LONG).show();
         }
 
+        // user is in notifications fragment
+        // and selected 'Clear All'
+        if (id == R.id.action_clear_notifications) {
+            Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG).show();
+        }*/
 
-        super.onBackPressed();
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.view_all_popular:
-                startActivity(new Intent(MainActivity.this, PopularActivity.class));
-                break;
-            case R.id.search_layout:
-                startActivity(new Intent(MainActivity.this, SearchActivity.class));
-        }
-    }
-
-
-    @Override
-    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null)
-            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signout));
-        else
-            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signin));
+        return super.onOptionsItemSelected(item);
     }
 }
