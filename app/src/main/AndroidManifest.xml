@@ -40,7 +40,8 @@
         <activity
             android:name=".Activity.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Activity.SearchActivity"></activity>
     </application>
 
 </manifest>

@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         popular_rv.setAdapter(popularAdapter);
 
         auth.addAuthStateListener(this);
+
+        findViewById(R.id.search_layout).setOnClickListener(this);
     }
 
     private void setUpNavigationView() {
@@ -138,25 +140,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_searchview, menu);
-//        MenuItem searchItem = menu.findItem(R.id.action_search);
-//
-//        SearchView searchView = null;
-//        if (searchItem != null) {
-//            searchView = (SearchView) searchItem.getActionView();
-////            searchView.setIconifiedByDefault(false);
-//            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//                @Override
-//                public boolean onQueryTextSubmit(String query) {
-//                    return false;
-//                }
-//
-//                @Override
-//                public boolean onQueryTextChange(String newText) {
-//                    return false;
-//                }
-//            });
-//        }
         return false;
     }
 

@@ -120,12 +120,34 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="?android:attr/actionBarSize"
                 android:layout_margin="@dimen/margin_20"
                 android:background="@drawable/toolbar_background"
-                android:gravity="top"
                 android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin">
+
+                <RelativeLayout
+                    android:id="@+id/search_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/search_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="left"
+                        android:text="Search..." />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:src="@drawable/ic_search_black_24dp" />
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabLayout"
@@ -134,7 +156,6 @@
                 android:layout_gravity="bottom"
                 android:background="@color/white"
                 android:scrollbars="horizontal"
-                app:layout_collapseMode="pin"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabIndicatorHeight="2dp"
                 app:tabMode="scrollable"
