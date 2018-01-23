@@ -1,47 +1,19 @@
 package mastersunny.unitedclub.Activity;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.ArrayList;
-
-import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
-import mastersunny.unitedclub.Adapter.PagerAdapter;
-import mastersunny.unitedclub.Adapter.PopularAdapter;
-import mastersunny.unitedclub.Fragments.AutoScrollFragment;
-import mastersunny.unitedclub.Fragments.AutoScrollFragment2;
 import mastersunny.unitedclub.Fragments.HomeFragment;
-import mastersunny.unitedclub.Fragments.MostUsedFragment;
+import mastersunny.unitedclub.Fragments.StoresFragment;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.utils.AutoScrollViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -100,13 +72,11 @@ public class MainActivity extends AppCompatActivity {
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
-                // home
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 1:
-               /* // photos
-                PhotosFragment photosFragment = new PhotosFragment();
-                return photosFragment;*/
+                StoresFragment storiesFragment = new StoresFragment();
+                return storiesFragment;
             case 2:
                 /*// movies fragment
                 MoviesFragment moviesFragment = new MoviesFragment();
