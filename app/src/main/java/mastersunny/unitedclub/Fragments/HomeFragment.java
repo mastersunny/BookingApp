@@ -26,6 +26,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.MainActivity;
+import mastersunny.unitedclub.Activity.PopularActivity;
 import mastersunny.unitedclub.Activity.SignUpActivity;
 import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
@@ -180,7 +181,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
     private void initLayout() {
         toolbar = view.findViewById(R.id.toolbar);
         drawerLayout = view.findViewById(R.id.drawer_layout);
@@ -206,6 +206,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.view_all_popular:
+                startActivity(new Intent(v.getContext(), PopularActivity.class));
+                break;
+        }
 
     }
 }
