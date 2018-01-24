@@ -42,8 +42,8 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        fab = findViewById(R.id.fab);
-        fab.setOnClickListener(this);
+//        fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(this);
 
     }
 
@@ -60,9 +60,9 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.fab:
-                break;
-        }
+//        switch (view.getId()) {
+//            case R.id.fab:
+//                break;
+//        }
     }
 }
