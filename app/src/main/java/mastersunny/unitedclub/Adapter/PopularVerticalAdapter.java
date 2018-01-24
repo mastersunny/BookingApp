@@ -1,6 +1,7 @@
 package mastersunny.unitedclub.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import mastersunny.unitedclub.Activity.StoresDetailsActivity;
 import mastersunny.unitedclub.Model.PopularDTO;
 import mastersunny.unitedclub.R;
 
@@ -38,6 +40,12 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
             PopularDTO popularDTO = popularDTOS.get(position);
             holder.company_name.setText(popularDTO.getCompanyName());
             holder.total_offer.setText(popularDTO.getTotalOffer() + " Offers");
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mActivity.startActivity(new Intent(view.getContext(), StoresDetailsActivity.class));
+                }
+            });
         }
     }
 
