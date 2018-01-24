@@ -64,7 +64,7 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
             view = inflater.inflate(R.layout.stories_fragment_main, container, false);
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            toolbar.setTitle("Stories");
+            toolbar.setTitle("Stores");
             setUpNavigationView();
             setUpTabLayout(savedInstanceState);
         }

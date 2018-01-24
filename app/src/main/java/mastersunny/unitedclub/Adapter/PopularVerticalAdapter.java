@@ -37,7 +37,7 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
         if (popularDTOS != null) {
             PopularDTO popularDTO = popularDTOS.get(position);
             holder.company_name.setText(popularDTO.getCompanyName());
-            holder.total_offer.setText(popularDTO.getTotalOffer() + "");
+            holder.total_offer.setText(popularDTO.getTotalOffer() + " Offers");
         }
     }
 
