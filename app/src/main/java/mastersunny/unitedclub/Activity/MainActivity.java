@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
+import mastersunny.unitedclub.Fragments.CategoriesFragment;
 import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.SearchFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
@@ -82,9 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 SearchFragment searchFragment = new SearchFragment();
                 return searchFragment;
             case 3:
-               /* // notifications fragment
-                NotificationsFragment notificationsFragment = new NotificationsFragment();
-                return notificationsFragment;*/
+                CategoriesFragment categoriesFragment = new CategoriesFragment();
+                return categoriesFragment;
 
             case 4:
                 /*// settings fragment
