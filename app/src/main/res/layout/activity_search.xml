@@ -11,6 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
+        android:layout_margin="@dimen/margin_20"
         android:background="@drawable/toolbar_background"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
