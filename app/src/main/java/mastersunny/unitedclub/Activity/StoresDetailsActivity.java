@@ -45,7 +45,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements Callback
     private RecyclerView offer_rv;
 
     public static void start(Context context, StoreDTO storeDTO) {
-        Intent intent = new Intent(context, ItemDetailsActivity.class);
+        Intent intent = new Intent(context, StoresDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra(Constants.STORE_DTO, storeDTO);
         context.startActivity(intent);
@@ -83,7 +83,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements Callback
         store_image = findViewById(R.id.store_image);
         store_name = findViewById(R.id.store_name);
 
-        offer_rv = findViewById(R.id.most_used_rv);
+        offer_rv = findViewById(R.id.offer_rv);
         offer_rv.setHasFixedSize(true);
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         storeOfferAdapter = new StoreOfferAdapter(this, storeOfferDTOS);

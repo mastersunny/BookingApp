@@ -103,12 +103,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         call.enqueue(new Callback<List<StoreDTO>>() {
             @Override
             public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
-                for (StoreDTO storeDTO : response.body()) {
-                    storeDTOS.add(storeDTO);
-                }
-                Log.d(TAG, "success " + response.body().size());
-                if (popularAdapter != null) {
-                    popularAdapter.notifyDataSetChanged();
+                if (response.body() != null) {
+                    for (StoreDTO storeDTO : response.body()) {
+                        storeDTOS.add(storeDTO);
+                    }
+                    if (popularAdapter != null) {
+                        popularAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 
