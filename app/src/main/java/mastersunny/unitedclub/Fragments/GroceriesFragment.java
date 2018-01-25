@@ -37,8 +37,6 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
     private Activity mActivity;
     private View view;
     private RecyclerView most_used_rv;
-    private SearchView searchView;
-    private TextView no_client_message;
     private ArrayList<Movie> movies;
     private MostUsedAdapter mostUsedAdapter;
 
