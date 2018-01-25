@@ -12,22 +12,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-
-import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
-import mastersunny.unitedclub.Adapter.PopularAdapter;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.utils.AutoScrollViewPager;
 
 
 /**
@@ -61,7 +53,7 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.stories_fragment_main, container, false);
+            view = inflater.inflate(R.layout.stores_fragment_main, container, false);
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             toolbar.setTitle("Stores");

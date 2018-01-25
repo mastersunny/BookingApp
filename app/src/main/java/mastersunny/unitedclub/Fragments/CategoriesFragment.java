@@ -53,7 +53,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.stories_fragment_main, container, false);
+            view = inflater.inflate(R.layout.stores_fragment_main, container, false);
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             toolbar.setTitle("Categories");
