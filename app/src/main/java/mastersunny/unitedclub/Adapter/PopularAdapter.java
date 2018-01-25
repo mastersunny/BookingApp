@@ -48,7 +48,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHold
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    StoresDetailsActivity.start(view.getContext(), storeDTO.getStoreId());
+                    StoresDetailsActivity.start(view.getContext(), storeDTO);
                 }
             });
         }

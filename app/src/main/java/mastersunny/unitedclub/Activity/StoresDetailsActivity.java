@@ -44,10 +44,10 @@ public class StoresDetailsActivity extends AppCompatActivity implements Callback
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private RecyclerView offer_rv;
 
-    public static void start(Context context, long storeId) {
+    public static void start(Context context, StoreDTO storeDTO) {
         Intent intent = new Intent(context, ItemDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.STORE_DTO, storeId);
+        intent.putExtra(Constants.STORE_DTO, storeDTO);
         context.startActivity(intent);
     }
 
@@ -60,10 +60,13 @@ public class StoresDetailsActivity extends AppCompatActivity implements Callback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stores_details);
 
+        getIntentData();
         initLayout();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        setUpTabLayout(savedInstanceState);
+
+        storeOfferDTOS = new ArrayList<>();
 
         if (storeDTO != null && storeDTO.getStoreId() > 0) {
             loadData();
@@ -81,12 +84,13 @@ public class StoresDetailsActivity extends AppCompatActivity implements Callback
         store_name = findViewById(R.id.store_name);
 
         offer_rv = findViewById(R.id.most_used_rv);
+        offer_rv.setHasFixedSize(true);
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         storeOfferAdapter = new StoreOfferAdapter(this, storeOfferDTOS);
         offer_rv.setAdapter(storeOfferAdapter);
     }
 
-    private void setUpTabLayout(Bundle savedInstanceState) {
+    /*private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         if (savedInstanceState == null) {
             pagerAdapter.addFragment(new MostUsedFragment(), "All");
@@ -120,7 +124,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements Callback
         });
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
-    }
+    }*/
 
     private Fragment getFragment(int position, Bundle savedInstanceState) {
         return savedInstanceState == null ? pagerAdapter.getItem(position) : getSupportFragmentManager().findFragmentByTag(getFragmentTag(position));
@@ -139,13 +143,18 @@ public class StoresDetailsActivity extends AppCompatActivity implements Callback
 
     private void loadData() {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        apiService.getStoreOffers(storeDTO.getStoreId(), ApiClient.API_KEY).enqueue(this);
+        apiService.getStoreOffers(storeDTO.getStoreId()).enqueue(this);
     }
 
     @Override
     public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
 
-
+        for (StoreOfferDTO storeOfferDTO : response.body()) {
+            storeOfferDTOS.add(storeOfferDTO);
+        }
+        if (storeOfferAdapter != null) {
+            storeOfferAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

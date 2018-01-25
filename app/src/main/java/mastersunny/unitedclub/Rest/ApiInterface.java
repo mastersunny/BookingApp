@@ -31,7 +31,7 @@ public interface ApiInterface {
     Call<List<StoreDTO>> getAllStores(@Query("api_key") String apiKey);
 
     @GET("store/{id}")
-    Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id, @Query("api_key") String apiKey);
+    Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id);
 
 
 }
