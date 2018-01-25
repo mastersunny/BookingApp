@@ -12,7 +12,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class Constants {
 
-    public static String ITEM_DTO = "item_dto";
+    public static final String ITEM_DTO = "item_dto";
+    public static final String STORE_DTO = "store_dto";
 
     public static void loadImage(Context context, String imageUrl, ImageView imageView) {
         Glide.with(context).load(imageUrl)

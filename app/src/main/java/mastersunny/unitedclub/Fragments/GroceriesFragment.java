@@ -7,16 +7,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Adapter.MostUsedAdapter;
+import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Model.Movie;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.R;
@@ -38,7 +36,7 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
     private View view;
     private RecyclerView most_used_rv;
     private ArrayList<Movie> movies;
-    private MostUsedAdapter mostUsedAdapter;
+    private StoreOfferAdapter storeOfferAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -77,8 +75,8 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
     private void initLayout() {
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        mostUsedAdapter = new MostUsedAdapter(mActivity, movies);
-        most_used_rv.setAdapter(mostUsedAdapter);
+        storeOfferAdapter = new StoreOfferAdapter(mActivity, movies);
+        most_used_rv.setAdapter(storeOfferAdapter);
     }
 
     @Override
@@ -90,7 +88,7 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
         movies.addAll(response.body().getResults());
-        mostUsedAdapter.notifyDataSetChanged();
+        storeOfferAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -22,20 +22,15 @@
                 android:layout_height="wrap_content"
                 app:layout_collapseMode="parallax">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/store_image_bg"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/swiggy" />
+                    android:layout_height="250dp"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_20"
                         android:layout_marginTop="?android:attr/actionBarSize">
 
@@ -47,7 +42,7 @@
                             android:src="@drawable/paytm" />
 
                         <TextView
-                            android:id="@+id/follow_layout"
+                            android:id="@+id/store_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -57,7 +52,17 @@
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_18" />
                     </RelativeLayout>
-                </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/offer_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_20"
+                        android:maxLines="2"
+                        android:text="dsafuhadsihfiasdhfiahsdifhiasdhfiusadhfihasdifhiasdhfisadhfiashdfihdsaifhdsiafhiasdhfiasdhfiasdhfasdhfidsuahfiusadhfiasdhfiasdhfdsaf"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_16" />
+                </LinearLayout>
             </FrameLayout>
 
             <android.support.v7.widget.Toolbar
@@ -68,12 +73,11 @@
                 app:layout_collapseMode="pin">
 
                 <RelativeLayout
-                    android:id="@+id/search_layout"
-                    android:layout_width="match_parent"
+                    android:id="@+id/offer_details_layout"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/store_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -100,7 +104,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/total_amount"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="Total Purchases"
@@ -111,7 +115,7 @@
                 android:textColorHint="@color/input_register_hint" />
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/submit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20"

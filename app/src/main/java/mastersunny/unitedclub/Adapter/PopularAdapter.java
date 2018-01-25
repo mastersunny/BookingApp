@@ -5,9 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import mastersunny.unitedclub.Activity.ItemDetailsActivity;
+import mastersunny.unitedclub.Activity.StoresDetailsActivity;
+import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 
@@ -17,12 +21,12 @@ import mastersunny.unitedclub.utils.Constants;
 
 public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHolder> {
 
-    private ArrayList<String> list;
+    private ArrayList<StoreDTO> storeDTOS;
     private Activity mActivity;
 
-    public PopularAdapter(Activity mActivity, ArrayList<String> list) {
+    public PopularAdapter(Activity mActivity, ArrayList<StoreDTO> storeDTOS) {
         this.mActivity = mActivity;
-        this.list = list;
+        this.storeDTOS = storeDTOS;
     }
 
     @Override
@@ -33,21 +37,30 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHold
 
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
-        if (list != null) {
-
+        if (storeDTOS != null) {
+            final StoreDTO storeDTO = storeDTOS.get(position);
+            Constants.loadImage(mActivity, storeDTO.getBannerImg(), holder.store_image);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    StoresDetailsActivity.start(view.getContext(), storeDTO.getStoreId());
+                }
+            });
         }
-
     }
 
     @Override
     public int getItemCount() {
-        return list == null ? 0 : list.size();
+        return storeDTOS == null ? 0 : storeDTOS.size();
     }
 
     public static class MainHolder extends RecyclerView.ViewHolder {
 
+        private ImageView store_image;
+
         public MainHolder(View itemView) {
             super(itemView);
+            store_image = itemView.findViewById(R.id.popular_image);
 
         }
     }

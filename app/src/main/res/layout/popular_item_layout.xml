@@ -15,7 +15,7 @@
         android:background="@drawable/most_used_item_background">
 
         <ImageView
-            android:id="@+id/popular_image"
+            android:id="@+id/store_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"

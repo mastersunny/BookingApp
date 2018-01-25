@@ -2,11 +2,13 @@ package mastersunny.unitedclub.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by ASUS on 1/25/2018.
  */
 
-public class StoreDTO {
+public class StoreDTO implements Serializable {
     @SerializedName("store_id")
     private int storeId;
     @SerializedName("store_name")

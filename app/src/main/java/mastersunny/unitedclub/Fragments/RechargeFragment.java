@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Adapter.MostUsedAdapter;
+import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Model.Movie;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.R;
@@ -40,7 +40,7 @@ public class RechargeFragment extends Fragment implements View.OnClickListener, 
     private SearchView searchView;
     private TextView no_client_message;
     private ArrayList<Movie> movies;
-    private MostUsedAdapter mostUsedAdapter;
+    private StoreOfferAdapter storeOfferAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -79,8 +79,8 @@ public class RechargeFragment extends Fragment implements View.OnClickListener, 
     private void initLayout() {
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        mostUsedAdapter = new MostUsedAdapter(mActivity, movies);
-        most_used_rv.setAdapter(mostUsedAdapter);
+        storeOfferAdapter = new StoreOfferAdapter(mActivity, movies);
+        most_used_rv.setAdapter(storeOfferAdapter);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class RechargeFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
         movies.addAll(response.body().getResults());
-        mostUsedAdapter.notifyDataSetChanged();
+        storeOfferAdapter.notifyDataSetChanged();
     }
 
     @Override

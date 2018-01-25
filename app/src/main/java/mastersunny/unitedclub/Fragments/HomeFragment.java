@@ -22,17 +22,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mastersunny.unitedclub.Activity.MainActivity;
 import mastersunny.unitedclub.Activity.PopularActivity;
+import mastersunny.unitedclub.Activity.SearchActivity;
 import mastersunny.unitedclub.Activity.SignUpActivity;
 import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
+import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.AutoScrollViewPager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -53,7 +62,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private AutoScrollViewPager autoScrollViewPager;
     private PopularAdapter popularAdapter;
     private RecyclerView popular_rv;
-    private ArrayList<String> list;
+    private ArrayList<StoreDTO> storeDTOS;
     private TextView view_all_popular;
 
     @Override
@@ -73,15 +82,38 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.home_fragment_main, container, false);
-            list = new ArrayList<>();
+            storeDTOS = new ArrayList<>();
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             setUpNavigationView();
             setUpTabLayout(savedInstanceState);
 
+            loadData();
+
         }
 
         return view;
+    }
+
+    private void loadData() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<List<StoreDTO>> call = apiService.getPopularStores(ApiClient.API_KEY);
+        call.enqueue(new Callback<List<StoreDTO>>() {
+            @Override
+            public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
+                for (StoreDTO storeDTO : response.body()) {
+                    storeDTOS.add(storeDTO);
+                }
+                if (popularAdapter != null) {
+                    popularAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void setUpNavigationView() {
@@ -191,15 +223,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view_all_popular.setOnClickListener(this);
         view.findViewById(R.id.search_layout).setOnClickListener(this);
 
-        list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            list.add("ddfhduifhuids " + i);
-        }
-
         popular_rv = view.findViewById(R.id.popular_rv);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
-        popularAdapter = new PopularAdapter(mActivity, list);
+        popularAdapter = new PopularAdapter(mActivity, storeDTOS);
         popular_rv.setAdapter(popularAdapter);
+
+        view.findViewById(R.id.search_layout).setOnClickListener(this);
 
     }
 
@@ -208,6 +237,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.view_all_popular:
                 startActivity(new Intent(v.getContext(), PopularActivity.class));
+                break;
+            case R.id.search_layout:
+                startActivity(new Intent(v.getContext(), SearchActivity.class));
                 break;
         }
 
