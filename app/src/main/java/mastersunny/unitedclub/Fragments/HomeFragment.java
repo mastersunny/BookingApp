@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,15 +22,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import mastersunny.unitedclub.Activity.MainActivity;
-import mastersunny.unitedclub.Activity.PopularActivity;
+import mastersunny.unitedclub.Activity.StoresActivity;
 import mastersunny.unitedclub.Activity.SearchActivity;
-import mastersunny.unitedclub.Activity.SignUpActivity;
 import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
@@ -242,7 +238,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.view_all_popular:
-                startActivity(new Intent(v.getContext(), PopularActivity.class));
+                startActivity(new Intent(v.getContext(), StoresActivity.class));
                 break;
             case R.id.search_layout:
                 startActivity(new Intent(v.getContext(), SearchActivity.class));
