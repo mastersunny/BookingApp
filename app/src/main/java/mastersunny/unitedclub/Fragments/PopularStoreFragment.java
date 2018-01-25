@@ -18,6 +18,7 @@ import mastersunny.unitedclub.Adapter.PopularVerticalAdapter;
 import mastersunny.unitedclub.Model.Movie;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.PopularDTO;
+import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -35,7 +36,7 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     public String TAG = "PopularStoreFragment";
     private Activity mActivity;
     private View view;
-    private ArrayList<Movie> movies;
+    private ArrayList<StoreDTO> storeDTOS;
     private RecyclerView popular_rv;
     private PopularVerticalAdapter popularVerticalAdapter;
     private ArrayList<PopularDTO> popularDTOS;
@@ -86,7 +87,7 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        popularVerticalAdapter = new PopularVerticalAdapter(mActivity, popularDTOS);
+        popularVerticalAdapter = new PopularVerticalAdapter(mActivity, storeDTOS);
         popular_rv.setAdapter(popularVerticalAdapter);
     }
 

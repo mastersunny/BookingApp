@@ -59,10 +59,10 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
     }
 
     private void loaData() {
-        if (ApiClient.API_KEY.isEmpty()) {
-            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
-            return;
-        }
+//        if (ApiClient.API_KEY.isEmpty()) {
+//            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
+//            return;
+//        }
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
     }

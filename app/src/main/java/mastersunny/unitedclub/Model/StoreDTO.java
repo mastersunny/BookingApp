@@ -15,6 +15,15 @@ public class StoreDTO implements Serializable {
     private String storeName;
     @SerializedName("bannerImage")
     private String bannerImg;
+    private int totalOffer;
+
+    public int getTotalOffer() {
+        return totalOffer;
+    }
+
+    public void setTotalOffer(int totalOffer) {
+        this.totalOffer = totalOffer;
+    }
 
     public int getStoreId() {
         return storeId;
@@ -46,6 +55,7 @@ public class StoreDTO implements Serializable {
                 "storeId=" + storeId +
                 ", storeName='" + storeName + '\'' +
                 ", bannerImg='" + bannerImg + '\'' +
+                ", totalOffer=" + totalOffer +
                 '}';
     }
 }

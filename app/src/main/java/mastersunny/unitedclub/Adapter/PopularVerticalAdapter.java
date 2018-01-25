@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.StoresDetailsActivity;
 import mastersunny.unitedclub.Model.PopularDTO;
+import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 
 /**
@@ -20,12 +21,12 @@ import mastersunny.unitedclub.R;
 
 public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVerticalAdapter.MainHolder> {
 
-    private ArrayList<PopularDTO> popularDTOS;
+    private ArrayList<StoreDTO> storeDTOS;
     private Activity mActivity;
 
-    public PopularVerticalAdapter(Activity mActivity, ArrayList<PopularDTO> popularDTOS) {
+    public PopularVerticalAdapter(Activity mActivity, ArrayList<StoreDTO> storeDTOS) {
         this.mActivity = mActivity;
-        this.popularDTOS = popularDTOS;
+        this.storeDTOS = storeDTOS;
     }
 
     @Override
@@ -36,14 +37,14 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
 
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
-        if (popularDTOS != null) {
-            PopularDTO popularDTO = popularDTOS.get(position);
-            holder.company_name.setText(popularDTO.getCompanyName());
-            holder.total_offer.setText(popularDTO.getTotalOffer() + " Offers");
+        if (storeDTOS != null) {
+            final StoreDTO storeDTO = storeDTOS.get(position);
+            holder.store_name.setText(storeDTO.getStoreName());
+            holder.total_offer.setText(storeDTO.getTotalOffer() + " Offers");
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mActivity.startActivity(new Intent(view.getContext(), StoresDetailsActivity.class));
+                    StoresDetailsActivity.start(view.getContext(), storeDTO);
                 }
             });
         }
@@ -51,18 +52,18 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
 
     @Override
     public int getItemCount() {
-        return popularDTOS == null ? 0 : popularDTOS.size();
+        return storeDTOS == null ? 0 : storeDTOS.size();
     }
 
     public static class MainHolder extends RecyclerView.ViewHolder {
 
 
-        private TextView company_name;
+        private TextView store_name;
         private TextView total_offer;
 
         public MainHolder(View itemView) {
             super(itemView);
-            company_name = itemView.findViewById(R.id.company_name);
+            store_name = itemView.findViewById(R.id.store_name);
             total_offer = itemView.findViewById(R.id.total_offer);
         }
     }
