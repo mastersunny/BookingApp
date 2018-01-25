@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,6 +51,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
+    public String TAG = "HomeFragment";
     private Activity mActivity;
     private View view;
     private DrawerLayout drawerLayout;
@@ -97,13 +99,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void loadData() {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<List<StoreDTO>> call = apiService.getPopularStores(ApiClient.API_KEY);
+        Call<List<StoreDTO>> call = apiService.getPopularStores();
         call.enqueue(new Callback<List<StoreDTO>>() {
             @Override
             public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
                 for (StoreDTO storeDTO : response.body()) {
                     storeDTOS.add(storeDTO);
                 }
+                Log.d(TAG, "success " + response.body().size());
                 if (popularAdapter != null) {
                     popularAdapter.notifyDataSetChanged();
                 }
@@ -111,6 +114,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
+                Log.d(TAG, "failed " + t.getMessage());
 
             }
         });
@@ -224,6 +228,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.search_layout).setOnClickListener(this);
 
         popular_rv = view.findViewById(R.id.popular_rv);
+        popular_rv.setNestedScrollingEnabled(false);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         popularAdapter = new PopularAdapter(mActivity, storeDTOS);
         popular_rv.setAdapter(popularAdapter);

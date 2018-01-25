@@ -21,14 +21,17 @@ public interface ApiInterface {
     @GET("movie/{id}")
     Call<MoviesResponse> getMovieDetails(@Path("id") int id, @Query("api_key") String apiKey);
 
-    @GET("popular/0")
-    Call<List<StoreDTO>> getPopularStores(@Query("api_key") String apiKey);
+    @GET("api/popularStores")
+    Call<List<StoreDTO>> getPopularStores();
+
+    @GET("api/allStores")
+    Call<List<StoreDTO>> getAllStores();
 
     @GET("all/0")
     Call<List<StoreDTO>> getAllStores(@Query("api_key") String apiKey);
 
-    @GET("offer/{store_id}")
-    Call<List<StoreOfferDTO>> getStoreOffers(@Path("store_id") int id, @Query("api_key") String apiKey);
+    @GET("store/{id}")
+    Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id, @Query("api_key") String apiKey);
 
 
 }

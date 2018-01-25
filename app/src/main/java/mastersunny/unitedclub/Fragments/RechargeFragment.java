@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Model.Movie;
 import mastersunny.unitedclub.Model.MoviesResponse;
+import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -39,7 +40,7 @@ public class RechargeFragment extends Fragment implements View.OnClickListener, 
     private RecyclerView most_used_rv;
     private SearchView searchView;
     private TextView no_client_message;
-    private ArrayList<Movie> movies;
+    private ArrayList<StoreOfferDTO> movies;
     private StoreOfferAdapter storeOfferAdapter;
 
     @Override
@@ -91,8 +92,7 @@ public class RechargeFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-        movies.addAll(response.body().getResults());
-        storeOfferAdapter.notifyDataSetChanged();
+
     }
 
     @Override
