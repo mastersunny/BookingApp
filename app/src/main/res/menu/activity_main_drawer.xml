@@ -9,26 +9,30 @@
         <item
             android:id="@+id/nav_grab"
             android:icon="@drawable/ic_thumb_up_black_24dp"
-            android:title="@string/nav_grab" />
+            android:title="@string/nav_grab"
+            android:visible="false" />
         <item
-            android:id="@+id/nav_coupon"
+            android:id="@+id/nav_coupon_finder"
             android:icon="@mipmap/ic_launcher"
             android:title="@string/nav_coupon" />
 
         <item
             android:id="@+id/nav_brands"
             android:icon="@mipmap/ic_launcher"
-            android:title="@string/nav_brands" />
+            android:title="@string/nav_brands"
+            android:visible="false" />
 
         <item
             android:id="@+id/nav_bank"
             android:icon="@mipmap/ic_launcher"
-            android:title="@string/nav_bank" />
+            android:title="@string/nav_bank"
+            android:visible="false" />
 
         <item
             android:id="@+id/nav_notification"
             android:icon="@drawable/ic_notifications_black_24dp"
-            android:title="@string/nav_notification" />
+            android:title="@string/nav_notification"
+            android:visible="false" />
 
         <item
             android:id="@+id/nav_settings"
@@ -43,7 +47,8 @@
         <item
             android:id="@+id/nav_feedback"
             android:icon="@mipmap/ic_launcher"
-            android:title="@string/nav_feedback" />
+            android:title="@string/nav_feedback"
+            android:visible="false" />
 
         <item
             android:id="@+id/nav_help"
@@ -54,6 +59,5 @@
             android:id="@+id/nav_sign"
             android:icon="@mipmap/ic_launcher"
             android:title="@string/nav_signin" />
-
     </group>
 </menu>
