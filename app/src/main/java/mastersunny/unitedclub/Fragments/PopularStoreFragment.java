@@ -10,14 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mastersunny.unitedclub.Adapter.PopularVerticalAdapter;
-import mastersunny.unitedclub.Model.Movie;
-import mastersunny.unitedclub.Model.MoviesResponse;
-import mastersunny.unitedclub.Model.PopularDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
@@ -31,7 +28,7 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class PopularStoreFragment extends Fragment implements View.OnClickListener, Callback<MoviesResponse> {
+public class PopularStoreFragment extends Fragment implements View.OnClickListener, Callback<List<StoreDTO>> {
 
     public String TAG = "PopularStoreFragment";
     private Activity mActivity;
@@ -39,7 +36,6 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     private ArrayList<StoreDTO> storeDTOS;
     private RecyclerView popular_rv;
     private PopularVerticalAdapter popularVerticalAdapter;
-    private ArrayList<PopularDTO> popularDTOS;
 
     @Override
     public void onAttach(Context context) {
@@ -52,7 +48,7 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_layout, container, false);
-            popularDTOS = new ArrayList<>();
+            storeDTOS = new ArrayList<>();
             initLayout();
             loaData();
         }
@@ -66,7 +62,7 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
 //            return;
 //        }
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
+        apiService.getPopularStores().enqueue(this);
     }
 
     @Override
@@ -76,14 +72,6 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     }
 
     private void initLayout() {
-        for (int i = 0; i < 20; i++) {
-            PopularDTO popularDTO = new PopularDTO();
-            popularDTO.setCompanyName("Dominos");
-            popularDTO.setTotalOffer(i);
-            popularDTOS.add(popularDTO);
-        }
-
-
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
@@ -96,15 +84,13 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
 
     }
 
-
     @Override
-    public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-//        movies.addAll(response.body().getResults());
-//        popularVerticalAdapter.notifyDataSetChanged();
+    public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
+
     }
 
     @Override
-    public void onFailure(Call<MoviesResponse> call, Throwable t) {
+    public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
 
     }
 }
