@@ -27,10 +27,10 @@ public interface ApiInterface {
     @GET("api/allStores")
     Call<List<StoreDTO>> getAllStores();
 
-    @GET("all/0")
+    @GET("api/all/0")
     Call<List<StoreDTO>> getAllStores(@Query("api_key") String apiKey);
 
-    @GET("store/{id}")
+    @GET("api/store/{id}")
     Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id);
 
 
