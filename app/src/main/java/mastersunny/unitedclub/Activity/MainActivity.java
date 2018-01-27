@@ -13,6 +13,7 @@ import android.view.WindowManager;
 
 import mastersunny.unitedclub.Fragments.CategoriesFragment;
 import mastersunny.unitedclub.Fragments.HomeFragment;
+import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.Fragments.SearchFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
 import mastersunny.unitedclub.R;
@@ -87,9 +88,8 @@ public class MainActivity extends AppCompatActivity {
                 return categoriesFragment;
 
             case 4:
-                /*// settings fragment
-                SettingsFragment settingsFragment = new SettingsFragment();
-                return settingsFragment;*/
+                ProfileFragment settingsFragment = new ProfileFragment();
+                return settingsFragment;
             default:
                 return new HomeFragment();
         }
