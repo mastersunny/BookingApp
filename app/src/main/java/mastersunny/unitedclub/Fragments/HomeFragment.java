@@ -26,6 +26,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import mastersunny.unitedclub.Activity.SignUpActivity;
 import mastersunny.unitedclub.Activity.StoresActivity;
 import mastersunny.unitedclub.Activity.SearchActivity;
 import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
@@ -132,11 +133,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     case R.id.nav_settings:
                         break;
                     case R.id.nav_sign:
-//                        if (user != null) {
-//                            auth.signOut();
-//                        } else {
-//                            startActivity(new Intent(MainActivity.this, SignUpActivity.class));
-//                        }
+                        startActivity(new Intent(mActivity, SignUpActivity.class));
+
                 }
                 drawerLayout.closeDrawers();
                 return true;
