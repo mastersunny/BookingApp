@@ -86,13 +86,13 @@
                         android:id="@+id/popular_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/coupon_finder_layout"
-                        android:padding="@dimen/margin_10">
+                        android:layout_below="@+id/coupon_finder_layout">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
+                            android:padding="@dimen/margin_10"
                             android:text="Popular Stories"
                             android:textSize="@dimen/text_size_12" />
 
@@ -101,9 +101,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:padding="@dimen/margin_10"
                             android:text="View All"
-                            android:textSize="@dimen/text_size_12"
-                            android:textStyle="bold" />
+                            android:textColor="#006ff1"
+                            android:textSize="@dimen/text_size_12" />
                     </RelativeLayout>
 
                     <android.support.v7.widget.RecyclerView
