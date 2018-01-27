@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,6 +59,7 @@ public class StoresDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_stores_details);
 
         storeOfferDTOS = new ArrayList<>();
@@ -152,10 +154,12 @@ public class StoresDetailsActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<StoreOfferDTO>>() {
             @Override
             public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
-                for (StoreOfferDTO storeOfferDTO : response.body()) {
-                    storeOfferDTOS.add(storeOfferDTO);
+                if (response.body() != null) {
+                    for (StoreOfferDTO storeOfferDTO : response.body()) {
+                        storeOfferDTOS.add(storeOfferDTO);
+                    }
+                    storeOfferAdapter.notifyDataSetChanged();
                 }
-                storeOfferAdapter.notifyDataSetChanged();
             }
 
             @Override
