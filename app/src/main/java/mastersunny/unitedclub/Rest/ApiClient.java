@@ -12,7 +12,7 @@ public class ApiClient {
 //    public static final String API_KEY = "35e1efe2694731228a71fe05cd424848";
     private static Retrofit retrofit = null;
 
-    public static final String BASE_URL = "http://50b693d7.ngrok.io/";
+    public static final String BASE_URL = "http://4b8f5b12.ngrok.io/";
     public static final String API_KEY = "";
 
     private ApiClient() {
