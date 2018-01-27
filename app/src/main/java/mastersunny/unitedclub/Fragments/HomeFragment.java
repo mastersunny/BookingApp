@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
-                Log.d(TAG, "failed " + t.getMessage());
+                Log.d(TAG, " " + t.getMessage());
 
             }
         });
