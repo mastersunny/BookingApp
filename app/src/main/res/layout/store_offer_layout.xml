@@ -6,7 +6,7 @@
     android:layout_height="160dp"
     android:foreground="?selectableItemBackground"
     card_view:cardCornerRadius="@dimen/margin_2"
-    card_view:cardElevation="@dimen/margin_5"
+    card_view:cardElevation="@dimen/margin_2"
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout

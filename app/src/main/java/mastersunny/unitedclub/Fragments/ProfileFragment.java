@@ -34,8 +34,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
     public String TAG = "MostUsedFragment";
     private Activity mActivity;
     private View view;
-    private RecyclerView most_used_rv;
-    private ArrayList<StoreOfferDTO> movies;
+    private RecyclerView transaction_details_rv;
+    private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private StoreOfferAdapter storeOfferAdapter;
 
     @Override
@@ -48,8 +48,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_layout, container, false);
-            movies = new ArrayList<>();
+            view = inflater.inflate(R.layout.profile_fragment_layout, container, false);
+            storeOfferDTOS = new ArrayList<>();
             initLayout();
             loaData();
         }
@@ -58,10 +58,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
     }
 
     private void loaData() {
-        if (ApiClient.API_KEY.isEmpty()) {
-            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
-            return;
-        }
+//        if (ApiClient.API_KEY.isEmpty()) {
+//            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
+//            return;
+//        }
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
     }
@@ -73,10 +73,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
     }
 
     private void initLayout() {
-        most_used_rv = view.findViewById(R.id.most_used_rv);
-        most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapter(mActivity, movies);
-        most_used_rv.setAdapter(storeOfferAdapter);
+        for (int i = 0; i < 20; i++) {
+            StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
+            storeOfferDTO.setOffer("some offer " + i);
+            storeOfferDTOS.add(storeOfferDTO);
+        }
+        transaction_details_rv = view.findViewById(R.id.transaction_details_rv);
+        transaction_details_rv.setHasFixedSize(true);
+        transaction_details_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
+        storeOfferAdapter = new StoreOfferAdapter(mActivity, storeOfferDTOS);
+        transaction_details_rv.setAdapter(storeOfferAdapter);
     }
 
     @Override
