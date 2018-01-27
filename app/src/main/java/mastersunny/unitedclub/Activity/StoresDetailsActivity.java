@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,8 +19,6 @@ import java.util.List;
 
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
-import mastersunny.unitedclub.Fragments.MostUsedFragment;
-import mastersunny.unitedclub.Fragments.PopularStoreFragment;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
@@ -30,8 +29,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StoresDetailsActivity extends AppCompatActivity implements Callback<List<StoreOfferDTO>> {
+public class StoresDetailsActivity extends AppCompatActivity {
 
+    public String TAG = "StoresDetailsActivity";
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Toolbar toolbar;
@@ -60,17 +60,22 @@ public class StoresDetailsActivity extends AppCompatActivity implements Callback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stores_details);
 
+        storeOfferDTOS = new ArrayList<>();
         getIntentData();
         initLayout();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        setUpTabLayout(savedInstanceState);
-
-        storeOfferDTOS = new ArrayList<>();
-
         if (storeDTO != null && storeDTO.getStoreId() > 0) {
+            updateStoreInfo();
             loadData();
         }
+    }
+
+    private void updateStoreInfo() {
+        store_name.setText(storeDTO.getStoreName());
+        String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getBannerImg();
+        Constants.loadImage(this, imgUrl, store_image);
     }
 
 
@@ -86,7 +91,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements Callback
         offer_rv = findViewById(R.id.offer_rv);
         offer_rv.setHasFixedSize(true);
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapter(this, storeOfferDTOS);
+        storeOfferAdapter = new StoreOfferAdapter(StoresDetailsActivity.this, storeOfferDTOS);
         offer_rv.setAdapter(storeOfferAdapter);
     }
 
@@ -143,22 +148,20 @@ public class StoresDetailsActivity extends AppCompatActivity implements Callback
 
     private void loadData() {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        apiService.getStoreOffers(storeDTO.getStoreId()).enqueue(this);
-    }
+        Call<List<StoreOfferDTO>> call = apiService.getStoreOffers(storeDTO.getStoreId());
+        call.enqueue(new Callback<List<StoreOfferDTO>>() {
+            @Override
+            public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
+                for (StoreOfferDTO storeOfferDTO : response.body()) {
+                    storeOfferDTOS.add(storeOfferDTO);
+                }
+                storeOfferAdapter.notifyDataSetChanged();
+            }
 
-    @Override
-    public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
+            @Override
+            public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
 
-        for (StoreOfferDTO storeOfferDTO : response.body()) {
-            storeOfferDTOS.add(storeOfferDTO);
-        }
-        if (storeOfferAdapter != null) {
-            storeOfferAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
-
+            }
+        });
     }
 }

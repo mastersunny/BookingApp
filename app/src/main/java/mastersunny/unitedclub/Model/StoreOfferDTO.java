@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class StoreOfferDTO {
-    @SerializedName("offer_id")
+    @SerializedName("id")
     private int offerId;
     @SerializedName("store_dto")
     private StoreDTO storeDTO;
@@ -15,7 +15,7 @@ public class StoreOfferDTO {
     private OfferCategory offerCategory;
     @SerializedName("offer")
     private String offer;
-    @SerializedName("end_date")
+    @SerializedName("endDate")
     private String endDate;
 
     public int getOfferId() {
