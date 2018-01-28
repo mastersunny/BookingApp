@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.R;
@@ -30,12 +31,12 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
 
     private Activity mActivity;
     private View view;
-    private DrawerLayout drawerLayout;
+    //    private DrawerLayout drawerLayout;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private NavigationView navigationView;
-    private Toolbar toolbar;
+    //    private NavigationView navigationView;
     private PagerAdapter pagerAdapter;
+    private TextView toolbar_title;
 
     @Override
     public void onAttach(Context context) {
@@ -53,18 +54,16 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.stores_fragment_main, container, false);
+            view = inflater.inflate(R.layout.stores_fragment_layout, container, false);
             initLayout();
-            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            toolbar.setTitle("Stores");
-            setUpNavigationView();
+//            setUpNavigationView();
             setUpTabLayout(savedInstanceState);
         }
 
         return view;
     }
 
-    private void setUpNavigationView() {
+    /*private void setUpNavigationView() {
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -100,7 +99,7 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
         toggle.syncState();
 
 
-    }
+    }*/
 
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
@@ -149,11 +148,12 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
 
 
     private void initLayout() {
-        toolbar = view.findViewById(R.id.toolbar);
-        drawerLayout = view.findViewById(R.id.drawer_layout);
+        toolbar_title = view.findViewById(R.id.toolbar_title);
+        toolbar_title.setText("Stores");
+//        drawerLayout = view.findViewById(R.id.drawer_layout);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
-        navigationView = view.findViewById(R.id.nav_view);
+//        navigationView = view.findViewById(R.id.nav_view);
     }
 
     @Override

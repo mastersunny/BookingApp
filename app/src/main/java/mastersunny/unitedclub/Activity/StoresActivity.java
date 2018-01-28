@@ -38,7 +38,7 @@ public class StoresActivity extends AppCompatActivity {
         initLayout();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Stores");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         setUpTabLayout(savedInstanceState);
 
     }
