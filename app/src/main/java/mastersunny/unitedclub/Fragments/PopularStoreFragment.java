@@ -61,8 +61,8 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
 //            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
 //            return;
 //        }
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        apiService.getPopularStores().enqueue(this);
+//        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+//        apiService.getPopularStores().enqueue(this);
     }
 
     @Override
@@ -72,6 +72,16 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     }
 
     private void initLayout() {
+        for (int i = 5; i < 15; i++) {
+            StoreDTO storeDTO = new StoreDTO();
+            if (i % 2 == 1) {
+                storeDTO.setStoreName("MakeMyTrip");
+            } else {
+                storeDTO.setStoreName("Paytm");
+            }
+            storeDTO.setTotalOffer(i * 10);
+            storeDTOS.add(storeDTO);
+        }
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));

@@ -106,7 +106,7 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
         if (savedInstanceState == null) {
             pagerAdapter.addFragment(new PopularStoreFragment(), "Popular");
-            pagerAdapter.addFragment(new PopularStoreFragment(), "All");
+            pagerAdapter.addFragment(new AllStoreFragment(), "All");
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
             String[] titles = savedInstanceState.getStringArray("titles");
@@ -116,6 +116,7 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
         }
 
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

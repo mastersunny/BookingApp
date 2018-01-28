@@ -39,7 +39,6 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener, 
     private ArrayList<StoreDTO> storeDTOS;
     private RecyclerView popular_rv;
     private PopularVerticalAdapter popularVerticalAdapter;
-    private ArrayList<PopularDTO> popularDTOS;
 
     @Override
     public void onAttach(Context context) {
@@ -52,7 +51,7 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener, 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_layout, container, false);
-            popularDTOS = new ArrayList<>();
+            storeDTOS = new ArrayList<>();
             initLayout();
             loaData();
         }
@@ -65,8 +64,8 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener, 
 //            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
 //            return;
 //        }
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
+//        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+//        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
     }
 
     @Override
@@ -76,13 +75,16 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void initLayout() {
-        for (int i = 0; i < 20; i++) {
-            PopularDTO popularDTO = new PopularDTO();
-            popularDTO.setCompanyName("Dominos");
-            popularDTO.setTotalOffer(i);
-            popularDTOS.add(popularDTO);
+        for (int i = 5; i < 15; i++) {
+            StoreDTO storeDTO = new StoreDTO();
+            if (i % 2 == 1) {
+                storeDTO.setStoreName("MakeMyTrip");
+            } else {
+                storeDTO.setStoreName("Paytm");
+            }
+            storeDTO.setTotalOffer(i * 10);
+            storeDTOS.add(storeDTO);
         }
-
 
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
