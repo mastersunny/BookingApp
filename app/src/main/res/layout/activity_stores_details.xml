@@ -25,7 +25,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="210dp"
-                    android:background="@color/colorPrimary">
+                    android:background="#105773">
 
                     <RelativeLayout
                         android:id="@+id/coupon_offer_layout"
