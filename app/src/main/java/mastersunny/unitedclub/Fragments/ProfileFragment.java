@@ -62,8 +62,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
 //            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
 //            return;
 //        }
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
+//        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+//        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
     }
 
     @Override
