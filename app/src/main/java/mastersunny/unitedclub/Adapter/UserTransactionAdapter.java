@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Model.StoreOfferDTO;
+import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.R;
 
 /**
@@ -20,23 +21,27 @@ import mastersunny.unitedclub.R;
 public class UserTransactionAdapter extends RecyclerView.Adapter<UserTransactionAdapter.MainHolder> {
     private String TAG = "UserTransactionAdapter";
 
-    private ArrayList<StoreOfferDTO> storeOfferDTOS;
+    private ArrayList<TransactionDTO> transactionDTOS;
     private Activity mActivity;
 
-    public UserTransactionAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS) {
+    public UserTransactionAdapter(Activity mActivity, ArrayList<TransactionDTO> transactionDTOS) {
         this.mActivity = mActivity;
-        this.storeOfferDTOS = storeOfferDTOS;
+        this.transactionDTOS = transactionDTOS;
     }
 
     @Override
     public MainHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_offer_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.transaction_layout, parent, false);
         return new MainHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
-        if (storeOfferDTOS != null) {
+        if (transactionDTOS != null) {
+            TransactionDTO transactionDTO = transactionDTOS.get(position);
+            holder.store_name.setText(transactionDTO.getStoreOfferDTO().getStoreDTO().getStoreName());
+            holder.paid_amount.setText("Paid: " + transactionDTO.getPaidAmount() + "");
+            holder.due_amount.setText("Due: " + transactionDTO.getDueAmount() + "");
 //            final StoreOfferDTO storeOfferDTO = storeOfferDTOS.get(position);
 //
 //            holder.store_offer.setText(storeOfferDTO.getOffer());
@@ -51,21 +56,22 @@ public class UserTransactionAdapter extends RecyclerView.Adapter<UserTransaction
 
     @Override
     public int getItemCount() {
-        return storeOfferDTOS == null ? 0 : storeOfferDTOS.size();
+        return transactionDTOS == null ? 0 : transactionDTOS.size();
     }
 
     public static class MainHolder extends RecyclerView.ViewHolder {
 
-        private ImageView store_image;
-        private TextView store_offer;
-        private TextView offer_end_date;
+        private TextView store_name;
+        private TextView paid_amount;
+        private TextView due_amount;
+        private TextView payment_date;
 
         public MainHolder(View itemView) {
             super(itemView);
-            store_image = itemView.findViewById(R.id.store_image);
-            store_offer = itemView.findViewById(R.id.store_offer);
-            offer_end_date = itemView.findViewById(R.id.offer_end_date);
-
+            store_name = itemView.findViewById(R.id.store_name);
+            paid_amount = itemView.findViewById(R.id.paid_amount);
+            due_amount = itemView.findViewById(R.id.due_amount);
+            payment_date = itemView.findViewById(R.id.payment_date);
         }
     }
 }
