@@ -58,6 +58,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
             transactionDTOS = new ArrayList<>();
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profile");
             loaData();
         }
 
