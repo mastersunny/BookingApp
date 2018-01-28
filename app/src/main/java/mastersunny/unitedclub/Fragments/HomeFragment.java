@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadData() {
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        /*ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<List<StoreDTO>> call = apiService.getPopularStores();
         call.enqueue(new Callback<List<StoreDTO>>() {
             @Override
@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Log.d(TAG, " " + t.getMessage());
 
             }
-        });
+        });*/
     }
 
     private void setUpNavigationView() {
@@ -221,6 +221,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view_all_popular = view.findViewById(R.id.view_all_popular);
         view_all_popular.setOnClickListener(this);
         view.findViewById(R.id.search_layout).setOnClickListener(this);
+
+        for (int i = 0; i < 10; i++) {
+            storeDTOS.add(new StoreDTO());
+        }
 
         popular_rv = view.findViewById(R.id.popular_rv);
         popular_rv.setNestedScrollingEnabled(false);

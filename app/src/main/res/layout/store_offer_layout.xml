@@ -25,8 +25,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/paytm" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/flipcart" />
 
             <LinearLayout
                 android:id="@+id/item_tag"
