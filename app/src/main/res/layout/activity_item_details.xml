@@ -24,15 +24,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="wrap_content"
                     android:background="#30404f"
                     android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_20"
-                        android:layout_marginTop="?android:attr/actionBarSize">
+                        android:layout_marginTop="?android:attr/actionBarSize"
+                        android:padding="@dimen/margin_20">
 
                         <ImageView
                             android:id="@+id/store_image"
@@ -57,7 +57,8 @@
                         android:id="@+id/offer_details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_20"
+                        android:layout_marginBottom="@dimen/margin_20"
+                        android:layout_marginLeft="@dimen/margin_20"
                         android:maxLines="2"
                         android:text="You will get 50% off on this product"
                         android:textColor="@color/white"
