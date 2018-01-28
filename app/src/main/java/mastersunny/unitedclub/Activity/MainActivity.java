@@ -14,7 +14,7 @@ import android.view.WindowManager;
 import mastersunny.unitedclub.Fragments.CategoriesFragment;
 import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
-import mastersunny.unitedclub.Fragments.SearchFragment;
+import mastersunny.unitedclub.Fragments.TransactionFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
 import mastersunny.unitedclub.R;
 
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public static int navItemIndex = 0;
     private static final String TAG_HOME = "home";
     private static final String TAG_STORIES = "stories";
-    private static final String TAG_SEARCH = "search";
+    private static final String TAG_TRANSACTION = "transaction";
     private static final String TAG_CATEGORIES = "categories";
     private static final String TAG_PROFILE = "profile";
     public static String CURRENT_TAG = TAG_HOME;
@@ -81,15 +81,14 @@ public class MainActivity extends AppCompatActivity {
                 StoresFragment storiesFragment = new StoresFragment();
                 return storiesFragment;
             case 2:
-                SearchFragment searchFragment = new SearchFragment();
-                return searchFragment;
-            case 3:
                 CategoriesFragment categoriesFragment = new CategoriesFragment();
                 return categoriesFragment;
-
+            case 3:
+                ProfileFragment profileFragment = new ProfileFragment();
+                return profileFragment;
             case 4:
-                ProfileFragment settingsFragment = new ProfileFragment();
-                return settingsFragment;
+                TransactionFragment searchFragment = new TransactionFragment();
+                return searchFragment;
             default:
                 return new HomeFragment();
         }
@@ -108,17 +107,17 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_STORIES;
                         break;
-                    case R.id.nav_bottom_search:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_SEARCH;
-                        break;
                     case R.id.nav_bottom_categories:
-                        navItemIndex = 3;
+                        navItemIndex = 2;
                         CURRENT_TAG = TAG_CATEGORIES;
                         break;
                     case R.id.nav_bottom_profile:
-                        navItemIndex = 4;
+                        navItemIndex = 3;
                         CURRENT_TAG = TAG_PROFILE;
+                        break;
+                    case R.id.nav_bottom_transaction:
+                        navItemIndex = 4;
+                        CURRENT_TAG = TAG_TRANSACTION;
                         break;
                     default:
                         navItemIndex = 0;

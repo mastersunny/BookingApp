@@ -22,6 +22,6 @@
         app:itemBackground="@color/white"
         app:itemIconTint="@color/bottom_navigation_background"
         app:itemTextColor="@color/bottom_navigation_background"
-        app:menu="@menu/navigation" />
+        app:menu="@menu/menu_bottom_navigation" />
 
 </android.support.design.widget.CoordinatorLayout>

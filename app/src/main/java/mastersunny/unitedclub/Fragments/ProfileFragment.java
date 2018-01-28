@@ -39,9 +39,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
     public String TAG = "MostUsedFragment";
     private Activity mActivity;
     private View view;
-    private RecyclerView transaction_details_rv;
-    private ArrayList<TransactionDTO> transactionDTOS;
-    private UserTransactionAdapter transactionAdapter;
     private Toolbar toolbar;
 
     @Override
@@ -55,7 +52,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.profile_fragment_layout, container, false);
-            transactionDTOS = new ArrayList<>();
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profile");
@@ -82,24 +78,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
 
     private void initLayout() {
         toolbar = view.findViewById(R.id.toolbar);
-        for (int i = 5; i < 30; i++) {
-            TransactionDTO transactionDTO = new TransactionDTO();
-            StoreDTO storeDTO = new StoreDTO();
-            if (i % 2 == 0) {
-                storeDTO.setStoreName("Paytm");
-            } else {
-                storeDTO.setStoreName("Amazon");
-            }
-            transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
-            transactionDTO.setPaidAmount(10000);
-            transactionDTO.setDueAmount(i);
-            transactionDTOS.add(transactionDTO);
-        }
-        transaction_details_rv = view.findViewById(R.id.transaction_details_rv);
-        transaction_details_rv.setHasFixedSize(true);
-        transaction_details_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        transactionAdapter = new UserTransactionAdapter(mActivity, transactionDTOS);
-        transaction_details_rv.setAdapter(transactionAdapter);
     }
 
     @Override

@@ -11,10 +11,10 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/stores" />
 
-    <item
-        android:id="@+id/nav_bottom_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="@string/search" />
+    <!--<item-->
+    <!--android:id="@+id/nav_bottom_search"-->
+    <!--android:icon="@drawable/ic_search_black_24dp"-->
+    <!--android:title="@string/search" />-->
 
     <item
         android:id="@+id/nav_bottom_categories"
@@ -25,5 +25,10 @@
         android:id="@+id/nav_bottom_profile"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/profile" />
+
+    <item
+        android:id="@+id/nav_bottom_transaction"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/transaction" />
 
 </menu>

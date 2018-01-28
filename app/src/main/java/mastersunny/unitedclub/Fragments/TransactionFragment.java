@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,7 +22,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.SearchActivity;
+import mastersunny.unitedclub.Adapter.UserTransactionAdapter;
 import mastersunny.unitedclub.Model.MoviesResponse;
+import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,12 +35,15 @@ import retrofit2.Response;
  * Created by ASUS on 1/23/2018.
  */
 
-public class SearchFragment extends Fragment implements View.OnClickListener, Callback<MoviesResponse> {
+public class TransactionFragment extends Fragment implements View.OnClickListener, Callback<MoviesResponse> {
 
     private Activity mActivity;
     private View view;
-    public String TAG = "SearchFragment";
+    public String TAG = "TransactionFragment";
     private Toolbar toolbar;
+    private RecyclerView transaction_details_rv;
+    private ArrayList<TransactionDTO> transactionDTOS;
+    private UserTransactionAdapter transactionAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -47,7 +55,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ca
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.activity_search, container, false);
+            view = inflater.inflate(R.layout.transaction_fragment_layout, container, false);
+            transactionDTOS = new ArrayList<>();
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -64,6 +73,24 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ca
 
     private void initLayout() {
         toolbar = view.findViewById(R.id.toolbar);
+        for (int i = 5; i < 30; i++) {
+            TransactionDTO transactionDTO = new TransactionDTO();
+            StoreDTO storeDTO = new StoreDTO();
+            if (i % 2 == 0) {
+                storeDTO.setStoreName("Paytm");
+            } else {
+                storeDTO.setStoreName("Amazon");
+            }
+            transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
+            transactionDTO.setPaidAmount(10000);
+            transactionDTO.setDueAmount(i);
+            transactionDTOS.add(transactionDTO);
+        }
+        transaction_details_rv = view.findViewById(R.id.transaction_details_rv);
+        transaction_details_rv.setHasFixedSize(true);
+        transaction_details_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
+        transactionAdapter = new UserTransactionAdapter(mActivity, transactionDTOS);
+        transaction_details_rv.setAdapter(transactionAdapter);
     }
 
     @Override

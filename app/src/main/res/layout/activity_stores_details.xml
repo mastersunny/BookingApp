@@ -133,13 +133,13 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
 
     <!--<android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+        android:id="@menu_bottom_navigationtion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         android:background="@color/colorPrimary"
-        app:menu="@menu/navigation" />-->
+        app:menu="@mmenu_bottom_navigationtion" />-->
 
 </android.support.design.widget.CoordinatorLayout>
