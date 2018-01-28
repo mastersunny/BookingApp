@@ -1,7 +1,6 @@
 package mastersunny.unitedclub.Adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.StoresDetailsActivity;
-import mastersunny.unitedclub.Model.PopularDTO;
+import mastersunny.unitedclub.Model.OfferCategory;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 
@@ -19,14 +18,14 @@ import mastersunny.unitedclub.R;
  * Created by sunnychowdhury on 1/19/18.
  */
 
-public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVerticalAdapter.MainHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MainHolder> {
 
-    private ArrayList<StoreDTO> storeDTOS;
+    private ArrayList<OfferCategory> offerCategories;
     private Activity mActivity;
 
-    public PopularVerticalAdapter(Activity mActivity, ArrayList<StoreDTO> storeDTOS) {
+    public CategoryAdapter(Activity mActivity, ArrayList<OfferCategory> offerCategories) {
         this.mActivity = mActivity;
-        this.storeDTOS = storeDTOS;
+        this.offerCategories = offerCategories;
     }
 
     @Override
@@ -37,10 +36,10 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
 
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
-        if (storeDTOS != null) {
-            final StoreDTO storeDTO = storeDTOS.get(position);
-            holder.store_name.setText(storeDTO.getStoreName());
-            holder.total_offer.setText(storeDTO.getTotalOffer() + " Offers");
+        if (offerCategories != null) {
+            final OfferCategory offerCategory = offerCategories.get(position);
+            holder.store_name.setText(offerCategory.getCategoryName());
+            holder.total_offer.setText(offerCategory.getTotalOffer() + " Offers");
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -52,7 +51,7 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
 
     @Override
     public int getItemCount() {
-        return storeDTOS == null ? 0 : storeDTOS.size();
+        return offerCategories == null ? 0 : offerCategories.size();
     }
 
     public static class MainHolder extends RecyclerView.ViewHolder {

@@ -11,6 +11,8 @@ public class OfferCategory {
     private int categoryId;
     @SerializedName("category_name")
     private String categoryName;
+    @SerializedName("total_offer")
+    private int totalOffer;
 
     public int getCategoryId() {
         return categoryId;
@@ -28,11 +30,20 @@ public class OfferCategory {
         this.categoryName = categoryName;
     }
 
+    public int getTotalOffer() {
+        return totalOffer;
+    }
+
+    public void setTotalOffer(int totalOffer) {
+        this.totalOffer = totalOffer;
+    }
+
     @Override
     public String toString() {
         return "OfferCategory{" +
                 "categoryId=" + categoryId +
                 ", categoryName='" + categoryName + '\'' +
+                ", totalOffer=" + totalOffer +
                 '}';
     }
 }

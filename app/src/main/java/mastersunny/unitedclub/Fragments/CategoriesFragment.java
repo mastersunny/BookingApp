@@ -105,8 +105,8 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
         if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new PopularStoreFragment(), "Popular");
-            pagerAdapter.addFragment(new PopularStoreFragment(), "All");
+            pagerAdapter.addFragment(new PopularCategoriesFragment(), "Popular");
+            pagerAdapter.addFragment(new AllCategoriesFragment(), "All");
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
             String[] titles = savedInstanceState.getStringArray("titles");
@@ -116,6 +116,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
         }
 
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
