@@ -25,7 +25,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:background="@color/colorPrimary"
+                    android:background="#30404f"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_20"
                         android:maxLines="2"
-                        android:text="dsafuhadsihfiasdhfiahsdifhiasdhfiusadhfihasdifhiasdhfisadhfiashdfihdsaifhdsiafhiasdhfiasdhfiasdhfasdhfidsuahfiusadhfiasdhfiasdhfdsaf"
+                        android:text="You will get 50% off on this product"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_size_16" />
                 </LinearLayout>
@@ -69,6 +69,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
+                android:layout_marginTop="@dimen/margin_20"
                 android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin">
 
@@ -111,15 +112,16 @@
                 android:inputType="numberDecimal"
                 android:maxLines="1"
                 android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/input_register"
                 android:textColorHint="@color/input_register_hint" />
 
             <Button
                 android:id="@+id/submit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:layout_marginTop="@dimen/margin_20"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimary"
                 android:text="Submit"
                 android:textColor="@android:color/white" />
 

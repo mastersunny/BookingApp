@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import mastersunny.unitedclub.Activity.ItemDetailsActivity;
 import mastersunny.unitedclub.Activity.StoresDetailsActivity;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
@@ -45,12 +46,14 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
 //            final StoreOfferDTO storeOfferDTO = storeOfferDTOS.get(position);
 //
 //            holder.store_offer.setText(storeOfferDTO.getOffer());
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                }
-//            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    ItemDetailsActivity.start(mActivity, null);
+
+                }
+            });
         }
     }
 

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
@@ -102,6 +103,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
     }
 
     private void submitPurchase() {
+        Toast.makeText(this, "You have submitted your purchases", Toast.LENGTH_SHORT).show();
         double amount = 0;
         try {
             amount = Double.valueOf(total_amount.getText().toString().trim());
