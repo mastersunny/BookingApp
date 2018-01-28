@@ -2,15 +2,14 @@ package mastersunny.unitedclub.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +19,7 @@ import java.util.List;
 
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
+import mastersunny.unitedclub.Model.OfferCategory;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
@@ -30,14 +30,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StoresDetailsActivity extends AppCompatActivity {
+public class CategoryDetailsActivity extends AppCompatActivity {
 
     public String TAG = "StoresDetailsActivity";
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Toolbar toolbar;
     private PagerAdapter pagerAdapter;
-    private StoreDTO storeDTO;
+    private OfferCategory offerCategory;
     private TextView total_offer;
     private ImageView store_image;
     private TextView store_name;
@@ -45,15 +45,15 @@ public class StoresDetailsActivity extends AppCompatActivity {
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private RecyclerView offer_rv;
 
-    public static void start(Context context, StoreDTO storeDTO) {
-        Intent intent = new Intent(context, StoresDetailsActivity.class);
+    public static void start(Context context, OfferCategory offerCategory) {
+        Intent intent = new Intent(context, CategoryDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.STORE_DTO, storeDTO);
+        intent.putExtra(Constants.STORE_DTO, offerCategory);
         context.startActivity(intent);
     }
 
     private void getIntentData() {
-        storeDTO = (StoreDTO) getIntent().getSerializableExtra(Constants.STORE_DTO);
+        offerCategory = (OfferCategory) getIntent().getSerializableExtra(Constants.STORE_DTO);
     }
 
     @Override
@@ -68,16 +68,16 @@ public class StoresDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        setUpTabLayout(savedInstanceState);
-        if (storeDTO != null && storeDTO.getStoreId() > 0) {
+        if (offerCategory != null && offerCategory.getCategoryId() > 0) {
             updateStoreInfo();
             loadData();
         }
     }
 
     private void updateStoreInfo() {
-        store_name.setText(storeDTO.getStoreName());
-        String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getBannerImg();
-        Constants.loadImage(this, imgUrl, store_image);
+        store_name.setText(offerCategory.getCategoryName());
+//        String imgUrl = ApiClient.BASE_URL + "" + offerCategory.getBannerImg();
+//        Constants.loadImage(this, imgUrl, store_image);
     }
 
 
@@ -98,7 +98,7 @@ public class StoresDetailsActivity extends AppCompatActivity {
         offer_rv = findViewById(R.id.offer_rv);
         offer_rv.setHasFixedSize(true);
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapter(StoresDetailsActivity.this, storeOfferDTOS);
+        storeOfferAdapter = new StoreOfferAdapter(CategoryDetailsActivity.this, storeOfferDTOS);
         offer_rv.setAdapter(storeOfferAdapter);
     }
 
