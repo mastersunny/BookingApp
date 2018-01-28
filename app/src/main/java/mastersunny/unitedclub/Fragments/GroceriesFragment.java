@@ -34,7 +34,7 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
     private Activity mActivity;
     private View view;
     private RecyclerView most_used_rv;
-    private ArrayList<StoreOfferDTO> movies;
+    private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private StoreOfferAdapter storeOfferAdapter;
 
     @Override
@@ -48,7 +48,7 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_layout, container, false);
-            movies = new ArrayList<>();
+            storeOfferDTOS = new ArrayList<>();
             initLayout();
             loaData();
         }
@@ -61,8 +61,8 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
 //            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
 //            return;
 //        }
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
+//        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+//        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
     }
 
     @Override
@@ -72,9 +72,15 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
     }
 
     private void initLayout() {
+        for (int i = 0; i < 10; i++) {
+            StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
+            storeOfferDTOS.add(storeOfferDTO);
+        }
+
         most_used_rv = view.findViewById(R.id.most_used_rv);
+        most_used_rv.setHasFixedSize(true);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapter(mActivity, movies);
+        storeOfferAdapter = new StoreOfferAdapter(mActivity, storeOfferDTOS);
         most_used_rv.setAdapter(storeOfferAdapter);
     }
 

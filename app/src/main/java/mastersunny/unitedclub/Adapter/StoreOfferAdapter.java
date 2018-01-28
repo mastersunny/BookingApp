@@ -42,15 +42,15 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
         if (storeOfferDTOS != null) {
-            final StoreOfferDTO storeOfferDTO = storeOfferDTOS.get(position);
-
-            holder.store_offer.setText(storeOfferDTO.getOffer());
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
+//            final StoreOfferDTO storeOfferDTO = storeOfferDTOS.get(position);
+//
+//            holder.store_offer.setText(storeOfferDTO.getOffer());
+//            holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                }
+//            });
         }
     }
 
