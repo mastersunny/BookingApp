@@ -67,6 +67,7 @@ public class StoresDetailsActivity extends AppCompatActivity {
         initLayout();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 //        setUpTabLayout(savedInstanceState);
         if (storeDTO != null && storeDTO.getStoreId() > 0) {
             updateStoreInfo();
