@@ -41,16 +41,16 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHold
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
         if (storeDTOS != null) {
-//            final StoreDTO storeDTO = storeDTOS.get(position);
+            final StoreDTO storeDTO = storeDTOS.get(position);
 //            String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getBannerImg();
 //            Log.d(TAG, " " + imgUrl + " " + storeDTO.getStoreId() + " " + storeDTO.getStoreName());
 //            Constants.loadImage(mActivity, imgUrl, holder.store_image);
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    StoresDetailsActivity.start(view.getContext(), storeDTO);
-//                }
-//            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    StoresDetailsActivity.start(view.getContext(), storeDTO);
+                }
+            });
         }
     }
 

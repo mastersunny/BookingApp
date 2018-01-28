@@ -90,6 +90,11 @@ public class StoresDetailsActivity extends AppCompatActivity {
         store_image = findViewById(R.id.store_image);
         store_name = findViewById(R.id.store_name);
 
+        for (int i = 0; i < 10; i++) {
+            StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
+            storeOfferDTOS.add(storeOfferDTO);
+        }
+
         offer_rv = findViewById(R.id.offer_rv);
         offer_rv.setHasFixedSize(true);
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
