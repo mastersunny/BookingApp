@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -14,10 +17,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
@@ -26,22 +33,21 @@ import mastersunny.unitedclub.utils.Constants;
 
 public class ItemDetailsActivity extends AppCompatActivity implements CommonInerface, View.OnClickListener {
 
-    private Toolbar toolbar;
     public String TAG = "ItemDetailsActivity";
     private long storeId;
     private ImageView store_image;
     private TextView store_name, offer_details;
-    private RelativeLayout offer_details_layout;
     private EditText total_amount;
     private Button submit;
     private StoreOfferDTO storeOfferDTO;
-    private AppBarLayout appBarLayout;
+    private NestedScrollView nestedScrollView;
+    private RelativeLayout hidden_toolbar, normal_toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_item_details);
+        setContentView(R.layout.activity_item_details2);
 
         getIntentData();
         initLayout();
@@ -63,28 +69,29 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
 
     @Override
     public void initLayout() {
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        normal_toolbar = findViewById(R.id.normal_toolbar);
+        normal_toolbar.setOnClickListener(this);
+        hidden_toolbar = findViewById(R.id.hidden_toolbar);
+        hidden_toolbar.setOnClickListener(this);
         store_image = findViewById(R.id.store_image);
         store_name = findViewById(R.id.store_name);
-        offer_details_layout = findViewById(R.id.offer_details_layout);
         total_amount = findViewById(R.id.total_amount);
         offer_details = findViewById(R.id.offer_details);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(this);
 
-        appBarLayout = findViewById(R.id.appBarLayout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        nestedScrollView = findViewById(R.id.nestedScrollView);
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
-                if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
-                    toolbar.setBackgroundColor(getResources().getColor(R.color.item_details));
-                } else {
-                    toolbar.setBackgroundColor(getResources().getColor(R.color.transparent_100));
+                if (scrollY > oldScrollY) {
+                    Log.i(TAG, "Scroll DOWN");
+                    hidden_toolbar.setVisibility(View.VISIBLE);
+                }
+                if (scrollY <= 100) {
+                    Log.i(TAG, "Scroll UP");
+                    hidden_toolbar.setVisibility(View.GONE);
                 }
             }
         });
@@ -112,6 +119,10 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
         switch (view.getId()) {
             case R.id.submit:
                 submitPurchase();
+                break;
+            case R.id.normal_toolbar:
+            case R.id.hidden_toolbar:
+                ItemDetailsActivity.this.finish();
                 break;
         }
     }
