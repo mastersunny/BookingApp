@@ -5,13 +5,16 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#105773"
-        android:fitsSystemWindows="true">
+        android:background="@color/item_details"
+        android:fitsSystemWindows="true"
+        android:paddingLeft="@dimen/margin_20">
 
-        <android.support.v7.widget.Toolbar
+        <RelativeLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
@@ -23,18 +26,17 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_gravity="left"
                 android:text="Amazon"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_18" />
-        </android.support.v7.widget.Toolbar>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/coupon_offer_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_10"
-            android:padding="@dimen/margin_10"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <TextView
@@ -60,9 +62,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/coupon_offer_layout"
-            android:layout_margin="@dimen/margin_20"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_10"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <ImageView
@@ -91,6 +94,26 @@
                 android:text="(Average: 4| 447 Reviews)"
                 android:textColor="@color/white"
                 android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginLeft="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_20"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/toolbar_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="left"
+                android:text="Amazon"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18" />
         </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
 

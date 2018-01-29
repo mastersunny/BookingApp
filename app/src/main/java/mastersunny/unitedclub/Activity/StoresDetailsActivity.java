@@ -2,6 +2,7 @@ package mastersunny.unitedclub.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,8 +12,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,7 +38,6 @@ public class StoresDetailsActivity extends AppCompatActivity {
     public String TAG = "StoresDetailsActivity";
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private Toolbar toolbar;
     private PagerAdapter pagerAdapter;
     private StoreDTO storeDTO;
     private TextView total_offer;
@@ -44,6 +46,8 @@ public class StoresDetailsActivity extends AppCompatActivity {
     private StoreOfferAdapter storeOfferAdapter;
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private RecyclerView offer_rv;
+    private AppBarLayout appBarLayout;
+    private RelativeLayout toolbar2;
 
     public static void start(Context context, StoreDTO storeDTO) {
         Intent intent = new Intent(context, StoresDetailsActivity.class);
@@ -65,9 +69,7 @@ public class StoresDetailsActivity extends AppCompatActivity {
         storeOfferDTOS = new ArrayList<>();
         getIntentData();
         initLayout();
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 //        setUpTabLayout(savedInstanceState);
         if (storeDTO != null && storeDTO.getStoreId() > 0) {
             updateStoreInfo();
@@ -83,7 +85,6 @@ public class StoresDetailsActivity extends AppCompatActivity {
 
 
     private void initLayout() {
-        toolbar = findViewById(R.id.toolbar);
 //        tabLayout = findViewById(R.id.tabLayout);
 //        viewPager = findViewById(R.id.viewPager);
 
@@ -101,6 +102,20 @@ public class StoresDetailsActivity extends AppCompatActivity {
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         storeOfferAdapter = new StoreOfferAdapter(StoresDetailsActivity.this, storeOfferDTOS);
         offer_rv.setAdapter(storeOfferAdapter);
+        toolbar2 = findViewById(R.id.toolbar2);
+
+        appBarLayout = findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
+                    toolbar2.setVisibility(View.VISIBLE);
+                } else {
+                    toolbar2.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     /*private void setUpTabLayout(Bundle savedInstanceState) {

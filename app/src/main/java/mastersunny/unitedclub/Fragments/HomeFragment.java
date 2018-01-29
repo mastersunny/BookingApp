@@ -3,6 +3,7 @@ package mastersunny.unitedclub.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -64,7 +65,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private PopularAdapter popularAdapter;
     private RecyclerView popular_rv;
     private ArrayList<StoreDTO> storeDTOS;
-    private TextView view_all_popular;
+    private TextView view_all_popular, popular_stories;
     private AppBarLayout appBarLayout;
 
     @Override
@@ -215,13 +216,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     private void initLayout() {
+        Typeface face = Typeface.createFromAsset(mActivity.getAssets(), "AvenirLTStd-Roman.otf");
+
         toolbar = view.findViewById(R.id.toolbar);
 //        drawerLayout = view.findViewById(R.id.drawer_layout);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
 //        navigationView = view.findViewById(R.id.nav_view);
         autoScrollViewPager = view.findViewById(R.id.autoViewPager);
+        popular_stories = view.findViewById(R.id.popular_stories);
         view_all_popular = view.findViewById(R.id.view_all_popular);
+
+
+        popular_stories.setTypeface(face);
+        view_all_popular.setTypeface(face);
+
         view_all_popular.setOnClickListener(this);
         view.findViewById(R.id.search_layout).setOnClickListener(this);
 
