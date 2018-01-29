@@ -84,7 +84,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
                 if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
                     toolbar.setBackgroundColor(getResources().getColor(R.color.item_details));
                 } else {
-                    toolbar.setBackgroundColor(getResources().getColor(R.color.black_tranparent_20));
+                    toolbar.setBackgroundColor(getResources().getColor(R.color.transparent_100));
                 }
             }
         });
