@@ -61,6 +61,7 @@
             android:layout_below="@id/image_layout"
             android:layout_marginTop="@dimen/margin_20"
             android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/margin_4"
             android:maxLines="2"
             android:text="Makemytrip Offers On Flight Tickets $100 Off ON Domestic Flights"
             android:textColor="@android:color/black" />

@@ -1,6 +1,7 @@
 package mastersunny.unitedclub.Adapter;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,10 +29,12 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
 
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private Activity mActivity;
+    Typeface face;
 
     public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS) {
         this.mActivity = mActivity;
         this.storeOfferDTOS = storeOfferDTOS;
+        face = Typeface.createFromAsset(mActivity.getAssets(), "AvenirLTStd-Light.otf");
     }
 
     @Override
@@ -46,6 +49,7 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
 //            final StoreOfferDTO storeOfferDTO = storeOfferDTOS.get(position);
 //
 //            holder.store_offer.setText(storeOfferDTO.getOffer());
+            holder.store_offer.setTypeface(face);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
