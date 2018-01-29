@@ -20,6 +20,7 @@
                 android:id="@+id/normal_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
+                android:layout_marginLeft="@dimen/margin_10"
                 android:layout_marginTop="@dimen/margin_20"
                 android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:visibility="visible">
@@ -46,14 +47,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginLeft="@dimen/margin_20"
                 android:layout_marginTop="@dimen/margin_10">
 
                 <ImageView
                     android:id="@+id/store_image"
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
                     android:layout_height="90dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/paytm" />
 
                 <TextView
@@ -72,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_20"
-                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginLeft="@dimen/margin_20"
                 android:layout_marginTop="@dimen/margin_10"
                 android:maxLines="2"
                 android:text="You will get 50% off on this product"
@@ -84,7 +85,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="@dimen/margin_30">
+                android:paddingLeft="@dimen/margin_20"
+                android:paddingRight="@dimen/margin_20"
+                android:paddingTop="@dimen/margin_30">
 
                 <EditText
                     android:id="@+id/total_amount"
