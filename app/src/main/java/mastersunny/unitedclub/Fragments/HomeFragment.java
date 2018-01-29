@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -64,6 +65,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private RecyclerView popular_rv;
     private ArrayList<StoreDTO> storeDTOS;
     private TextView view_all_popular;
+    private AppBarLayout appBarLayout;
 
     @Override
     public void onAttach(Context context) {
@@ -222,6 +224,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view_all_popular = view.findViewById(R.id.view_all_popular);
         view_all_popular.setOnClickListener(this);
         view.findViewById(R.id.search_layout).setOnClickListener(this);
+
+        appBarLayout = view.findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
+                    toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
+                } else {
+                    toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.black_tranparent_20));
+                }
+            }
+        });
 
         for (int i = 0; i < 10; i++) {
             storeDTOS.add(new StoreDTO());
