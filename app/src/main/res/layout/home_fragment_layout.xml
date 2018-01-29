@@ -92,6 +92,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
+                            android:elevation="@dimen/margin_5"
                             android:padding="@dimen/margin_10"
                             android:text="Popular Stories"
                             android:textSize="@dimen/text_size_12" />
@@ -101,6 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:elevation="@dimen/margin_5"
                             android:padding="@dimen/margin_10"
                             android:text="View All"
                             android:textColor="#006ff1"
