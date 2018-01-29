@@ -35,6 +35,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
     private EditText total_amount;
     private Button submit;
     private StoreOfferDTO storeOfferDTO;
+    private AppBarLayout appBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,19 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
         offer_details = findViewById(R.id.offer_details);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(this);
+
+        appBarLayout = findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
+                    toolbar.setBackgroundColor(getResources().getColor(R.color.item_details));
+                } else {
+                    toolbar.setBackgroundColor(getResources().getColor(R.color.black_tranparent_20));
+                }
+            }
+        });
     }
 
     @Override
