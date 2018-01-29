@@ -123,7 +123,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="@color/white"
                 android:paddingBottom="@dimen/margin_20"
                 android:paddingLeft="@dimen/margin_10"
                 android:paddingRight="@dimen/margin_10"
