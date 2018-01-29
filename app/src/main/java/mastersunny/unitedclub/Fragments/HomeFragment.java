@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private PopularAdapter popularAdapter;
     private RecyclerView popular_rv;
     private ArrayList<StoreDTO> storeDTOS;
-    private TextView view_all_popular, popular_stories;
+    private TextView view_all_popular, popular_stories, search_text;
     private AppBarLayout appBarLayout;
 
     @Override
@@ -226,8 +226,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         autoScrollViewPager = view.findViewById(R.id.autoViewPager);
         popular_stories = view.findViewById(R.id.popular_stories);
         view_all_popular = view.findViewById(R.id.view_all_popular);
+        search_text = view.findViewById(R.id.search_text);
 
-
+        search_text.setTypeface(face);
         popular_stories.setTypeface(face);
         view_all_popular.setTypeface(face);
 
@@ -242,7 +243,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
                     toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
                 } else {
-                    toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.black_tranparent_20));
+                    toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.transparent_100));
                 }
             }
         });

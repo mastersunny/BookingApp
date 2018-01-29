@@ -108,12 +108,13 @@ public class StoresDetailsActivity extends AppCompatActivity {
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                Log.d(TAG, "" + verticalOffset);
 
-                if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
-                    toolbar2.setVisibility(View.VISIBLE);
-                } else {
-                    toolbar2.setVisibility(View.GONE);
-                }
+//                if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
+//                    toolbar2.setVisibility(View.VISIBLE);
+//                } else {
+//                    toolbar2.setVisibility(View.GONE);
+//                }
             }
         });
     }
