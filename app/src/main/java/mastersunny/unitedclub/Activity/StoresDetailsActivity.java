@@ -47,7 +47,6 @@ public class StoresDetailsActivity extends AppCompatActivity {
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private RecyclerView offer_rv;
     private AppBarLayout appBarLayout;
-    private RelativeLayout toolbar2;
 
     public static void start(Context context, StoreDTO storeDTO) {
         Intent intent = new Intent(context, StoresDetailsActivity.class);
@@ -102,7 +101,6 @@ public class StoresDetailsActivity extends AppCompatActivity {
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         storeOfferAdapter = new StoreOfferAdapter(StoresDetailsActivity.this, storeOfferDTOS);
         offer_rv.setAdapter(storeOfferAdapter);
-        toolbar2 = findViewById(R.id.toolbar2);
 
         appBarLayout = findViewById(R.id.appBarLayout);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
