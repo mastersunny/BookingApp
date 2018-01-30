@@ -74,14 +74,22 @@ public class FoodFragment extends Fragment implements View.OnClickListener, Call
     }
 
     private void initLayout() {
-        for (int i = 0; i < 10; i++) {
-            storeOfferDTOS.add(new StoreOfferDTO());
-        }
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setHasFixedSize(true);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         storeOfferAdapter = new StoreOfferAdapter(mActivity, storeOfferDTOS);
         most_used_rv.setAdapter(storeOfferAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        for (int i = 0; i < 10; i++) {
+            StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
+            storeOfferDTOS.add(storeOfferDTO);
+        }
+        if (storeOfferAdapter != null)
+            storeOfferAdapter.notifyDataSetChanged();
     }
 
     @Override

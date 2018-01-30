@@ -167,7 +167,6 @@
             android:scrollbars="horizontal"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabIndicatorHeight="2dp"
-            app:tabMode="scrollable"
             app:tabPaddingEnd="0dp"
             app:tabPaddingStart="0dp"
             app:tabTextAppearance="@style/MineCustomTabText" />

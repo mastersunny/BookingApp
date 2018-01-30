@@ -160,12 +160,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
         if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new RechargeFragment(), getResources().getString(R.string.recharge));
-            pagerAdapter.addFragment(new TravelFragment(), getResources().getString(R.string.travel));
-            pagerAdapter.addFragment(new FashionFragment(), getResources().getString(R.string.fashion));
             pagerAdapter.addFragment(new FoodFragment(), getResources().getString(R.string.food));
-            pagerAdapter.addFragment(new ElectronicsFragment(), getResources().getString(R.string.electronics));
             pagerAdapter.addFragment(new GroceriesFragment(), getResources().getString(R.string.groceries));
+            pagerAdapter.addFragment(new ElectronicsFragment(), getResources().getString(R.string.electronics));
+            pagerAdapter.addFragment(new FashionFragment(), getResources().getString(R.string.fashion));
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
             String[] titles = savedInstanceState.getStringArray("titles");
