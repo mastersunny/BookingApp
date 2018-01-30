@@ -8,6 +8,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:fitsSystemWindows="true">
 
         <android.support.v7.widget.Toolbar
@@ -17,6 +18,15 @@
             android:layout_marginTop="@dimen/margin_20"
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+            <ImageView
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_chevron_left_black_24dp" />
+
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
@@ -25,8 +35,17 @@
                 android:text="Stores"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_18" />
-        </android.support.v7.widget.Toolbar>
 
+            <ImageView
+                android:id="@+id/search_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_search_normal" />
+
+        </android.support.v7.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package mastersunny.unitedclub.Activity;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import mastersunny.unitedclub.Fragments.PopularStoreFragment;
 import mastersunny.unitedclub.Model.PopularDTO;
 import mastersunny.unitedclub.R;
 
-public class StoresActivity extends AppCompatActivity {
+public class StoresActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView popular_rv;
     private PopularVerticalAdapter popularVerticalAdapter;
@@ -37,7 +39,6 @@ public class StoresActivity extends AppCompatActivity {
 
         initLayout();
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         setUpTabLayout(savedInstanceState);
 
@@ -91,11 +92,20 @@ public class StoresActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
+
+        findViewById(R.id.back_button).setOnClickListener(this);
+        findViewById(R.id.search_button).setOnClickListener(this);
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back_button:
+                StoresActivity.this.finish();
+                break;
+            case R.id.search_button:
+                startActivity(new Intent(StoresActivity.this, SearchActivity.class));
+                break;
+        }
     }
 }
