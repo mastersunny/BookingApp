@@ -33,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StoresDetailsActivity extends AppCompatActivity {
+public class StoresDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     public String TAG = "StoresDetailsActivity";
     private TabLayout tabLayout;
@@ -47,6 +47,7 @@ public class StoresDetailsActivity extends AppCompatActivity {
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private RecyclerView offer_rv;
     private AppBarLayout appBarLayout;
+    private Toolbar toolbar;
 
     public static void start(Context context, StoreDTO storeDTO) {
         Intent intent = new Intent(context, StoresDetailsActivity.class);
@@ -87,6 +88,11 @@ public class StoresDetailsActivity extends AppCompatActivity {
 //        tabLayout = findViewById(R.id.tabLayout);
 //        viewPager = findViewById(R.id.viewPager);
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        findViewById(R.id.back_button).setOnClickListener(this);
+
+
         total_offer = findViewById(R.id.total_offer);
         store_image = findViewById(R.id.store_image);
         store_name = findViewById(R.id.store_name);
@@ -101,20 +107,6 @@ public class StoresDetailsActivity extends AppCompatActivity {
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         storeOfferAdapter = new StoreOfferAdapter(StoresDetailsActivity.this, storeOfferDTOS);
         offer_rv.setAdapter(storeOfferAdapter);
-
-        appBarLayout = findViewById(R.id.appBarLayout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                Log.d(TAG, "" + verticalOffset);
-
-//                if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
-//                    toolbar2.setVisibility(View.VISIBLE);
-//                } else {
-//                    toolbar2.setVisibility(View.GONE);
-//                }
-            }
-        });
     }
 
     /*private void setUpTabLayout(Bundle savedInstanceState) {
@@ -187,5 +179,14 @@ public class StoresDetailsActivity extends AppCompatActivity {
 //
 //            }
 //        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back_button:
+                StoresDetailsActivity.this.finish();
+                break;
+        }
     }
 }
