@@ -25,6 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.asksira.loopingviewpager.LoopingPagerAdapter;
+import com.asksira.loopingviewpager.LoopingViewPager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +35,7 @@ import mastersunny.unitedclub.Activity.SignUpActivity;
 import mastersunny.unitedclub.Activity.StoresActivity;
 import mastersunny.unitedclub.Activity.SearchActivity;
 import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
+import mastersunny.unitedclub.Adapter.AutoScrollAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
@@ -60,13 +64,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ViewPager viewPager;
     private Toolbar toolbar;
     private PagerAdapter pagerAdapter;
-    private AutoPagerAdapter autoPagerAdapter;
-    private AutoScrollViewPager autoScrollViewPager;
     private PopularAdapter popularAdapter;
     private RecyclerView popular_rv;
     private ArrayList<StoreDTO> storeDTOS;
     private TextView view_all_popular, popular_stories, search_text;
     private AppBarLayout appBarLayout;
+    private LoopingViewPager loopingViewPager;
+    private LoopingPagerAdapter adapter;
 
     @Override
     public void onAttach(Context context) {
@@ -194,13 +198,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
-        autoPagerAdapter = new AutoPagerAdapter(getChildFragmentManager());
-        autoPagerAdapter.addFragment(new AutoScrollFragment(), "");
-        autoPagerAdapter.addFragment(new AutoScrollFragment2(), "");
-        autoPagerAdapter.addFragment(new AutoScrollFragment(), "");
-        autoScrollViewPager.setAdapter(autoPagerAdapter);
-        autoScrollViewPager.setOffscreenPageLimit(3);
-        autoScrollViewPager.startAutoScroll();
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        loopingViewPager = view.findViewById(R.id.autoViewPager);
+        adapter = new AutoScrollAdapter(mActivity, list, true);
+        loopingViewPager.setAdapter(adapter);
     }
 
     private Fragment getFragment(int position, Bundle savedInstanceState) {
@@ -217,11 +222,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Typeface face = Typeface.createFromAsset(mActivity.getAssets(), "AvenirLTStd-Roman.otf");
 
         toolbar = view.findViewById(R.id.toolbar);
-//        drawerLayout = view.findViewById(R.id.drawer_layout);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
-//        navigationView = view.findViewById(R.id.nav_view);
-        autoScrollViewPager = view.findViewById(R.id.autoViewPager);
         popular_stories = view.findViewById(R.id.popular_stories);
         view_all_popular = view.findViewById(R.id.view_all_popular);
         search_text = view.findViewById(R.id.search_text);
@@ -271,5 +273,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loopingViewPager.resumeAutoScroll();
+    }
+
+    @Override
+    public void onPause() {
+        loopingViewPager.pauseAutoScroll();
+        super.onPause();
     }
 }

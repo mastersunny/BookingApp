@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
             view = inflater.inflate(R.layout.profile_fragment_layout, container, false);
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profile");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
             loaData();
         }
 

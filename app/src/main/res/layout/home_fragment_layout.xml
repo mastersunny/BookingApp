@@ -29,10 +29,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <mastersunny.unitedclub.utils.AutoScrollViewPager
+                    <com.asksira.loopingviewpager.LoopingViewPager
                         android:id="@+id/autoViewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="220dp" />
+                        android:layout_height="wrap_content"
+                        app:autoScroll="true"
+                        app:isInfinite="true"
+                        app:scrollInterval="5000"
+                        app:viewpagerAspectRatio="1.5" />
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/coupon_finder_layout"
