@@ -20,4 +20,5 @@
     <color name="btn_logut_bg">#ff6861</color>
     <color name="grey">#e5e5e5</color>
     <color name="item_details">#30404f</color>
+    <color name="dark_grey">#888888</color>
 </resources>
