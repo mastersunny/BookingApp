@@ -60,23 +60,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void loadHomeFragment() {
+    private Runnable mPendingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Fragment fragment = getHomeFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+    };
 
+    private void loadHomeFragment() {
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             return;
         }
-        Runnable mPendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                Fragment fragment = getHomeFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        };
-
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
         }
@@ -117,18 +115,18 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_STORIES;
                         break;
-                    case R.id.nav_bottom_categories:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_CATEGORIES;
-                        break;
+//                    case R.id.nav_bottom_categories:
+//                        navItemIndex = 2;
+//                        CURRENT_TAG = TAG_CATEGORIES;
+//                        break;
                     case R.id.nav_bottom_profile:
                         navItemIndex = 3;
                         CURRENT_TAG = TAG_PROFILE;
                         break;
-                    case R.id.nav_bottom_transaction:
-                        navItemIndex = 4;
-                        CURRENT_TAG = TAG_TRANSACTION;
-                        break;
+//                    case R.id.nav_bottom_transaction:
+//                        navItemIndex = 4;
+//                        CURRENT_TAG = TAG_TRANSACTION;
+//                        break;
                     default:
                         navItemIndex = 0;
                 }
