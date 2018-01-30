@@ -9,6 +9,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -30,7 +31,7 @@
                     <mastersunny.unitedclub.utils.AutoScrollViewPager
                         android:id="@+id/autoViewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp" />
+                        android:layout_height="220dp" />
 
                     <RelativeLayout
                         android:id="@+id/coupon_finder_layout"
