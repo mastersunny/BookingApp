@@ -7,6 +7,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
+    public String TAG = "MainActivity";
 
 
     @Override
@@ -42,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
         mHandler = new Handler();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         setUpNavigationView();
+
+        Display mDisplay = getWindowManager().getDefaultDisplay();
+        final int width = mDisplay.getWidth();
+        final int height = mDisplay.getHeight();
+
+        Log.d(TAG, "" + width);
+        Log.d(TAG, "" + height);
 
         if (savedInstanceState == null) {
             navItemIndex = 0;
