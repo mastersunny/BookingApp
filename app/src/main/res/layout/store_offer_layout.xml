@@ -64,7 +64,8 @@
             android:lineSpacingExtra="@dimen/margin_4"
             android:maxLines="2"
             android:text="Makemytrip Offers On Flight Tickets $100 Off ON Domestic Flights"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/offer_end_date"

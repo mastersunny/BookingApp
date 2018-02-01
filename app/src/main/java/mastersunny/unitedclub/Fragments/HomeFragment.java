@@ -216,7 +216,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         String tag = "android:switcher:" + R.id.viewPager + ":" + position;
         return tag;
     }
-    
+
     private void initLayout() {
         Typeface face = Typeface.createFromAsset(mActivity.getAssets(), "AVENIRLTSTD-REGULAR.OTF");
 

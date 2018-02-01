@@ -3,7 +3,6 @@ package mastersunny.unitedclub.Adapter;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.ItemDetailsActivity;
-import mastersunny.unitedclub.Activity.StoresDetailsActivity;
-import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.utils.Constants;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
@@ -34,7 +29,7 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
     public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS) {
         this.mActivity = mActivity;
         this.storeOfferDTOS = storeOfferDTOS;
-        face = Typeface.createFromAsset(mActivity.getAssets(), "AvenirLTStd-Light.otf");
+        face = Typeface.createFromAsset(mActivity.getAssets(), "AVENIRLTSTD-MEDIUM.otf");
     }
 
     @Override
