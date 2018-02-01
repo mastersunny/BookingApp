@@ -36,24 +36,46 @@
                         app:autoScroll="true"
                         app:isInfinite="true"
                         app:scrollInterval="5000"
-                        app:viewpagerAspectRatio="1.5" />
+                        app:viewpagerAspectRatio="1.6" />
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/coupon_finder_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="130dp"
+                        android:layout_height="140dp"
                         android:layout_below="@+id/autoViewPager"
                         android:layout_margin="@dimen/margin_10"
                         android:foreground="?selectableItemBackground"
                         card_view:cardCornerRadius="@dimen/margin_2"
                         card_view:cardElevation="@dimen/margin_2">
 
-                        <ImageView
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/coupon-bg" />
+                            android:layout_height="match_parent">
 
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/coupon_bg" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_20"
+                                android:text="Scan your store and save more"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_size_16" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_margin="@dimen/margin_5"
+                                android:text="@string/tap_and_save"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_size_12" />
+                        </RelativeLayout>
                     </android.support.v7.widget.CardView>
 
                     <RelativeLayout
