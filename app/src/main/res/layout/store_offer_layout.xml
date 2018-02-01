@@ -36,7 +36,8 @@
                 android:background="@drawable/most_used_item_tag_background"
                 android:orientation="horizontal"
                 android:padding="@dimen/margin_10"
-                android:textSize="16sp">
+                android:textSize="16sp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="@dimen/margin_20"
