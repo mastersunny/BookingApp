@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private PopularAdapter popularAdapter;
     private RecyclerView popular_rv;
     private ArrayList<StoreDTO> storeDTOS;
-    private TextView view_all_popular, popular_stories, search_text;
+    private TextView view_all_popular, popular_stores, search_text;
     private AppBarLayout appBarLayout;
     private LoopingViewPager loopingViewPager;
     private LoopingPagerAdapter adapter;
@@ -216,20 +216,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         String tag = "android:switcher:" + R.id.viewPager + ":" + position;
         return tag;
     }
-
-
+    
     private void initLayout() {
-        Typeface face = Typeface.createFromAsset(mActivity.getAssets(), "AvenirLTStd-Roman.otf");
+        Typeface face = Typeface.createFromAsset(mActivity.getAssets(), "AVENIRLTSTD-REGULAR.OTF");
 
         toolbar = view.findViewById(R.id.toolbar);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
-        popular_stories = view.findViewById(R.id.popular_stories);
+        popular_stores = view.findViewById(R.id.popular_stores);
         view_all_popular = view.findViewById(R.id.view_all_popular);
         search_text = view.findViewById(R.id.search_text);
 
         search_text.setTypeface(face);
-        popular_stories.setTypeface(face);
+        popular_stores.setTypeface(face);
         view_all_popular.setTypeface(face);
 
         view_all_popular.setOnClickListener(this);
