@@ -41,6 +41,24 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHold
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
         if (storeDTOS != null) {
+            switch (position) {
+                case 0:
+                    int id1 = mActivity.getResources().getIdentifier("deli_grocery", "drawable", mActivity.getPackageName());
+                    holder.store_image.setImageResource(id1);
+                    break;
+                case 1:
+                    int id2 = mActivity.getResources().getIdentifier("indian_kitchen", "drawable", mActivity.getPackageName());
+                    holder.store_image.setImageResource(id2);
+                    break;
+                case 2:
+                    int id3 = mActivity.getResources().getIdentifier("bd_wireless", "drawable", mActivity.getPackageName());
+                    holder.store_image.setImageResource(id3);
+                    break;
+                case 3:
+                    int id4 = mActivity.getResources().getIdentifier("winzone", "drawable", mActivity.getPackageName());
+                    holder.store_image.setImageResource(id4);
+                    break;
+            }
             final StoreDTO storeDTO = storeDTOS.get(position);
 //            String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getBannerImg();
 //            Log.d(TAG, " " + imgUrl + " " + storeDTO.getStoreId() + " " + storeDTO.getStoreName());

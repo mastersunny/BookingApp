@@ -250,7 +250,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 4; i++) {
             storeDTOS.add(new StoreDTO());
         }
 
