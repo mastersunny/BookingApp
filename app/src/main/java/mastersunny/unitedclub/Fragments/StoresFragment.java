@@ -3,6 +3,7 @@ package mastersunny.unitedclub.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,7 +39,7 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
     private ViewPager viewPager;
     //    private NavigationView navigationView;
     private PagerAdapter pagerAdapter;
-    private TextView toolbar_title;
+    private TextView toolbar_title, total_popular_item, total_item;
 
     @Override
     public void onAttach(Context context) {
@@ -150,12 +151,17 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
 
 
     private void initLayout() {
+        Typeface face = Typeface.createFromAsset(mActivity.getAssets(), "AVENIRLTSTD-REGULAR.OTF");
         toolbar_title = view.findViewById(R.id.toolbar_title);
         toolbar_title.setText("Stores");
 //        drawerLayout = view.findViewById(R.id.drawer_layout);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
 //        navigationView = view.findViewById(R.id.nav_view);
+        total_popular_item = view.findViewById(R.id.total_popular_item);
+        total_popular_item.setTypeface(face);
+        total_item = view.findViewById(R.id.total_item);
+        total_item.setTypeface(face);
 
         view.findViewById(R.id.search_button).setOnClickListener(this);
     }
