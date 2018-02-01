@@ -1,14 +1,21 @@
 package mastersunny.unitedclub.utils;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import mastersunny.unitedclub.R;
 
 /**
  * Created by ASUS on 1/20/2018.
@@ -38,25 +45,23 @@ public class Constants {
     }
 
     public static void showPaymentDialog(Context context) {
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(context);
-        }
-        builder.setTitle("Payment")
-                .setMessage("Do you want to make this payment?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.payment_dialog_layout);
+        dialog.setTitle("Title...");
+
+        TextView text = (TextView) dialog.findViewById(R.id.message);
+        text.setText("Your payment has been submitted");
+
+        Button dialogButton = (Button) dialog.findViewById(R.id.ok_button);
+        // if button is clicked, close the custom dialog
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }
