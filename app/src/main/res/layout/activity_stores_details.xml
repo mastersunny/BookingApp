@@ -45,15 +45,49 @@
                         android:text="10 Offers"
                         android:textColor="@color/white" />
 
-                    <ImageView
-                        android:id="@+id/store_image"
-                        android:layout_width="100dp"
-                        android:layout_height="90dp"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/total_offer"
-                        android:layout_marginTop="@dimen/margin_10"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/paytm" />
+                        android:layout_marginTop="@dimen/margin_10">
 
+                        <ImageView
+                            android:id="@+id/store_image"
+                            android:layout_width="100dp"
+                            android:layout_height="90dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/paytm" />
+
+
+                        <LinearLayout
+                            android:id="@+id/follow_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_20"
+                            android:layout_toRightOf="@id/store_image"
+                            android:background="@drawable/follow_background">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/margin_5"
+                                android:paddingLeft="@dimen/margin_20"
+                                android:paddingRight="@dimen/margin_20"
+                                android:paddingTop="@dimen/margin_5"
+                                android:text="Follow"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
+
+                        <RatingBar
+                            android:id="@+id/ratingBar1"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/follow_layout"
+                            android:layout_marginLeft="@dimen/margin_20"
+                            android:layout_marginTop="@dimen/margin_10"
+                            android:layout_toRightOf="@+id/store_image" />
+                    </RelativeLayout>
                 </RelativeLayout>
             </FrameLayout>
 
