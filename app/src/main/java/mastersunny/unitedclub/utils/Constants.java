@@ -18,6 +18,11 @@ public class Constants {
         return face;
     }
 
+    public static Typeface getMediumFace(Context context) {
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "AVENIRLTSTD-MEDIUM.otf");
+        return face;
+    }
+
     public static final String ITEM_DTO = "item_dto";
     public static final String STORE_DTO = "store_dto";
 

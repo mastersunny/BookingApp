@@ -3,28 +3,18 @@ package mastersunny.unitedclub.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
@@ -36,7 +26,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
     public String TAG = "ItemDetailsActivity";
     private long storeId;
     private ImageView store_image;
-    private TextView store_name, offer_details;
+    private TextView store_name, offer_details, description_text, description_details;
     private EditText total_amount;
     private Button submit;
     private StoreOfferDTO storeOfferDTO;
@@ -77,8 +67,16 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
         store_name = findViewById(R.id.store_name);
         total_amount = findViewById(R.id.total_amount);
         offer_details = findViewById(R.id.offer_details);
+        description_text = findViewById(R.id.description_text);
+        description_details = findViewById(R.id.description_details);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(this);
+
+        store_name.setTypeface(Constants.getRegularFace(this));
+        offer_details.setTypeface(Constants.getRegularFace(this));
+        description_text.setTypeface(Constants.getMediumFace(this));
+        description_details.setTypeface(Constants.getMediumFace(this));
+
 
         nestedScrollView = findViewById(R.id.nestedScrollView);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {

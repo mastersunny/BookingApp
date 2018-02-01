@@ -89,37 +89,45 @@
                 android:paddingRight="@dimen/margin_20">
 
                 <TextView
+                    android:id="@+id/description_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
-                    android:text="Description" />
+                    android:text="Description"
+                    android:textColor="#2c3f51" />
 
                 <TextView
+                    android:id="@+id/description_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_20"
                     android:gravity="left"
-                    android:text="Paytm is Offering Flat Rs 10 cashback on Rs 50. Racharge sbill payment should be equal to or greater than RS 50" />
+                    android:text="Paytm is Offering Flat Rs 10 cashback on Rs 50. Racharge sbill payment should be equal to or greater than RS 50"
+                    android:textColor="#838383"
+                    android:textSize="@dimen/text_size_13" />
 
-                <EditText
-                    android:id="@+id/total_amount"
-                    android:layout_width="fill_parent"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/usernameWrapper"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_20"
-                    android:hint="Total Purchases"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1"
-                    android:padding="10dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/input_register"
-                    android:textColorHint="@color/input_register_hint" />
+                    android:textAppearance="?android:attr/textAppearanceSmall">
+
+                    <EditText
+                        android:id="@+id/total_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Amount"
+                        android:inputType="numberDecimal" />
+
+                </android.support.design.widget.TextInputLayout>
 
                 <Button
                     android:id="@+id/submit"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="@dimen/margin_20"
-                    android:background="@color/colorPrimary"
+                    android:background="#0d5ada"
                     android:text="Submit"
                     android:textColor="@android:color/white" />
             </LinearLayout>
