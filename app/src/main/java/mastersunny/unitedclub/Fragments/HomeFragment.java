@@ -261,6 +261,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         popular_rv.setAdapter(popularAdapter);
 
         view.findViewById(R.id.search_layout).setOnClickListener(this);
+        view.findViewById(R.id.coupon_finder_layout).setOnClickListener(this);
 
     }
 
@@ -272,6 +273,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.search_layout:
                 startActivity(new Intent(v.getContext(), SearchActivity.class));
+                break;
+            case R.id.coupon_finder_layout:
                 break;
         }
 

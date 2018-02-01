@@ -11,7 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".Activity.SplashActivity"
             android:screenOrientation="portrait">
@@ -24,13 +23,9 @@
         <activity
             android:name=".Activity.ItemDetailsActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity android:name=".Activity.MainActivity" />
-
         <activity android:name=".Activity.SignUpActivity" />
-
         <activity android:name=".Activity.ResetPasswordActivity" />
-
         <activity android:name=".Activity.LoginActivity" />
 
         <service android:name=".services.MyFirebaseMessagingService">
@@ -38,7 +33,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".services.FirebaseIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -50,13 +44,10 @@
             android:name=".Activity.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme" />
-
         <activity android:name=".Activity.SearchActivity" />
-
         <activity android:name=".Activity.StoresDetailsActivity" />
-
         <activity android:name=".Activity.CategoryDetailsActivity" />
-
+        <activity android:name=".Activity.BarcodeReaderActivity"></activity>
     </application>
 
 </manifest>
