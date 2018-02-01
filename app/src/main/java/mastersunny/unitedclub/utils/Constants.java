@@ -1,6 +1,7 @@
 package mastersunny.unitedclub.utils;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -11,6 +12,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
  */
 
 public class Constants {
+
+    public static Typeface getRegularFace(Context context) {
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "AVENIRLTSTD-REGULAR.OTF");
+        return face;
+    }
 
     public static final String ITEM_DTO = "item_dto";
     public static final String STORE_DTO = "store_dto";

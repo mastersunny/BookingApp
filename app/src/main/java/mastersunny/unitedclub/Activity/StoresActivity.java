@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ import mastersunny.unitedclub.Fragments.AllStoreFragment;
 import mastersunny.unitedclub.Fragments.PopularStoreFragment;
 import mastersunny.unitedclub.Model.PopularDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.utils.Constants;
 
 public class StoresActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,6 +32,8 @@ public class StoresActivity extends AppCompatActivity implements View.OnClickLis
     private ViewPager viewPager;
     private Toolbar toolbar;
     private PagerAdapter pagerAdapter;
+    private TextView toolbar_title, total_popular_item, total_item;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,12 @@ public class StoresActivity extends AppCompatActivity implements View.OnClickLis
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
+
+        total_popular_item = findViewById(R.id.total_popular_item);
+        total_popular_item.setTypeface(Constants.getRegularFace(this));
+        total_item = findViewById(R.id.total_item);
+        total_item.setTypeface(Constants.getRegularFace(this));
+
 
         findViewById(R.id.back_button).setOnClickListener(this);
         findViewById(R.id.search_button).setOnClickListener(this);
