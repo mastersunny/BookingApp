@@ -53,9 +53,9 @@
                 <ImageView
                     android:id="@+id/store_image"
                     android:layout_width="100dp"
-                    android:layout_height="90dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/paytm" />
+                    android:layout_height="80dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/deli_grocery" />
 
                 <TextView
                     android:id="@+id/store_name"
