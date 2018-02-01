@@ -33,6 +33,7 @@
                         android:id="@+id/autoViewPager"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10"
                         app:autoScroll="true"
                         app:isInfinite="true"
                         app:scrollInterval="5000"
