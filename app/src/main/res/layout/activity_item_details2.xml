@@ -86,13 +86,26 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/margin_20"
-                android:paddingRight="@dimen/margin_20"
-                android:paddingTop="@dimen/margin_30">
+                android:paddingRight="@dimen/margin_20">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:text="Description" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:gravity="left"
+                    android:text="Paytm is Offering Flat Rs 10 cashback on Rs 50. Racharge sbill payment should be equal to or greater than RS 50" />
 
                 <EditText
                     android:id="@+id/total_amount"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
                     android:hint="Total Purchases"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
