@@ -50,6 +50,7 @@
         <activity android:name=".Activity.StoresDetailsActivity" />
         <activity android:name=".Activity.CategoryDetailsActivity" />
         <activity android:name=".utils.barcode.BarcodeCaptureActivity" />
+        <activity android:name=".Activity.TransactionActivity" />
     </application>
 
 </manifest>

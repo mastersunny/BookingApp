@@ -45,7 +45,7 @@
             android:id="@+id/payment_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
             android:text="Date: 31 Dec 2017"
             android:textSize="@dimen/text_size_12" />
     </LinearLayout>

@@ -16,12 +16,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import mastersunny.unitedclub.Activity.TransactionActivity;
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Adapter.UserTransactionAdapter;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.Model.TransactionDTO;
+import mastersunny.unitedclub.Model.UserDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -78,10 +80,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
 
     private void initLayout() {
         toolbar = view.findViewById(R.id.toolbar);
+
+        view.findViewById(R.id.view_transaction).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.view_transaction:
+                TransactionActivity.start(v.getContext(), new UserDTO());
+                break;
+        }
 
     }
 

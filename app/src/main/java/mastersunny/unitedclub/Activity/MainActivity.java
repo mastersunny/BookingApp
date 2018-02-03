@@ -15,8 +15,8 @@ import android.view.WindowManager;
 
 import mastersunny.unitedclub.Fragments.CategoriesFragment;
 import mastersunny.unitedclub.Fragments.HomeFragment;
+import mastersunny.unitedclub.Fragments.PaidFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
-import mastersunny.unitedclub.Fragments.TransactionFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
 import mastersunny.unitedclub.R;
 
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 ProfileFragment profileFragment = new ProfileFragment();
                 return profileFragment;
             case 4:
-                TransactionFragment searchFragment = new TransactionFragment();
+                PaidFragment searchFragment = new PaidFragment();
                 return searchFragment;
             default:
                 return new HomeFragment();

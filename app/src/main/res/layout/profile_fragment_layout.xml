@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -47,5 +48,31 @@
         android:src="@drawable/profile_image"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|center" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/view_transaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="?android:attr/actionBarSize"
+        android:foreground="?selectableItemBackground"
+        card_view:cardCornerRadius="@dimen/margin_2"
+        card_view:cardElevation="@dimen/margin_2"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Your Transactions" />
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
 </android.support.design.widget.CoordinatorLayout>
