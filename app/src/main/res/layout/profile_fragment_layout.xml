@@ -25,11 +25,11 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
-            <ImageView
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
+                android:background="@color/item_details"
                 android:scaleType="centerCrop"
-                android:src="@drawable/profile_background"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
