@@ -45,9 +45,11 @@
     <mastersunny.unitedclub.utils.CircleImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_20"
         android:src="@drawable/profile_image"
         app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|center" />
+        app:layout_anchorGravity="left" />
 
     <ImageView
         android:id="@+id/edit_profile"
@@ -58,6 +60,175 @@
         android:layout_marginTop="?android:actionBarSize"
         android:background="?selectableItemBackground"
         android:src="@drawable/ic_edit_black_24dp" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_10"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toolbar_background"
+                android:padding="@dimen/margin_10">
+
+                <TextView
+                    android:id="@+id/first_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="First Name" />
+
+                <TextView
+                    android:id="@+id/first_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/first_name_text"
+                    android:text="Master"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="?selectableItemBackground"
+                    android:src="@drawable/ic_chevron_right_black_24dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toolbar_background"
+                android:padding="@dimen/margin_10">
+
+                <TextView
+                    android:id="@+id/last_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Last Name" />
+
+                <TextView
+                    android:id="@+id/last_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/last_name_text"
+                    android:text="Shifu"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="?selectableItemBackground"
+                    android:src="@drawable/ic_chevron_right_black_24dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toolbar_background"
+                android:padding="@dimen/margin_10">
+
+                <TextView
+                    android:id="@+id/phone_number_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Phone Number" />
+
+                <TextView
+                    android:id="@+id/phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/phone_number_text"
+                    android:text="01629121345"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="?selectableItemBackground"
+                    android:src="@drawable/ic_chevron_right_black_24dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toolbar_background"
+                android:padding="@dimen/margin_10">
+
+                <TextView
+                    android:id="@+id/email_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Email" />
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/email_text"
+                    android:text="master@gmail.com"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="?selectableItemBackground"
+                    android:src="@drawable/ic_chevron_right_black_24dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toolbar_background"
+                android:padding="@dimen/margin_10">
+
+                <TextView
+                    android:id="@+id/password_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Password" />
+
+                <TextView
+                    android:id="@+id/total_offer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/password_text"
+                    android:text="******"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="?selectableItemBackground"
+                    android:src="@drawable/ic_chevron_right_black_24dp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/view_transaction"
@@ -81,8 +252,6 @@
                 android:layout_centerVertical="true"
                 android:text="Your Transactions" />
 
-
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-
 </android.support.design.widget.CoordinatorLayout>
