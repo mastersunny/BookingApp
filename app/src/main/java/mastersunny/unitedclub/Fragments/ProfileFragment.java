@@ -82,6 +82,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
         toolbar = view.findViewById(R.id.toolbar);
 
         view.findViewById(R.id.view_transaction).setOnClickListener(this);
+        view.findViewById(R.id.edit_profile).setOnClickListener(this);
     }
 
     @Override
@@ -89,6 +90,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
         switch (v.getId()) {
             case R.id.view_transaction:
                 TransactionActivity.start(v.getContext(), new UserDTO());
+                break;
+            case R.id.edit_profile:
                 break;
         }
 
