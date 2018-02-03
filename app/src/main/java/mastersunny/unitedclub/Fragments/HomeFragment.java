@@ -220,13 +220,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         popular_stores = view.findViewById(R.id.popular_stores);
         view_all_popular = view.findViewById(R.id.view_all_popular);
         search_text = view.findViewById(R.id.search_text);
-        coupon_finder_text = view.findViewById(R.id.coupon_finder_text);
+
         progressBar = view.findViewById(R.id.progressBar);
 
         search_text.setTypeface(face);
         popular_stores.setTypeface(face);
         view_all_popular.setTypeface(face);
-        coupon_finder_text.setTypeface(face);
 
         view_all_popular.setOnClickListener(this);
         view.findViewById(R.id.search_layout).setOnClickListener(this);
