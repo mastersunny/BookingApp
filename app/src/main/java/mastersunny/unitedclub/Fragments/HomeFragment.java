@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -283,6 +284,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
                     Barcode barCode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    Log.d(TAG, "" + barCode.displayValue);
                     StoreDTO storeDTO = new StoreDTO();
                     storeDTO.setStoreName(barCode.displayValue);
                     ItemDetailsActivity.start(mActivity, storeDTO);

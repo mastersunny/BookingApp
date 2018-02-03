@@ -45,7 +45,7 @@
                         android:layout_height="140dp"
                         android:layout_below="@+id/autoViewPager"
                         android:layout_margin="@dimen/margin_10"
-                        android:foreground="?selectableItemBackground"
+                        android:foreground="@drawable/coupon_finder_bg"
                         card_view:cardCornerRadius="@dimen/margin_2"
                         card_view:cardElevation="@dimen/margin_2">
 
