@@ -196,7 +196,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         list.add(1);
         list.add(2);
         list.add(3);
-        list.add(4);
         loopingViewPager = view.findViewById(R.id.autoViewPager);
         adapter = new AutoScrollAdapter(mActivity, list, true);
         loopingViewPager.setAdapter(adapter);
