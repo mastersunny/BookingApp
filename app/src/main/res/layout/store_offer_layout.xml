@@ -17,16 +17,16 @@
         <RelativeLayout
             android:id="@+id/image_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_40">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/store_image"
                 android:layout_width="100dp"
-                android:layout_height="match_parent"
+                android:layout_height="60dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/flipcart" />
+                android:scaleType="fitXY"
+                android:src="@drawable/bd_wireless_m" />
 
             <LinearLayout
                 android:id="@+id/item_tag"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/image_layout"
-            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_10"
             android:ellipsize="end"
             android:lineSpacingExtra="@dimen/margin_4"
             android:maxLines="2"

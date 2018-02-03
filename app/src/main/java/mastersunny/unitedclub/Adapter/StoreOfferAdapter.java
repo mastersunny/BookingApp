@@ -41,6 +41,30 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
         if (storeOfferDTOS != null) {
+
+            switch (position) {
+                case 0:
+                    int id1 = mActivity.getResources().getIdentifier("bd_wireless_m", "drawable", mActivity.getPackageName());
+                    holder.store_image.setImageResource(id1);
+                    break;
+                case 1:
+                    int id4 = mActivity.getResources().getIdentifier("tax_manage_m", "drawable", mActivity.getPackageName());
+                    holder.store_image.setImageResource(id4);
+                    break;
+                case 2:
+                    int id2 = mActivity.getResources().getIdentifier("indian_kitchen", "drawable", mActivity.getPackageName());
+                    holder.store_image.setImageResource(id2);
+                    break;
+                case 3:
+                    int id3 = mActivity.getResources().getIdentifier("deli_grocery_m", "drawable", mActivity.getPackageName());
+                    holder.store_image.setImageResource(id3);
+                    break;
+                case 4:
+                    int id5 = mActivity.getResources().getIdentifier("winzone_m", "drawable", mActivity.getPackageName());
+                    holder.store_image.setImageResource(id5);
+                    break;
+            }
+
 //            final StoreOfferDTO storeOfferDTO = storeOfferDTOS.get(position);
 //
 //            holder.store_offer.setText(storeOfferDTO.getOffer());
