@@ -9,6 +9,8 @@ import com.asksira.loopingviewpager.LoopingPagerAdapter;
 
 import java.util.ArrayList;
 
+import mastersunny.unitedclub.Activity.ItemDetailsActivity;
+import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 
 /**
@@ -40,5 +42,11 @@ public class AutoScrollAdapter extends LoopingPagerAdapter<Integer> {
                 img2.setImageResource(id2);
                 break;
         }
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ItemDetailsActivity.start(view.getContext(), new StoreDTO());
+            }
+        });
     }
 }
