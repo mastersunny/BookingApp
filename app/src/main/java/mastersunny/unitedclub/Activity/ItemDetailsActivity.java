@@ -51,7 +51,6 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
         context.startActivity(intent);
     }
 
-
     @Override
     public void getIntentData() {
         storeId = getIntent().getLongExtra(Constants.STORE_DTO, 0);

@@ -18,13 +18,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asksira.loopingviewpager.LoopingPagerAdapter;
 import com.asksira.loopingviewpager.LoopingViewPager;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Activity.BarcodeReaderActivity;
+import mastersunny.unitedclub.Activity.ItemDetailsActivity;
 import mastersunny.unitedclub.Activity.StoresActivity;
 import mastersunny.unitedclub.Activity.SearchActivity;
 import mastersunny.unitedclub.Adapter.AutoScrollAdapter;
@@ -32,6 +35,7 @@ import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.utils.barcode.BarcodeCaptureActivity;
 
 
 /**
@@ -261,10 +265,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(v.getContext(), SearchActivity.class));
                 break;
             case R.id.coupon_finder_layout:
-                startActivity(new Intent(mActivity, BarcodeReaderActivity.class));
+                Intent intent = new Intent(mActivity, BarcodeCaptureActivity.class);
+                startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
                 break;
         }
 
+    }
+
+    public static final int BARCODE_READER_REQUEST_CODE = 101;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == BARCODE_READER_REQUEST_CODE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    Barcode barCode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    StoreDTO storeDTO = new StoreDTO();
+                    storeDTO.setStoreName(barCode.displayValue);
+                    ItemDetailsActivity.start(mActivity, storeDTO);
+                } else {
+                    Toast.makeText(mActivity, R.string.no_barcode_captured, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     @Override
