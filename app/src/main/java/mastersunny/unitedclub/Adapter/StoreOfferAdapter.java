@@ -29,7 +29,7 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
     public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS) {
         this.mActivity = mActivity;
         this.storeOfferDTOS = storeOfferDTOS;
-        face = Typeface.createFromAsset(mActivity.getAssets(), "AVENIRLTSTD-MEDIUM.otf");
+        face = Typeface.createFromAsset(mActivity.getAssets(), "avenirltstd_medium.otf");
     }
 
     @Override

@@ -5,22 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -29,23 +23,15 @@ import com.asksira.loopingviewpager.LoopingPagerAdapter;
 import com.asksira.loopingviewpager.LoopingViewPager;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import mastersunny.unitedclub.Activity.SignUpActivity;
+import mastersunny.unitedclub.Activity.BarcodeReaderActivity;
 import mastersunny.unitedclub.Activity.StoresActivity;
 import mastersunny.unitedclub.Activity.SearchActivity;
-import mastersunny.unitedclub.Adapter.AutoPagerAdapter;
 import mastersunny.unitedclub.Adapter.AutoScrollAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
-import mastersunny.unitedclub.utils.AutoScrollViewPager;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**
@@ -219,7 +205,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initLayout() {
-        Typeface face = Typeface.createFromAsset(mActivity.getAssets(), "AVENIRLTSTD-REGULAR.OTF");
+        Typeface face = Typeface.createFromAsset(mActivity.getAssets(), "avenirltstd_regular.otf");
 
         toolbar = view.findViewById(R.id.toolbar);
         tabLayout = view.findViewById(R.id.tabLayout);
@@ -275,6 +261,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(v.getContext(), SearchActivity.class));
                 break;
             case R.id.coupon_finder_layout:
+                startActivity(new Intent(mActivity, BarcodeReaderActivity.class));
                 break;
         }
 

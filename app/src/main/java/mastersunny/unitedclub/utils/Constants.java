@@ -2,10 +2,7 @@ package mastersunny.unitedclub.utils;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.os.Build;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -24,12 +21,12 @@ import mastersunny.unitedclub.R;
 public class Constants {
 
     public static Typeface getRegularFace(Context context) {
-        Typeface face = Typeface.createFromAsset(context.getAssets(), "AVENIRLTSTD-REGULAR.OTF");
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_regular.otf");
         return face;
     }
 
     public static Typeface getMediumFace(Context context) {
-        Typeface face = Typeface.createFromAsset(context.getAssets(), "AVENIRLTSTD-MEDIUM.otf");
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_medium.otf");
         return face;
     }
 

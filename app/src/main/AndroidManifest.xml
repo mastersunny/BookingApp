@@ -3,6 +3,8 @@
     package="mastersunny.unitedclub">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -47,7 +49,8 @@
         <activity android:name=".Activity.SearchActivity" />
         <activity android:name=".Activity.StoresDetailsActivity" />
         <activity android:name=".Activity.CategoryDetailsActivity" />
-        <activity android:name=".Activity.BarcodeReaderActivity"></activity>
+        <activity android:name=".Activity.BarcodeReaderActivity" />
+        <activity android:name=".utils.barcode.BarcodeCaptureActivity" />
     </application>
 
 </manifest>
