@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +64,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private AppBarLayout appBarLayout;
     private LoopingViewPager loopingViewPager;
     private LoopingPagerAdapter adapter;
+    private ProgressBar progressBar;
 
     @Override
     public void onAttach(Context context) {
@@ -87,7 +90,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             setUpTabLayout(savedInstanceState);
 
             loadData();
-
         }
 
         return view;
@@ -218,6 +220,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view_all_popular = view.findViewById(R.id.view_all_popular);
         search_text = view.findViewById(R.id.search_text);
         coupon_finder_text = view.findViewById(R.id.coupon_finder_text);
+        progressBar = view.findViewById(R.id.progressBar);
 
         search_text.setTypeface(face);
         popular_stores.setTypeface(face);
