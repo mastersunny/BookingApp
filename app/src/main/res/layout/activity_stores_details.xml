@@ -56,9 +56,8 @@
                             android:layout_width="100dp"
                             android:layout_height="80dp"
                             android:scaleType="fitXY"
-                            android:src="@drawable/deli_grocery" />
-
-
+                            android:src="@drawable/deli_grocery_m" />
+                        
                         <LinearLayout
                             android:id="@+id/follow_layout"
                             android:layout_width="wrap_content"

@@ -32,14 +32,19 @@ public class AutoScrollAdapter extends LoopingPagerAdapter<Integer> {
     protected void bindView(View holder, int listPosition, int viewType) {
         switch (listPosition) {
             case 0:
-                int id1 = context.getResources().getIdentifier("grocery_bg", "drawable", context.getPackageName());
+                int id1 = context.getResources().getIdentifier("deli_grocery_bg", "drawable", context.getPackageName());
                 ImageView imageView = holder.findViewById(R.id.store_image);
                 imageView.setImageResource(id1);
                 break;
             case 1:
-                int id2 = context.getResources().getIdentifier("winzone_bg", "drawable", context.getPackageName());
+                int id2 = context.getResources().getIdentifier("bd_wireless_bg", "drawable", context.getPackageName());
                 ImageView img2 = holder.findViewById(R.id.store_image);
                 img2.setImageResource(id2);
+                break;
+            case 2:
+                int id3 = context.getResources().getIdentifier("winzone_bg", "drawable", context.getPackageName());
+                ImageView img3 = holder.findViewById(R.id.store_image);
+                img3.setImageResource(id3);
                 break;
         }
         holder.setOnClickListener(new View.OnClickListener() {

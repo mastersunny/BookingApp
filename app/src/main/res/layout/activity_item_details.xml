@@ -55,7 +55,7 @@
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/deli_grocery" />
+                    android:src="@drawable/deli_grocery_m" />
 
                 <TextView
                     android:id="@+id/store_name"
