@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import mastersunny.unitedclub.Model.UserDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +46,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
     private Activity mActivity;
     private View view;
     private Toolbar toolbar;
+    private TextView first_name, last_name, phone_number, email, password;
 
     @Override
     public void onAttach(Context context) {
@@ -82,6 +85,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
 
     private void initLayout() {
         toolbar = view.findViewById(R.id.toolbar);
+
+        first_name = view.findViewById(R.id.first_name);
+        first_name.setTypeface(Constants.getMediumFace(mActivity));
+        last_name = view.findViewById(R.id.last_name);
+        last_name.setTypeface(Constants.getMediumFace(mActivity));
+        phone_number = view.findViewById(R.id.phone_number);
+        phone_number.setTypeface(Constants.getMediumFace(mActivity));
+        email = view.findViewById(R.id.email);
+        email.setTypeface(Constants.getMediumFace(mActivity));
+        password = view.findViewById(R.id.password);
+        password.setTypeface(Constants.getMediumFace(mActivity));
 
         view.findViewById(R.id.view_transaction).setOnClickListener(this);
         view.findViewById(R.id.edit_profile).setOnClickListener(this);

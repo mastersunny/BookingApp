@@ -14,6 +14,7 @@ import mastersunny.unitedclub.Activity.StoresDetailsActivity;
 import mastersunny.unitedclub.Model.PopularDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.utils.Constants;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
@@ -40,7 +41,9 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
         if (storeDTOS != null) {
             final StoreDTO storeDTO = storeDTOS.get(position);
             holder.store_name.setText(storeDTO.getStoreName());
+            holder.store_name.setTypeface(Constants.getMediumFace(mActivity));
             holder.total_offer.setText(storeDTO.getTotalOffer() + " Offers");
+            holder.total_offer.setTypeface(Constants.getMediumFace(mActivity));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
