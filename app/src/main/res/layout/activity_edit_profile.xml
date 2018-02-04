@@ -4,30 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_horizontal_margin"
     tools:context="mastersunny.unitedclub.Activity.EditProfileActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:layout_marginTop="@dimen/margin_20"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <ImageView
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_marginRight="@dimen/margin_20"
-            android:background="?selectableItemBackground"
-            android:src="@drawable/ic_chevron_left_black_24dp" />
+            android:layout_gravity="left"
+            android:layout_marginTop="@dimen/margin_20">
+
+            <ImageView
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_chevron_left_black_24dp" />
+        </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="parent"
@@ -60,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
             android:background="@color/colorAccent"
-            android:text="@string/btn_login"
+            android:text="UPDATE"
             android:textColor="@android:color/white" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
