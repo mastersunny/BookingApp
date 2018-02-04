@@ -247,7 +247,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
 
         popular_rv = view.findViewById(R.id.popular_rv);
-        popular_rv.setNestedScrollingEnabled(false);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         popularAdapter = new PopularAdapter(mActivity, storeDTOS);
         popular_rv.setAdapter(popularAdapter);
