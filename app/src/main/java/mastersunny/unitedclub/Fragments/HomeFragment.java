@@ -267,8 +267,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(v.getContext(), SearchActivity.class));
                 break;
             case R.id.coupon_finder_layout:
-//                Intent intent = new Intent(mActivity, BarcodeCaptureActivity.class);
-//                startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+                Intent intent = new Intent(mActivity, BarcodeCaptureActivity.class);
+                startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
                 break;
         }
 
