@@ -78,8 +78,7 @@
                 android:id="@+id/first_name_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/toolbar_background"
-                android:foreground="?selectableItemBackground"
+                android:background="@drawable/profile_item_bg"
                 android:padding="@dimen/margin_10">
 
                 <TextView
@@ -110,8 +109,7 @@
                 android:id="@+id/last_name_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/toolbar_background"
-                android:foreground="?selectableItemBackground"
+                android:background="@drawable/profile_item_bg"
                 android:padding="@dimen/margin_10">
 
                 <TextView
@@ -142,8 +140,7 @@
                 android:id="@+id/phone_number_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/toolbar_background"
-                android:foreground="?selectableItemBackground"
+                android:background="@drawable/profile_item_bg"
                 android:padding="@dimen/margin_10">
 
                 <TextView
@@ -174,8 +171,7 @@
                 android:id="@+id/email_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/toolbar_background"
-                android:foreground="?selectableItemBackground"
+                android:background="@drawable/profile_item_bg"
                 android:padding="@dimen/margin_10">
 
                 <TextView
@@ -206,8 +202,7 @@
                 android:id="@+id/password_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/toolbar_background"
-                android:foreground="?selectableItemBackground"
+                android:background="@drawable/profile_item_bg"
                 android:padding="@dimen/margin_10">
 
                 <TextView
