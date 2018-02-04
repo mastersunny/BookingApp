@@ -222,17 +222,17 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
         Log.e(TAG, "Permission not granted: results len = " + grantResults.length +
                 " Result code = " + (grantResults.length > 0 ? grantResults[0] : "(empty)"));
 
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                finish();
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("UnitedClub")
-                .setMessage(R.string.no_camera_permission)
-                .setPositiveButton(R.string.ok, listener)
-                .show();
+//        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int id) {
+//                finish();
+//            }
+//        };
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("UnitedClub")
+//                .setMessage(R.string.no_camera_permission)
+//                .setPositiveButton(R.string.ok, listener)
+//                .show();
     }
 
     /**
