@@ -66,27 +66,17 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
         boolean autoFocus = true;
         boolean useFlash = false;
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Multitracker sample")
-                    .setMessage(R.string.permission_camera_rationale)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            finish();
-                        }
-                    })
-                    .show();
-            return;
-        }
-
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
         int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        if (rc == PackageManager.PERMISSION_GRANTED) {
-            createCameraSource(autoFocus, useFlash);
+        if (rc != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                Toast.makeText(this, "Camera permision needed for scanning", Toast.LENGTH_SHORT).show();
+            }
+            final String[] permissions = new String[]{Manifest.permission.CAMERA};
+            ActivityCompat.requestPermissions(this, permissions, RC_HANDLE_CAMERA_PERM);
         } else {
-            requestCameraPermission();
+            createCameraSource(autoFocus, useFlash);
         }
     }
 
@@ -97,18 +87,6 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
             intent.putExtra(BarcodeObject, barcode);
             setResult(CommonStatusCodes.SUCCESS, intent);
             finish();
-        }
-    }
-
-    // Handles the requesting of the camera permission.
-    private void requestCameraPermission() {
-        Log.w(TAG, "Camera permission is not granted. Requesting permission");
-
-        final String[] permissions = new String[]{Manifest.permission.CAMERA};
-
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.CAMERA)) {
-            ActivityCompat.requestPermissions(this, permissions, RC_HANDLE_CAMERA_PERM);
         }
     }
 
@@ -251,7 +229,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Multitracker sample")
+        builder.setTitle("UnitedClub")
                 .setMessage(R.string.no_camera_permission)
                 .setPositiveButton(R.string.ok, listener)
                 .show();

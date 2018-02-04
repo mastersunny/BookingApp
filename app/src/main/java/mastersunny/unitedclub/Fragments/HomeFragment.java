@@ -241,7 +241,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
                     loopingViewPager.pauseAutoScroll();
                 } else {
-                    loopingViewPager.resumeAutoScroll();
                     toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.transparent_100));
                 }
             }
