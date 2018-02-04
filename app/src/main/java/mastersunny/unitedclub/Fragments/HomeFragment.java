@@ -234,9 +234,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
+                if (verticalOffset == 0) {
+                    loopingViewPager.resumeAutoScroll();
+                }
                 if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
                     toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
+                    loopingViewPager.pauseAutoScroll();
                 } else {
+                    loopingViewPager.resumeAutoScroll();
                     toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.transparent_100));
                 }
             }
