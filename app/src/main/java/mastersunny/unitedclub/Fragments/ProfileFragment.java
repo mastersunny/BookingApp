@@ -12,10 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import mastersunny.unitedclub.Activity.EditProfileActivity;
 import mastersunny.unitedclub.Activity.TransactionActivity;
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Adapter.UserTransactionAdapter;
@@ -83,6 +85,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
 
         view.findViewById(R.id.view_transaction).setOnClickListener(this);
         view.findViewById(R.id.edit_profile).setOnClickListener(this);
+        LinearLayout linearLayout = view.findViewById(R.id.profile_info_layout);
+        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+            View view = linearLayout.getChildAt(i);
+            view.setOnClickListener(this);
+        }
     }
 
     @Override
@@ -92,6 +99,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
                 TransactionActivity.start(v.getContext(), new UserDTO());
                 break;
             case R.id.edit_profile:
+                break;
+            case R.id.first_name_layout:
+                EditProfileActivity.start(v.getContext(), "First Name", "Doe");
+                break;
+            case R.id.last_name_layout:
+                EditProfileActivity.start(v.getContext(), "Last Name", "Doe");
+                break;
+            case R.id.phone_number_layout:
+                EditProfileActivity.start(v.getContext(), "Phone Number", "01728923792");
+                break;
+            case R.id.email_layout:
+                EditProfileActivity.start(v.getContext(), "Email", "Doe@gmail.com");
+                break;
+            case R.id.password_layout:
+                EditProfileActivity.start(v.getContext(), "Enter a new password", "Doe");
                 break;
         }
 
