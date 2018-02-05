@@ -1,41 +1,28 @@
 package mastersunny.unitedclub.Fragments;
 
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Activity.SearchActivity;
 import mastersunny.unitedclub.Adapter.UserTransactionAdapter;
-import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.R;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by ASUS on 1/23/2018.
  */
 
-public class PaidFragment extends Fragment implements View.OnClickListener, Callback<MoviesResponse> {
+public class PaidFragment extends Fragment implements View.OnClickListener {
 
     private Activity mActivity;
     private View view;
@@ -91,16 +78,6 @@ public class PaidFragment extends Fragment implements View.OnClickListener, Call
 
     @Override
     public void onClick(View view) {
-
-    }
-
-    @Override
-    public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-
-    }
-
-    @Override
-    public void onFailure(Call<MoviesResponse> call, Throwable t) {
 
     }
 }

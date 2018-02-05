@@ -10,18 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Adapter.PopularVerticalAdapter;
-import mastersunny.unitedclub.Model.Movie;
 import mastersunny.unitedclub.Model.MoviesResponse;
-import mastersunny.unitedclub.Model.PopularDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,7 +26,7 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class AllStoreFragment extends Fragment implements View.OnClickListener, Callback<MoviesResponse> {
+public class AllStoreFragment extends Fragment implements View.OnClickListener {
 
     public String TAG = "PopularStoreFragment";
     private Activity mActivity;
@@ -75,6 +70,17 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void initLayout() {
+        for (int i = 5; i < 15; i++) {
+            StoreDTO storeDTO = new StoreDTO();
+            if (i % 2 == 1) {
+                storeDTO.setStoreName("MakeMyTrip");
+            } else {
+                storeDTO.setStoreName("Paytm");
+            }
+            storeDTO.setTotalOffer(i * 10);
+            storeDTOS.add(storeDTO);
+            popularVerticalAdapter.notifyDataSetChanged();
+        }
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
@@ -85,37 +91,10 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onResume() {
         super.onResume();
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 5; i < 15; i++) {
-                    StoreDTO storeDTO = new StoreDTO();
-                    if (i % 2 == 1) {
-                        storeDTO.setStoreName("MakeMyTrip");
-                    } else {
-                        storeDTO.setStoreName("Paytm");
-                    }
-                    storeDTO.setTotalOffer(i * 10);
-                    storeDTOS.add(storeDTO);
-                }
-            }
-        });
     }
 
     @Override
     public void onClick(View v) {
-
-    }
-
-
-    @Override
-    public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-//        movies.addAll(response.body().getResults());
-//        popularVerticalAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onFailure(Call<MoviesResponse> call, Throwable t) {
 
     }
 }

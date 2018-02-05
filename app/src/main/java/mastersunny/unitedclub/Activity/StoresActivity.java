@@ -1,38 +1,29 @@
 package mastersunny.unitedclub.Activity;
 
 import android.content.Intent;
-import android.support.design.widget.NavigationView;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import mastersunny.unitedclub.Adapter.PagerAdapter;
-import mastersunny.unitedclub.Adapter.PopularVerticalAdapter;
 import mastersunny.unitedclub.Fragments.AllStoreFragment;
 import mastersunny.unitedclub.Fragments.PopularStoreFragment;
-import mastersunny.unitedclub.Model.PopularDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 
 public class StoresActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private RecyclerView popular_rv;
-    private PopularVerticalAdapter popularVerticalAdapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Toolbar toolbar;
     private PagerAdapter pagerAdapter;
-    private TextView toolbar_title, total_popular_item, total_item;
+    private TextView total_popular_item, total_item;
 
 
     @Override
@@ -45,7 +36,6 @@ public class StoresActivity extends AppCompatActivity implements View.OnClickLis
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         setUpTabLayout(savedInstanceState);
-
     }
 
     private void setUpTabLayout(Bundle savedInstanceState) {

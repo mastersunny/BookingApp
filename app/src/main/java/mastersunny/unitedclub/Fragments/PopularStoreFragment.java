@@ -12,23 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import mastersunny.unitedclub.Adapter.PopularVerticalAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class PopularStoreFragment extends Fragment implements View.OnClickListener, Callback<List<StoreDTO>> {
+public class PopularStoreFragment extends Fragment implements View.OnClickListener {
 
     public String TAG = "PopularStoreFragment";
     private Activity mActivity;
@@ -72,6 +66,17 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     }
 
     private void initLayout() {
+        for (int i = 5; i < 15; i++) {
+            StoreDTO storeDTO = new StoreDTO();
+            if (i % 2 == 1) {
+                storeDTO.setStoreName("MakeMyTrip");
+            } else {
+                storeDTO.setStoreName("Paytm");
+            }
+            storeDTO.setTotalOffer(i * 10);
+            storeDTOS.add(storeDTO);
+            popularVerticalAdapter.notifyDataSetChanged();
+        }
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
@@ -82,21 +87,6 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 5; i < 15; i++) {
-                    StoreDTO storeDTO = new StoreDTO();
-                    if (i % 2 == 1) {
-                        storeDTO.setStoreName("MakeMyTrip");
-                    } else {
-                        storeDTO.setStoreName("Paytm");
-                    }
-                    storeDTO.setTotalOffer(i * 10);
-                    storeDTOS.add(storeDTO);
-                }
-            }
-        });
     }
 
     @Override
@@ -104,13 +94,4 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
 
     }
 
-    @Override
-    public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
-
-    }
-
-    @Override
-    public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
-
-    }
 }
