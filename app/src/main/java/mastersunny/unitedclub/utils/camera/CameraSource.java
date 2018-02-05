@@ -324,7 +324,7 @@ public class CameraSource {
      * @throws IOException if the camera's preview texture or display could not be initialized
      */
     @RequiresPermission(Manifest.permission.CAMERA)
-    public CameraSource start() throws IOException {
+    public CameraSource start() throws IOException, SecurityException {
         synchronized (mCameraLock) {
             if (mCamera != null) {
                 return this;
@@ -358,7 +358,7 @@ public class CameraSource {
      * @throws IOException if the supplied surface holder could not be used as the preview display
      */
     @RequiresPermission(Manifest.permission.CAMERA)
-    public CameraSource start(SurfaceHolder surfaceHolder) throws IOException {
+    public CameraSource start(SurfaceHolder surfaceHolder) throws IOException, SecurityException {
         synchronized (mCameraLock) {
             if (mCamera != null) {
                 return this;
