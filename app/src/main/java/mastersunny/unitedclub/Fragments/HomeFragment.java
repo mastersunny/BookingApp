@@ -305,9 +305,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 autoScrollList.add(3);
 
                 adapter.notifyDataSetChanged();
+                loopingViewPager.resumeAutoScroll();
             }
         });
-        loopingViewPager.resumeAutoScroll();
     }
 
     @Override
