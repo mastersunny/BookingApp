@@ -66,6 +66,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LoopingViewPager loopingViewPager;
     private LoopingPagerAdapter adapter;
     private ProgressBar progressBar;
+    private ArrayList<Integer> autoScrollList;
 
     @Override
     public void onAttach(Context context) {
@@ -192,12 +193,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
+        autoScrollList = new ArrayList<>();
         loopingViewPager = view.findViewById(R.id.autoViewPager);
-        adapter = new AutoScrollAdapter(mActivity, list, true);
+        adapter = new AutoScrollAdapter(mActivity, autoScrollList, true);
         loopingViewPager.setAdapter(adapter);
     }
 
@@ -245,10 +243,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
-
-        for (int i = 0; i < 5; i++) {
-            storeDTOS.add(new StoreDTO());
-        }
 
         popular_rv = view.findViewById(R.id.popular_rv);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
@@ -299,6 +293,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 5; i++) {
+                    storeDTOS.add(new StoreDTO());
+                }
+
+                autoScrollList.add(1);
+                autoScrollList.add(2);
+                autoScrollList.add(3);
+
+                adapter.notifyDataSetChanged();
+            }
+        });
         loopingViewPager.resumeAutoScroll();
     }
 

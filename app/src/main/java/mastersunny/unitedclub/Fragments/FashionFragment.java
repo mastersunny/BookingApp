@@ -84,12 +84,17 @@ public class FashionFragment extends Fragment implements View.OnClickListener, C
     @Override
     public void onResume() {
         super.onResume();
-        for (int i = 0; i < 10; i++) {
-            StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
-            storeOfferDTOS.add(storeOfferDTO);
-        }
-        if (storeOfferAdapter != null)
-            storeOfferAdapter.notifyDataSetChanged();
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10; i++) {
+                    StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
+                    storeOfferDTOS.add(storeOfferDTO);
+                }
+                if (storeOfferAdapter != null)
+                    storeOfferAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
