@@ -45,11 +45,9 @@
     <mastersunny.unitedclub.utils.CircleImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="@dimen/margin_20"
-        android:layout_marginTop="@dimen/margin_20"
         android:src="@drawable/profile_image"
         app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="left" />
+        app:layout_anchorGravity="center" />
 
     <ImageView
         android:id="@+id/edit_profile"
