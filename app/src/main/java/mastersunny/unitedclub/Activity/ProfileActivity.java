@@ -3,6 +3,7 @@ package mastersunny.unitedclub.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_profile);
 
         initLayout();
@@ -40,6 +42,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             View view = linearLayout.getChildAt(i);
             view.setOnClickListener(this);
         }
+
+        findViewById(R.id.back_button).setOnClickListener(this);
     }
 
     @Override
@@ -61,6 +65,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.password_layout:
                 EditProfileActivity.start(v.getContext(), "Enter a new password", "Doe");
+                break;
+            case R.id.back_button:
+                ProfileActivity.this.finish();
                 break;
         }
     }

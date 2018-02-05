@@ -59,6 +59,16 @@
         android:background="?selectableItemBackground"
         android:src="@drawable/ic_edit_black_24dp" />
 
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_30"
+        android:background="?selectableItemBackground"
+        android:src="@drawable/ic_chevron_left_black_24dp" />
+
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
