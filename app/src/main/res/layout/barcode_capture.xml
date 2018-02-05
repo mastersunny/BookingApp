@@ -9,6 +9,8 @@
     <mastersunny.unitedclub.utils.camera.CameraSourcePreview
         android:id="@+id/preview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent">
+
+
+    </mastersunny.unitedclub.utils.camera.CameraSourcePreview>
 </LinearLayout>
