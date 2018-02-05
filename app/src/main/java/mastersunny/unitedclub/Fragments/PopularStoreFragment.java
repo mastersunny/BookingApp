@@ -72,21 +72,31 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     }
 
     private void initLayout() {
-        for (int i = 5; i < 15; i++) {
-            StoreDTO storeDTO = new StoreDTO();
-            if (i % 2 == 1) {
-                storeDTO.setStoreName("MakeMyTrip");
-            } else {
-                storeDTO.setStoreName("Paytm");
-            }
-            storeDTO.setTotalOffer(i * 10);
-            storeDTOS.add(storeDTO);
-        }
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         popularVerticalAdapter = new PopularVerticalAdapter(mActivity, storeDTOS);
         popular_rv.setAdapter(popularVerticalAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 5; i < 15; i++) {
+                    StoreDTO storeDTO = new StoreDTO();
+                    if (i % 2 == 1) {
+                        storeDTO.setStoreName("MakeMyTrip");
+                    } else {
+                        storeDTO.setStoreName("Paytm");
+                    }
+                    storeDTO.setTotalOffer(i * 10);
+                    storeDTOS.add(storeDTO);
+                }
+            }
+        });
     }
 
     @Override

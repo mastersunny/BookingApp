@@ -35,10 +35,8 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
 
     private Activity mActivity;
     private View view;
-    //    private DrawerLayout drawerLayout;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    //    private NavigationView navigationView;
     private PagerAdapter pagerAdapter;
     private TextView toolbar_title, total_popular_item, total_item;
 
@@ -48,62 +46,17 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
         mActivity = getActivity();
     }
 
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setHasOptionsMenu(true);
-//    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.stores_fragment_layout, container, false);
             initLayout();
-//            setUpNavigationView();
             setUpTabLayout(savedInstanceState);
         }
 
         return view;
     }
-
-    /*private void setUpNavigationView() {
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        break;
-                    case R.id.nav_grab:
-                        break;
-                    case R.id.nav_share:
-                        break;
-                    case R.id.nav_settings:
-                        break;
-                    case R.id.nav_sign:
-//                        if (user != null) {
-//                            auth.signOut();
-//                        } else {
-//                            startActivity(new Intent(MainActivity.this, SignUpActivity.class));
-//                        }
-                }
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
-
-//        if (user == null)
-//            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signin));
-//        else
-//            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signout));
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(mActivity, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
-
-
-    }*/
 
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
@@ -154,15 +107,13 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
     private void initLayout() {
         toolbar_title = view.findViewById(R.id.toolbar_title);
         toolbar_title.setText("Stores");
-//        drawerLayout = view.findViewById(R.id.drawer_layout);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
-//        navigationView = view.findViewById(R.id.nav_view);
         total_popular_item = view.findViewById(R.id.total_popular_item);
         total_popular_item.setTypeface(Constants.getRegularFace(mActivity));
         total_item = view.findViewById(R.id.total_item);
         total_item.setTypeface(Constants.getRegularFace(mActivity));
-
+        
         view.findViewById(R.id.search_button).setOnClickListener(this);
     }
 
