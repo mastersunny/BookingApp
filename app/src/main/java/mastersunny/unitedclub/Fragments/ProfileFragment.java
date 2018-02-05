@@ -2,6 +2,7 @@ package mastersunny.unitedclub.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.EditProfileActivity;
+import mastersunny.unitedclub.Activity.ProfileActivity;
 import mastersunny.unitedclub.Activity.TransactionActivity;
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Adapter.UserTransactionAdapter;
@@ -40,13 +42,14 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class ProfileFragment extends Fragment implements View.OnClickListener, Callback<MoviesResponse> {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public String TAG = "MostUsedFragment";
     private Activity mActivity;
     private View view;
-    private Toolbar toolbar;
-    private TextView first_name, last_name, phone_number, email, password;
+    private RecyclerView transaction_rv;
+    private UserTransactionAdapter transactionAdapter;
+    private ArrayList<TransactionDTO> transactionDTOS;
 
     @Override
     public void onAttach(Context context) {
@@ -59,22 +62,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.profile_fragment_layout, container, false);
+            transactionDTOS = new ArrayList<>();
             initLayout();
-            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-            loaData();
         }
 
         return view;
-    }
-
-    private void loaData() {
-//        if (ApiClient.API_KEY.isEmpty()) {
-//            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-//        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
     }
 
     @Override
@@ -84,63 +76,34 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, C
     }
 
     private void initLayout() {
-        toolbar = view.findViewById(R.id.toolbar);
-
-        first_name = view.findViewById(R.id.first_name);
-        first_name.setTypeface(Constants.getMediumFace(mActivity));
-        last_name = view.findViewById(R.id.last_name);
-        last_name.setTypeface(Constants.getMediumFace(mActivity));
-        phone_number = view.findViewById(R.id.phone_number);
-        phone_number.setTypeface(Constants.getMediumFace(mActivity));
-        email = view.findViewById(R.id.email);
-        email.setTypeface(Constants.getMediumFace(mActivity));
-        password = view.findViewById(R.id.password);
-        password.setTypeface(Constants.getMediumFace(mActivity));
-
-        view.findViewById(R.id.view_transaction).setOnClickListener(this);
         view.findViewById(R.id.edit_profile).setOnClickListener(this);
-        LinearLayout linearLayout = view.findViewById(R.id.profile_info_layout);
-        for (int i = 0; i < linearLayout.getChildCount(); i++) {
-            View view = linearLayout.getChildAt(i);
-            view.setOnClickListener(this);
+
+        for (int i = 5; i < 30; i++) {
+            TransactionDTO transactionDTO = new TransactionDTO();
+            StoreDTO storeDTO = new StoreDTO();
+            if (i % 2 == 0) {
+                storeDTO.setStoreName("Paytm");
+            } else {
+                storeDTO.setStoreName("Amazon");
+            }
+            transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
+            transactionDTO.setPaidAmount(10000);
+            transactionDTO.setDueAmount(i);
+            transactionDTOS.add(transactionDTO);
         }
+        transaction_rv = view.findViewById(R.id.transaction_rv);
+        transaction_rv.setHasFixedSize(true);
+        transaction_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
+        transactionAdapter = new UserTransactionAdapter(mActivity, transactionDTOS);
+        transaction_rv.setAdapter(transactionAdapter);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.view_transaction:
-                TransactionActivity.start(v.getContext(), new UserDTO());
-                break;
             case R.id.edit_profile:
-                break;
-            case R.id.first_name_layout:
-                EditProfileActivity.start(v.getContext(), "First Name", "Doe");
-                break;
-            case R.id.last_name_layout:
-                EditProfileActivity.start(v.getContext(), "Last Name", "Doe");
-                break;
-            case R.id.phone_number_layout:
-                EditProfileActivity.start(v.getContext(), "Phone Number", "01728923792");
-                break;
-            case R.id.email_layout:
-                EditProfileActivity.start(v.getContext(), "Email", "Doe@gmail.com");
-                break;
-            case R.id.password_layout:
-                EditProfileActivity.start(v.getContext(), "Enter a new password", "Doe");
+                startActivity(new Intent(mActivity, ProfileActivity.class));
                 break;
         }
-
-    }
-
-
-    @Override
-    public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-
-    }
-
-    @Override
-    public void onFailure(Call<MoviesResponse> call, Throwable t) {
-
     }
 }

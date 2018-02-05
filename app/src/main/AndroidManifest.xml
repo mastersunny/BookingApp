@@ -84,7 +84,14 @@
             android:name=".Activity.TransactionActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.EditProfileActivity"></activity>
+        <activity android:name=".Activity.EditProfileActivity" />
+        <activity android:name=".Activity.ProfileActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
