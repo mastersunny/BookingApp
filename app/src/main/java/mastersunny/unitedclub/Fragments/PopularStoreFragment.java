@@ -3,6 +3,7 @@ package mastersunny.unitedclub.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     private ArrayList<StoreDTO> storeDTOS;
     private RecyclerView popular_rv;
     private PopularVerticalAdapter popularVerticalAdapter;
+    Handler handler = new Handler();
 
     @Override
     public void onAttach(Context context) {
@@ -45,6 +47,22 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
             storeDTOS = new ArrayList<>();
             initLayout();
             loaData();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 5; i < 15; i++) {
+                        StoreDTO storeDTO = new StoreDTO();
+                        if (i % 2 == 1) {
+                            storeDTO.setStoreName("MakeMyTrip");
+                        } else {
+                            storeDTO.setStoreName("Paytm");
+                        }
+                        storeDTO.setTotalOffer(i * 10);
+                        storeDTOS.add(storeDTO);
+                    }
+                    popularVerticalAdapter.notifyDataSetChanged();
+                }
+            }, 500);
         }
 
         return view;
@@ -66,16 +84,6 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     }
 
     private void initLayout() {
-        for (int i = 5; i < 15; i++) {
-            StoreDTO storeDTO = new StoreDTO();
-            if (i % 2 == 1) {
-                storeDTO.setStoreName("MakeMyTrip");
-            } else {
-                storeDTO.setStoreName("Paytm");
-            }
-            storeDTO.setTotalOffer(i * 10);
-            storeDTOS.add(storeDTO);
-        }
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
@@ -93,4 +101,9 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
 
     }
 
+    @Override
+    public void onDestroy() {
+        handler.removeCallbacksAndMessages(null);
+        super.onDestroy();
+    }
 }
