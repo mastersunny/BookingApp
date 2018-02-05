@@ -193,7 +193,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
+
         autoScrollList = new ArrayList<>();
+        autoScrollList.add(1);
+        autoScrollList.add(2);
+        autoScrollList.add(3);
         loopingViewPager = view.findViewById(R.id.autoViewPager);
         adapter = new AutoScrollAdapter(mActivity, autoScrollList, true);
         loopingViewPager.setAdapter(adapter);
@@ -300,9 +304,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     storeDTOS.add(new StoreDTO());
                 }
 
-                autoScrollList.add(1);
-                autoScrollList.add(2);
-                autoScrollList.add(3);
+
+                adapter.notifyDataSetChanged();
 
                 adapter.notifyDataSetChanged();
                 loopingViewPager.resumeAutoScroll();
