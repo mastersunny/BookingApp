@@ -57,7 +57,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="View All" />
+            android:text="View All"
+            android:textColor="#006ff1" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
