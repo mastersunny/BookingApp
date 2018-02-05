@@ -31,7 +31,6 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     private ArrayList<StoreDTO> storeDTOS;
     private RecyclerView popular_rv;
     private PopularVerticalAdapter popularVerticalAdapter;
-    Handler handler = new Handler();
 
     @Override
     public void onAttach(Context context) {
@@ -47,22 +46,6 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
             storeDTOS = new ArrayList<>();
             initLayout();
             loaData();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i = 5; i < 15; i++) {
-                        StoreDTO storeDTO = new StoreDTO();
-                        if (i % 2 == 1) {
-                            storeDTO.setStoreName("MakeMyTrip");
-                        } else {
-                            storeDTO.setStoreName("Paytm");
-                        }
-                        storeDTO.setTotalOffer(i * 10);
-                        storeDTOS.add(storeDTO);
-                    }
-                    popularVerticalAdapter.notifyDataSetChanged();
-                }
-            }, 500);
         }
 
         return view;
@@ -94,6 +77,23 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 5; i < 15; i++) {
+                    StoreDTO storeDTO = new StoreDTO();
+                    if (i % 2 == 1) {
+                        storeDTO.setStoreName("MakeMyTrip");
+                    } else {
+                        storeDTO.setStoreName("Paytm");
+                    }
+                    storeDTO.setTotalOffer(i * 10);
+                    storeDTOS.add(storeDTO);
+                }
+                if (popularVerticalAdapter != null)
+                    popularVerticalAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -103,7 +103,6 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onDestroy() {
-        handler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
 }

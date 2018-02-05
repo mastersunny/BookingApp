@@ -50,22 +50,6 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener {
             storeDTOS = new ArrayList<>();
             initLayout();
             loaData();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i = 5; i < 15; i++) {
-                        StoreDTO storeDTO = new StoreDTO();
-                        if (i % 2 == 1) {
-                            storeDTO.setStoreName("MakeMyTrip");
-                        } else {
-                            storeDTO.setStoreName("Paytm");
-                        }
-                        storeDTO.setTotalOffer(i * 10);
-                        storeDTOS.add(storeDTO);
-                    }
-                    popularVerticalAdapter.notifyDataSetChanged();
-                }
-            }, 500);
         }
 
         return view;
@@ -94,11 +78,26 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener {
         popular_rv.setAdapter(popularVerticalAdapter);
     }
 
-    Handler handler = new Handler();
-
     @Override
     public void onResume() {
         super.onResume();
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 5; i < 15; i++) {
+                    StoreDTO storeDTO = new StoreDTO();
+                    if (i % 2 == 1) {
+                        storeDTO.setStoreName("MakeMyTrip");
+                    } else {
+                        storeDTO.setStoreName("Paytm");
+                    }
+                    storeDTO.setTotalOffer(i * 10);
+                    storeDTOS.add(storeDTO);
+                }
+                if (popularVerticalAdapter != null)
+                    popularVerticalAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -108,7 +107,6 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onDestroy() {
-        handler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
 }
