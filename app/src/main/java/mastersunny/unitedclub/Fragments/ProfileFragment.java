@@ -78,24 +78,36 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void initLayout() {
         view.findViewById(R.id.edit_profile).setOnClickListener(this);
 
-        for (int i = 5; i < 30; i++) {
-            TransactionDTO transactionDTO = new TransactionDTO();
-            StoreDTO storeDTO = new StoreDTO();
-            if (i % 2 == 0) {
-                storeDTO.setStoreName("Paytm");
-            } else {
-                storeDTO.setStoreName("Amazon");
-            }
-            transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
-            transactionDTO.setPaidAmount(10000);
-            transactionDTO.setDueAmount(i);
-            transactionDTOS.add(transactionDTO);
-        }
         transaction_rv = view.findViewById(R.id.transaction_rv);
         transaction_rv.setHasFixedSize(true);
         transaction_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         transactionAdapter = new UserTransactionAdapter(mActivity, transactionDTOS);
         transaction_rv.setAdapter(transactionAdapter);
+
+        view.findViewById(R.id.view_all_transaction).setOnClickListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 5; i < 30; i++) {
+                    TransactionDTO transactionDTO = new TransactionDTO();
+                    StoreDTO storeDTO = new StoreDTO();
+                    if (i % 2 == 0) {
+                        storeDTO.setStoreName("Paytm");
+                    } else {
+                        storeDTO.setStoreName("Amazon");
+                    }
+                    transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
+                    transactionDTO.setPaidAmount(10000);
+                    transactionDTO.setDueAmount(i);
+                    transactionDTOS.add(transactionDTO);
+                }
+            }
+        });
     }
 
     @Override
@@ -103,6 +115,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.edit_profile:
                 startActivity(new Intent(mActivity, ProfileActivity.class));
+                break;
+            case R.id.view_all_transaction:
+                TransactionActivity.start(v.getContext(), new UserDTO());
                 break;
         }
     }
