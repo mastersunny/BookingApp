@@ -75,7 +75,6 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
             }
             storeDTO.setTotalOffer(i * 10);
             storeDTOS.add(storeDTO);
-            popularVerticalAdapter.notifyDataSetChanged();
         }
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
