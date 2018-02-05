@@ -33,8 +33,8 @@ public class AutoScrollAdapter extends LoopingPagerAdapter<Integer> {
         switch (listPosition) {
             case 0:
                 int id1 = context.getResources().getIdentifier("deli_grocery_bg", "drawable", context.getPackageName());
-                ImageView imageView = holder.findViewById(R.id.store_image);
-                imageView.setImageResource(id1);
+                ImageView img1 = holder.findViewById(R.id.store_image);
+                img1.setImageResource(id1);
                 break;
             case 1:
                 int id2 = context.getResources().getIdentifier("bd_wireless_bg", "drawable", context.getPackageName());
