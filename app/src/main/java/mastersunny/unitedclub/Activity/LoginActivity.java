@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import mastersunny.unitedclub.Model.UserDTO;
 import mastersunny.unitedclub.R;
 
 /**
@@ -62,8 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(mainIntent);
+                TransactionActivity.start(v.getContext(), new UserDTO());
                 finish();
             }
         });
