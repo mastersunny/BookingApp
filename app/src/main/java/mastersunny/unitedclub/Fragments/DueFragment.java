@@ -5,21 +5,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Adapter.UserTransactionAdapter;
+import mastersunny.unitedclub.Adapter.TransactionAdapter;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.TransactionDTO;
@@ -40,7 +35,7 @@ public class DueFragment extends Fragment implements View.OnClickListener, Callb
     private Toolbar toolbar;
     private RecyclerView transaction_details_rv;
     private ArrayList<TransactionDTO> transactionDTOS;
-    private UserTransactionAdapter transactionAdapter;
+    private TransactionAdapter transactionAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -84,7 +79,7 @@ public class DueFragment extends Fragment implements View.OnClickListener, Callb
         transaction_details_rv = view.findViewById(R.id.transaction_details_rv);
         transaction_details_rv.setHasFixedSize(true);
         transaction_details_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        transactionAdapter = new UserTransactionAdapter(mActivity, transactionDTOS);
+        transactionAdapter = new TransactionAdapter(mActivity, transactionDTOS);
         transaction_details_rv.setAdapter(transactionAdapter);
     }
 

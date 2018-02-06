@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Adapter.UserTransactionAdapter;
+import mastersunny.unitedclub.Adapter.TransactionAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.R;
@@ -29,7 +29,7 @@ public class PaidFragment extends Fragment implements View.OnClickListener {
     public String TAG = "PaidFragment";
     private RecyclerView transaction_details_rv;
     private ArrayList<TransactionDTO> transactionDTOS;
-    private UserTransactionAdapter transactionAdapter;
+    private TransactionAdapter transactionAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -72,7 +72,7 @@ public class PaidFragment extends Fragment implements View.OnClickListener {
         transaction_details_rv = view.findViewById(R.id.transaction_details_rv);
         transaction_details_rv.setHasFixedSize(true);
         transaction_details_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        transactionAdapter = new UserTransactionAdapter(mActivity, transactionDTOS);
+        transactionAdapter = new TransactionAdapter(mActivity, transactionDTOS);
         transaction_details_rv.setAdapter(transactionAdapter);
     }
 

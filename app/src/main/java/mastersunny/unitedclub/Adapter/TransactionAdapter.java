@@ -5,12 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.R;
 
@@ -18,13 +16,13 @@ import mastersunny.unitedclub.R;
  * Created by sunnychowdhury on 1/19/18.
  */
 
-public class UserTransactionAdapter extends RecyclerView.Adapter<UserTransactionAdapter.MainHolder> {
-    private String TAG = "UserTransactionAdapter";
+public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.MainHolder> {
+    private String TAG = "TransactionAdapter";
 
     private ArrayList<TransactionDTO> transactionDTOS;
     private Activity mActivity;
 
-    public UserTransactionAdapter(Activity mActivity, ArrayList<TransactionDTO> transactionDTOS) {
+    public TransactionAdapter(Activity mActivity, ArrayList<TransactionDTO> transactionDTOS) {
         this.mActivity = mActivity;
         this.transactionDTOS = transactionDTOS;
     }

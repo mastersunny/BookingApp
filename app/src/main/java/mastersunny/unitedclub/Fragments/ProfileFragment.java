@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.ProfileActivity;
 import mastersunny.unitedclub.Activity.TransactionActivity;
-import mastersunny.unitedclub.Adapter.UserTransactionAdapter;
+import mastersunny.unitedclub.Adapter.TransactionAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.Model.UserDTO;
@@ -33,7 +33,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Activity mActivity;
     private View view;
     private RecyclerView transaction_rv;
-    private UserTransactionAdapter transactionAdapter;
+    private TransactionAdapter transactionAdapter;
     private ArrayList<TransactionDTO> transactionDTOS;
 
     @Override
@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         transaction_rv = view.findViewById(R.id.transaction_rv);
         transaction_rv.setHasFixedSize(true);
         transaction_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        transactionAdapter = new UserTransactionAdapter(mActivity, transactionDTOS);
+        transactionAdapter = new TransactionAdapter(mActivity, transactionDTOS);
         transaction_rv.setAdapter(transactionAdapter);
 
         view.findViewById(R.id.view_all_transaction).setOnClickListener(this);
