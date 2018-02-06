@@ -9,44 +9,62 @@
     card_view:cardElevation="@dimen/margin_2"
     card_view:cardUseCompatPadding="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/margin_10">
 
-        <TextView
-            android:id="@+id/store_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MekeMyTrip" />
+        <ImageView
+            android:id="@+id/store_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/deli_grocery_m" />
 
         <TextView
-            android:id="@+id/paid_amount"
+            android:id="@+id/offer_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_toRightOf="@+id/store_image"
             android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Paid: 1000"
-            android:textColor="@android:color/black" />
+            android:maxLines="4"
+            android:text="This offer has a description of 100.This offer has a description of 100. This offer has a description of 100" />
+
+        <LinearLayout
+            android:id="@+id/offer_date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/store_image"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/offer_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="10th Jan 2018 at 06:19 PM"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="$20"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/due_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Due: 20"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/payment_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
-            android:text="Date: 31 Dec 2017"
-            android:textSize="@dimen/text_size_12" />
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/offer_date_layout"
+            android:paddingTop="@dimen/margin_5"
+            android:text="Paid"
+            android:textColor="#006ff1" />
+    </RelativeLayout>
 </android.support.v7.widget.CardView>

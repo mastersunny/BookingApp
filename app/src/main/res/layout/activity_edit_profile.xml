@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mastersunny.unitedclub.Activity.EditProfileActivity">
+    tools:context="mastersunny.unitedclub.Activity.ChangePasswordActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -38,14 +38,49 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/input_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="First Name" />
+            android:text="Current Password" />
 
         <EditText
-            android:id="@+id/input_value"
+            android:id="@+id/current_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/margin_10"
+            android:inputType="textPassword"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="New Password" />
+
+        <EditText
+            android:id="@+id/new_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/margin_10"
+            android:inputType="textPassword"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="Confirm New Password" />
+
+        <EditText
+            android:id="@+id/confirm_new_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -62,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
             android:background="@color/colorAccent"
-            android:text="UPDATE"
+            android:text="Change Password"
             android:textColor="@android:color/white" />
     </LinearLayout>
 </RelativeLayout>

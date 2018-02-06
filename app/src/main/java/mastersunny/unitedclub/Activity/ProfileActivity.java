@@ -1,5 +1,6 @@
 package mastersunny.unitedclub.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,8 +35,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         phone_number.setTypeface(Constants.getMediumFace(this));
         email = findViewById(R.id.email);
         email.setTypeface(Constants.getMediumFace(this));
-        password = findViewById(R.id.password);
-        password.setTypeface(Constants.getMediumFace(this));
 
         LinearLayout linearLayout = findViewById(R.id.profile_info_layout);
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
@@ -44,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         findViewById(R.id.back_button).setOnClickListener(this);
+        findViewById(R.id.change_password).setOnClickListener(this);
     }
 
     @Override
@@ -51,23 +51,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.edit_profile:
                 break;
-            case R.id.first_name_layout:
-                EditProfileActivity.start(v.getContext(), "First Name", "Doe");
-                break;
-            case R.id.last_name_layout:
-                EditProfileActivity.start(v.getContext(), "Last Name", "Doe");
-                break;
-            case R.id.phone_number_layout:
-                EditProfileActivity.start(v.getContext(), "Phone Number", "01728923792");
-                break;
-            case R.id.email_layout:
-                EditProfileActivity.start(v.getContext(), "Email", "Doe@gmail.com");
-                break;
-            case R.id.password_layout:
-                EditProfileActivity.start(v.getContext(), "Enter a new password", "Doe");
-                break;
             case R.id.back_button:
                 ProfileActivity.this.finish();
+                break;
+            case R.id.change_password:
+                startActivity(new Intent(ProfileActivity.this, ChangePasswordActivity.class));
                 break;
         }
     }

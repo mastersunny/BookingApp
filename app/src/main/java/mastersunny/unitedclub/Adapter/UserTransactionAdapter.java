@@ -38,10 +38,10 @@ public class UserTransactionAdapter extends RecyclerView.Adapter<UserTransaction
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
         if (transactionDTOS != null) {
-            TransactionDTO transactionDTO = transactionDTOS.get(position);
-            holder.store_name.setText(transactionDTO.getStoreOfferDTO().getStoreDTO().getStoreName());
-            holder.paid_amount.setText("Paid: " + transactionDTO.getPaidAmount() + "");
-            holder.due_amount.setText("Due: " + transactionDTO.getDueAmount() + "");
+//            TransactionDTO transactionDTO = transactionDTOS.get(position);
+//            holder.store_name.setText(transactionDTO.getStoreOfferDTO().getStoreDTO().getStoreName());
+//            holder.paid_amount.setText("Paid: " + transactionDTO.getPaidAmount() + "");
+//            holder.due_amount.setText("Due: " + transactionDTO.getDueAmount() + "");
 //            final StoreOfferDTO storeOfferDTO = storeOfferDTOS.get(position);
 //
 //            holder.store_offer.setText(storeOfferDTO.getOffer());
@@ -68,10 +68,10 @@ public class UserTransactionAdapter extends RecyclerView.Adapter<UserTransaction
 
         public MainHolder(View itemView) {
             super(itemView);
-            store_name = itemView.findViewById(R.id.store_name);
-            paid_amount = itemView.findViewById(R.id.paid_amount);
-            due_amount = itemView.findViewById(R.id.due_amount);
-            payment_date = itemView.findViewById(R.id.payment_date);
+//            store_name = itemView.findViewById(R.id.store_name);
+//            paid_amount = itemView.findViewById(R.id.paid_amount);
+//            due_amount = itemView.findViewById(R.id.due_amount);
+//            payment_date = itemView.findViewById(R.id.payment_date);
         }
     }
 }
