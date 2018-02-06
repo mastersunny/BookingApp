@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,8 @@ import mastersunny.unitedclub.utils.Constants;
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView first_name, last_name, phone_number, email, password;
+    private ImageView change_cover_image;
+    public static final int PICK_IMAGE = 1;
 
 
     @Override
@@ -34,6 +37,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         phone_number.setTypeface(Constants.getMediumFace(this));
         email = findViewById(R.id.email);
         email.setTypeface(Constants.getMediumFace(this));
+        change_cover_image = findViewById(R.id.change_cover_image);
+        change_cover_image.setOnClickListener(this);
 
         LinearLayout linearLayout = findViewById(R.id.profile_info_layout);
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
@@ -56,6 +61,18 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             case R.id.change_password:
                 startActivity(new Intent(EditProfileActivity.this, ChangePasswordActivity.class));
                 break;
+            case R.id.change_cover_image:
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_IMAGE) {
+            //TODO: action
         }
     }
 }
