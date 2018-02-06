@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.utils.Constants;
 
 /**
  * Created by ASUS on 1/21/2018.
@@ -54,7 +55,17 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                int userType = 2;
+                Intent mainIntent = null;
+                switch (userType) {
+                    case Constants.USER_TYPE_CLIENT:
+                        mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        break;
+                    case Constants.USER_TYPE_MERCHANT:
+                        break;
+                    case Constants.USER_TYPE_ADMIN:
+                        break;
+                }
                 startActivity(mainIntent);
                 finish();
             }

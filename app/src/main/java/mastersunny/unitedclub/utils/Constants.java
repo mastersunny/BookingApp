@@ -20,6 +20,10 @@ import mastersunny.unitedclub.R;
 
 public class Constants {
 
+    public static final int USER_TYPE_CLIENT = 1;
+    public static final int USER_TYPE_MERCHANT = 2;
+    public static final int USER_TYPE_ADMIN = 3;
+
     public static Typeface getRegularFace(Context context) {
         Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_regular.otf");
         return face;
