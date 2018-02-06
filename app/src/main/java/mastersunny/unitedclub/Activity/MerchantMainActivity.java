@@ -13,34 +13,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import mastersunny.unitedclub.Fragments.CategoriesFragment;
 import mastersunny.unitedclub.Fragments.HomeFragment;
-import mastersunny.unitedclub.Fragments.PaidFragment;
+import mastersunny.unitedclub.Fragments.MerchantHomeFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
-import mastersunny.unitedclub.Fragments.StoresFragment;
 import mastersunny.unitedclub.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MerchantMainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     public static int navItemIndex = 0;
     private static final String TAG_HOME = "home";
-    private static final String TAG_STORIES = "stories";
-    private static final String TAG_TRANSACTION = "transaction";
-    private static final String TAG_CATEGORIES = "categories";
     private static final String TAG_PROFILE = "profile";
     public static String CURRENT_TAG = TAG_HOME;
 
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
-    public String TAG = "MainActivity";
+    public String TAG = "ClientMainActivity";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.merchant_main_activity);
 
         mHandler = new Handler();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -83,20 +78,11 @@ public class MainActivity extends AppCompatActivity {
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
-                HomeFragment homeFragment = new HomeFragment();
+                MerchantHomeFragment homeFragment = new MerchantHomeFragment();
                 return homeFragment;
             case 1:
-                StoresFragment storiesFragment = new StoresFragment();
-                return storiesFragment;
-            case 2:
-                CategoriesFragment categoriesFragment = new CategoriesFragment();
-                return categoriesFragment;
-            case 3:
                 ProfileFragment profileFragment = new ProfileFragment();
                 return profileFragment;
-            case 4:
-                PaidFragment searchFragment = new PaidFragment();
-                return searchFragment;
             default:
                 return new HomeFragment();
         }
@@ -111,22 +97,10 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME;
                         break;
-                    case R.id.nav_bottom_stores:
-                        navItemIndex = 1;
-                        CURRENT_TAG = TAG_STORIES;
-                        break;
-//                    case R.id.nav_bottom_categories:
-//                        navItemIndex = 2;
-//                        CURRENT_TAG = TAG_CATEGORIES;
-//                        break;
                     case R.id.nav_bottom_profile:
-                        navItemIndex = 3;
+                        navItemIndex = 1;
                         CURRENT_TAG = TAG_PROFILE;
                         break;
-//                    case R.id.nav_bottom_transaction:
-//                        navItemIndex = 4;
-//                        CURRENT_TAG = TAG_TRANSACTION;
-//                        break;
                     default:
                         navItemIndex = 0;
                 }
@@ -157,28 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*// Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
-            return true;
-        }
-
-        // user is in notifications fragment
-        // and selected 'Mark all as Read'
-        if (id == R.id.action_mark_all_read) {
-            Toast.makeText(getApplicationContext(), "All notifications marked as read!", Toast.LENGTH_LONG).show();
-        }
-
-        // user is in notifications fragment
-        // and selected 'Clear All'
-        if (id == R.id.action_clear_notifications) {
-            Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG).show();
-        }*/
 
         return super.onOptionsItemSelected(item);
     }

@@ -59,9 +59,10 @@ public class LoginActivity extends AppCompatActivity {
                 Intent mainIntent = null;
                 switch (userType) {
                     case Constants.USER_TYPE_CLIENT:
-                        mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        mainIntent = new Intent(LoginActivity.this, ClientMainActivity.class);
                         break;
                     case Constants.USER_TYPE_MERCHANT:
+                        mainIntent = new Intent(LoginActivity.this, MerchantMainActivity.class);
                         break;
                     case Constants.USER_TYPE_ADMIN:
                         break;
