@@ -57,6 +57,7 @@
         android:layout_marginRight="@dimen/margin_20"
         android:layout_marginTop="?android:actionBarSize"
         android:background="?selectableItemBackground"
+        android:padding="@dimen/margin_10"
         android:src="@drawable/ic_edit_black_24dp" />
 
     <ImageView
