@@ -8,11 +8,10 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import mastersunny.unitedclub.Model.UserDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView first_name, last_name, phone_number, email, password;
 
@@ -21,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_edit_profile);
 
         initLayout();
     }
@@ -52,10 +51,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.edit_profile:
                 break;
             case R.id.back_button:
-                ProfileActivity.this.finish();
+                EditProfileActivity.this.finish();
                 break;
             case R.id.change_password:
-                startActivity(new Intent(ProfileActivity.this, ChangePasswordActivity.class));
+                startActivity(new Intent(EditProfileActivity.this, ChangePasswordActivity.class));
                 break;
         }
     }

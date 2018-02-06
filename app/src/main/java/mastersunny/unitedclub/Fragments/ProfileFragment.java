@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Activity.ProfileActivity;
+import mastersunny.unitedclub.Activity.EditProfileActivity;
 import mastersunny.unitedclub.Activity.TransactionActivity;
 import mastersunny.unitedclub.Adapter.TransactionAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.edit_profile:
-                startActivity(new Intent(mActivity, ProfileActivity.class));
+                startActivity(new Intent(mActivity, EditProfileActivity.class));
                 break;
             case R.id.view_all_transaction:
                 TransactionActivity.start(v.getContext(), new UserDTO());
