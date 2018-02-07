@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             search_text, coupon_finder_text;
     private AppBarLayout appBarLayout;
     private LoopingViewPager loopingViewPager;
-    private LoopingPagerAdapter adapter;
+    private LoopingPagerAdapter loopingPagerAdapter;
     private ProgressBar progressBar;
     private ArrayList<SliderDTO> autoScrollList;
 
@@ -106,6 +106,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     autoScrollList.addAll(response.body());
+                    createAutoScrollViewPager();
                 }
             }
 
@@ -114,6 +115,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+    }
+
+    private void createAutoScrollViewPager() {
+        loopingPagerAdapter = new AutoScrollAdapter(mActivity, autoScrollList, true);
+        loopingViewPager.setAdapter(loopingPagerAdapter);
     }
 
     /*private void setUpNavigationView() {
@@ -187,10 +193,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
-
-        loopingViewPager = view.findViewById(R.id.autoViewPager);
-        adapter = new AutoScrollAdapter(mActivity, autoScrollList, true);
-        loopingViewPager.setAdapter(adapter);
     }
 
     private Fragment getFragment(int position, Bundle savedInstanceState) {
@@ -211,7 +213,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         popular_stores = view.findViewById(R.id.popular_stores);
         view_all_popular = view.findViewById(R.id.view_all_popular);
         search_text = view.findViewById(R.id.search_text);
-
+        loopingViewPager = view.findViewById(R.id.autoViewPager);
         progressBar = view.findViewById(R.id.progressBar);
 
         search_text.setTypeface(face);
@@ -293,12 +295,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 for (int i = 0; i < 5; i++) {
                     storeDTOS.add(new StoreDTO());
                 }
-
-
-                adapter.notifyDataSetChanged();
-
-                adapter.notifyDataSetChanged();
-                loopingViewPager.resumeAutoScroll();
+                if (loopingPagerAdapter != null && loopingPagerAdapter.getCount() > 0) {
+                    Log.d(TAG, "resumeAutoScroll");
+                    loopingViewPager.resumeAutoScroll();
+                }
             }
         });
     }

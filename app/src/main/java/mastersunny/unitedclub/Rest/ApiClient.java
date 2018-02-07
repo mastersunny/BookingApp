@@ -8,11 +8,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiClient {
-    //    public static final String BASE_URL = "http://api.themoviedb.org/3/";
-//    public static final String API_KEY = "35e1efe2694731228a71fe05cd424848";
+    //    public static final String API_KEY = "35e1efe2694731228a71fe05cd424848";
     private static Retrofit retrofit = null;
 
-    public static final String BASE_URL = "http://localhost:8000/";
+    public static final String BASE_URL = "http://ba9a4206.ngrok.io/";
     public static final String API_KEY = "";
 
     private ApiClient() {
