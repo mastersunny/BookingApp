@@ -41,32 +41,9 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHold
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
         if (storeDTOS != null) {
-            switch (position) {
-                case 0:
-                    int id1 = mActivity.getResources().getIdentifier("bd_wireless_m", "drawable", mActivity.getPackageName());
-                    holder.store_image.setImageResource(id1);
-                    break;
-                case 1:
-                    int id4 = mActivity.getResources().getIdentifier("tax_manage_m", "drawable", mActivity.getPackageName());
-                    holder.store_image.setImageResource(id4);
-                    break;
-                case 2:
-                    int id2 = mActivity.getResources().getIdentifier("indian_kitchen", "drawable", mActivity.getPackageName());
-                    holder.store_image.setImageResource(id2);
-                    break;
-                case 3:
-                    int id3 = mActivity.getResources().getIdentifier("deli_grocery_m", "drawable", mActivity.getPackageName());
-                    holder.store_image.setImageResource(id3);
-                    break;
-                case 4:
-                    int id5 = mActivity.getResources().getIdentifier("winzone_m", "drawable", mActivity.getPackageName());
-                    holder.store_image.setImageResource(id5);
-                    break;
-            }
             final StoreDTO storeDTO = storeDTOS.get(position);
-//            String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getBannerImg();
-//            Log.d(TAG, " " + imgUrl + " " + storeDTO.getStoreId() + " " + storeDTO.getStoreName());
-//            Constants.loadImage(mActivity, imgUrl, holder.store_image);
+            String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getImageUrl();
+            Constants.loadImage(mActivity, imgUrl, holder.store_image);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -99,7 +99,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
     }
 
     private void updateInfo() {
-        Constants.loadImage(this, storeOfferDTO.getStoreDTO().getBannerImg(), store_image);
+        Constants.loadImage(this, storeOfferDTO.getStoreDTO().getImageUrl(), store_image);
         store_name.setText(storeOfferDTO.getStoreDTO().getStoreName());
         offer_details.setText(storeOfferDTO.getOffer());
     }

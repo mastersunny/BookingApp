@@ -9,21 +9,14 @@ import java.io.Serializable;
  */
 
 public class StoreDTO implements Serializable {
-    @SerializedName("id")
+    @SerializedName("store_id")
     private int storeId;
-    @SerializedName("name")
+    @SerializedName("store_name")
     private String storeName;
-    @SerializedName("bannerImage")
-    private String bannerImg;
+    @SerializedName("image_url")
+    private String imageUrl;
+    @SerializedName("count")
     private int totalOffer;
-
-    public int getTotalOffer() {
-        return totalOffer;
-    }
-
-    public void setTotalOffer(int totalOffer) {
-        this.totalOffer = totalOffer;
-    }
 
     public int getStoreId() {
         return storeId;
@@ -41,12 +34,20 @@ public class StoreDTO implements Serializable {
         this.storeName = storeName;
     }
 
-    public String getBannerImg() {
-        return bannerImg;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setBannerImg(String bannerImg) {
-        this.bannerImg = bannerImg;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public int getTotalOffer() {
+        return totalOffer;
+    }
+
+    public void setTotalOffer(int totalOffer) {
+        this.totalOffer = totalOffer;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class StoreDTO implements Serializable {
         return "StoreDTO{" +
                 "storeId=" + storeId +
                 ", storeName='" + storeName + '\'' +
-                ", bannerImg='" + bannerImg + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", totalOffer=" + totalOffer +
                 '}';
     }

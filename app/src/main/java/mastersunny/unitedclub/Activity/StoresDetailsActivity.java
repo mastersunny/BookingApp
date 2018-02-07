@@ -79,7 +79,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
 
     private void updateStoreInfo() {
         store_name.setText(storeDTO.getStoreName());
-        String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getBannerImg();
+        String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getImageUrl();
         Constants.loadImage(this, imgUrl, store_image);
     }
 

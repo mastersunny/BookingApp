@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LoopingPagerAdapter loopingPagerAdapter;
     private ProgressBar progressBar;
     private ArrayList<SliderDTO> autoScrollList;
+    ApiInterface apiService;
 
     @Override
     public void onAttach(Context context) {
@@ -86,6 +87,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.home_fragment_layout, container, false);
+            apiService = ApiClient.getClient().create(ApiInterface.class);
+
             storeDTOS = new ArrayList<>();
             autoScrollList = new ArrayList<>();
             initLayout();
@@ -99,9 +102,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadData() {
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<List<SliderDTO>> call = apiService.getSliders();
-        call.enqueue(new Callback<List<SliderDTO>>() {
+        Call<List<SliderDTO>> sliders = apiService.getSliders();
+        sliders.enqueue(new Callback<List<SliderDTO>>() {
             @Override
             public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -112,6 +114,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<List<SliderDTO>> call, Throwable t) {
+
+            }
+        });
+
+        apiService.getPopularStores().enqueue(new Callback<List<StoreDTO>>() {
+            @Override
+            public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
+                if (response.isSuccessful() & response.body() != null) {
+                    storeDTOS.addAll(response.body());
+                    popularAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
 
             }
         });
@@ -292,9 +309,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 5; i++) {
-                    storeDTOS.add(new StoreDTO());
-                }
                 if (loopingPagerAdapter != null && loopingPagerAdapter.getCount() > 0) {
                     Log.d(TAG, "resumeAutoScroll");
                     loopingViewPager.resumeAutoScroll();
