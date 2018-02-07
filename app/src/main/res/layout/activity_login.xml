@@ -24,15 +24,15 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="@string/hint_email"
-                android:inputType="textEmailAddress"
+                android:hint="@string/hint_phone_no"
+                android:inputType="number"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/black"
-                android:textColorHint="@android:color/white" />
+                android:textColorHint="@android:color/black" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -45,10 +45,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="@string/hint_password"
-                android:inputType="textPassword"
+                android:inputType="numberPassword"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/black"
-                android:textColorHint="@android:color/white" />
+                android:textColorHint="@android:color/black" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Login Button -->

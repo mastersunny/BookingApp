@@ -17,12 +17,22 @@ public class UserDTO implements Serializable {
     private String email;
     @SerializedName("password")
     private String password;
-    @SerializedName("mobile_no")
-    private String mobileNo;
+    @SerializedName("phone_no")
+    private String phoneNo;
     @SerializedName("user_type")
     private int userType;
     @SerializedName("img_url")
     private String imgUrl;
+    @SerializedName("access_token")
+    private String accessToken;
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     public long getUserId() {
         return userId;
@@ -56,12 +66,12 @@ public class UserDTO implements Serializable {
         this.password = password;
     }
 
-    public String getMobileNo() {
-        return mobileNo;
+    public String getPhoneNo() {
+        return phoneNo;
     }
 
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
     public int getUserType() {
@@ -87,9 +97,10 @@ public class UserDTO implements Serializable {
                 ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", mobileNo='" + mobileNo + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
                 ", userType=" + userType +
                 ", imgUrl='" + imgUrl + '\'' +
+                ", accessToken='" + accessToken + '\'' +
                 '}';
     }
 }

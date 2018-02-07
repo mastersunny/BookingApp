@@ -5,8 +5,10 @@ import java.util.List;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
+import mastersunny.unitedclub.Model.UserDTO;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -32,6 +34,9 @@ public interface ApiInterface {
 
     @GET("api/store/{id}")
     Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id);
+
+    @POST("api/login")
+    Call<UserDTO> logIn(@Path("phone_no") String phoneNo, @Path("password") String password);
 
 
 }
