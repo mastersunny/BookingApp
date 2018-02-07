@@ -113,7 +113,7 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
         total_popular_item.setTypeface(Constants.getRegularFace(mActivity));
         total_item = view.findViewById(R.id.total_item);
         total_item.setTypeface(Constants.getRegularFace(mActivity));
-        
+
         view.findViewById(R.id.search_button).setOnClickListener(this);
     }
 

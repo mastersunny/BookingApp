@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import mastersunny.unitedclub.Adapter.PopularVerticalAdapter;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,25 +81,29 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 5; i < 15; i++) {
-                    StoreDTO storeDTO = new StoreDTO();
-                    if (i % 2 == 1) {
-                        storeDTO.setStoreName("MakeMyTrip");
-                    } else {
-                        storeDTO.setStoreName("Paytm");
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            Log.d(MerchantHomeFragment.TAG, "" + "onresume");
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 5; i < 15; i++) {
+                        StoreDTO storeDTO = new StoreDTO();
+                        if (i % 2 == 1) {
+                            storeDTO.setStoreName("MakeMyTrip");
+                        } else {
+                            storeDTO.setStoreName("Paytm");
+                        }
+                        storeDTO.setTotalOffer(i * 10);
+                        storeDTOS.add(storeDTO);
                     }
-                    storeDTO.setTotalOffer(i * 10);
-                    storeDTOS.add(storeDTO);
+                    if (popularVerticalAdapter != null)
+                        popularVerticalAdapter.notifyDataSetChanged();
                 }
-                if (popularVerticalAdapter != null)
-                    popularVerticalAdapter.notifyDataSetChanged();
-            }
-        });
+            });
+        } else {
+        }
     }
 
     @Override
