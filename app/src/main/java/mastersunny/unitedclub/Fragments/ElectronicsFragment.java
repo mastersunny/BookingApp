@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,19 +83,23 @@ public class ElectronicsFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 10; i++) {
-                    StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
-                    storeOfferDTOS.add(storeOfferDTO);
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            Log.d(MerchantHomeFragment.TAG, "" + "onresume");
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < 10; i++) {
+                        StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
+                        storeOfferDTOS.add(storeOfferDTO);
+                    }
+                    if (storeOfferAdapter != null)
+                        storeOfferAdapter.notifyDataSetChanged();
                 }
-                if (storeOfferAdapter != null)
-                    storeOfferAdapter.notifyDataSetChanged();
-            }
-        });
+            });
+        } else {
+        }
     }
 
     @Override

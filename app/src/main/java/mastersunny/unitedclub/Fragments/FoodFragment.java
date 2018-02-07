@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener, Call
 
     @Override
     public void onAttach(Context context) {
+        Log.d(MerchantHomeFragment.TAG, "" + "onAttach");
         super.onAttach(context);
         mActivity = getActivity();
     }
@@ -68,22 +70,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener, Call
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    private void initLayout() {
-        most_used_rv = view.findViewById(R.id.most_used_rv);
-        most_used_rv.setHasFixedSize(true);
-        most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapter(mActivity, storeOfferDTOS);
-        most_used_rv.setAdapter(storeOfferAdapter);
-    }
-
-    @Override
     public void onResume() {
-        super.onResume();
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -95,6 +82,21 @@ public class FoodFragment extends Fragment implements View.OnClickListener, Call
                     storeOfferAdapter.notifyDataSetChanged();
             }
         });
+        super.onResume();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    private void initLayout() {
+        most_used_rv = view.findViewById(R.id.most_used_rv);
+        most_used_rv.setHasFixedSize(true);
+        most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
+        storeOfferAdapter = new StoreOfferAdapter(mActivity, storeOfferDTOS);
+        most_used_rv.setAdapter(storeOfferAdapter);
     }
 
     @Override
