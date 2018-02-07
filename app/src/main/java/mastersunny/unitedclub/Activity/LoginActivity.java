@@ -92,25 +92,25 @@ public class LoginActivity extends AppCompatActivity implements Callback<UserDTO
             progressBar.setVisibility(View.GONE);
             final UserDTO userDTO = response.body();
             Log.d(TAG, "" + userDTO);
-            if (userDTO != null) {
+            if (userDTO.getAccessToken() != null) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Intent mainIntent = null;
                         switch (userDTO.getUserType()) {
                             case Constants.USER_TYPE_CLIENT:
-                                mainIntent = new Intent(LoginActivity.this, ClientMainActivity.class);
+                                startActivity(new Intent(LoginActivity.this, ClientMainActivity.class));
                                 break;
                             case Constants.USER_TYPE_MERCHANT:
-                                mainIntent = new Intent(LoginActivity.this, MerchantMainActivity.class);
+                                startActivity(new Intent(LoginActivity.this, MerchantMainActivity.class));
                                 break;
                             case Constants.USER_TYPE_ADMIN:
                                 break;
                         }
-                        startActivity(mainIntent);
                         finish();
                     }
                 });
+            } else {
+                Toast.makeText(LoginActivity.this, "Please check phone number or password", Toast.LENGTH_SHORT).show();
             }
         }
     }
