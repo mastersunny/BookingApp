@@ -88,26 +88,36 @@ public class LoginActivity extends AppCompatActivity implements Callback<UserDTO
 
     @Override
     public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-
-        Log.d(TAG, "" + response.body());
-        int userType = 1;
-        Intent mainIntent = null;
-        switch (userType) {
-            case Constants.USER_TYPE_CLIENT:
-                mainIntent = new Intent(LoginActivity.this, ClientMainActivity.class);
-                break;
-            case Constants.USER_TYPE_MERCHANT:
-                mainIntent = new Intent(LoginActivity.this, MerchantMainActivity.class);
-                break;
-            case Constants.USER_TYPE_ADMIN:
-                break;
+        if (response.isSuccessful()) {
+            progressBar.setVisibility(View.GONE);
+            final UserDTO userDTO = response.body();
+            Log.d(TAG, "" + userDTO);
+            if (userDTO != null) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent mainIntent = null;
+                        switch (userDTO.getUserType()) {
+                            case Constants.USER_TYPE_CLIENT:
+                                mainIntent = new Intent(LoginActivity.this, ClientMainActivity.class);
+                                break;
+                            case Constants.USER_TYPE_MERCHANT:
+                                mainIntent = new Intent(LoginActivity.this, MerchantMainActivity.class);
+                                break;
+                            case Constants.USER_TYPE_ADMIN:
+                                break;
+                        }
+                        startActivity(mainIntent);
+                        finish();
+                    }
+                });
+            }
         }
-        startActivity(mainIntent);
-        finish();
     }
 
     @Override
     public void onFailure(Call<UserDTO> call, Throwable t) {
-
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(LoginActivity.this, "Sorry Cannot login at this moment", Toast.LENGTH_SHORT).show();
     }
 }

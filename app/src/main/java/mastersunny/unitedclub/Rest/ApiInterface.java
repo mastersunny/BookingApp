@@ -7,6 +7,8 @@ import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.Model.UserDTO;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -36,7 +38,9 @@ public interface ApiInterface {
     Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id);
 
     @POST("api/login")
-    Call<UserDTO> logIn(@Path("phone_no") String phoneNo, @Path("password") String password);
-
+    @FormUrlEncoded
+    Call<UserDTO> logIn(@Field("phone_no") String phoneNo,
+                        @Field("password") String password
+    );
 
 }
