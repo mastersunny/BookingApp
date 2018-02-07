@@ -45,14 +45,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_10"
-            android:text="Your last transactions"
-            android:textColor="@color/colorPrimary" />
+            android:text="Your last transactions" />
 
         <TextView
             android:id="@+id/view_all_transaction"
@@ -67,5 +67,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/transaction_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_5" />
 </LinearLayout>
