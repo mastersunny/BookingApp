@@ -25,9 +25,7 @@ public class ClientMainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     public static int navItemIndex = 0;
     private static final String TAG_HOME = "home";
-    private static final String TAG_STORIES = "stories";
-    private static final String TAG_TRANSACTION = "transaction";
-    private static final String TAG_CATEGORIES = "categories";
+    private static final String TAG_STORES = "stores";
     private static final String TAG_PROFILE = "profile";
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -89,14 +87,8 @@ public class ClientMainActivity extends AppCompatActivity {
                 StoresFragment storiesFragment = new StoresFragment();
                 return storiesFragment;
             case 2:
-                CategoriesFragment categoriesFragment = new CategoriesFragment();
-                return categoriesFragment;
-            case 3:
                 ProfileFragment profileFragment = new ProfileFragment();
                 return profileFragment;
-            case 4:
-                PaidFragment searchFragment = new PaidFragment();
-                return searchFragment;
             default:
                 return new HomeFragment();
         }
@@ -113,20 +105,12 @@ public class ClientMainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_bottom_stores:
                         navItemIndex = 1;
-                        CURRENT_TAG = TAG_STORIES;
+                        CURRENT_TAG = TAG_STORES;
                         break;
-//                    case R.id.nav_bottom_categories:
-//                        navItemIndex = 2;
-//                        CURRENT_TAG = TAG_CATEGORIES;
-//                        break;
                     case R.id.nav_bottom_profile:
-                        navItemIndex = 3;
+                        navItemIndex = 2;
                         CURRENT_TAG = TAG_PROFILE;
                         break;
-//                    case R.id.nav_bottom_transaction:
-//                        navItemIndex = 4;
-//                        CURRENT_TAG = TAG_TRANSACTION;
-//                        break;
                     default:
                         navItemIndex = 0;
                 }
@@ -148,38 +132,5 @@ public class ClientMainActivity extends AppCompatActivity {
             }
         }
         super.onBackPressed();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return false;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /*// Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
-            return true;
-        }
-
-        // user is in notifications fragment
-        // and selected 'Mark all as Read'
-        if (id == R.id.action_mark_all_read) {
-            Toast.makeText(getApplicationContext(), "All notifications marked as read!", Toast.LENGTH_LONG).show();
-        }
-
-        // user is in notifications fragment
-        // and selected 'Clear All'
-        if (id == R.id.action_clear_notifications) {
-            Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG).show();
-        }*/
-
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int userType = 2;
+                int userType = 1;
                 Intent mainIntent = null;
                 switch (userType) {
                     case Constants.USER_TYPE_CLIENT:
