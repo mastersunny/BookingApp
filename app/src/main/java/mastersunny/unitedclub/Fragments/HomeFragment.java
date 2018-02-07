@@ -29,6 +29,7 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mastersunny.unitedclub.Activity.ItemDetailsActivity;
 import mastersunny.unitedclub.Activity.StoresActivity;
@@ -36,9 +37,15 @@ import mastersunny.unitedclub.Activity.SearchActivity;
 import mastersunny.unitedclub.Adapter.AutoScrollAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
+import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.barcode.BarcodeCaptureActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -66,7 +73,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LoopingViewPager loopingViewPager;
     private LoopingPagerAdapter adapter;
     private ProgressBar progressBar;
-    private ArrayList<Integer> autoScrollList;
+    private ArrayList<SliderDTO> autoScrollList;
 
     @Override
     public void onAttach(Context context) {
@@ -74,21 +81,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mActivity = getActivity();
     }
 
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setHasOptionsMenu(true);
-//    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.home_fragment_layout, container, false);
             storeDTOS = new ArrayList<>();
+            autoScrollList = new ArrayList<>();
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-//            setUpNavigationView();
             setUpTabLayout(savedInstanceState);
 
             loadData();
@@ -98,27 +99,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadData() {
-        /*ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<List<StoreDTO>> call = apiService.getPopularStores();
-        call.enqueue(new Callback<List<StoreDTO>>() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<List<SliderDTO>> call = apiService.getSliders();
+        call.enqueue(new Callback<List<SliderDTO>>() {
             @Override
-            public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
-                if (response.body() != null) {
-                    for (StoreDTO storeDTO : response.body()) {
-                        storeDTOS.add(storeDTO);
-                    }
-                    if (popularAdapter != null) {
-                        popularAdapter.notifyDataSetChanged();
-                    }
+            public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    autoScrollList.addAll(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
-                Log.d(TAG, " " + t.getMessage());
+            public void onFailure(Call<List<SliderDTO>> call, Throwable t) {
 
             }
-        });*/
+        });
     }
 
     /*private void setUpNavigationView() {
@@ -193,11 +188,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
-
-        autoScrollList = new ArrayList<>();
-        autoScrollList.add(1);
-        autoScrollList.add(2);
-        autoScrollList.add(3);
         loopingViewPager = view.findViewById(R.id.autoViewPager);
         adapter = new AutoScrollAdapter(mActivity, autoScrollList, true);
         loopingViewPager.setAdapter(adapter);

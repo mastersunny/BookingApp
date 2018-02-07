@@ -35,6 +35,7 @@ import mastersunny.unitedclub.Activity.StoresActivity;
 import mastersunny.unitedclub.Adapter.AutoScrollAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
+import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.barcode.BarcodeCaptureActivity;
@@ -58,7 +59,7 @@ public class MerchantHomeFragment extends Fragment implements View.OnClickListen
     private LoopingViewPager loopingViewPager;
     private LoopingPagerAdapter adapter;
     private ProgressBar progressBar;
-    private ArrayList<Integer> autoScrollList;
+    private ArrayList<SliderDTO> autoScrollList;
 
     @Override
     public void onAttach(Context context) {
@@ -71,6 +72,7 @@ public class MerchantHomeFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.merchant_home_fragment, container, false);
+            autoScrollList = new ArrayList<>();
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             setUpTabLayout(savedInstanceState);
@@ -142,11 +144,6 @@ public class MerchantHomeFragment extends Fragment implements View.OnClickListen
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
-
-        autoScrollList = new ArrayList<>();
-        autoScrollList.add(1);
-        autoScrollList.add(2);
-        autoScrollList.add(3);
         loopingViewPager = view.findViewById(R.id.autoViewPager);
         adapter = new AutoScrollAdapter(mActivity, autoScrollList, true);
         loopingViewPager.setAdapter(adapter);

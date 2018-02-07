@@ -1,8 +1,11 @@
 package mastersunny.unitedclub.Rest;
 
+import android.transition.Slide;
+
 import java.util.List;
 
 import mastersunny.unitedclub.Model.MoviesResponse;
+import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.Model.UserDTO;
@@ -31,16 +34,15 @@ public interface ApiInterface {
     @GET("api/allStores")
     Call<List<StoreDTO>> getAllStores();
 
-    @GET("api/all/0")
-    Call<List<StoreDTO>> getAllStores(@Query("api_key") String apiKey);
+    @GET("api/getSliders")
+    Call<List<SliderDTO>> getSliders();
 
     @GET("api/store/{id}")
     Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id);
 
     @POST("api/login")
     @FormUrlEncoded
-    Call<UserDTO> logIn(@Field("phone_no") String phoneNo,
-                        @Field("password") String password
-    );
+    Call<UserDTO> logIn(@Field("phone_no") String phoneNo, @Field("password") String password);
+
 
 }
