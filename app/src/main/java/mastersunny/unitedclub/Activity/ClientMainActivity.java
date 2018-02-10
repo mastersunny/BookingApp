@@ -1,37 +1,27 @@
 package mastersunny.unitedclub.Activity;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Display;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import mastersunny.unitedclub.Fragments.CategoriesFragment;
+import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Fragments.HomeFragment;
-import mastersunny.unitedclub.Fragments.PaidFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
 import mastersunny.unitedclub.R;
 
 public class ClientMainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
-    public static int navItemIndex = 0;
-    private static final String TAG_HOME = "home";
-    private static final String TAG_STORES = "stores";
-    private static final String TAG_PROFILE = "profile";
-    public static String CURRENT_TAG = TAG_HOME;
-
-    private boolean shouldLoadHomeFragOnBackPress = true;
-    private Handler mHandler;
     public String TAG = "ClientMainActivity";
+    private BottomNavigationView bottomNavigationView;
+    private PagerAdapter pagerAdapter;
+    private ViewPager viewPager;
+    private MenuItem prevMenuItem;
 
 
     @Override
@@ -40,82 +30,84 @@ public class ClientMainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.cleint_main_activity);
 
-        mHandler = new Handler();
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        setUpTabLayout(savedInstanceState);
         setUpNavigationView();
 
-        Display mDisplay = getWindowManager().getDefaultDisplay();
+       /* Display mDisplay = getWindowManager().getDefaultDisplay();
         final int width = mDisplay.getWidth();
         final int height = mDisplay.getHeight();
 
         Log.d(TAG, "" + width);
-        Log.d(TAG, "" + height);
+        Log.d(TAG, "" + height);*/
+    }
 
+    private void setUpTabLayout(Bundle savedInstanceState) {
+        viewPager = findViewById(R.id.viewPager);
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         if (savedInstanceState == null) {
-            navItemIndex = 0;
-            CURRENT_TAG = TAG_HOME;
-            loadHomeFragment();
+            pagerAdapter.addFragment(new HomeFragment(), getResources().getString(R.string.nav_home));
+            pagerAdapter.addFragment(new StoresFragment(), getResources().getString(R.string.stores));
+            pagerAdapter.addFragment(new ProfileFragment(), getResources().getString(R.string.profile));
+        } else {
+            Integer count = savedInstanceState.getInt("tabsCount");
+            String[] titles = savedInstanceState.getStringArray("titles");
+            for (int i = 0; i < count; i++) {
+                pagerAdapter.addFragment(getFragment(i, savedInstanceState), titles[i]);
+            }
         }
+
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (prevMenuItem != null) {
+                    prevMenuItem.setChecked(false);
+                } else {
+                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
+                }
+
+                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+                prevMenuItem = bottomNavigationView.getMenu().getItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
-    private Runnable mPendingRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Fragment fragment = getHomeFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-            fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-            fragmentTransaction.commitAllowingStateLoss();
-        }
-    };
-
-    private void loadHomeFragment() {
-        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-            return;
-        }
-        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
-        }
+    private Fragment getFragment(int position, Bundle savedInstanceState) {
+        return savedInstanceState == null ? pagerAdapter.getItem(position) : getSupportFragmentManager().findFragmentByTag(getFragmentTag(position));
     }
 
-    private Fragment getHomeFragment() {
-        switch (navItemIndex) {
-            case 0:
-                HomeFragment homeFragment = new HomeFragment();
-                return homeFragment;
-            case 1:
-                StoresFragment storiesFragment = new StoresFragment();
-                return storiesFragment;
-            case 2:
-                ProfileFragment profileFragment = new ProfileFragment();
-                return profileFragment;
-            default:
-                return new HomeFragment();
-        }
+    private String getFragmentTag(int position) {
+        String tag = "android:switcher:" + R.id.viewPager + ":" + position;
+        return tag;
     }
 
     private void setUpNavigationView() {
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_bottom_home:
-                        navItemIndex = 0;
-                        CURRENT_TAG = TAG_HOME;
+                        viewPager.setCurrentItem(0);
                         break;
                     case R.id.nav_bottom_stores:
-                        navItemIndex = 1;
-                        CURRENT_TAG = TAG_STORES;
+                        viewPager.setCurrentItem(1);
                         break;
                     case R.id.nav_bottom_profile:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_PROFILE;
+                        viewPager.setCurrentItem(2);
                         break;
-                    default:
-                        navItemIndex = 0;
                 }
-
-                loadHomeFragment();
                 return true;
             }
         });
@@ -123,14 +115,6 @@ public class ClientMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (shouldLoadHomeFragOnBackPress) {
-            if (navItemIndex != 0) {
-                navItemIndex = 0;
-                CURRENT_TAG = TAG_HOME;
-                loadHomeFragment();
-                return;
-            }
-        }
         super.onBackPressed();
     }
 }
