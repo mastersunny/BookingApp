@@ -50,6 +50,7 @@
     <string name="btn_login">LOGIN</string>
     <string name="btn_verify">VERIFY</string>
     <string name="btn_resend">RESEND</string>
+    <string name="send_code">Send Code</string>
     <string name="btn_link_to_register">Not a member? Get registered!</string>
     <string name="btn_link_to_login">Already registered? Login!</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
