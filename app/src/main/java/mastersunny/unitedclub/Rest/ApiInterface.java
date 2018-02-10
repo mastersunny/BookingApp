@@ -42,7 +42,14 @@ public interface ApiInterface {
 
     @POST("api/login")
     @FormUrlEncoded
-    Call<UserDTO> logIn(@Field("phone_no") String phoneNo, @Field("password") String password);
+    Call<UserDTO> logIn(@Field("phone_number") String phoneNo, @Field("password") String password);
 
+    @POST("api/initialRegistration")
+    @FormUrlEncoded
+    Call<String> initRegistration(@Field("phone_number") String phoneNo);
+
+    @POST("api/checkCode")
+    @FormUrlEncoded
+    Call<String> checkCode(@Field("phone_number") String phoneNo, @Field("code") String code);
 
 }

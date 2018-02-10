@@ -33,7 +33,6 @@
             android:name=".Activity.ClientMainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activity.MerchantMainActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -92,6 +91,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Activity.ChangePasswordActivity" />
         <activity android:name=".Activity.EditProfileActivity" />
-
+        <activity android:name=".Activity.MobileVerificationActivity"></activity>
     </application>
+
 </manifest>
