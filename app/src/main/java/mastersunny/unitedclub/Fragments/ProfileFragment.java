@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,26 +74,32 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 5; i < 30; i++) {
-                    TransactionDTO transactionDTO = new TransactionDTO();
-                    StoreDTO storeDTO = new StoreDTO();
-                    if (i % 2 == 0) {
-                        storeDTO.setStoreName("Paytm");
-                    } else {
-                        storeDTO.setStoreName("Amazon");
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            Log.d(MerchantHomeFragment.TAG, "" + "onresume");
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 5; i < 30; i++) {
+                        TransactionDTO transactionDTO = new TransactionDTO();
+                        StoreDTO storeDTO = new StoreDTO();
+                        if (i % 2 == 0) {
+                            storeDTO.setStoreName("Paytm");
+                        } else {
+                            storeDTO.setStoreName("Amazon");
+                        }
+                        transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
+                        transactionDTO.setPaidAmount(10000);
+                        transactionDTO.setDueAmount(i);
+                        transactionDTOS.add(transactionDTO);
                     }
-                    transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
-                    transactionDTO.setPaidAmount(10000);
-                    transactionDTO.setDueAmount(i);
-                    transactionDTOS.add(transactionDTO);
+                    if (transactionAdapter != null)
+                        transactionAdapter.notifyDataSetChanged();
                 }
-            }
-        });
+            });
+        } else {
+        }
     }
 
     @Override
