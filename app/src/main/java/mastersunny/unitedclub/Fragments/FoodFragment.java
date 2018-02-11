@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener, Call
     private RecyclerView most_used_rv;
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private StoreOfferAdapter storeOfferAdapter;
+    private ProgressBar progressBar;
 
     @Override
     public void onAttach(Context context) {
@@ -80,6 +82,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener, Call
                 }
                 if (storeOfferAdapter != null)
                     storeOfferAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
             }
         });
         super.onResume();
@@ -92,6 +95,8 @@ public class FoodFragment extends Fragment implements View.OnClickListener, Call
     }
 
     private void initLayout() {
+        progressBar = view.findViewById(R.id.progressBar);
+
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setHasFixedSize(true);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import mastersunny.unitedclub.Activity.ItemDetailsActivity;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.utils.Constants;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
@@ -29,7 +30,7 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
     public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS) {
         this.mActivity = mActivity;
         this.storeOfferDTOS = storeOfferDTOS;
-        face = Typeface.createFromAsset(mActivity.getAssets(), "avenirltstd_medium.otf");
+        face = Constants.getMediumFace(mActivity);
     }
 
     @Override

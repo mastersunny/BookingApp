@@ -2,6 +2,7 @@ package mastersunny.unitedclub.Adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +25,12 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
 
     private ArrayList<StoreDTO> storeDTOS;
     private Activity mActivity;
+    private Typeface face;
 
     public PopularVerticalAdapter(Activity mActivity, ArrayList<StoreDTO> storeDTOS) {
         this.mActivity = mActivity;
         this.storeDTOS = storeDTOS;
+        face = Constants.getMediumFace(mActivity);
     }
 
     @Override
@@ -41,9 +44,9 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
         if (storeDTOS != null) {
             final StoreDTO storeDTO = storeDTOS.get(position);
             holder.store_name.setText(storeDTO.getStoreName());
-            holder.store_name.setTypeface(Constants.getMediumFace(mActivity));
+            holder.store_name.setTypeface(face);
             holder.total_offer.setText(storeDTO.getTotalOffer() + " Offers");
-            holder.total_offer.setTypeface(Constants.getMediumFace(mActivity));
+            holder.total_offer.setTypeface(face);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
