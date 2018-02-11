@@ -15,8 +15,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +48,8 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
     private StoreOfferAdapter storeOfferAdapter;
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private RecyclerView offer_rv;
-    private AppBarLayout appBarLayout;
     private Toolbar toolbar;
+    private RatingBar ratingBar;
 
     public static void start(Context context, StoreDTO storeDTO) {
         Intent intent = new Intent(context, StoresDetailsActivity.class);
@@ -88,6 +90,15 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
 //        tabLayout = findViewById(R.id.tabLayout);
 //        viewPager = findViewById(R.id.viewPager);
 
+        ratingBar = findViewById(R.id.ratingBar);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                Toast.makeText(StoresDetailsActivity.this, Float.toString(v), Toast.LENGTH_LONG).show();
+            }
+        });
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         findViewById(R.id.back_button).setOnClickListener(this);
@@ -107,6 +118,8 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         storeOfferAdapter = new StoreOfferAdapter(StoresDetailsActivity.this, storeOfferDTOS);
         offer_rv.setAdapter(storeOfferAdapter);
+
+        findViewById(R.id.follow_layout).setOnClickListener(this);
     }
 
     /*private void setUpTabLayout(Bundle savedInstanceState) {
@@ -186,6 +199,9 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
         switch (view.getId()) {
             case R.id.back_button:
                 StoresDetailsActivity.this.finish();
+                break;
+            case R.id.follow_layout:
+                Toast.makeText(StoresDetailsActivity.this, "Followed successfuly", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
