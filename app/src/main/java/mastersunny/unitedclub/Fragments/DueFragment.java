@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,24 +64,40 @@ public class DueFragment extends Fragment implements View.OnClickListener, Callb
 
     private void initLayout() {
         toolbar = view.findViewById(R.id.toolbar);
-        for (int i = 5; i < 30; i++) {
-            TransactionDTO transactionDTO = new TransactionDTO();
-            StoreDTO storeDTO = new StoreDTO();
-            if (i % 2 == 0) {
-                storeDTO.setStoreName("Paytm");
-            } else {
-                storeDTO.setStoreName("Amazon");
-            }
-            transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
-            transactionDTO.setPaidAmount(10000);
-            transactionDTO.setDueAmount(i);
-            transactionDTOS.add(transactionDTO);
-        }
         transaction_details_rv = view.findViewById(R.id.transaction_details_rv);
         transaction_details_rv.setHasFixedSize(true);
         transaction_details_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         transactionAdapter = new TransactionAdapter(mActivity, transactionDTOS);
         transaction_details_rv.setAdapter(transactionAdapter);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            Log.d(MerchantHomeFragment.TAG, "" + "onresume");
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 5; i < 30; i++) {
+                        TransactionDTO transactionDTO = new TransactionDTO();
+                        StoreDTO storeDTO = new StoreDTO();
+                        if (i % 2 == 0) {
+                            storeDTO.setStoreName("Paytm");
+                        } else {
+                            storeDTO.setStoreName("Amazon");
+                        }
+                        transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
+                        transactionDTO.setPaidAmount(10000);
+                        transactionDTO.setDueAmount(i);
+                        transactionDTOS.add(transactionDTO);
+                    }
+                    if (transactionAdapter != null)
+                        transactionAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+        }
     }
 
     @Override
