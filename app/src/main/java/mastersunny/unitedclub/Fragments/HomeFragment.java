@@ -67,8 +67,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private PopularAdapter popularAdapter;
     private RecyclerView popular_rv;
     private ArrayList<StoreDTO> storeDTOS;
-    private TextView view_all_popular, popular_stores,
-            search_text, coupon_finder_text;
+    private TextView view_all_popular, popular_stores, search_text;
     private AppBarLayout appBarLayout;
     private LoopingViewPager loopingViewPager;
     private LoopingPagerAdapter loopingPagerAdapter;

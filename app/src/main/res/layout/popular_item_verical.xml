@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/most_used_item_background"
+        android:background="@drawable/popular_item_background"
         android:paddingBottom="@dimen/margin_20"
         android:paddingLeft="@dimen/margin_10"
         android:paddingRight="@dimen/margin_10"
@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="15 Offers" />
-
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
