@@ -65,7 +65,9 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         phone_number = findViewById(R.id.phone_number);
         timer_text = findViewById(R.id.timer_text);
         btn_next = findViewById(R.id.btn_next);
+        btn_next.setOnClickListener(this);
         btn_resend_code = findViewById(R.id.btn_resend_code);
+        btn_resend_code.setOnClickListener(this);
         btn_resend_code.setClickable(false);
         btn_resend_code.setAlpha(0.5f);
 
