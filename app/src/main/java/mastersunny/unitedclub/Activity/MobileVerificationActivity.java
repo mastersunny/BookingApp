@@ -1,5 +1,6 @@
 package mastersunny.unitedclub.Activity;
 
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,13 +18,21 @@ public class MobileVerificationActivity extends AppCompatActivity {
     private EditText one_time_password;
     private TextView phone_number, timer_text;
     private Button btn_next, btn_resend_code;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_verification);
 
+        preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
+
         initLayout();
+        updateUI();
+    }
+
+    private void updateUI() {
+        phone_number.setText(preferences.getString(Constants.PHONE_NUMBER, ""));
     }
 
     int time = 60;
