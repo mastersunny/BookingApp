@@ -2,7 +2,6 @@ package mastersunny.unitedclub.Activity;
 
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 
-public class MobileVerificationActivity extends AppCompatActivity {
+public class MobileVerificationActivity extends MainActivity {
 
     public String MobileVerificationActivity = "MobileVerificationActivity";
     private EditText one_time_password;
@@ -64,6 +63,15 @@ public class MobileVerificationActivity extends AppCompatActivity {
             }
 
         }.start();
+
+        btn_resend_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isResend) {
+                    sendCode();
+                }
+            }
+        });
     }
 
     @Override

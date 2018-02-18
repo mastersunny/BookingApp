@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,9 +12,6 @@ import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
-
         editor = preferences.edit();
 
         initLayout();
@@ -61,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void sendCode() {
+    protected void sendCode() {
         String phone = phone_number.getText().toString().trim();
         if (phone.length() == 0) {
             Constants.showDialog(MainActivity.this, "Please enter a valid phone number");
@@ -69,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         editor.putString(Constants.PHONE_NUMBER, phone);
         editor.apply();
-        apiInterface.initRegistration(phone).enqueue(new Callback<String>() {
+      /*  apiInterface.initRegistration(phone).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
@@ -79,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onFailure(Call<String> call, Throwable t) {
 
             }
-        });
+        });*/
 
         startActivity(new Intent(MainActivity.this, MobileVerificationActivity.class));
     }
