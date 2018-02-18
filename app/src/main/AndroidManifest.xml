@@ -92,7 +92,8 @@
         <activity android:name=".Activity.ChangePasswordActivity" />
         <activity android:name=".Activity.EditProfileActivity" />
         <activity android:name=".Activity.MobileVerificationActivity" />
-        <activity android:name=".Activity.MainActivity"></activity>
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.RegistrationActivity"></activity>
     </application>
 
 </manifest>
