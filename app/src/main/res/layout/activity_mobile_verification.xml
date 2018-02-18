@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="@string/hint_phone_no"
+                android:hint="@string/hint_code"
                 android:inputType="number"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/black"
