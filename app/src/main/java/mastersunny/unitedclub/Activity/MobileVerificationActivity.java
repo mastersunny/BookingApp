@@ -130,6 +130,8 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         if (response != null && response.body().length() > 0) {
             editor.putString(Constants.PHONE_NUMBER, phoneNumber);
             editor.putString(Constants.API_KEY, response.body());
+        } else {
+
         }
     }
 
