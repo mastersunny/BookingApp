@@ -19,6 +19,7 @@ public class MobileVerificationActivity extends AppCompatActivity {
     private TextView phone_number, timer_text;
     private Button btn_next, btn_resend_code;
     SharedPreferences preferences;
+    private boolean isResend = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class MobileVerificationActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
+        isResend = false;
         phone_number.setText(preferences.getString(Constants.PHONE_NUMBER, ""));
     }
 
@@ -58,8 +60,17 @@ public class MobileVerificationActivity extends AppCompatActivity {
             public void onFinish() {
                 btn_resend_code.setClickable(true);
                 btn_resend_code.setAlpha(1f);
+                isResend = true;
             }
 
         }.start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!isResend) {
+            return;
+        }
+        super.onBackPressed();
     }
 }

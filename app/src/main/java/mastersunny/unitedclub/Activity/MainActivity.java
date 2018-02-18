@@ -57,13 +57,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btn_send_code:
                 sendCode();
-                startActivity(new Intent(MainActivity.this, MobileVerificationActivity.class));
                 break;
         }
     }
 
     private void sendCode() {
         String phone = phone_number.getText().toString().trim();
+        if (phone.length() == 0) {
+            Constants.showDialog(MainActivity.this, "Please enter a valid phone number");
+            return;
+        }
         editor.putString(Constants.PHONE_NUMBER, phone);
         editor.apply();
         apiInterface.initRegistration(phone).enqueue(new Callback<String>() {
@@ -77,5 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+
+        startActivity(new Intent(MainActivity.this, MobileVerificationActivity.class));
     }
 }
