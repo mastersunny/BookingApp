@@ -1,5 +1,6 @@
 package mastersunny.unitedclub.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public String TAG = "MainActivity";
     private EditText phone_number;
-    private Button send_code;
+    private Button btn_send_code;
     private ApiInterface apiInterface;
 
     @Override
@@ -32,8 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initLayout() {
         phone_number = findViewById(R.id.phone_number);
-        send_code = findViewById(R.id.send_code);
-        send_code.setOnClickListener(this);
+        btn_send_code = findViewById(R.id.btn_send_code);
+        btn_send_code.setOnClickListener(this);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.send_code:
                 sendCode();
-                send_code.setClickable(false);
+                startActivity(new Intent(MainActivity.this, MobileVerificationActivity.class));
                 break;
         }
     }
