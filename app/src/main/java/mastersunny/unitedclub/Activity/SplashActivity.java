@@ -20,7 +20,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private final int SPLASH_DISPLAY_LENGTH = 2000;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (phoneNumber != null && phoneNumber.length() == 11) {
+                if (phoneNumber != null && phoneNumber.length() > 0) {
                     Intent mainIntent = new Intent(SplashActivity.this, ClientMainActivity.class);
                     startActivity(mainIntent);
                     finish();
