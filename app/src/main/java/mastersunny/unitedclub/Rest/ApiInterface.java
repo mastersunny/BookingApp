@@ -40,16 +40,17 @@ public interface ApiInterface {
     @GET("api/store/{id}")
     Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id);
 
-    @POST("api/login")
+    @POST("api/initRegistration")
     @FormUrlEncoded
-    Call<UserDTO> logIn(@Field("phone_number") String phoneNo, @Field("password") String password);
+    Call<String> initRegistration(@Field("phone_number") String phoneNumber);
 
-    @POST("api/initialRegistration")
+    @POST("api/verifyCode")
     @FormUrlEncoded
-    Call<String> initRegistration(@Field("phone_number") String phoneNo);
+    Call<String> verifyCode(@Field("phone_number") String phoneNumber, @Field("code") String code);
 
-    @POST("api/checkCode")
+    @POST("api/signUp")
     @FormUrlEncoded
-    Call<String> checkCode(@Field("phone_number") String phoneNo, @Field("code") String code);
+    Call<String> signUp(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("email") String email);
+
 
 }

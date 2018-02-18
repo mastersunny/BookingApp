@@ -19,13 +19,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MobileVerificationActivity extends AppCompatActivity {
+public class MobileVerificationActivity extends AppCompatActivity implements View.OnClickListener, Callback<String> {
 
     public String MobileVerificationActivity = "MobileVerificationActivity";
     private EditText one_time_password;
     private TextView phone_number, timer_text;
     private Button btn_next, btn_resend_code;
     SharedPreferences preferences;
+    SharedPreferences.Editor editor;
     private boolean isResend = false;
     private String phoneNumber = "";
     private ApiInterface apiInterface;
@@ -42,6 +43,7 @@ public class MobileVerificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mobile_verification);
 
         preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
+        editor = preferences.edit();
 
         phoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);
 
@@ -84,22 +86,19 @@ public class MobileVerificationActivity extends AppCompatActivity {
 
         }.start();
 
-        btn_resend_code.setOnClickListener(new View.OnClickListener() {
+        btn_resend_code.setOnClickListener(this);
+    }
+
+    private void sendCode() {
+        apiInterface.initRegistration(phoneNumber).enqueue(new Callback<String>() {
             @Override
-            public void onClick(View v) {
-                if (!isResend) {
-                    apiInterface.initRegistration(phoneNumber).enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
 
-                        }
+            }
 
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
 
-                        }
-                    });
-                }
             }
         });
     }
@@ -110,5 +109,32 @@ public class MobileVerificationActivity extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_resend_code:
+                if (!isResend) {
+                    sendCode();
+                }
+                break;
+            case R.id.btn_next:
+                apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(this);
+                break;
+        }
+    }
+
+    @Override
+    public void onResponse(Call<String> call, Response<String> response) {
+        if (response != null && response.body().length() > 0) {
+            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
+            editor.putString(Constants.API_KEY, response.body());
+        }
+    }
+
+    @Override
+    public void onFailure(Call<String> call, Throwable t) {
+
     }
 }
