@@ -52,24 +52,21 @@ public class Constants {
                 .into(imageView);
     }
 
-    public static void showPaymentDialog(Context context) {
+    public static void showDialog(Context context, String message) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.payment_dialog_layout);
-        dialog.setTitle("Title...");
 
-        TextView text = (TextView) dialog.findViewById(R.id.message);
-        text.setText("Your payment has been submitted");
+        TextView text = dialog.findViewById(R.id.message);
+        text.setText(message);
 
-        Button dialogButton = (Button) dialog.findViewById(R.id.ok_button);
-        // if button is clicked, close the custom dialog
-        dialogButton.setOnClickListener(new View.OnClickListener() {
+        TextView ok_button = dialog.findViewById(R.id.ok_button);
+        ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-
         dialog.show();
     }
 }

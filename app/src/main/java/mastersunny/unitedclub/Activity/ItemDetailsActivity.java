@@ -124,7 +124,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
     }
 
     private void submitPurchase() {
-        Constants.showPaymentDialog(this);
+        Constants.showDialog(this, "Your payment has been submitted");
         double amount = 0;
         try {
             amount = Double.valueOf(total_amount.getText().toString().trim());
