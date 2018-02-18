@@ -12,6 +12,9 @@ import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,25 +22,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText phone_number;
     private Button btn_send_code;
     private ApiInterface apiInterface;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
+    private String phoneNumber = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-
-        preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
-        editor = preferences.edit();
-
         initLayout();
     }
 
     @Override
     protected void onResume() {
-        String phone = preferences.getString(Constants.PHONE_NUMBER, "");
-        phone_number.setText(phone);
+        phone_number.setText(phoneNumber);
         super.onResume();
     }
 
@@ -57,25 +54,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void sendCode() {
-        String phone = phone_number.getText().toString().trim();
-        if (phone.length() == 0) {
+        phoneNumber = phone_number.getText().toString().trim();
+        if (phoneNumber.length() == 0) {
             Constants.showDialog(MainActivity.this, "Please enter a valid phone number");
             return;
+        } else {
+            apiInterface.initRegistration(phoneNumber).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
+            MobileVerificationActivity.start(MainActivity.this, phoneNumber);
         }
-        editor.putString(Constants.PHONE_NUMBER, phone);
-        editor.apply();
-      /*  apiInterface.initRegistration(phone).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
 
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });*/
-
-        startActivity(new Intent(MainActivity.this, MobileVerificationActivity.class));
     }
 }

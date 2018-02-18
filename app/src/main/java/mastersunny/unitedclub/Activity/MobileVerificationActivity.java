@@ -1,17 +1,25 @@
 package mastersunny.unitedclub.Activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class MobileVerificationActivity extends MainActivity {
+public class MobileVerificationActivity extends AppCompatActivity {
 
     public String MobileVerificationActivity = "MobileVerificationActivity";
     private EditText one_time_password;
@@ -19,6 +27,14 @@ public class MobileVerificationActivity extends MainActivity {
     private Button btn_next, btn_resend_code;
     SharedPreferences preferences;
     private boolean isResend = false;
+    private String phoneNumber = "";
+    private ApiInterface apiInterface;
+
+    public static void start(Context context, String phoneNumber) {
+        Intent intent = new Intent(context, MobileVerificationActivity.class);
+        intent.putExtra(Constants.PHONE_NUMBER, phoneNumber);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +43,17 @@ public class MobileVerificationActivity extends MainActivity {
 
         preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
 
+        phoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);
+
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
         initLayout();
         updateUI();
     }
 
     private void updateUI() {
         isResend = false;
-        phone_number.setText(preferences.getString(Constants.PHONE_NUMBER, ""));
+        phone_number.setText(phoneNumber);
     }
 
     int time = 60;
@@ -68,7 +88,17 @@ public class MobileVerificationActivity extends MainActivity {
             @Override
             public void onClick(View v) {
                 if (!isResend) {
-                    sendCode();
+                    apiInterface.initRegistration(phoneNumber).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+
+                        }
+                    });
                 }
             }
         });
