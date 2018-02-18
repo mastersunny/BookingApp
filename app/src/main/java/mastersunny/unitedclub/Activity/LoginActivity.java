@@ -27,9 +27,9 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity implements Callback<UserDTO> {
 
     public String TAG = "LoginActivity";
-    private EditText phone_number, password;
+    private EditText phone_number;
     private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset;
+    private Button  btnLogin;
     private ApiInterface apiService;
 
     @Override
@@ -41,25 +41,8 @@ public class LoginActivity extends AppCompatActivity implements Callback<UserDTO
         apiService = ApiClient.getClient().create(ApiInterface.class);
 
         phone_number = findViewById(R.id.phone_number);
-        password = findViewById(R.id.password);
         progressBar = findViewById(R.id.progressBar);
-        btnSignup = findViewById(R.id.btn_signup);
         btnLogin = findViewById(R.id.btn_login);
-        btnReset = findViewById(R.id.btn_reset_password);
-
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-            }
-        });
-
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
-            }
-        });
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -74,9 +57,8 @@ public class LoginActivity extends AppCompatActivity implements Callback<UserDTO
     private void submitUserLogin() {
         progressBar.setVisibility(View.VISIBLE);
         String phone = phone_number.getText().toString().trim();
-        String pass = password.getText().toString().trim();
 
-        apiService.logIn(phone, pass).enqueue(this);
+//        apiService.logIn(phone, pass).enqueue(this);
     }
 
     @Override

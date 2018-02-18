@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.security.PublicKey;
+
 import mastersunny.unitedclub.R;
 
 /**
@@ -23,6 +25,10 @@ public class Constants {
     public static final int USER_TYPE_CLIENT = 1;
     public static final int USER_TYPE_MERCHANT = 2;
     public static final int USER_TYPE_ADMIN = 3;
+
+    public static final String prefs = "prefs";
+    public static final String PHONE_NUMBER = "phone_number";
+    public static final String API_KEY = "api_key";
 
     public static Typeface getRegularFace(Context context) {
         Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_regular.otf");
