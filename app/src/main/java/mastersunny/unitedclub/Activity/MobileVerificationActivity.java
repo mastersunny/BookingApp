@@ -120,7 +120,8 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                 }
                 break;
             case R.id.btn_next:
-                apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(this);
+                startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
+//                apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(this);
                 break;
         }
     }
