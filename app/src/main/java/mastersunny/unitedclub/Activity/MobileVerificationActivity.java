@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import mastersunny.unitedclub.Model.AccessModel;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -21,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MobileVerificationActivity extends AppCompatActivity implements View.OnClickListener, Callback<String> {
+public class MobileVerificationActivity extends AppCompatActivity implements View.OnClickListener {
 
     public String TAG = "MobileVerificationActivity";
     private EditText one_time_password;
@@ -32,6 +34,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     private boolean isResend = false;
     private String phoneNumber = "";
     private ApiInterface apiInterface;
+    private ProgressBar progressBar;
 
     public static void start(Context context, String phoneNumber) {
         Intent intent = new Intent(context, MobileVerificationActivity.class);
@@ -73,6 +76,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         btn_resend_code.setOnClickListener(this);
         btn_resend_code.setClickable(false);
         btn_resend_code.setAlpha(0.5f);
+        progressBar = findViewById(R.id.progressBar);
 
         findViewById(R.id.back_button).setOnClickListener(this);
 
@@ -89,6 +93,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                 btn_resend_code.setClickable(true);
                 btn_resend_code.setAlpha(1f);
                 isResend = true;
+                progressBar.setVisibility(View.GONE);
             }
 
         }.start();
@@ -128,7 +133,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                 }
                 break;
             case R.id.btn_next:
-                apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(this);
+                verifyCode();
                 break;
             case R.id.back_button:
                 if (isResend) {
@@ -137,25 +142,35 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         }
     }
 
-    @Override
-    public void onResponse(Call<String> call, Response<String> response) {
-        try {
-            Constants.debugLog(TAG, response.body());
-        } catch (Exception e) {
-            Constants.debugLog(TAG, e.getMessage());
-        }
-
-//        Log.d(TAG, "" + response.body());
+    private void verifyCode() {
+        progressBar.setVisibility(View.VISIBLE);
+        Constants.debugLog(TAG, "" + phoneNumber + " " + one_time_password.getText().toString());
+        apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<AccessModel>() {
+            @Override
+            public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                progressBar.setVisibility(View.GONE);
+                try {
+                    Constants.debugLog(TAG, response.body().toString());
+                    //        Log.d(TAG, "" + response.body());
 //        if (response != null && response.body().length() > 0) {
 //            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
 //            editor.putString(Constants.API_KEY, response.body());
 //        } else {
 //            startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
 //        }
+                } catch (Exception e) {
+                    Constants.debugLog(TAG, e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AccessModel> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Constants.debugLog(TAG, "" + t.getMessage());
+                Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment");
+            }
+        });
     }
 
-    @Override
-    public void onFailure(Call<String> call, Throwable t) {
-        Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment");
-    }
+
 }

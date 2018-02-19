@@ -1,14 +1,12 @@
 package mastersunny.unitedclub.Rest;
 
-import android.transition.Slide;
-
 import java.util.List;
 
+import mastersunny.unitedclub.Model.AccessModel;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
-import mastersunny.unitedclub.Model.UserDTO;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -46,7 +44,7 @@ public interface ApiInterface {
 
     @POST("api/getAccess")
     @FormUrlEncoded
-    Call<String> verifyCode(@Field("phone_number") String phoneNumber, @Field("code") String code);
+    Call<AccessModel> verifyCode(@Field("phone_number") String phoneNumber, @Field("code") String code);
 
     @POST("api/signUp")
     @FormUrlEncoded
