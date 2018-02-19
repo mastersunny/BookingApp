@@ -96,7 +96,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     }
 
     private void sendCode() {
-        apiInterface.getAccess(phoneNumber).enqueue(new Callback<String>() {
+        apiInterface.initRegistration(phoneNumber).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
@@ -126,7 +126,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                 }
                 break;
             case R.id.btn_next:
-                apiInterface.getAccess(phoneNumber, one_time_password.getText().toString()).enqueue(this);
+                apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(this);
                 break;
             case R.id.back_button:
                 if (!isResend) {
@@ -140,9 +140,8 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         if (response != null && response.body().length() > 0) {
             editor.putString(Constants.PHONE_NUMBER, phoneNumber);
             editor.putString(Constants.API_KEY, response.body());
-            startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
         } else {
-            Constants.showDialog(MobileVerificationActivity.this, "Wrong error code");
+            startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
         }
     }
 

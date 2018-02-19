@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -61,18 +62,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Constants.showDialog(MainActivity.this, "Please enter a valid phone number");
             return;
         } else {
-            apiInterface.getAccess(phoneNumber).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+            try {
+                apiInterface.initRegistration(phoneNumber).enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
 
-                }
+                        Log.d(TAG, "isSuccessful " + response.isSuccessful()
+                                + " code " + response.code() + " body " + response.body());
 
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                        if (!response.isSuccessful() || response.code() != 200) {
+                            Constants.showDialog(MainActivity.this, "Error occurred");
+                            return;
+                        }
+                    }
 
-                }
-            });
-            MobileVerificationActivity.start(MainActivity.this, phoneNumber);
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Constants.showDialog(MainActivity.this, "Error occurred");
+                    }
+                });
+                MobileVerificationActivity.start(MainActivity.this, phoneNumber);
+            } catch (Exception e) {
+                Log.d(TAG, "" + e.getMessage());
+                Constants.showDialog(MainActivity.this, "Error occurred");
+            }
         }
 
     }
