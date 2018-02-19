@@ -103,17 +103,31 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
     private void sendCode() {
         isResend = false;
-        apiInterface.initRegistration(phoneNumber).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+        try {
+            apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
+                @Override
+                public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                    Constants.debugLog(TAG, response.body().toString());
+                    progressBar.setVisibility(View.GONE);
+                    if (response.body().isSuccess()) {
+                        Constants.showDialog(MobileVerificationActivity.this,
+                                "Verification code will be sent to your phone number.");
+                    } else {
+                        Constants.showDialog(MobileVerificationActivity.this, "Please try again");
+                    }
+                }
 
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
+                @Override
+                public void onFailure(Call<AccessModel> call, Throwable t) {
+                    Constants.debugLog(TAG, t.getMessage());
+                    Constants.showDialog(MobileVerificationActivity.this, "Please try again");
+                }
+            });
+        } catch (Exception e) {
+            Log.d(TAG, "" + e.getMessage());
+            progressBar.setVisibility(View.GONE);
+            Constants.showDialog(MobileVerificationActivity.this, "Please try again");
+        }
     }
 
     @Override

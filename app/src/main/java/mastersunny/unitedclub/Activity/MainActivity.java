@@ -2,6 +2,7 @@ package mastersunny.unitedclub.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
+import mastersunny.unitedclub.Model.AccessModel;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_send_code;
     private ApiInterface apiInterface;
     private String phoneNumber = "";
+    private ProgressBar progressBar;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        handler = new Handler();
         initLayout();
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            progressBar.setVisibility(View.GONE);
+        }
+    };
+
+    private void refreshHandler() {
+        handler.postDelayed(runnable, 10000);
     }
 
     @Override
@@ -42,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initLayout() {
+        progressBar = findViewById(R.id.progressBar);
         phone_number = findViewById(R.id.phone_number);
         btn_send_code = findViewById(R.id.btn_send_code);
         btn_send_code.setOnClickListener(this);
@@ -57,36 +75,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void sendCode() {
+        progressBar.setVisibility(View.VISIBLE);
+        refreshHandler();
         phoneNumber = phone_number.getText().toString().trim();
         if (phoneNumber.length() == 0) {
             Constants.showDialog(MainActivity.this, "Please enter a valid phone number");
             return;
         } else {
             try {
-                apiInterface.initRegistration(phoneNumber).enqueue(new Callback<String>() {
+                apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
-                        Log.d(TAG, "isSuccessful " + response.isSuccessful()
-                                + " code " + response.code() + " body " + response.body());
-
-                        if (!response.isSuccessful() || response.code() != 200) {
+                    public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                        Constants.debugLog(TAG, response.body().toString());
+                        progressBar.setVisibility(View.GONE);
+                        if (response.body().isSuccess()) {
+                            MobileVerificationActivity.start(MainActivity.this, phoneNumber);
+                        } else {
                             Constants.showDialog(MainActivity.this, "Please try again");
-                            return;
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<AccessModel> call, Throwable t) {
                         Constants.showDialog(MainActivity.this, "Please try again");
                     }
                 });
-                MobileVerificationActivity.start(MainActivity.this, phoneNumber);
             } catch (Exception e) {
+                progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "" + e.getMessage());
                 Constants.showDialog(MainActivity.this, "Please try again");
             }
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        handler.removeCallbacksAndMessages(null);
+        super.onDestroy();
     }
 }

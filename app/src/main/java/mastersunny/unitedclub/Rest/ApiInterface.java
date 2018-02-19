@@ -40,7 +40,7 @@ public interface ApiInterface {
 
     @POST("api/getAccess")
     @FormUrlEncoded
-    Call<String> initRegistration(@Field("phone_number") String phoneNumber);
+    Call<AccessModel> initRegistration(@Field("phone_number") String phoneNumber);
 
     @POST("api/getAccess")
     @FormUrlEncoded
