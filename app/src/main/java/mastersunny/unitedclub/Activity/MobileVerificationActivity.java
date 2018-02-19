@@ -151,7 +151,6 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
                     Constants.debugLog(TAG, response.body().toString());
                     progressBar.setVisibility(View.GONE);
-
                     AccessModel accessModel = response.body();
                     if (accessModel.isSuccess()) {
                         if (accessModel.getAccessToken().length() == 0) {
