@@ -42,11 +42,11 @@ public interface ApiInterface {
 
     @POST("api/initRegistration")
     @FormUrlEncoded
-    Call<String> initRegistration(@Field("phone_number") String phoneNumber);
+    Call<String> getAccess(@Field("phone_number") String phoneNumber);
 
     @POST("api/verifyCode")
     @FormUrlEncoded
-    Call<String> verifyCode(@Field("phone_number") String phoneNumber, @Field("code") String code);
+    Call<String> getAccess(@Field("phone_number") String phoneNumber, @Field("code") String code);
 
     @POST("api/signUp")
     @FormUrlEncoded
