@@ -145,31 +145,41 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     private void verifyCode() {
         progressBar.setVisibility(View.VISIBLE);
         Constants.debugLog(TAG, "" + phoneNumber + " " + one_time_password.getText().toString());
-        apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<AccessModel>() {
-            @Override
-            public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
-                progressBar.setVisibility(View.GONE);
-                try {
+        try {
+            apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<AccessModel>() {
+                @Override
+                public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
                     Constants.debugLog(TAG, response.body().toString());
-                    //        Log.d(TAG, "" + response.body());
-//        if (response != null && response.body().length() > 0) {
-//            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
-//            editor.putString(Constants.API_KEY, response.body());
-//        } else {
-//            startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
-//        }
-                } catch (Exception e) {
-                    Constants.debugLog(TAG, e.getMessage());
-                }
-            }
+                    progressBar.setVisibility(View.GONE);
 
-            @Override
-            public void onFailure(Call<AccessModel> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Constants.debugLog(TAG, "" + t.getMessage());
-                Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment");
-            }
-        });
+                    AccessModel accessModel = response.body();
+                    if (accessModel.isSuccess()) {
+                        if (accessModel.getAccessToken().length() == 0) {
+                            startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
+                            finish();
+                        } else {
+                            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
+                            editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
+                            startActivity(new Intent(MobileVerificationActivity.this, ClientMainActivity.class));
+                            finish();
+                        }
+                    } else {
+                        Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment");
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<AccessModel> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Constants.debugLog(TAG, "" + t.getMessage());
+                    Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment");
+                }
+            });
+
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
     }
 
 

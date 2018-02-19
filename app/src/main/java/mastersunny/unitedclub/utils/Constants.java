@@ -30,7 +30,7 @@ public class Constants {
 
     public static final String prefs = "prefs";
     public static final String PHONE_NUMBER = "phone_number";
-    public static final String API_KEY = "api_key";
+    public static final String ACCESS_TOKEN = "access_token";
 
     public static Typeface getRegularFace(Context context) {
         Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_regular.otf");
