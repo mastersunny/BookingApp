@@ -71,20 +71,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 + " code " + response.code() + " body " + response.body());
 
                         if (!response.isSuccessful() || response.code() != 200) {
-                            Constants.showDialog(MainActivity.this, "Error occurred");
+                            Constants.showDialog(MainActivity.this, "Please try again");
                             return;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-                        Constants.showDialog(MainActivity.this, "Error occurred");
+                        Constants.showDialog(MainActivity.this, "Please try again");
                     }
                 });
                 MobileVerificationActivity.start(MainActivity.this, phoneNumber);
             } catch (Exception e) {
                 Log.d(TAG, "" + e.getMessage());
-                Constants.showDialog(MainActivity.this, "Error occurred");
+                Constants.showDialog(MainActivity.this, "Please try again");
             }
         }
 
