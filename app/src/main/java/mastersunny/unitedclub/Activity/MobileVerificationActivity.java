@@ -115,6 +115,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                     } else {
                         Constants.showDialog(MobileVerificationActivity.this, "Please try again");
                     }
+                    isResend = true;
                 }
 
                 @Override
