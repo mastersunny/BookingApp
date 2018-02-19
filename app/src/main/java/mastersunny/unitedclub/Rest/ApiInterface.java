@@ -46,9 +46,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<AccessModel> verifyCode(@Field("phone_number") String phoneNumber, @Field("code") String code);
 
-    @POST("api/signUp")
+    @POST("api/sign_up")
     @FormUrlEncoded
-    Call<String> signUp(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("email") String email);
+    Call<String> signUp(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("email") String email, @Field("phone_number") String phoneNumber);
 
 
 }
