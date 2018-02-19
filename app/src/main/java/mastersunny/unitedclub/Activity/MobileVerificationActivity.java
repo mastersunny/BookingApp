@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,7 +23,7 @@ import retrofit2.Response;
 
 public class MobileVerificationActivity extends AppCompatActivity implements View.OnClickListener, Callback<String> {
 
-    public String MobileVerificationActivity = "MobileVerificationActivity";
+    public String TAG = "MobileVerificationActivity";
     private EditText one_time_password;
     private TextView phone_number, timer_text;
     private Button btn_next, btn_resend_code;
@@ -96,6 +97,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     }
 
     private void sendCode() {
+        isResend = false;
         apiInterface.initRegistration(phoneNumber).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -111,7 +113,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onBackPressed() {
-        if (!isResend) {
+        if (isResend) {
             return;
         }
         super.onBackPressed();
@@ -121,7 +123,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_resend_code:
-                if (!isResend) {
+                if (isResend) {
                     sendCode();
                 }
                 break;
@@ -129,7 +131,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                 apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(this);
                 break;
             case R.id.back_button:
-                if (!isResend) {
+                if (isResend) {
                     finish();
                 }
         }
@@ -137,16 +139,23 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
-        if (response != null && response.body().length() > 0) {
-            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
-            editor.putString(Constants.API_KEY, response.body());
-        } else {
-            startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
+        try {
+            Constants.debugLog(TAG, response.body());
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
         }
+
+//        Log.d(TAG, "" + response.body());
+//        if (response != null && response.body().length() > 0) {
+//            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
+//            editor.putString(Constants.API_KEY, response.body());
+//        } else {
+//            startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
+//        }
     }
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
-        Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment" + t.getMessage());
+        Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment");
     }
 }

@@ -3,6 +3,7 @@ package mastersunny.unitedclub.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import mastersunny.unitedclub.R;
 
 public class Constants {
 
+    public static boolean debugOn = true;
     public static final int USER_TYPE_CLIENT = 1;
     public static final int USER_TYPE_MERCHANT = 2;
     public static final int USER_TYPE_ADMIN = 3;
@@ -68,5 +70,11 @@ public class Constants {
             }
         });
         dialog.show();
+    }
+
+    public static void debugLog(String TAG, String message) {
+        if (debugOn) {
+            Log.d(TAG, "" + message);
+        }
     }
 }
