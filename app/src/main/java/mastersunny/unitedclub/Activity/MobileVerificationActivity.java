@@ -39,7 +39,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     private ProgressBar progressBar;
     private CountDownTimer timer;
     private Handler handler;
-    private boolean sendAgain = false;
+    private boolean alreadyRequest = false;
 
     public static void start(Context context, String phoneNumber) {
         Intent intent = new Intent(context, MobileVerificationActivity.class);
@@ -65,7 +65,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     }
 
     private void updateUI() {
-        sendAgain = false;
+        alreadyRequest = true;
         phone_number.setText(phoneNumber);
     }
 
@@ -118,7 +118,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
             }
 
             public void onFinish() {
-                sendAgain = true;
+                alreadyRequest = false;
                 btn_resend_code.setClickable(true);
                 btn_resend_code.setAlpha(1f);
                 progressBar.setVisibility(View.GONE);
@@ -132,7 +132,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onBackPressed() {
-        if (!sendAgain) {
+        if (!alreadyRequest) {
             super.onBackPressed();
         }
     }
@@ -141,17 +141,19 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_resend_code:
-                if (sendAgain) {
+                if (!alreadyRequest) {
+                    alreadyRequest = true;
                     sendCode();
                 }
                 break;
             case R.id.btn_next:
-                if (!sendAgain) {
+                if (!alreadyRequest) {
+                    alreadyRequest = true;
                     verifyCode();
                 }
                 break;
             case R.id.back_button:
-                if (!sendAgain) {
+                if (!alreadyRequest) {
                     finish();
                 }
         }
@@ -160,8 +162,8 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            alreadyRequest = false;
             if (timer != null) {
-                sendAgain = true;
                 timer.cancel();
             }
             progressBar.setVisibility(View.GONE);
@@ -174,13 +176,12 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
     protected void sendCode() {
         try {
-            sendAgain = false;
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
             apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
-                    sendAgain = true;
+                    alreadyRequest = false;
                     progressBar.setVisibility(View.GONE);
                     if (response != null && response.isSuccessful() && response.body().isSuccess()) {
                         Constants.showDialog(MobileVerificationActivity.this, "Verification code will be sent to your phone number.");
@@ -207,13 +208,12 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
             return;
         }
         try {
-            sendAgain = false;
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
             apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
-                    sendAgain = true;
+                    alreadyRequest = false;
                     progressBar.setVisibility(View.GONE);
                     if (response != null && response.isSuccessful() && response.body().isSuccess()) {
                         AccessModel accessModel = response.body();
