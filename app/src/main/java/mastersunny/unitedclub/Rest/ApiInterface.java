@@ -26,23 +26,26 @@ public interface ApiInterface {
     @GET("movie/{id}")
     Call<MoviesResponse> getMovieDetails(@Path("id") int id, @Query("api_key") String apiKey);
 
-    @GET("api/popularStores")
-    Call<List<StoreDTO>> getPopularStores();
+    @GET("api/popular_stores")
+    Call<List<StoreDTO>> getPopularStores(@Query("access_token") String accessToken);
 
-    @GET("api/allStores")
-    Call<List<StoreDTO>> getAllStores();
+    @GET("api/all_stores")
+    Call<List<StoreDTO>> getAllStores(@Query("access_token") String accessToken);
 
-    @GET("api/getSliders")
-    Call<List<SliderDTO>> getSliders();
+    @GET("api/get_sliders")
+    Call<List<SliderDTO>> getSliders(@Query("access_token") String accessToken);
 
     @GET("api/store/{id}")
-    Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id);
+    Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id, @Query("access_token") String accessToken);
 
-    @POST("api/getAccess")
+    @GET("api/category/{id}")
+    Call<List<StoreOfferDTO>> getCategoryOffers(@Path("id") int id, @Query("access_token") String accessToken);
+
+    @POST("api/get_access")
     @FormUrlEncoded
     Call<AccessModel> initRegistration(@Field("phone_number") String phoneNumber);
 
-    @POST("api/getAccess")
+    @POST("api/get_access")
     @FormUrlEncoded
     Call<AccessModel> verifyCode(@Field("phone_number") String phoneNumber, @Field("code") String code);
 

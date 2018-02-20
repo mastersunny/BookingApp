@@ -3,6 +3,7 @@ package mastersunny.unitedclub.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,13 +40,17 @@ import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
 import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.utils.Constants;
 import mastersunny.unitedclub.utils.barcode.BarcodeCaptureActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -57,9 +62,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public String TAG = "HomeFragment";
     private Activity mActivity;
     private View view;
-    //    private DrawerLayout drawerLayout;
-//    private NavigationView navigationView;
-
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Toolbar toolbar;
@@ -73,7 +75,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LoopingPagerAdapter loopingPagerAdapter;
     private ProgressBar progressBar;
     private ArrayList<SliderDTO> autoScrollList;
-    ApiInterface apiService;
+    private ApiInterface apiService;
+    private String accessToken = "";
 
     @Override
     public void onAttach(Context context) {
@@ -87,22 +90,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (view == null) {
             view = inflater.inflate(R.layout.home_fragment_layout, container, false);
             apiService = ApiClient.getClient().create(ApiInterface.class);
-
+            accessToken = mActivity.getSharedPreferences(Constants.prefs, MODE_PRIVATE).getString(Constants.ACCESS_TOKEN, "");
             storeDTOS = new ArrayList<>();
             autoScrollList = new ArrayList<>();
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             setUpTabLayout(savedInstanceState);
+            try {
+                progressBar.setVisibility(View.VISIBLE);
+                Constants.debugLog(TAG, "Loading data");
+                loadData();
+            } catch (Exception e) {
+                Constants.debugLog(TAG, "" + e.getMessage());
+            }
 
-            loadData();
         }
 
         return view;
     }
 
     private void loadData() {
-        Call<List<SliderDTO>> sliders = apiService.getSliders();
-        sliders.enqueue(new Callback<List<SliderDTO>>() {
+        apiService.getSliders(accessToken).enqueue(new Callback<List<SliderDTO>>() {
             @Override
             public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -117,7 +125,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        apiService.getPopularStores().enqueue(new Callback<List<StoreDTO>>() {
+        apiService.getPopularStores(accessToken).enqueue(new Callback<List<StoreDTO>>() {
             @Override
             public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
                 if (response.isSuccessful() & response.body() != null) {
@@ -137,41 +145,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         loopingPagerAdapter = new AutoScrollAdapter(mActivity, autoScrollList, true);
         loopingViewPager.setAdapter(loopingPagerAdapter);
     }
-
-    /*private void setUpNavigationView() {
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        break;
-                    case R.id.nav_grab:
-                        break;
-                    case R.id.nav_share:
-                        break;
-                    case R.id.nav_settings:
-                        break;
-                    case R.id.nav_sign:
-                        startActivity(new Intent(mActivity, SignUpActivity.class));
-
-                }
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
-
-        if (user == null)
-            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signin));
-        else
-            navigationView.getMenu().getItem(10).setTitle(getResources().getString(R.string.nav_signout));
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(mActivity, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
-
-
-    }*/
 
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
