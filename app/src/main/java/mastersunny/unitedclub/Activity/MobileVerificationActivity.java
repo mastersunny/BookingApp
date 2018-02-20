@@ -32,12 +32,12 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     private Button btn_next, btn_resend_code;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-    private boolean isResend = false;
     private String phoneNumber = "";
     private ApiInterface apiInterface;
     private ProgressBar progressBar;
     private CountDownTimer timer;
     private Handler handler;
+    private boolean sendAgain = false;
 
     public static void start(Context context, String phoneNumber) {
         Intent intent = new Intent(context, MobileVerificationActivity.class);
@@ -63,7 +63,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     }
 
     private void updateUI() {
-        isResend = false;
+        sendAgain = false;
         phone_number.setText(phoneNumber);
     }
 
@@ -93,9 +93,9 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
             }
 
             public void onFinish() {
+                sendAgain = true;
                 btn_resend_code.setClickable(true);
                 btn_resend_code.setAlpha(1f);
-                isResend = true;
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -107,17 +107,16 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onBackPressed() {
-        if (isResend) {
-            return;
+        if (!sendAgain) {
+            super.onBackPressed();
         }
-        super.onBackPressed();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_resend_code:
-                if (isResend) {
+                if (sendAgain) {
                     sendCode();
                 }
                 break;
@@ -125,7 +124,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                 verifyCode();
                 break;
             case R.id.back_button:
-                if (isResend) {
+                if (!sendAgain) {
                     finish();
                 }
         }
@@ -135,6 +134,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         @Override
         public void run() {
             if (timer != null) {
+                sendAgain = true;
                 timer.cancel();
             }
             progressBar.setVisibility(View.GONE);
@@ -147,6 +147,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
     protected void sendCode() {
         try {
+            sendAgain = false;
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
             apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
@@ -174,6 +175,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
     private void verifyCode() {
         try {
+            sendAgain = false;
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
             apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<AccessModel>() {
