@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
                     @Override
                     public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                        Constants.debugLog(TAG, response.body().toString());
                         progressBar.setVisibility(View.GONE);
                         if (response != null && response.isSuccessful() && response.body().isSuccess()) {
                             MobileVerificationActivity.start(MainActivity.this, phoneNumber);
