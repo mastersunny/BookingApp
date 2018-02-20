@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     private ApiInterface apiInterface;
     private ProgressBar progressBar;
     private CountDownTimer timer;
+    private Handler handler;
 
     public static void start(Context context, String phoneNumber) {
         Intent intent = new Intent(context, MobileVerificationActivity.class);
@@ -55,7 +57,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         phoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-
+        handler = new Handler();
         initLayout();
         updateUI();
     }
@@ -103,37 +105,6 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         btn_resend_code.setOnClickListener(this);
     }
 
-    private void sendCode() {
-        isResend = false;
-        try {
-            timer.start();
-            apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
-                @Override
-                public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
-                    Constants.debugLog(TAG, response.body().toString());
-                    progressBar.setVisibility(View.GONE);
-                    if (response.body().isSuccess()) {
-                        Constants.showDialog(MobileVerificationActivity.this,
-                                "Verification code will be sent to your phone number.");
-                    } else {
-                        Constants.showDialog(MobileVerificationActivity.this, "Please try again");
-                    }
-                    isResend = true;
-                }
-
-                @Override
-                public void onFailure(Call<AccessModel> call, Throwable t) {
-                    Constants.debugLog(TAG, t.getMessage());
-                    Constants.showDialog(MobileVerificationActivity.this, "Please try again");
-                }
-            });
-        } catch (Exception e) {
-            Log.d(TAG, "" + e.getMessage());
-            progressBar.setVisibility(View.GONE);
-            Constants.showDialog(MobileVerificationActivity.this, "Please try again");
-        }
-    }
-
     @Override
     public void onBackPressed() {
         if (isResend) {
@@ -160,17 +131,57 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         }
     }
 
-    private void verifyCode() {
-        progressBar.setVisibility(View.VISIBLE);
-        Constants.debugLog(TAG, "" + phoneNumber + " " + one_time_password.getText().toString());
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (timer != null) {
+                timer.cancel();
+            }
+            progressBar.setVisibility(View.GONE);
+        }
+    };
+
+    private void refreshHandler() {
+        handler.postDelayed(runnable, 10000);
+    }
+
+    protected void sendCode() {
         try {
+            progressBar.setVisibility(View.VISIBLE);
+            refreshHandler();
+            apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
+                @Override
+                public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response != null && response.isSuccessful() && response.body().isSuccess()) {
+                        Constants.showDialog(MobileVerificationActivity.this, "Verification code will be sent to your phone number.");
+                    } else {
+                        Constants.showDialog(MobileVerificationActivity.this, "Please try again");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AccessModel> call, Throwable t) {
+                    Constants.showDialog(MobileVerificationActivity.this, "Please try again");
+                }
+            });
+        } catch (Exception e) {
+            Log.d(TAG, "" + e.getMessage());
+            progressBar.setVisibility(View.GONE);
+            Constants.showDialog(MobileVerificationActivity.this, "Please try again");
+        }
+    }
+
+    private void verifyCode() {
+        try {
+            progressBar.setVisibility(View.VISIBLE);
+            refreshHandler();
             apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
-                    Constants.debugLog(TAG, response.body().toString());
                     progressBar.setVisibility(View.GONE);
-                    AccessModel accessModel = response.body();
-                    if (accessModel.isSuccess()) {
+                    if (response != null && response.isSuccessful() && response.body().isSuccess()) {
+                        AccessModel accessModel = response.body();
                         if (accessModel.getAccessToken().length() == 0) {
                             editor.putString(Constants.PHONE_NUMBER, phoneNumber);
                             editor.apply();
@@ -186,7 +197,6 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                     } else {
                         Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment");
                     }
-
                 }
 
                 @Override

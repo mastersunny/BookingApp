@@ -80,15 +80,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Constants.showDialog(MainActivity.this, "Please enter a valid phone number");
             return;
         } else {
-            progressBar.setVisibility(View.VISIBLE);
-            refreshHandler();
             try {
+                progressBar.setVisibility(View.VISIBLE);
+                refreshHandler();
                 apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
                     @Override
                     public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
-                        Constants.debugLog(TAG, response.body().toString());
                         progressBar.setVisibility(View.GONE);
-                        if (response.body().isSuccess()) {
+                        if (response != null && response.isSuccessful() && response.body().isSuccess()) {
                             MobileVerificationActivity.start(MainActivity.this, phoneNumber);
                         } else {
                             Constants.showDialog(MainActivity.this, "Please try again");
@@ -101,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
             } catch (Exception e) {
-                progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "" + e.getMessage());
+                progressBar.setVisibility(View.GONE);
                 Constants.showDialog(MainActivity.this, "Please try again");
             }
         }
