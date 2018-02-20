@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btn_send_code:
                 if (!alreadyRequest) {
+                    Constants.debugLog(TAG, "request " + alreadyRequest);
                     alreadyRequest = true;
                     sendCode();
                 }

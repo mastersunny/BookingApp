@@ -65,7 +65,6 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     }
 
     private void updateUI() {
-        alreadyRequest = true;
         phone_number.setText(phoneNumber);
     }
 
