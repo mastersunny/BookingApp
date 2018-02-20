@@ -108,6 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadData() {
+        Constants.debugLog(TAG, accessToken);
         apiService.getSliders(accessToken).enqueue(new Callback<List<SliderDTO>>() {
             @Override
             public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {
