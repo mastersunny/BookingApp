@@ -1,5 +1,6 @@
 package mastersunny.unitedclub.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -83,6 +84,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                 editor.putString(Constants.LAST_NAME, lastName);
                                 editor.putString(Constants.EMAIL, emailAddress);
                                 editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
+                                startActivity(new Intent(RegistrationActivity.this, MerchantMainActivity.class));
+                                finish();
                             } else {
                                 Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");
                                 Constants.debugLog(TAG, "ERROR");
