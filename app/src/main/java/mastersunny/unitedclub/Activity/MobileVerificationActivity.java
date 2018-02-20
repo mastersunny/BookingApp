@@ -7,6 +7,8 @@ import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -74,12 +76,35 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         phone_number = findViewById(R.id.phone_number);
         timer_text = findViewById(R.id.timer_text);
         btn_next = findViewById(R.id.btn_next);
+        btn_next.setAlpha(0.5f);
+        btn_next.setClickable(false);
         btn_next.setOnClickListener(this);
         btn_resend_code = findViewById(R.id.btn_resend_code);
         btn_resend_code.setOnClickListener(this);
         btn_resend_code.setClickable(false);
         btn_resend_code.setAlpha(0.5f);
         progressBar = findViewById(R.id.progressBar);
+
+        one_time_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    btn_next.setAlpha(1);
+                    btn_next.setClickable(true);
+                } else {
+                    btn_next.setAlpha(0.5f);
+                    btn_next.setClickable(false);
+                }
+            }
+        });
 
         findViewById(R.id.back_button).setOnClickListener(this);
 
@@ -121,7 +146,9 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                 }
                 break;
             case R.id.btn_next:
-                verifyCode();
+                if (!sendAgain) {
+                    verifyCode();
+                }
                 break;
             case R.id.back_button:
                 if (!sendAgain) {
@@ -153,6 +180,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
             apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                    sendAgain = true;
                     progressBar.setVisibility(View.GONE);
                     if (response != null && response.isSuccessful() && response.body().isSuccess()) {
                         Constants.showDialog(MobileVerificationActivity.this, "Verification code will be sent to your phone number.");
@@ -174,6 +202,10 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     }
 
     private void verifyCode() {
+        String otp = one_time_password.getText().toString().trim();
+        if (otp.length() == 0) {
+            return;
+        }
         try {
             sendAgain = false;
             progressBar.setVisibility(View.VISIBLE);
@@ -181,6 +213,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
             apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                    sendAgain = true;
                     progressBar.setVisibility(View.GONE);
                     if (response != null && response.isSuccessful() && response.body().isSuccess()) {
                         AccessModel accessModel = response.body();

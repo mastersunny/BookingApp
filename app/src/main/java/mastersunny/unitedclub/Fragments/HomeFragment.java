@@ -73,7 +73,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private AppBarLayout appBarLayout;
     private LoopingViewPager loopingViewPager;
     private LoopingPagerAdapter loopingPagerAdapter;
-    private ProgressBar progressBar;
     private ArrayList<SliderDTO> autoScrollList;
     private ApiInterface apiService;
     private String accessToken = "";
@@ -97,7 +96,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             setUpTabLayout(savedInstanceState);
             try {
-                progressBar.setVisibility(View.VISIBLE);
                 Constants.debugLog(TAG, "Loading data");
                 loadData();
             } catch (Exception e) {
@@ -203,7 +201,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view_all_popular = view.findViewById(R.id.view_all_popular);
         search_text = view.findViewById(R.id.search_text);
         loopingViewPager = view.findViewById(R.id.autoViewPager);
-        progressBar = view.findViewById(R.id.progressBar);
 
         search_text.setTypeface(face);
         popular_stores.setTypeface(face);

@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String phoneNumber = "";
     private ProgressBar progressBar;
     private Handler handler;
+    private boolean alreadyRequest = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            alreadyRequest = false;
             progressBar.setVisibility(View.GONE);
         }
     };
@@ -69,7 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_send_code:
-                sendCode();
+                if (!alreadyRequest) {
+                    alreadyRequest = true;
+                    sendCode();
+                }
                 break;
         }
     }
@@ -86,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
                     @Override
                     public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                        alreadyRequest = false;
                         Constants.debugLog(TAG, response.body().toString());
                         progressBar.setVisibility(View.GONE);
                         if (response != null && response.isSuccessful() && response.body().isSuccess()) {
@@ -106,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Constants.showDialog(MainActivity.this, "Please try again");
             }
         }
-
     }
 
     @Override
