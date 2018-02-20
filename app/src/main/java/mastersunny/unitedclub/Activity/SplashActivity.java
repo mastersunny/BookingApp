@@ -25,12 +25,12 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_layout);
         SharedPreferences sharedpreferences = getSharedPreferences(Constants.prefs, Context.MODE_PRIVATE);
-        final String phoneNumber = sharedpreferences.getString(Constants.PHONE_NUMBER, "");
+        final String accessToken = sharedpreferences.getString(Constants.ACCESS_TOKEN, "");
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (phoneNumber != null && phoneNumber.length() > 0) {
+                if (accessToken != null && accessToken.length() > 0) {
                     Intent mainIntent = new Intent(SplashActivity.this, ClientMainActivity.class);
                     startActivity(mainIntent);
                     finish();
