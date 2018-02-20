@@ -36,6 +36,9 @@ public interface ApiInterface {
     Call<List<SliderDTO>> getSliders(@Query("access_token") String accessToken);
 
     @GET("api/store/{id}")
+    Call<StoreDTO> getStoreById(@Path("id") int id, @Query("access_token") String accessToken);
+
+    @GET("api/store_offer/{id}")
     Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id, @Query("access_token") String accessToken);
 
     @GET("api/category/{id}")

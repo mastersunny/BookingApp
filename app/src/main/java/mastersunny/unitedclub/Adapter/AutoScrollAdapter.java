@@ -10,6 +10,7 @@ import com.asksira.loopingviewpager.LoopingPagerAdapter;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.ItemDetailsActivity;
+import mastersunny.unitedclub.Activity.StoresDetailsActivity;
 import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
@@ -37,7 +38,7 @@ public class AutoScrollAdapter extends LoopingPagerAdapter<SliderDTO> {
     @Override
     protected void bindView(View holder, int listPosition, int viewType) {
         if (autoScrollList != null) {
-            SliderDTO sliderDTO = autoScrollList.get(listPosition);
+            final SliderDTO sliderDTO = autoScrollList.get(listPosition);
             ImageView imageView = holder.findViewById(R.id.store_image);
             String imgUrl = ApiClient.BASE_URL + "" + sliderDTO.getImageUrl();
             Constants.loadImage(context, imgUrl, imageView);
@@ -45,7 +46,7 @@ public class AutoScrollAdapter extends LoopingPagerAdapter<SliderDTO> {
             holder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ItemDetailsActivity.start(view.getContext(), new StoreDTO());
+                    StoresDetailsActivity.start(view.getContext(), sliderDTO.getStoreId());
                 }
             });
         }

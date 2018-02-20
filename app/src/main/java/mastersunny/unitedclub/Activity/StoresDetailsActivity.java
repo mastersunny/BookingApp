@@ -41,7 +41,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
-    private StoreDTO storeDTO;
+    private int storeId;
     private TextView total_offer;
     private ImageView store_image;
     private TextView store_name;
@@ -50,16 +50,19 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
     private RecyclerView offer_rv;
     private Toolbar toolbar;
     private RatingBar ratingBar;
+    private String accessToken = "";
+    private ApiInterface apiService;
+    private StoreDTO storeDTO;
 
-    public static void start(Context context, StoreDTO storeDTO) {
+    public static void start(Context context, int storeId) {
         Intent intent = new Intent(context, StoresDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.STORE_DTO, storeDTO);
+        intent.putExtra(Constants.STORE_DTO, storeId);
         context.startActivity(intent);
     }
 
     private void getIntentData() {
-        storeDTO = (StoreDTO) getIntent().getSerializableExtra(Constants.STORE_DTO);
+        storeId = getIntent().getIntExtra(Constants.STORE_DTO, 0);
     }
 
     @Override
@@ -67,15 +70,17 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_stores_details);
-
+        accessToken = getSharedPreferences(Constants.ACCESS_TOKEN, MODE_PRIVATE).getString(Constants.ACCESS_TOKEN, "");
+        apiService = ApiClient.getClient().create(ApiInterface.class);
+        storeDTO = new StoreDTO();
         storeOfferDTOS = new ArrayList<>();
         getIntentData();
         initLayout();
-
-//        setUpTabLayout(savedInstanceState);
-        if (storeDTO != null && storeDTO.getStoreId() > 0) {
-            updateStoreInfo();
+        try {
+            Constants.debugLog(TAG, "Loading data");
             loadData();
+        } catch (Exception e) {
+            Constants.debugLog(TAG, "" + e.getMessage());
         }
     }
 
@@ -87,9 +92,6 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
 
 
     private void initLayout() {
-//        tabLayout = findViewById(R.id.tabLayout);
-//        viewPager = findViewById(R.id.viewPager);
-
         ratingBar = findViewById(R.id.ratingBar);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
@@ -103,15 +105,10 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
         setSupportActionBar(toolbar);
         findViewById(R.id.back_button).setOnClickListener(this);
 
-
         total_offer = findViewById(R.id.total_offer);
         store_image = findViewById(R.id.store_image);
         store_name = findViewById(R.id.store_name);
 
-        for (int i = 0; i < 10; i++) {
-            StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
-            storeOfferDTOS.add(storeOfferDTO);
-        }
 
         offer_rv = findViewById(R.id.offer_rv);
         offer_rv.setHasFixedSize(true);
@@ -121,42 +118,6 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
 
         findViewById(R.id.follow_layout).setOnClickListener(this);
     }
-
-    /*private void setUpTabLayout(Bundle savedInstanceState) {
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new MostUsedFragment(), "All");
-            pagerAdapter.addFragment(new MostUsedFragment(), "Coupons");
-            pagerAdapter.addFragment(new MostUsedFragment(), "Offers");
-        } else {
-            Integer count = savedInstanceState.getInt("tabsCount");
-            String[] titles = savedInstanceState.getStringArray("titles");
-            for (int i = 0; i < count; i++) {
-                pagerAdapter.addFragment(getFragment(i, savedInstanceState), titles[i]);
-            }
-        }
-
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-    }*/
 
     private Fragment getFragment(int position, Bundle savedInstanceState) {
         return savedInstanceState == null ? pagerAdapter.getItem(position) : getSupportFragmentManager().findFragmentByTag(getFragmentTag(position));
@@ -174,24 +135,38 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void loadData() {
-//        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-//        Call<List<StoreOfferDTO>> call = apiService.getStoreOffers(storeDTO.getStoreId());
-//        call.enqueue(new Callback<List<StoreOfferDTO>>() {
-//            @Override
-//            public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
-//                if (response.body() != null) {
-//                    for (StoreOfferDTO storeOfferDTO : response.body()) {
-//                        storeOfferDTOS.add(storeOfferDTO);
-//                    }
-//                    storeOfferAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
-//
-//            }
-//        });
+        apiService.getStoreById(storeId, accessToken).enqueue(new Callback<StoreDTO>() {
+            @Override
+            public void onResponse(Call<StoreDTO> call, Response<StoreDTO> response) {
+                Constants.debugLog(TAG, "" + response);
+                if (response.isSuccessful() && response.body() != null) {
+                    storeDTO = response.body();
+                    updateStoreInfo();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreDTO> call, Throwable t) {
+                Constants.debugLog(TAG, "" + t.getMessage());
+            }
+        });
+        apiService.getStoreOffers(storeId, accessToken).enqueue(new Callback<List<StoreOfferDTO>>() {
+            @Override
+            public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
+                Constants.debugLog(TAG, "" + response);
+                if (response.isSuccessful() && response.body() != null) {
+                    storeOfferDTOS.addAll(response.body());
+                    if (storeOfferAdapter != null) {
+                        storeOfferAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
+                Constants.debugLog(TAG, "" + t.getMessage());
+            }
+        });
     }
 
     @Override
@@ -201,7 +176,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
                 StoresDetailsActivity.this.finish();
                 break;
             case R.id.follow_layout:
-                Toast.makeText(StoresDetailsActivity.this, "Followed successfuly", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StoresDetailsActivity.this, "Followed successfully", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
