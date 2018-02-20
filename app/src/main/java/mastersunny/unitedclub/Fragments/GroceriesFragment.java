@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Model.MoviesResponse;
@@ -21,6 +22,7 @@ import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,7 +32,7 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class GroceriesFragment extends Fragment implements View.OnClickListener, Callback<MoviesResponse> {
+public class GroceriesFragment extends Fragment implements View.OnClickListener {
 
     public String TAG = "MostUsedFragment";
     private Activity mActivity;
@@ -39,6 +41,8 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private StoreOfferAdapter storeOfferAdapter;
     private ProgressBar progressBar;
+    ApiInterface apiService;
+    private String accessToken = "";
 
     @Override
     public void onAttach(Context context) {
@@ -51,21 +55,29 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_layout, container, false);
+            apiService = ApiClient.getClient().create(ApiInterface.class);
             storeOfferDTOS = new ArrayList<>();
+            accessToken = mActivity.getSharedPreferences(Constants.ACCESS_TOKEN, Context.MODE_PRIVATE)
+                    .getString(Constants.ACCESS_TOKEN, "");
             initLayout();
-            loaData();
         }
 
         return view;
     }
 
     private void loaData() {
-//        if (ApiClient.API_KEY.isEmpty()) {
-//            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-//        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
+        apiService.getCategoryOffers(2, accessToken).enqueue(new Callback<List<StoreOfferDTO>>() {
+            @Override
+            public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
+                progressBar.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -94,29 +106,9 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener,
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             Log.d(MerchantHomeFragment.TAG, "" + "onresume");
-            progressBar.setVisibility(View.GONE);
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i = 0; i < 10; i++) {
-                        StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
-                        storeOfferDTOS.add(storeOfferDTO);
-                    }
-                    if (storeOfferAdapter != null)
-                        storeOfferAdapter.notifyDataSetChanged();
-                }
-            });
+            progressBar.setVisibility(View.VISIBLE);
+            loaData();
         } else {
         }
-    }
-
-    @Override
-    public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-
-    }
-
-    @Override
-    public void onFailure(Call<MoviesResponse> call, Throwable t) {
-
     }
 }
