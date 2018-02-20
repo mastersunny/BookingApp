@@ -70,7 +70,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_stores_details);
-        accessToken = getSharedPreferences(Constants.ACCESS_TOKEN, MODE_PRIVATE).getString(Constants.ACCESS_TOKEN, "");
+        accessToken = getSharedPreferences(Constants.prefs, MODE_PRIVATE).getString(Constants.ACCESS_TOKEN, "");
         apiService = ApiClient.getClient().create(ApiInterface.class);
         storeDTO = new StoreDTO();
         storeOfferDTOS = new ArrayList<>();
@@ -135,6 +135,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void loadData() {
+        Constants.debugLog(TAG, "accessToken: " + accessToken);
         apiService.getStoreById(storeId, accessToken).enqueue(new Callback<StoreDTO>() {
             @Override
             public void onResponse(Call<StoreDTO> call, Response<StoreDTO> response) {
@@ -150,23 +151,23 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
                 Constants.debugLog(TAG, "" + t.getMessage());
             }
         });
-        apiService.getStoreOffers(storeId, accessToken).enqueue(new Callback<List<StoreOfferDTO>>() {
-            @Override
-            public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
-                Constants.debugLog(TAG, "" + response);
-                if (response.isSuccessful() && response.body() != null) {
-                    storeOfferDTOS.addAll(response.body());
-                    if (storeOfferAdapter != null) {
-                        storeOfferAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
-                Constants.debugLog(TAG, "" + t.getMessage());
-            }
-        });
+//        apiService.getStoreOffers(storeId, ).enqueue(new Callback<List<StoreOfferDTO>>() {
+//            @Override
+//            public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
+//                Constants.debugLog(TAG, "" + response);
+//                if (response.isSuccessful() && response.body() != null) {
+//                    storeOfferDTOS.addAll(response.body());
+//                    if (storeOfferAdapter != null) {
+//                        storeOfferAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
+//                Constants.debugLog(TAG, "" + t.getMessage());
+//            }
+//        });
     }
 
     @Override
