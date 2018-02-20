@@ -172,11 +172,14 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                     AccessModel accessModel = response.body();
                     if (accessModel.isSuccess()) {
                         if (accessModel.getAccessToken().length() == 0) {
+                            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
+                            editor.apply();
                             startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
                             finish();
                         } else {
                             editor.putString(Constants.PHONE_NUMBER, phoneNumber);
                             editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
+                            editor.apply();
                             startActivity(new Intent(MobileVerificationActivity.this, ClientMainActivity.class));
                             finish();
                         }

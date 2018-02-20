@@ -48,7 +48,7 @@ public interface ApiInterface {
 
     @POST("api/sign_up")
     @FormUrlEncoded
-    Call<String> signUp(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("email") String email, @Field("phone_number") String phoneNumber);
+    Call<AccessModel> signUp(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("email") String email, @Field("phone_number") String phoneNumber);
 
 
 }
