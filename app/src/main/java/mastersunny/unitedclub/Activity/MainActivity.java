@@ -75,13 +75,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void sendCode() {
-        progressBar.setVisibility(View.VISIBLE);
-        refreshHandler();
         phoneNumber = phone_number.getText().toString().trim();
         if (phoneNumber.length() == 0) {
             Constants.showDialog(MainActivity.this, "Please enter a valid phone number");
             return;
         } else {
+            progressBar.setVisibility(View.VISIBLE);
+            refreshHandler();
             try {
                 apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
                     @Override
