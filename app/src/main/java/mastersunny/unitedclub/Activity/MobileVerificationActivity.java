@@ -35,6 +35,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     private String phoneNumber = "";
     private ApiInterface apiInterface;
     private ProgressBar progressBar;
+    private CountDownTimer timer;
 
     public static void start(Context context, String phoneNumber) {
         Intent intent = new Intent(context, MobileVerificationActivity.class);
@@ -82,7 +83,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
         Constants.showDialog(this, "Verification code will be sent to your phone number.");
 
-        new CountDownTimer(62000, 1000) {
+        timer = new CountDownTimer(62000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 timer_text.setText("" + time);
@@ -96,7 +97,8 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                 progressBar.setVisibility(View.GONE);
             }
 
-        }.start();
+        };
+        timer.start();
 
         btn_resend_code.setOnClickListener(this);
     }
@@ -104,6 +106,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     private void sendCode() {
         isResend = false;
         try {
+            timer.start();
             apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
