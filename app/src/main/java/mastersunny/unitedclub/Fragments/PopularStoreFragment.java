@@ -39,6 +39,7 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     private RecyclerView popular_rv;
     private PopularVerticalAdapter popularVerticalAdapter;
     private ApiInterface apiInterface;
+    private boolean firstRequest = false;
 
     @Override
     public void onAttach(Context context) {
@@ -103,7 +104,11 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                loaData();
+                if (!firstRequest) {
+                    firstRequest = true;
+                    loaData();
+                }
+
             }
         });
     }
