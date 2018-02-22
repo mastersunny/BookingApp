@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Fragments.CategoryFragment;
-import mastersunny.unitedclub.Fragments.FoodFragment;
+import mastersunny.unitedclub.Fragments.FirstCategoryFragment;
 import mastersunny.unitedclub.Model.CategoryDTO;
 
 /**
@@ -37,7 +37,7 @@ public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return FoodFragment.newInstance(DTOs.get(position));
+            return FirstCategoryFragment.newInstance(DTOs.get(position));
         } else {
             return CategoryFragment.newInstance(DTOs.get(position));
         }

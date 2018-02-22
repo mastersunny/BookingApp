@@ -44,6 +44,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
     private ProgressBar progressBar;
     ApiInterface apiService;
     private String accessToken = "";
+    private boolean firstRequest = false;
 
     public static CategoryFragment newInstance(CategoryDTO categoryDTO) {
         CategoryFragment fragment = new CategoryFragment();
@@ -112,7 +113,8 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
+        if (isVisibleToUser && !firstRequest) {
+            firstRequest = true;
             Constants.debugLog(TAG, "Visible");
             loaData();
         } else {

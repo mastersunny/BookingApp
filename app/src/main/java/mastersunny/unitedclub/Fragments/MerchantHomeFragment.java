@@ -106,7 +106,7 @@ public class MerchantHomeFragment extends Fragment implements View.OnClickListen
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
         if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new FoodFragment(), getResources().getString(R.string.food));
+            pagerAdapter.addFragment(new FirstCategoryFragment(), getResources().getString(R.string.food));
             pagerAdapter.addFragment(new CategoryFragment(), getResources().getString(R.string.groceries));
             pagerAdapter.addFragment(new ElectronicsFragment(), getResources().getString(R.string.electronics));
             pagerAdapter.addFragment(new FashionFragment(), getResources().getString(R.string.fashion));

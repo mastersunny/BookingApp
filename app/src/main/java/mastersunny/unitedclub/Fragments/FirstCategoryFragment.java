@@ -7,13 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -22,8 +20,6 @@ import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +30,7 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class FoodFragment extends Fragment implements View.OnClickListener, Callback<MoviesResponse> {
+public class FirstCategoryFragment extends Fragment implements View.OnClickListener, Callback<MoviesResponse> {
 
     public String TAG = "MostUsedFragment";
     private Activity mActivity;
@@ -43,9 +39,10 @@ public class FoodFragment extends Fragment implements View.OnClickListener, Call
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private StoreOfferAdapter storeOfferAdapter;
     private ProgressBar progressBar;
+    private boolean firstRequest = false;
 
-    public static FoodFragment newInstance(CategoryDTO categoryDTO) {
-        FoodFragment fragment = new FoodFragment();
+    public static FirstCategoryFragment newInstance(CategoryDTO categoryDTO) {
+        FirstCategoryFragment fragment = new FirstCategoryFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.CATEGORY_DTO, categoryDTO);
         fragment.setArguments(bundle);
@@ -86,13 +83,16 @@ public class FoodFragment extends Fragment implements View.OnClickListener, Call
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 10; i++) {
-                    StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
-                    storeOfferDTOS.add(storeOfferDTO);
+                if (!firstRequest) {
+                    firstRequest = true;
+                    for (int i = 0; i < 10; i++) {
+                        StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
+                        storeOfferDTOS.add(storeOfferDTO);
+                    }
+                    if (storeOfferAdapter != null)
+                        storeOfferAdapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
                 }
-                if (storeOfferAdapter != null)
-                    storeOfferAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
             }
         });
         super.onResume();
