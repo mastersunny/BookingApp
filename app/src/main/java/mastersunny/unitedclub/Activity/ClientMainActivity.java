@@ -99,13 +99,13 @@ public class ClientMainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_bottom_home:
-                        viewPager.setCurrentItem(0);
+                        viewPager.setCurrentItem(0, true);
                         break;
                     case R.id.nav_bottom_stores:
-                        viewPager.setCurrentItem(1);
+                        viewPager.setCurrentItem(1, true);
                         break;
                     case R.id.nav_bottom_profile:
-                        viewPager.setCurrentItem(2);
+                        viewPager.setCurrentItem(2, true);
                         break;
                 }
                 return true;

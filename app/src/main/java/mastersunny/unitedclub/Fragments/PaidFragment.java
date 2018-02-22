@@ -11,14 +11,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mastersunny.unitedclub.Adapter.TransactionAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ASUS on 1/23/2018.
@@ -32,6 +40,8 @@ public class PaidFragment extends Fragment implements View.OnClickListener {
     private RecyclerView transaction_details_rv;
     private ArrayList<TransactionDTO> transactionDTOS;
     private TransactionAdapter transactionAdapter;
+    ApiInterface apiService;
+    private ProgressBar progressBar;
 
     @Override
     public void onAttach(Context context) {
@@ -44,6 +54,7 @@ public class PaidFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.transaction_fragment_layout, container, false);
+            apiService = ApiClient.getClient().create(ApiInterface.class);
             transactionDTOS = new ArrayList<>();
             initLayout();
         }
@@ -58,6 +69,8 @@ public class PaidFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initLayout() {
+        progressBar = view.findViewById(R.id.progressBar);
+
         transaction_details_rv = view.findViewById(R.id.transaction_details_rv);
         transaction_details_rv.setHasFixedSize(true);
         transaction_details_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
@@ -70,21 +83,8 @@ public class PaidFragment extends Fragment implements View.OnClickListener {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 5; i < 30; i++) {
-                    TransactionDTO transactionDTO = new TransactionDTO();
-                    StoreDTO storeDTO = new StoreDTO();
-                    if (i % 2 == 0) {
-                        storeDTO.setStoreName("Paytm");
-                    } else {
-                        storeDTO.setStoreName("Amazon");
-                    }
-                    transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
-                    transactionDTO.setPaidAmount(10000);
-                    transactionDTO.setDueAmount(i);
-                    transactionDTOS.add(transactionDTO);
-                }
-                if (transactionAdapter != null)
-                    transactionAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.VISIBLE);
+                loaData();
             }
         });
         super.onResume();
@@ -93,5 +93,31 @@ public class PaidFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
+    }
+
+    private void loaData() {
+        try {
+            apiService.getPaidTransactions(Constants.getAccessToken(mActivity)).enqueue(new Callback<List<TransactionDTO>>() {
+                @Override
+                public void onResponse(Call<List<TransactionDTO>> call, Response<List<TransactionDTO>> response) {
+                    Constants.debugLog(TAG, response + "");
+                    progressBar.setVisibility(View.GONE);
+                    if (response != null && response.isSuccessful() && response.body() != null) {
+                        transactionDTOS.clear();
+                        transactionDTOS.addAll(response.body());
+                        if (transactionAdapter != null) {
+                            transactionAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<TransactionDTO>> call, Throwable t) {
+                    Constants.debugLog(TAG, "Error in load data " + t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            Constants.debugLog(TAG, "Error in load data " + e.getMessage());
+        }
     }
 }

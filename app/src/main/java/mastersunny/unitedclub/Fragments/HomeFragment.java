@@ -91,20 +91,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             storeDTOS = new ArrayList<>();
             autoScrollList = new ArrayList<>();
             categoryDTOS = new ArrayList<>();
-            for (int i = 0; i < 4; i++) {
-                CategoryDTO categoryDTO = new CategoryDTO();
-                categoryDTO.setCategoryName("Fashion");
-                categoryDTOS.add(categoryDTO);
-            }
+//            for (int i = 0; i < 4; i++) {
+//                CategoryDTO categoryDTO = new CategoryDTO();
+//                categoryDTO.setCategoryName("Fashion");
+//                categoryDTOS.add(categoryDTO);
+//            }
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             setUpTabLayout(savedInstanceState);
-            try {
-                Constants.debugLog(TAG, "Loading data");
-                loadData();
-            } catch (Exception e) {
-                Constants.debugLog(TAG, "" + e.getMessage());
-            }
+            loadData();
 
         }
 
@@ -112,37 +107,59 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadData() {
-        Constants.debugLog(TAG, accessToken);
-        apiService.getSliders(accessToken).enqueue(new Callback<List<SliderDTO>>() {
-            @Override
-            public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {
-                Constants.debugLog(TAG, "" + response.body());
-                if (response.isSuccessful() && response.body() != null) {
-                    autoScrollList.addAll(response.body());
-                    createAutoScrollViewPager();
+        try {
+            Constants.debugLog(TAG, accessToken);
+            apiService.getSliders(accessToken).enqueue(new Callback<List<SliderDTO>>() {
+                @Override
+                public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {
+                    Constants.debugLog(TAG, "" + response.body());
+                    if (response.isSuccessful() && response.body() != null) {
+                        autoScrollList.addAll(response.body());
+                        createAutoScrollViewPager();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<SliderDTO>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<List<SliderDTO>> call, Throwable t) {
 
-            }
-        });
-
-        apiService.getPopularStores(accessToken).enqueue(new Callback<List<StoreDTO>>() {
-            @Override
-            public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
-                if (response.isSuccessful() & response.body() != null) {
-                    storeDTOS.addAll(response.body());
-                    popularAdapter.notifyDataSetChanged();
                 }
-            }
+            });
 
-            @Override
-            public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
+            apiService.getPopularStores(accessToken).enqueue(new Callback<List<StoreDTO>>() {
+                @Override
+                public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
+                    if (response.isSuccessful() & response.body() != null) {
+                        storeDTOS.addAll(response.body());
+                        popularAdapter.notifyDataSetChanged();
+                    }
+                }
 
-            }
-        });
+                @Override
+                public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
+
+                }
+            });
+
+            apiService.getCategories(accessToken).enqueue(new Callback<List<CategoryDTO>>() {
+                @Override
+                public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
+                    Constants.debugLog(TAG, "" + response);
+                    if (response != null && response.isSuccessful()) {
+                        categoryDTOS.addAll(response.body());
+                        if (categoryPagerAdapter != null) {
+                            categoryPagerAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<CategoryDTO>> call, Throwable t) {
+                    Constants.debugLog(TAG, "Error in load data" + t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            Constants.debugLog(TAG, "Error in load data " + e.getMessage());
+        }
     }
 
     private void createAutoScrollViewPager() {

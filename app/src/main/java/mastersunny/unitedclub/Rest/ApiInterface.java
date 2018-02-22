@@ -3,6 +3,7 @@ package mastersunny.unitedclub.Rest;
 import java.util.List;
 
 import mastersunny.unitedclub.Model.AccessModel;
+import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
@@ -36,15 +37,19 @@ public interface ApiInterface {
     @GET("api/get_sliders")
     Call<List<SliderDTO>> getSliders(@Query("access_token") String accessToken);
 
+    //Offer List
     @GET("api/get_store")
     Call<StoreDTO> getStoreById(@Query("id") int id, @Query("access_token") String accessToken);
 
-    @GET("api/store_offer/{id}")
-    Call<List<StoreOfferDTO>> getStoreOffers(@Path("id") int id, @Query("access_token") String accessToken);
+    @GET("api/get_store_offer/{store_id}")
+    Call<List<StoreOfferDTO>> getStoreOffers(@Path("store_id") int store_id, @Query("access_token") String accessToken);
 
-    @GET("api/category/{id}")
-    Call<List<StoreOfferDTO>> getCategoryOffers(@Path("id") int id, @Query("access_token") String accessToken);
+    @GET("api/get_category_offer/{category_id}")
+    Call<List<StoreOfferDTO>> getCategoryOffers(@Path("category_id") int category_id, @Query("access_token") String accessToken);
+    //Offer List
 
+
+    //Login and registration
     @POST("api/get_access")
     @FormUrlEncoded
     Call<AccessModel> initRegistration(@Field("phone_number") String phoneNumber);
@@ -56,14 +61,24 @@ public interface ApiInterface {
     @POST("api/sign_up")
     @FormUrlEncoded
     Call<AccessModel> signUp(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("email") String email, @Field("phone_number") String phoneNumber);
+    //Login and registration
 
+
+    //Category
+    @GET("api/get_categories")
+    Call<List<CategoryDTO>> getCategories(@Query("access_token") String accessToken);
+    //Category
 
     //Transaction Details
     @GET("api/recent_transaction")
     Call<List<TransactionDTO>> getRecentTransactions(@Query("access_token") String accessToken);
 
+    @GET("api/paid_transaction")
+    Call<List<TransactionDTO>> getPaidTransactions(@Query("access_token") String accessToken);
 
-    //Tramsaction Details
+    @GET("api/due_transaction")
+    Call<List<TransactionDTO>> getDueTransactions(@Query("access_token") String accessToken);
+    //Transaction Details
 
 
 }
