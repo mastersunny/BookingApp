@@ -79,6 +79,12 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
                 progressBar.setVisibility(View.GONE);
+                if (response != null && response.isSuccessful()) {
+                    storeOfferDTOS.addAll(response.body());
+                    if (storeOfferAdapter != null) {
+                        storeOfferAdapter.notifyDataSetChanged();
+                    }
+                }
 
             }
 
