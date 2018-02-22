@@ -3,10 +3,8 @@ package mastersunny.unitedclub.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -20,7 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,11 +33,12 @@ import mastersunny.unitedclub.Activity.ItemDetailsActivity;
 import mastersunny.unitedclub.Activity.StoresActivity;
 import mastersunny.unitedclub.Activity.SearchActivity;
 import mastersunny.unitedclub.Adapter.AutoScrollAdapter;
+import mastersunny.unitedclub.Adapter.CategoryPagerAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
+import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
-import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -65,7 +63,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Toolbar toolbar;
-    private PagerAdapter pagerAdapter;
+    private CategoryPagerAdapter categoryPagerAdapter;
     private PopularAdapter popularAdapter;
     private RecyclerView popular_rv;
     private ArrayList<StoreDTO> storeDTOS;
@@ -76,6 +74,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ArrayList<SliderDTO> autoScrollList;
     private ApiInterface apiService;
     private String accessToken = "";
+    private ArrayList<CategoryDTO> categoryDTOS;
 
     @Override
     public void onAttach(Context context) {
@@ -92,6 +91,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             accessToken = mActivity.getSharedPreferences(Constants.prefs, MODE_PRIVATE).getString(Constants.ACCESS_TOKEN, "");
             storeDTOS = new ArrayList<>();
             autoScrollList = new ArrayList<>();
+            categoryDTOS = new ArrayList<>();
+            for (int i = 0; i < 4; i++) {
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.setCategoryName("Fashion");
+                categoryDTOS.add(categoryDTO);
+            }
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             setUpTabLayout(savedInstanceState);
@@ -146,21 +151,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setUpTabLayout(Bundle savedInstanceState) {
-        pagerAdapter = new PagerAdapter(getChildFragmentManager());
-        if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new FoodFragment(), getResources().getString(R.string.food));
-            pagerAdapter.addFragment(new GroceriesFragment(), getResources().getString(R.string.groceries));
-            pagerAdapter.addFragment(new ElectronicsFragment(), getResources().getString(R.string.electronics));
-            pagerAdapter.addFragment(new FashionFragment(), getResources().getString(R.string.fashion));
-        } else {
-            Integer count = savedInstanceState.getInt("tabsCount");
-            String[] titles = savedInstanceState.getStringArray("titles");
-            for (int i = 0; i < count; i++) {
-                pagerAdapter.addFragment(getFragment(i, savedInstanceState), titles[i]);
-            }
-        }
-
-        viewPager.setAdapter(pagerAdapter);
+        categoryPagerAdapter = new CategoryPagerAdapter(getChildFragmentManager());
+        categoryPagerAdapter.addItems(categoryDTOS);
+        viewPager.setAdapter(categoryPagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -181,15 +174,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    private Fragment getFragment(int position, Bundle savedInstanceState) {
-        return savedInstanceState == null ? pagerAdapter.getItem(position) : getChildFragmentManager().findFragmentByTag(getFragmentTag(position));
-    }
-
-    private String getFragmentTag(int position) {
-        String tag = "android:switcher:" + R.id.viewPager + ":" + position;
-        return tag;
     }
 
     private void initLayout() {

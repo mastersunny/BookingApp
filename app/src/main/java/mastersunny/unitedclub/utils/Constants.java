@@ -48,6 +48,7 @@ public class Constants {
     public static final String ITEM_DTO = "item_dto";
     public static final String STORE_DTO = "store_dto";
     public static final String USER_DTO = "user_dto";
+    public static final String CATEGORY_DTO = "category_dto";
 
     public static void loadImage(Context context, String imageUrl, ImageView imageView) {
         Glide.with(context).load(imageUrl)

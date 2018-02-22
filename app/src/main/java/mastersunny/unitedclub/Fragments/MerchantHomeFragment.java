@@ -11,8 +11,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,10 +29,8 @@ import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.ItemDetailsActivity;
 import mastersunny.unitedclub.Activity.SearchActivity;
-import mastersunny.unitedclub.Activity.StoresActivity;
 import mastersunny.unitedclub.Adapter.AutoScrollAdapter;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
-import mastersunny.unitedclub.Adapter.PopularAdapter;
 import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
@@ -111,7 +107,7 @@ public class MerchantHomeFragment extends Fragment implements View.OnClickListen
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
         if (savedInstanceState == null) {
             pagerAdapter.addFragment(new FoodFragment(), getResources().getString(R.string.food));
-            pagerAdapter.addFragment(new GroceriesFragment(), getResources().getString(R.string.groceries));
+            pagerAdapter.addFragment(new CategoryFragment(), getResources().getString(R.string.groceries));
             pagerAdapter.addFragment(new ElectronicsFragment(), getResources().getString(R.string.electronics));
             pagerAdapter.addFragment(new FashionFragment(), getResources().getString(R.string.fashion));
         } else {

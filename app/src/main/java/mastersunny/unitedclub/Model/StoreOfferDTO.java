@@ -12,7 +12,7 @@ public class StoreOfferDTO {
     @SerializedName("store_dto")
     private StoreDTO storeDTO;
     @SerializedName("offer_category")
-    private OfferCategory offerCategory;
+    private CategoryDTO categoryDTO;
     @SerializedName("offer")
     private String offer;
     @SerializedName("endDate")
@@ -34,12 +34,12 @@ public class StoreOfferDTO {
         this.storeDTO = storeDTO;
     }
 
-    public OfferCategory getOfferCategory() {
-        return offerCategory;
+    public CategoryDTO getCategoryDTO() {
+        return categoryDTO;
     }
 
-    public void setOfferCategory(OfferCategory offerCategory) {
-        this.offerCategory = offerCategory;
+    public void setCategoryDTO(CategoryDTO categoryDTO) {
+        this.categoryDTO = categoryDTO;
     }
 
     public String getOffer() {
@@ -63,7 +63,7 @@ public class StoreOfferDTO {
         return "StoreOfferDTO{" +
                 "offerId=" + offerId +
                 ", storeDTO=" + storeDTO +
-                ", offerCategory=" + offerCategory +
+                ", categoryDTO=" + categoryDTO +
                 ", offer='" + offer + '\'' +
                 ", endDate='" + endDate + '\'' +
                 '}';

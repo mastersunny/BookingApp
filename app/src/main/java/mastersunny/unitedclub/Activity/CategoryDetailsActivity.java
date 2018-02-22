@@ -15,20 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
-import mastersunny.unitedclub.Model.OfferCategory;
-import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CategoryDetailsActivity extends AppCompatActivity {
 
@@ -37,7 +30,7 @@ public class CategoryDetailsActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private Toolbar toolbar;
     private PagerAdapter pagerAdapter;
-    private OfferCategory offerCategory;
+    private CategoryDTO categoryDTO;
     private TextView total_offer;
     private ImageView store_image;
     private TextView store_name;
@@ -45,15 +38,15 @@ public class CategoryDetailsActivity extends AppCompatActivity {
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private RecyclerView offer_rv;
 
-    public static void start(Context context, OfferCategory offerCategory) {
+    public static void start(Context context, CategoryDTO categoryDTO) {
         Intent intent = new Intent(context, CategoryDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.STORE_DTO, offerCategory);
+        intent.putExtra(Constants.STORE_DTO, categoryDTO);
         context.startActivity(intent);
     }
 
     private void getIntentData() {
-        offerCategory = (OfferCategory) getIntent().getSerializableExtra(Constants.STORE_DTO);
+        categoryDTO = (CategoryDTO) getIntent().getSerializableExtra(Constants.STORE_DTO);
     }
 
     @Override
@@ -68,15 +61,15 @@ public class CategoryDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        setUpTabLayout(savedInstanceState);
-        if (offerCategory != null && offerCategory.getCategoryId() > 0) {
+        if (categoryDTO != null && categoryDTO.getCategoryId() > 0) {
             updateStoreInfo();
             loadData();
         }
     }
 
     private void updateStoreInfo() {
-        store_name.setText(offerCategory.getCategoryName());
-//        String imgUrl = ApiClient.BASE_URL + "" + offerCategory.getBannerImg();
+        store_name.setText(categoryDTO.getCategoryName());
+//        String imgUrl = ApiClient.BASE_URL + "" + categoryDTO.getBannerImg();
 //        Constants.loadImage(this, imgUrl, store_image);
     }
 

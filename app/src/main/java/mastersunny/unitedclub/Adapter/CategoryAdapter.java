@@ -10,9 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.CategoryDetailsActivity;
-import mastersunny.unitedclub.Activity.StoresDetailsActivity;
-import mastersunny.unitedclub.Model.OfferCategory;
-import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.R;
 
 /**
@@ -21,10 +19,10 @@ import mastersunny.unitedclub.R;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MainHolder> {
 
-    private ArrayList<OfferCategory> offerCategories;
+    private ArrayList<CategoryDTO> offerCategories;
     private Activity mActivity;
 
-    public CategoryAdapter(Activity mActivity, ArrayList<OfferCategory> offerCategories) {
+    public CategoryAdapter(Activity mActivity, ArrayList<CategoryDTO> offerCategories) {
         this.mActivity = mActivity;
         this.offerCategories = offerCategories;
     }
@@ -38,13 +36,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MainHo
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
         if (offerCategories != null) {
-            final OfferCategory offerCategory = offerCategories.get(position);
-            holder.store_name.setText(offerCategory.getCategoryName());
-            holder.total_offer.setText(offerCategory.getTotalOffer() + " Offers");
+            final CategoryDTO categoryDTO = offerCategories.get(position);
+            holder.store_name.setText(categoryDTO.getCategoryName());
+            holder.total_offer.setText(categoryDTO.getTotalOffer() + " Offers");
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    CategoryDetailsActivity.start(view.getContext(), offerCategory);
+                    CategoryDetailsActivity.start(view.getContext(), categoryDTO);
                 }
             });
         }

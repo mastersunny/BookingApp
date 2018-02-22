@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
+import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
@@ -32,9 +33,9 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class GroceriesFragment extends Fragment implements View.OnClickListener {
+public class CategoryFragment extends Fragment implements View.OnClickListener {
 
-    public String TAG = "MostUsedFragment";
+    public String TAG = "CategoryFragment";
     private Activity mActivity;
     private View view;
     private RecyclerView most_used_rv;
@@ -43,6 +44,14 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener 
     private ProgressBar progressBar;
     ApiInterface apiService;
     private String accessToken = "";
+
+    public static CategoryFragment newInstance(CategoryDTO categoryDTO) {
+        CategoryFragment fragment = new CategoryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.CATEGORY_DTO, categoryDTO);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -80,15 +89,8 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener 
         });
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
     private void initLayout() {
         progressBar = view.findViewById(R.id.progressBar);
-
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setHasFixedSize(true);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
@@ -105,9 +107,10 @@ public class GroceriesFragment extends Fragment implements View.OnClickListener 
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            Log.d(MerchantHomeFragment.TAG, "" + "onresume");
-            progressBar.setVisibility(View.VISIBLE);
-            loaData();
+            Constants.debugLog(TAG, "Visible");
+            if (isAdded()) {
+                loaData();
+            }
         } else {
         }
     }

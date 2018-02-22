@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by ASUS on 1/25/2018.
  */
 
-public class OfferCategory implements Serializable{
+public class CategoryDTO implements Serializable{
     @SerializedName("category_id")
     private int categoryId;
     @SerializedName("category_name")
@@ -42,7 +42,7 @@ public class OfferCategory implements Serializable{
 
     @Override
     public String toString() {
-        return "OfferCategory{" +
+        return "CategoryDTO{" +
                 "categoryId=" + categoryId +
                 ", categoryName='" + categoryName + '\'' +
                 ", totalOffer=" + totalOffer +

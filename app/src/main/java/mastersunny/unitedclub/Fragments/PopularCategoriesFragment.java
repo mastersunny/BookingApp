@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mastersunny.unitedclub.Adapter.CategoryAdapter;
-import mastersunny.unitedclub.Adapter.PopularVerticalAdapter;
-import mastersunny.unitedclub.Model.OfferCategory;
+import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 import retrofit2.Call;
@@ -33,7 +32,7 @@ public class PopularCategoriesFragment extends Fragment implements View.OnClickL
     public String TAG = "PopularStoreFragment";
     private Activity mActivity;
     private View view;
-    private ArrayList<OfferCategory> offerCategoryDTOs;
+    private ArrayList<CategoryDTO> categoryDTODTOS;
     private RecyclerView popular_rv;
     private CategoryAdapter categoryAdapter;
 
@@ -48,7 +47,7 @@ public class PopularCategoriesFragment extends Fragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_layout, container, false);
-            offerCategoryDTOs = new ArrayList<>();
+            categoryDTODTOS = new ArrayList<>();
             initLayout();
             loaData();
         }
@@ -73,19 +72,19 @@ public class PopularCategoriesFragment extends Fragment implements View.OnClickL
 
     private void initLayout() {
         for (int i = 5; i < 15; i++) {
-            OfferCategory storeDTO = new OfferCategory();
+            CategoryDTO storeDTO = new CategoryDTO();
             if (i % 2 == 1) {
                 storeDTO.setCategoryName("Fashion");
             } else {
                 storeDTO.setCategoryName("Food");
             }
             storeDTO.setTotalOffer(i * 10);
-            offerCategoryDTOs.add(storeDTO);
+            categoryDTODTOS.add(storeDTO);
         }
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        categoryAdapter = new CategoryAdapter(mActivity, offerCategoryDTOs);
+        categoryAdapter = new CategoryAdapter(mActivity, categoryDTODTOS);
         popular_rv.setAdapter(categoryAdapter);
     }
 
