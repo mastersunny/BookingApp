@@ -98,7 +98,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //            }
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            setUpTabLayout(savedInstanceState);
             loadData();
 
         }
@@ -128,6 +127,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             apiService.getPopularStores(accessToken).enqueue(new Callback<List<StoreDTO>>() {
                 @Override
                 public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
+                    Constants.debugLog(TAG, "" + response.body());
                     if (response.isSuccessful() & response.body() != null) {
                         storeDTOS.addAll(response.body());
                         popularAdapter.notifyDataSetChanged();
@@ -143,9 +143,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             apiService.getCategories(accessToken).enqueue(new Callback<List<CategoryDTO>>() {
                 @Override
                 public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
-                    Constants.debugLog(TAG, "" + response);
+                    Constants.debugLog(TAG, "getCategories " + response);
                     if (response != null && response.isSuccessful()) {
+                        Constants.debugLog(TAG, "getCategories " + response.body());
                         categoryDTOS.addAll(response.body());
+                        setUpTabLayout();
                         if (categoryPagerAdapter != null) {
                             categoryPagerAdapter.notifyDataSetChanged();
                         }
@@ -167,7 +169,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         loopingViewPager.setAdapter(loopingPagerAdapter);
     }
 
-    private void setUpTabLayout(Bundle savedInstanceState) {
+    private void setUpTabLayout() {
         categoryPagerAdapter = new CategoryPagerAdapter(getChildFragmentManager());
         categoryPagerAdapter.addItems(categoryDTOS);
         viewPager.setAdapter(categoryPagerAdapter);

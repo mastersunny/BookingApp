@@ -64,7 +64,7 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener {
 
     private void loaData() {
         try {
-            apiInterface.getPopularStores(Constants.getAccessToken(mActivity)).enqueue(new Callback<List<StoreDTO>>() {
+            apiInterface.getAllStores(Constants.getAccessToken(mActivity)).enqueue(new Callback<List<StoreDTO>>() {
                 @Override
                 public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
                     Constants.debugLog(TAG, "" + response);
