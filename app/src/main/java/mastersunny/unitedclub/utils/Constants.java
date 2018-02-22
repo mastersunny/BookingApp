@@ -17,6 +17,8 @@ import java.security.PublicKey;
 
 import mastersunny.unitedclub.R;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by ASUS on 1/20/2018.
  */
@@ -80,5 +82,9 @@ public class Constants {
         if (debugOn) {
             Log.d(TAG, "" + message);
         }
+    }
+
+    public static String getAccessToken(Context context) {
+        return context.getSharedPreferences(Constants.prefs, MODE_PRIVATE).getString(ACCESS_TOKEN, "");
     }
 }

@@ -14,12 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mastersunny.unitedclub.Adapter.PopularVerticalAdapter;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,12 +35,13 @@ import retrofit2.Response;
 
 public class AllStoreFragment extends Fragment implements View.OnClickListener {
 
-    public String TAG = "PopularStoreFragment";
+    public String TAG = AllStoreFragment.class.getName();
     private Activity mActivity;
     private View view;
     private ArrayList<StoreDTO> storeDTOS;
     private RecyclerView popular_rv;
     private PopularVerticalAdapter popularVerticalAdapter;
+    private ApiInterface apiInterface;
 
     @Override
     public void onAttach(Context context) {
@@ -50,20 +55,35 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_layout, container, false);
             storeDTOS = new ArrayList<>();
+            apiInterface = ApiClient.getClient().create(ApiInterface.class);
             initLayout();
-            loaData();
         }
 
         return view;
     }
 
     private void loaData() {
-//        if (ApiClient.API_KEY.isEmpty()) {
-//            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-//        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
+        try {
+            apiInterface.getPopularStores(Constants.getAccessToken(mActivity)).enqueue(new Callback<List<StoreDTO>>() {
+                @Override
+                public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
+                    Constants.debugLog(TAG, "" + response);
+                    if (response != null && response.isSuccessful()) {
+                        storeDTOS.addAll(response.body());
+                        if (popularVerticalAdapter != null) {
+                            popularVerticalAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
+                    Constants.debugLog(TAG, "" + t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            Constants.debugLog(TAG, "Error in load data" + e.getMessage());
+        }
     }
 
     @Override
@@ -88,18 +108,7 @@ public class AllStoreFragment extends Fragment implements View.OnClickListener {
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 5; i < 15; i++) {
-                        StoreDTO storeDTO = new StoreDTO();
-                        if (i % 2 == 1) {
-                            storeDTO.setStoreName("MakeMyTrip");
-                        } else {
-                            storeDTO.setStoreName("Paytm");
-                        }
-                        storeDTO.setTotalOffer(i * 10);
-                        storeDTOS.add(storeDTO);
-                    }
-                    if (popularVerticalAdapter != null)
-                        popularVerticalAdapter.notifyDataSetChanged();
+                    loaData();
                 }
             });
         } else {
