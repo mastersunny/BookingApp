@@ -164,7 +164,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onPageSelected(int position) {
-                
+//                tabLayout.getTabAt(position).setText(categoryDTOS.get(position).getCategoryName());
             }
 
             @Override

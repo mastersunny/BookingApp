@@ -14,25 +14,37 @@ import mastersunny.unitedclub.Model.CategoryDTO;
  */
 
 public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
-    private ArrayList<CategoryDTO> dtos;
+    private ArrayList<CategoryDTO> DTOs;
+    private ArrayList<String> titles;
 
 
     public CategoryPagerAdapter(FragmentManager fm) {
         super(fm);
-        dtos = new ArrayList<>();
+        DTOs = new ArrayList<>();
+        titles = new ArrayList<>();
     }
 
-    public void addItems(ArrayList<CategoryDTO> dtos) {
-        this.dtos.addAll(dtos);
+    public void addItems(ArrayList<CategoryDTO> DTOs) {
+        if (DTOs != null) {
+            for (CategoryDTO dto : DTOs) {
+                this.DTOs.add(dto);
+                titles.add(dto.getCategoryName());
+            }
+        }
     }
 
     @Override
     public Fragment getItem(int position) {
-        return CategoryFragment.newInstance(dtos.get(position));
+        return CategoryFragment.newInstance(DTOs.get(position));
     }
 
     @Override
     public int getCount() {
-        return dtos == null ? 0 : dtos.size();
+        return DTOs == null ? 0 : DTOs.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles.get(position);
     }
 }
