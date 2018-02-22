@@ -18,11 +18,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
+import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +43,14 @@ public class FoodFragment extends Fragment implements View.OnClickListener, Call
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private StoreOfferAdapter storeOfferAdapter;
     private ProgressBar progressBar;
+
+    public static FoodFragment newInstance(CategoryDTO categoryDTO) {
+        FoodFragment fragment = new FoodFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.CATEGORY_DTO, categoryDTO);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public void onAttach(Context context) {

@@ -114,9 +114,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             Constants.debugLog(TAG, "Visible");
-            if (isAdded()) {
-                loaData();
-            }
+            loaData();
         } else {
         }
     }
