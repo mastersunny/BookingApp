@@ -30,6 +30,9 @@ public class Constants {
     public static final int USER_TYPE_MERCHANT = 2;
     public static final int USER_TYPE_ADMIN = 3;
 
+    public static final int store_search = 1;
+    public static final int category_search = 2;
+
     public static final String prefs = "prefs";
     public static final String FIRST_NAME = "first_name";
     public static final String LAST_NAME = "last_name";
@@ -51,6 +54,7 @@ public class Constants {
     public static final String STORE_DTO = "store_dto";
     public static final String USER_DTO = "user_dto";
     public static final String CATEGORY_DTO = "category_dto";
+    public static final String SEARCH_TYPE = "search_type";
 
     public static void loadImage(Context context, String imageUrl, ImageView imageView) {
         Glide.with(context).load(imageUrl)

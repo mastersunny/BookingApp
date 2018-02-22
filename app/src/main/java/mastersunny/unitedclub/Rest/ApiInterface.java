@@ -7,6 +7,7 @@ import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
+import mastersunny.unitedclub.Model.TransactionDTO;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -55,6 +56,14 @@ public interface ApiInterface {
     @POST("api/sign_up")
     @FormUrlEncoded
     Call<AccessModel> signUp(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("email") String email, @Field("phone_number") String phoneNumber);
+
+
+    //Transaction Details
+    @GET("api/recent_transaction")
+    Call<List<TransactionDTO>> getRecentTransactions(@Query("access_token") String accessToken);
+
+
+    //Tramsaction Details
 
 
 }

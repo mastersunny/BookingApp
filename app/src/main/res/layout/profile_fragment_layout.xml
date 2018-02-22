@@ -63,6 +63,8 @@
             android:textColor="#006ff1" />
     </RelativeLayout>
 
+    <include layout="@layout/progress_layout"></include>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/transaction_rv"
         android:layout_width="match_parent"
