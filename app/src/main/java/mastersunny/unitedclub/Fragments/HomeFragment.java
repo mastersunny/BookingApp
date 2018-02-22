@@ -117,6 +117,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         apiService.getSliders(accessToken).enqueue(new Callback<List<SliderDTO>>() {
             @Override
             public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {
+                Constants.debugLog(TAG, "" + response.body());
                 if (response.isSuccessful() && response.body() != null) {
                     autoScrollList.addAll(response.body());
                     createAutoScrollViewPager();
@@ -163,8 +164,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onPageSelected(int position) {
-
-
+                
             }
 
             @Override
