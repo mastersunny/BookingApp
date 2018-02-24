@@ -86,6 +86,7 @@ public class FirstCategoryFragment extends Fragment implements View.OnClickListe
                         @Override
                         public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
                             Constants.debugLog(TAG, "" + response);
+                            progressBar.setVisibility(View.GONE);
                             if (response.isSuccessful() && response.body() != null) {
                                 Constants.debugLog(TAG, "" + response.body());
                                 storeOfferDTOS.addAll(response.body());
@@ -111,6 +112,7 @@ public class FirstCategoryFragment extends Fragment implements View.OnClickListe
             @Override
             public void run() {
                 if (!firstRequest) {
+                    progressBar.setVisibility(View.VISIBLE);
                     firstRequest = true;
                     loaData();
                 }
@@ -127,6 +129,7 @@ public class FirstCategoryFragment extends Fragment implements View.OnClickListe
 
     private void initLayout() {
         progressBar = view.findViewById(R.id.progressBar);
+        view.findViewById(R.id.swipeRefresh).setEnabled(false);
 
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setHasFixedSize(true);
