@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/profile_cover_img_height"
         android:background="@color/item_details">
 
         <mastersunny.unitedclub.utils.CircleImageView
