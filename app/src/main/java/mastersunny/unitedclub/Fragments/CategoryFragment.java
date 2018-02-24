@@ -104,6 +104,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
 
     private void initLayout() {
         progressBar = view.findViewById(R.id.progressBar);
+        view.findViewById(R.id.swipeRefresh).setEnabled(false);
 
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setHasFixedSize(true);
