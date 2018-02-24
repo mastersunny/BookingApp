@@ -9,9 +9,9 @@ import java.io.Serializable;
  */
 
 public class CategoryDTO implements Serializable {
-    @SerializedName("id")
+    @SerializedName("category_id")
     private int categoryId;
-    @SerializedName("name")
+    @SerializedName("category_name")
     private String categoryName;
     @SerializedName("total_offer")
     private int totalOffer;
