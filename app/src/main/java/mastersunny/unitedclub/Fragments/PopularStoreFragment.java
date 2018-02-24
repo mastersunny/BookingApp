@@ -38,9 +38,6 @@ public class PopularStoreFragment extends FragmentBase implements View.OnClickLi
     private ArrayList<StoreDTO> storeDTOS;
     private RecyclerView popular_rv;
     private PopularVerticalAdapter popularVerticalAdapter;
-    private ApiInterface apiInterface;
-    private boolean firstRequest = false;
-
 
     @Override
     public void onAttach(Context context) {
@@ -81,7 +78,7 @@ public class PopularStoreFragment extends FragmentBase implements View.OnClickLi
     @Override
     public void onCreate() {
         storeDTOS = new ArrayList<>();
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        initLayout();
     }
 
     @Override
