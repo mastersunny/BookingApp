@@ -27,6 +27,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Constants {
 
+    public static final int REQUEST_TIMEOUT = 5000;
     public static boolean debugOn = true;
     public static final int USER_TYPE_CLIENT = 1;
     public static final int USER_TYPE_MERCHANT = 2;

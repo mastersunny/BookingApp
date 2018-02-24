@@ -31,35 +31,21 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class PopularStoreFragment extends Fragment implements View.OnClickListener {
+public class PopularStoreFragment extends FragmentBase implements View.OnClickListener {
 
     public String TAG = PopularStoreFragment.class.getName();
     private Activity mActivity;
-    private View view;
     private ArrayList<StoreDTO> storeDTOS;
     private RecyclerView popular_rv;
     private PopularVerticalAdapter popularVerticalAdapter;
     private ApiInterface apiInterface;
     private boolean firstRequest = false;
-    private SwipeRefreshLayout swipeRefresh;
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = getActivity();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_layout, container, false);
-            storeDTOS = new ArrayList<>();
-            apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            initLayout();
-        }
-
-        return view;
     }
 
     private void loaData() {
@@ -92,15 +78,14 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
         setHasOptionsMenu(true);
     }
 
-    private void initLayout() {
-        swipeRefresh = view.findViewById(R.id.swipeRefresh);
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+    @Override
+    public void onCreate() {
+        storeDTOS = new ArrayList<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+    }
 
-            }
-        });
-
+    @Override
+    public void initLayout() {
         popular_rv = view.findViewById(R.id.most_used_rv);
         popular_rv.setHasFixedSize(true);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
@@ -109,18 +94,29 @@ public class PopularStoreFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
+    public void updateLayout() {
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (!firstRequest) {
-                    firstRequest = true;
-                    loaData();
-                }
-
+                sendInitialRequest();
             }
         });
+    }
+
+    @Override
+    public void sendInitialRequest() {
+        if (!firstRequest) {
+            firstRequest = true;
+            swipeRefresh.setRefreshing(true);
+            refreshHandler();
+            loaData();
+        }
     }
 
     @Override
