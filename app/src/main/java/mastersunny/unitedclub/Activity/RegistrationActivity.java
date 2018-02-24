@@ -78,7 +78,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
                             progressBar.setVisibility(View.GONE);
                             Constants.debugLog(TAG, "" + response);
-                            if (response.isSuccessful()) {
+                            if (response.isSuccessful() && response.body() != null) {
                                 AccessModel accessModel = response.body();
                                 editor.putString(Constants.FIRST_NAME, firstName);
                                 editor.putString(Constants.LAST_NAME, lastName);
@@ -95,6 +95,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         @Override
                         public void onFailure(Call<AccessModel> call, Throwable t) {
                             Constants.debugLog(TAG, "" + t.getMessage());
+                            Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");
 
                         }
                     });
