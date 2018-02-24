@@ -38,5 +38,6 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="logo_w_h">100dp</dimen>
+    <dimen name="profile_cover_img_height">180dp</dimen>
 
 </resources>

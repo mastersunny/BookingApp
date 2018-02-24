@@ -3,6 +3,7 @@ package mastersunny.unitedclub.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.io.File;
 import java.security.PublicKey;
 
 import mastersunny.unitedclub.R;
@@ -32,6 +34,7 @@ public class Constants {
 
     public static final int store_search = 1;
     public static final int category_search = 2;
+    public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 101;
 
     public static final String prefs = "prefs";
     public static final String FIRST_NAME = "first_name";
@@ -90,5 +93,20 @@ public class Constants {
 
     public static String getAccessToken(Context context) {
         return context.getSharedPreferences(Constants.prefs, MODE_PRIVATE).getString(ACCESS_TOKEN, "");
+    }
+
+    public static String getRootDirectory() {
+        String rootPath = "";
+        try {
+            rootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "united_club";
+            File root = new File(rootPath);
+            if (!root.exists()) {
+                root.mkdirs();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return rootPath;
+        }
     }
 }
