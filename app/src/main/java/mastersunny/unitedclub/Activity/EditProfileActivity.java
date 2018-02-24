@@ -172,7 +172,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 try {
                     String rootPath = Constants.getRootDirectory();
                     deleteFiles(new File(rootPath));
-                    destFile = new File(rootPath + "cover_image" + ".jpg");
+                    destFile = new File(rootPath + File.separator + "cover_image" + ".jpg");
                     destFile.createNewFile();
                     new AsyncCaller().execute(new File(getRealPathFromURI(uri)), destFile);
                 } catch (Exception e) {
@@ -235,6 +235,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
+            Log.d(TAG, "result " + result + " destFile " + destFile.getAbsolutePath());
             if (result) {
                 Constants.loadImage(EditProfileActivity.this, destFile.getAbsolutePath(), cover_image);
             }
