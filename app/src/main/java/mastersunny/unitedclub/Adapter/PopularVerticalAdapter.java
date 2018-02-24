@@ -50,7 +50,7 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    StoresDetailsActivity.start(view.getContext(), storeDTO.getStoreId());
+                    StoresDetailsActivity.start(view.getContext(), storeDTO);
                 }
             });
         }

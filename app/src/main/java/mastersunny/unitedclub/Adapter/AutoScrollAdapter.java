@@ -46,7 +46,7 @@ public class AutoScrollAdapter extends LoopingPagerAdapter<SliderDTO> {
             holder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    StoresDetailsActivity.start(view.getContext(), sliderDTO.getStoreId());
+//                    StoresDetailsActivity.start(view.getContext(), sliderDTO.getStoreId());
                 }
             });
         }
