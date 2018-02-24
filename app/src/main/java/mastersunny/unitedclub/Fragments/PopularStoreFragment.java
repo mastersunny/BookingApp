@@ -52,6 +52,7 @@ public class PopularStoreFragment extends FragmentBase implements View.OnClickLi
                 public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
                     Constants.debugLog(TAG, "" + response);
                     if (response != null && response.isSuccessful()) {
+                        storeDTOS.clear();
                         storeDTOS.addAll(response.body());
                         if (popularVerticalAdapter != null) {
                             popularVerticalAdapter.notifyDataSetChanged();
