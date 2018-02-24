@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "990070376786",
-    "firebase_url": "https://unitedclub-b894c.firebaseio.com",
-    "project_id": "unitedclub-b894c",
-    "storage_bucket": "unitedclub-b894c.appspot.com"
+    "project_number": "690359897602",
+    "firebase_url": "https://unitedclub-718ce.firebaseio.com",
+    "project_id": "unitedclub-718ce",
+    "storage_bucket": "unitedclub-718ce.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:990070376786:android:daff6d27933bfc3c",
+        "mobilesdk_app_id": "1:690359897602:android:302bec915de5c50d",
         "android_client_info": {
           "package_name": "com.inflack.unitedclub"
         }
       },
       "oauth_client": [
         {
-          "client_id": "990070376786-qfeakihu5tlm9hbdaqqdj9dkgm2s48u6.apps.googleusercontent.com",
+          "client_id": "690359897602-86e49dl1b0t9na9il435kb7u3670813h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCo4HBL__JLTpR1_wEg9bPxB4seeE_0A-E"
+          "current_key": "AIzaSyB5VVvzCjdVfQUUq1PXvi9eAjr-NJpOvxc"
         }
       ],
       "services": {
