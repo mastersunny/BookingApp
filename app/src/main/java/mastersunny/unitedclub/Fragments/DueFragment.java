@@ -33,15 +33,13 @@ import retrofit2.Response;
  * Created by ASUS on 1/23/2018.
  */
 
-public class DueFragment extends Fragment implements View.OnClickListener {
+public class DueFragment extends FragmentBase implements View.OnClickListener {
 
     private Activity mActivity;
-    private View view;
     public String TAG = "PaidFragment";
     private RecyclerView transaction_details_rv;
     private ArrayList<TransactionDTO> transactionDTOS;
     private TransactionAdapter transactionAdapter;
-    ApiInterface apiService;
     private ProgressBar progressBar;
 
     @Override
@@ -50,29 +48,18 @@ public class DueFragment extends Fragment implements View.OnClickListener {
         mActivity = getActivity();
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.transaction_fragment_layout, container, false);
-            apiService = ApiClient.getClient().create(ApiInterface.class);
-            transactionDTOS = new ArrayList<>();
-            initLayout();
-        }
 
-        return view;
+    @Override
+    public void onCreate() {
+        transactionDTOS = new ArrayList<>();
+        initLayout();
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    private void initLayout() {
+    public void initLayout() {
         progressBar = view.findViewById(R.id.progressBar);
 
-        transaction_details_rv = view.findViewById(R.id.transaction_details_rv);
+        transaction_details_rv = view.findViewById(R.id.most_used_rv);
         transaction_details_rv.setHasFixedSize(true);
         transaction_details_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         transactionAdapter = new TransactionAdapter(mActivity, transactionDTOS);
@@ -80,15 +67,28 @@ public class DueFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void updateLayout() {
+
+    }
+
+    @Override
+    public void sendInitialRequest() {
+        if (!firstRequest) {
+            firstRequest = true;
+            swipeRefresh.setRefreshing(true);
+            refreshHandler();
+            loaData();
+        }
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            Log.d(MerchantHomeFragment.TAG, "" + "onresume");
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    progressBar.setVisibility(View.VISIBLE);
-                    loaData();
+                    sendInitialRequest();
                 }
             });
         } else {
@@ -102,7 +102,7 @@ public class DueFragment extends Fragment implements View.OnClickListener {
 
     private void loaData() {
         try {
-            apiService.getDueTransactions(Constants.getAccessToken(mActivity)).enqueue(new Callback<List<TransactionDTO>>() {
+            apiInterface.getDueTransactions(Constants.getAccessToken(mActivity)).enqueue(new Callback<List<TransactionDTO>>() {
                 @Override
                 public void onResponse(Call<List<TransactionDTO>> call, Response<List<TransactionDTO>> response) {
                     progressBar.setVisibility(View.GONE);
