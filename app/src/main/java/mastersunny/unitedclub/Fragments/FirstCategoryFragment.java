@@ -14,12 +14,16 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import mastersunny.unitedclub.Activity.StoresDetailsActivity;
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,9 +34,9 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class FirstCategoryFragment extends Fragment implements View.OnClickListener, Callback<MoviesResponse> {
+public class FirstCategoryFragment extends Fragment implements View.OnClickListener {
 
-    public String TAG = "MostUsedFragment";
+    public String TAG = "FirstCategoryFragment";
     private Activity mActivity;
     private View view;
     private RecyclerView most_used_rv;
@@ -40,6 +44,8 @@ public class FirstCategoryFragment extends Fragment implements View.OnClickListe
     private StoreOfferAdapter storeOfferAdapter;
     private ProgressBar progressBar;
     private boolean firstRequest = false;
+    private ApiInterface apiInterface;
+    private CategoryDTO categoryDTO;
 
     public static FirstCategoryFragment newInstance(CategoryDTO categoryDTO) {
         FirstCategoryFragment fragment = new FirstCategoryFragment();
@@ -51,7 +57,6 @@ public class FirstCategoryFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onAttach(Context context) {
-        Log.d(MerchantHomeFragment.TAG, "" + "onAttach");
         super.onAttach(context);
         mActivity = getActivity();
     }
@@ -61,21 +66,43 @@ public class FirstCategoryFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_layout, container, false);
+            apiInterface = ApiClient.getClient().create(ApiInterface.class);
             storeOfferDTOS = new ArrayList<>();
+            getIntentData();
             initLayout();
-            loaData();
         }
 
         return view;
     }
 
+    private void getIntentData() {
+        categoryDTO = (CategoryDTO) getArguments().getSerializable(Constants.CATEGORY_DTO);
+    }
+
     private void loaData() {
-//        if (ApiClient.API_KEY.isEmpty()) {
-//            Toast.makeText(mActivity, "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-//        apiService.getTopRatedMovies(ApiClient.API_KEY).enqueue(this);
+        try {
+            apiInterface.getStoreOffers(categoryDTO.getCategoryId(), Constants.getAccessToken(mActivity))
+                    .enqueue(new Callback<List<StoreOfferDTO>>() {
+                        @Override
+                        public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
+                            Constants.debugLog(TAG, "" + response);
+                            if (response.isSuccessful() && response.body() != null) {
+                                Constants.debugLog(TAG, "" + response.body());
+                                storeOfferDTOS.addAll(response.body());
+                                if (storeOfferAdapter != null) {
+                                    storeOfferAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
+                            Constants.debugLog(TAG, "" + t.getMessage());
+                        }
+                    });
+        } catch (Exception e) {
+            Constants.debugLog(TAG, "" + e.getMessage());
+        }
     }
 
     @Override
@@ -85,13 +112,7 @@ public class FirstCategoryFragment extends Fragment implements View.OnClickListe
             public void run() {
                 if (!firstRequest) {
                     firstRequest = true;
-                    for (int i = 0; i < 10; i++) {
-                        StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
-                        storeOfferDTOS.add(storeOfferDTO);
-                    }
-                    if (storeOfferAdapter != null)
-                        storeOfferAdapter.notifyDataSetChanged();
-                    progressBar.setVisibility(View.GONE);
+                    loaData();
                 }
             }
         });
@@ -116,17 +137,6 @@ public class FirstCategoryFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
-    }
-
-
-    @Override
-    public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-
-    }
-
-    @Override
-    public void onFailure(Call<MoviesResponse> call, Throwable t) {
 
     }
 }

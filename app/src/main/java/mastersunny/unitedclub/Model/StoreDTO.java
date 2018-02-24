@@ -9,9 +9,9 @@ import java.io.Serializable;
  */
 
 public class StoreDTO implements Serializable {
-    @SerializedName("store_id")
+    @SerializedName("id")
     private int storeId;
-    @SerializedName("store_name")
+    @SerializedName("name")
     private String storeName;
     @SerializedName("image_url")
     private String imageUrl;

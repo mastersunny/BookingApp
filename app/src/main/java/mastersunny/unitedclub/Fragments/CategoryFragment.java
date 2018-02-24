@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
 import mastersunny.unitedclub.Model.CategoryDTO;
-import mastersunny.unitedclub.Model.MoviesResponse;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
@@ -42,9 +40,9 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private StoreOfferAdapter storeOfferAdapter;
     private ProgressBar progressBar;
-    ApiInterface apiService;
-    private String accessToken = "";
     private boolean firstRequest = false;
+    private ApiInterface apiInterface;
+    private CategoryDTO categoryDTO;
 
     public static CategoryFragment newInstance(CategoryDTO categoryDTO) {
         CategoryFragment fragment = new CategoryFragment();
@@ -65,39 +63,48 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_layout, container, false);
-            apiService = ApiClient.getClient().create(ApiInterface.class);
+            apiInterface = ApiClient.getClient().create(ApiInterface.class);
             storeOfferDTOS = new ArrayList<>();
-            accessToken = mActivity.getSharedPreferences(Constants.ACCESS_TOKEN, Context.MODE_PRIVATE)
-                    .getString(Constants.ACCESS_TOKEN, "");
+            getIntentData();
             initLayout();
         }
 
         return view;
     }
 
+    private void getIntentData() {
+        categoryDTO = (CategoryDTO) getArguments().getSerializable(Constants.CATEGORY_DTO);
+    }
+
     private void loaData() {
-        apiService.getCategoryOffers(2, accessToken).enqueue(new Callback<List<StoreOfferDTO>>() {
-            @Override
-            public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
-                progressBar.setVisibility(View.GONE);
-                if (response != null && response.isSuccessful()) {
-                    storeOfferDTOS.addAll(response.body());
-                    if (storeOfferAdapter != null) {
-                        storeOfferAdapter.notifyDataSetChanged();
-                    }
-                }
+        try {
+            apiInterface.getStoreOffers(categoryDTO.getCategoryId(), Constants.getAccessToken(mActivity))
+                    .enqueue(new Callback<List<StoreOfferDTO>>() {
+                        @Override
+                        public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
+                            Constants.debugLog(TAG, "" + response);
+                            if (response.isSuccessful() && response.body() != null) {
+                                Constants.debugLog(TAG, "" + response.body());
+                                storeOfferDTOS.addAll(response.body());
+                                if (storeOfferAdapter != null) {
+                                    storeOfferAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
 
-            }
-
-            @Override
-            public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
-
-            }
-        });
+                        @Override
+                        public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
+                            Constants.debugLog(TAG, "" + t.getMessage());
+                        }
+                    });
+        } catch (Exception e) {
+            Constants.debugLog(TAG, "" + e.getMessage());
+        }
     }
 
     private void initLayout() {
         progressBar = view.findViewById(R.id.progressBar);
+
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setHasFixedSize(true);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
@@ -115,9 +122,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !firstRequest) {
             firstRequest = true;
-            Constants.debugLog(TAG, "Visible");
             loaData();
-        } else {
         }
     }
 }

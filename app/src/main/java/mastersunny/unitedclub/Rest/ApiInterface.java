@@ -41,11 +41,11 @@ public interface ApiInterface {
     @GET("api/get_store")
     Call<StoreDTO> getStoreById(@Query("id") int id, @Query("access_token") String accessToken);
 
-    @GET("api/get_store_offer/{store_id}")
-    Call<List<StoreOfferDTO>> getStoreOffers(@Path("store_id") int store_id, @Query("access_token") String accessToken);
+    @GET("api/get_store_offer")
+    Call<List<StoreOfferDTO>> getStoreOffers(@Query("store_id") int store_id, @Query("access_token") String accessToken);
 
-    @GET("api/get_category_offer/{category_id}")
-    Call<List<StoreOfferDTO>> getCategoryOffers(@Path("category_id") int category_id, @Query("access_token") String accessToken);
+    @GET("api/get_category_offer")
+    Call<List<StoreOfferDTO>> getCategoryOffers(@Query("category_id") int category_id, @Query("access_token") String accessToken);
     //Offer List
 
 

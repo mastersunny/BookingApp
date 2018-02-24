@@ -88,7 +88,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
         store_name.setText(storeDTO.getStoreName());
         String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getImageUrl();
         Constants.loadImage(this, imgUrl, store_image);
-        total_offer.setText("" + storeDTO.getTotalOffer());
+        total_offer.setText(storeDTO.getTotalOffer() + " Offers");
 
         offer_rv = findViewById(R.id.offer_rv);
         offer_rv.setHasFixedSize(true);
@@ -129,6 +129,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
                         public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
                             Constants.debugLog(TAG, "" + response);
                             if (response.isSuccessful() && response.body() != null) {
+                                Constants.debugLog(TAG, "" + response.body());
                                 storeOfferDTOS.addAll(response.body());
                                 if (storeOfferAdapter != null) {
                                     storeOfferAdapter.notifyDataSetChanged();

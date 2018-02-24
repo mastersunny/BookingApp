@@ -7,11 +7,11 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class StoreOfferDTO {
-    @SerializedName("offer_id")
+    @SerializedName("id")
     private int offerId;
-    @SerializedName("store_dto")
+    @SerializedName("club_store")
     private StoreDTO storeDTO;
-    @SerializedName("category_dto")
+    @SerializedName("category")
     private CategoryDTO categoryDTO;
     @SerializedName("offer")
     private String offer;
