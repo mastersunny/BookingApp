@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -47,12 +49,29 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private ArrayList<TransactionDTO> transactionDTOS;
     ApiInterface apiService;
     private ProgressBar progressBar;
+    protected SwipeRefreshLayout swipeRefresh;
+    protected boolean firstRequest = false;
+    protected Handler handler = new Handler();
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = getActivity();
     }
+
+    protected void refreshHandler() {
+        handler.postDelayed(runnable, Constants.REQUEST_TIMEOUT);
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            Constants.debugLog("TAG", "" + swipeRefresh);
+            if (swipeRefresh != null) {
+                swipeRefresh.setRefreshing(false);
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -68,15 +87,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
     private void initLayout() {
         progressBar = view.findViewById(R.id.progressBar);
-        view.findViewById(R.id.edit_profile).setOnClickListener(this);
+        swipeRefresh = view.findViewById(R.id.swipeRefresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                firstRequest = false;
+                sendInitialRequest();
+            }
+        });
 
         transaction_rv = view.findViewById(R.id.transaction_rv);
         transaction_rv.setHasFixedSize(true);
@@ -85,36 +105,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         transaction_rv.setAdapter(transactionAdapter);
 
         view.findViewById(R.id.view_all_transaction).setOnClickListener(this);
+        view.findViewById(R.id.edit_profile).setOnClickListener(this);
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            Log.d(MerchantHomeFragment.TAG, "" + "onresume");
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loaData();
-//                    for (int i = 5; i < 30; i++) {
-//                        TransactionDTO transactionDTO = new TransactionDTO();
-//                        StoreDTO storeDTO = new StoreDTO();
-//                        if (i % 2 == 0) {
-//                            storeDTO.setStoreName("Paytm");
-//                        } else {
-//                            storeDTO.setStoreName("Amazon");
-//                        }
-//                        transactionDTO.getStoreOfferDTO().setStoreDTO(storeDTO);
-//                        transactionDTO.setPaidAmount(10000);
-//                        transactionDTO.setDueAmount(i);
-//                        transactionDTOS.add(transactionDTO);
-//                    }
-//                    if (transactionAdapter != null)
-//                        transactionAdapter.notifyDataSetChanged();
-                }
-            });
-        } else {
+            sendInitialRequest();
         }
+        super.setUserVisibleHint(isVisibleToUser);
     }
 
     @Override
@@ -151,6 +150,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             });
         } catch (Exception e) {
             Constants.debugLog(TAG, "Error in load data " + e.getMessage());
+        }
+    }
+
+    public void sendInitialRequest() {
+        if (!firstRequest) {
+            firstRequest = true;
+            swipeRefresh.setRefreshing(true);
+            refreshHandler();
+            loaData();
         }
     }
 }

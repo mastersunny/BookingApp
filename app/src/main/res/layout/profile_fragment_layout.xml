@@ -1,73 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/profile_cover_img_height"
-        android:background="@color/item_details">
-
-        <mastersunny.unitedclub.utils.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_30"
-            android:src="@drawable/profile_image" />
-
-        <ImageView
-            android:id="@+id/edit_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/margin_20"
-            android:layout_marginTop="?android:actionBarSize"
-            android:background="?selectableItemBackground"
-            android:padding="@dimen/margin_10"
-            android:src="@drawable/ic_edit_black_24dp" />
-
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/margin_20"
-            android:text="John Doe"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_18" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_10"
-        android:background="@color/white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin_10"
-            android:text="Your last transactions" />
-
-        <TextView
-            android:id="@+id/view_all_transaction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="@dimen/margin_10"
-            android:text="View All"
-            android:textColor="#006ff1" />
-    </RelativeLayout>
-
-    <include layout="@layout/progress_layout"></include>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/transaction_rv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_5" />
-</LinearLayout>
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/profile_cover_img_height"
+            android:background="@color/item_details">
+
+            <mastersunny.unitedclub.utils.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_30"
+                android:src="@drawable/profile_image" />
+
+            <ImageView
+                android:id="@+id/edit_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/margin_20"
+                android:layout_marginTop="?android:actionBarSize"
+                android:background="?selectableItemBackground"
+                android:padding="@dimen/margin_10"
+                android:src="@drawable/ic_edit_black_24dp" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:text="John Doe"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_18" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_10"
+                android:text="Your last transactions" />
+
+            <TextView
+                android:id="@+id/view_all_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/margin_10"
+                android:text="View All"
+                android:textColor="#006ff1" />
+        </RelativeLayout>
+
+        <include layout="@layout/progress_layout"></include>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/transaction_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_5" />
+    </LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
