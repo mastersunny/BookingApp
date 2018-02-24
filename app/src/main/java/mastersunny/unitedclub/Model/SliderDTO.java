@@ -8,7 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class SliderDTO {
 
-    @SerializedName("image")
+    @SerializedName("slider_id")
+    private long sliderId;
+    @SerializedName("slider_image")
     private String imageUrl;
     @SerializedName("store_id")
     private int storeId;
