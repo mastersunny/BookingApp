@@ -72,8 +72,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LoopingPagerAdapter loopingPagerAdapter;
     private ArrayList<SliderDTO> autoScrollList;
     private ApiInterface apiService;
-    private String accessToken = "";
     private ArrayList<CategoryDTO> categoryDTOS;
+    private String accessToken = "";
 
     @Override
     public void onAttach(Context context) {
@@ -87,7 +87,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (view == null) {
             view = inflater.inflate(R.layout.home_fragment_layout, container, false);
             apiService = ApiClient.getClient().create(ApiInterface.class);
-            accessToken = mActivity.getSharedPreferences(Constants.prefs, MODE_PRIVATE).getString(Constants.ACCESS_TOKEN, "");
             storeDTOS = new ArrayList<>();
             autoScrollList = new ArrayList<>();
             categoryDTOS = new ArrayList<>();
@@ -107,7 +106,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void loadData() {
         try {
-            Constants.debugLog(TAG, accessToken);
+            Constants.debugLog(TAG, Constants.getAccessToken(mActivity));
             apiService.getSliders(accessToken).enqueue(new Callback<List<SliderDTO>>() {
                 @Override
                 public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {

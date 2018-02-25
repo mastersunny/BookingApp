@@ -50,6 +50,9 @@ public interface ApiInterface {
 
 
     //Login and registration
+    @GET("api/is_access_token_valid/{access_token}")
+    Call<AccessModel> isAccessTokenValid(@Path("access_token") String accessToken);
+
     @POST("api/get_access")
     @FormUrlEncoded
     Call<AccessModel> initRegistration(@Field("phone_number") String phoneNumber);

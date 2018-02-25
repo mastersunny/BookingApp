@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
     private void refreshHandler() {
-        handler.postDelayed(runnable, 10000);
+        if (handler != null) {
+            handler.postDelayed(runnable, 10000);
+        }
     }
 
     @Override
