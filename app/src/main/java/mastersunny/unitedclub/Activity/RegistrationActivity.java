@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -79,12 +80,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             progressBar.setVisibility(View.GONE);
                             Constants.debugLog(TAG, "" + response);
                             if (response.isSuccessful() && response.body() != null) {
+                                Log.d(TAG, "" + response.body());
                                 AccessModel accessModel = response.body();
                                 editor.putString(Constants.FIRST_NAME, firstName);
                                 editor.putString(Constants.LAST_NAME, lastName);
                                 editor.putString(Constants.EMAIL, emailAddress);
-                                editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
-                                startActivity(new Intent(RegistrationActivity.this, MerchantMainActivity.class));
+                                if (accessModel.getAccessToken().length() > 0) {
+                                    editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
+                                    startActivity(new Intent(RegistrationActivity.this, ClientMainActivity.class));
+                                }
                                 finish();
                             } else {
                                 Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");

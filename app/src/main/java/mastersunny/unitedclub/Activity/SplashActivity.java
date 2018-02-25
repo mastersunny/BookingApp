@@ -18,6 +18,8 @@ import mastersunny.unitedclub.utils.Constants;
 public class SplashActivity extends AppCompatActivity {
 
     private final int SPLASH_DISPLAY_LENGTH = 2000;
+    private Handler handler = new Handler();
+    private String accessToken = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,21 +27,29 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_layout);
         SharedPreferences sharedpreferences = getSharedPreferences(Constants.prefs, Context.MODE_PRIVATE);
-        final String accessToken = sharedpreferences.getString(Constants.ACCESS_TOKEN, "");
+        accessToken = sharedpreferences.getString(Constants.ACCESS_TOKEN, "");
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (accessToken != null && accessToken.length() > 0) {
-                    Intent mainIntent = new Intent(SplashActivity.this, ClientMainActivity.class);
-                    startActivity(mainIntent);
-                    finish();
-                } else {
-                    Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(mainIntent);
-                    finish();
-                }
+        if (handler != null) {
+            handler.postDelayed(runnable, SPLASH_DISPLAY_LENGTH);
+        }
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (accessToken != null && accessToken.length() > 0) {
+                startActivity(new Intent(SplashActivity.this, ClientMainActivity.class));
+                SplashActivity.this.finish();
+            } else {
+                SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                SplashActivity.this.finish();
             }
-        }, SPLASH_DISPLAY_LENGTH);
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        handler.removeCallbacksAndMessages(null);
+        super.onDestroy();
     }
 }
