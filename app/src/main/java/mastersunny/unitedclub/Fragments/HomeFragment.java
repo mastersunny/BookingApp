@@ -73,7 +73,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ArrayList<SliderDTO> autoScrollList;
     private ApiInterface apiService;
     private ArrayList<CategoryDTO> categoryDTOS;
-    private String accessToken = "";
 
     @Override
     public void onAttach(Context context) {
@@ -107,7 +106,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void loadData() {
         try {
             Constants.debugLog(TAG, Constants.getAccessToken(mActivity));
-            apiService.getSliders(accessToken).enqueue(new Callback<List<SliderDTO>>() {
+            apiService.getSliders(Constants.accessToken).enqueue(new Callback<List<SliderDTO>>() {
                 @Override
                 public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {
                     Constants.debugLog(TAG, "" + response.body());
@@ -123,7 +122,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
-            apiService.getPopularStores(accessToken).enqueue(new Callback<List<StoreDTO>>() {
+            apiService.getPopularStores(Constants.accessToken).enqueue(new Callback<List<StoreDTO>>() {
                 @Override
                 public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
                     Constants.debugLog(TAG, "" + response.body());
@@ -139,7 +138,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
-            apiService.getCategories(accessToken).enqueue(new Callback<List<CategoryDTO>>() {
+            apiService.getCategories(Constants.accessToken).enqueue(new Callback<List<CategoryDTO>>() {
                 @Override
                 public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
                     Constants.debugLog(TAG, "getCategories " + response);

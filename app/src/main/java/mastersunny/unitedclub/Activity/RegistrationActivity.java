@@ -79,16 +79,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
                             progressBar.setVisibility(View.GONE);
                             Constants.debugLog(TAG, "" + response);
-                            if (response.isSuccessful() && response.body() != null) {
+                            if (response.isSuccessful() && response.body() != null && response.body().getAccessToken().length() > 0) {
                                 Log.d(TAG, "" + response.body());
                                 AccessModel accessModel = response.body();
                                 editor.putString(Constants.FIRST_NAME, firstName);
                                 editor.putString(Constants.LAST_NAME, lastName);
                                 editor.putString(Constants.EMAIL, emailAddress);
-                                if (accessModel.getAccessToken().length() > 0) {
-                                    editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
-                                    startActivity(new Intent(RegistrationActivity.this, ClientMainActivity.class));
-                                }
+                                editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
+                                editor.apply();
+                                startActivity(new Intent(RegistrationActivity.this, ClientMainActivity.class));
                                 finish();
                             } else {
                                 Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");

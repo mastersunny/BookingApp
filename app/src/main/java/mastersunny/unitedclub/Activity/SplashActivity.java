@@ -55,6 +55,7 @@ public class SplashActivity extends AppCompatActivity {
             apiInterface.isAccessTokenValid(accessToken).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                    handler.removeCallbacksAndMessages(null);
                     Constants.debugLog(TAG, response.body() + "");
                     progressBar.setVisibility(View.GONE);
                     if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
@@ -67,6 +68,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<AccessModel> call, Throwable t) {
+                    Constants.showDialog(SplashActivity.this, "Please try again later");
                     Constants.debugLog(TAG, t.getMessage());
 
                 }
@@ -79,8 +81,10 @@ public class SplashActivity extends AppCompatActivity {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            progressBar.setVisibility(View.GONE);
-            Constants.showDialog(SplashActivity.this, "Please try again later");
+            if (!isFinishing()) {
+                progressBar.setVisibility(View.GONE);
+                Constants.showDialog(SplashActivity.this, "Please try again later");
+            }
         }
     };
 

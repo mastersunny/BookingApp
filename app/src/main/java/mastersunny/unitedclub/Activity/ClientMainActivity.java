@@ -1,27 +1,41 @@
 package mastersunny.unitedclub.Activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Toast;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.utils.Constants;
+import mastersunny.unitedclub.utils.NotificationUtils;
 
 public class ClientMainActivity extends AppCompatActivity {
 
-    public String TAG = "ClientMainActivity";
+    public String TAG = ClientMainActivity.class.getSimpleName();
     private BottomNavigationView bottomNavigationView;
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
     private MenuItem prevMenuItem;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private SharedPreferences preferences;
 
 
     @Override
@@ -29,16 +43,67 @@ public class ClientMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.cleint_main_activity);
-
+        preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
+        Constants.accessToken = preferences.getString(Constants.ACCESS_TOKEN, "");
         setUpTabLayout(savedInstanceState);
         setUpNavigationView();
+        initBroadcastReceiver();
+    }
 
-       /* Display mDisplay = getWindowManager().getDefaultDisplay();
-        final int width = mDisplay.getWidth();
-        final int height = mDisplay.getHeight();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        Log.d(TAG, "" + width);
-        Log.d(TAG, "" + height);*/
+        // register GCM registration complete receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Constants.REGISTRATION_COMPLETE));
+
+        // register new push message receiver
+        // by doing this, the activity will be notified each time a new message arrives
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Constants.PUSH_NOTIFICATION));
+
+        // clear the notification area when the app is opened
+        NotificationUtils.clearNotifications(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
+    }
+
+    private void initBroadcastReceiver() {
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                // checking for type intent filter
+                if (intent.getAction().equals(Constants.REGISTRATION_COMPLETE)) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC_GLOBAL);
+
+                    displayFirebaseRegId();
+
+                } else if (intent.getAction().equals(Constants.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+
+                    String message = intent.getStringExtra("message");
+
+                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+
+//                    txtMessage.setText(message);
+                }
+            }
+        };
+    }
+
+    private void displayFirebaseRegId() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.prefs, 0);
+        String regId = pref.getString("regId", null);
+
+        Constants.debugLog(TAG, "Firebase reg id: " + regId);
     }
 
     private void setUpTabLayout(Bundle savedInstanceState) {
