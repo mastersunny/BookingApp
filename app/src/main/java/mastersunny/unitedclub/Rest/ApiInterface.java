@@ -65,7 +65,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<AccessModel> signUp(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("email") String email, @Field("phone_number") String phoneNumber);
 
-    @POST("api/sign_up")
+    @POST("api/client_info")
     @FormUrlEncoded
     Call<AccessModel> sendRegistrationToServer(@Field("access_token") String accessToken, @Field("fcm_token") String fcmToken);
     //Login and registration
