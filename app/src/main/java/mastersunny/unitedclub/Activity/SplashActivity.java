@@ -59,9 +59,9 @@ public class SplashActivity extends AppCompatActivity {
                     Constants.debugLog(TAG, response.body() + "");
                     progressBar.setVisibility(View.GONE);
                     if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                        startActivity(new Intent(SplashActivity.this, ClientMainActivity.class));
+                        ClientMainActivity.start(SplashActivity.this, false);
                     } else {
-                        SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     }
                     SplashActivity.this.finish();
                 }

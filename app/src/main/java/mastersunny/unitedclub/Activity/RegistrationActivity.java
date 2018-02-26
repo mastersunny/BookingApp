@@ -84,7 +84,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             editor.putString(Constants.EMAIL, emailAddress);
             editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
             editor.apply();
-            startActivity(new Intent(RegistrationActivity.this, ClientMainActivity.class));
+            ClientMainActivity.start(RegistrationActivity.this, true);
             finish();
         } else {
             Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");

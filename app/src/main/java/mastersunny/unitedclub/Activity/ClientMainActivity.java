@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import mastersunny.unitedclub.Adapter.PagerAdapter;
@@ -24,6 +25,8 @@ import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 import mastersunny.unitedclub.utils.NotificationUtils;
 
@@ -36,6 +39,15 @@ public class ClientMainActivity extends AppCompatActivity {
     private MenuItem prevMenuItem;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private SharedPreferences preferences;
+    static final String NEW_USER = "new_user";
+    private boolean isNewUser;
+    private ApiInterface apiInterface;
+
+    public static void start(Context context, boolean isNewUser) {
+        Intent intent = new Intent(context, ClientMainActivity.class);
+        intent.putExtra(NEW_USER, isNewUser);
+        context.startActivity(intent);
+    }
 
 
     @Override
@@ -43,17 +55,22 @@ public class ClientMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.cleint_main_activity);
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
         preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
         Constants.accessToken = preferences.getString(Constants.ACCESS_TOKEN, "");
         setUpTabLayout(savedInstanceState);
         setUpNavigationView();
         initBroadcastReceiver();
+        isNewUser = getIntent().getBooleanExtra(NEW_USER, false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        if (isNewUser) {
+            apiInterface.sendRegistrationToServer(Constants.accessToken, FirebaseInstanceId.getInstance().getToken());
+        }
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Constants.REGISTRATION_COMPLETE));
