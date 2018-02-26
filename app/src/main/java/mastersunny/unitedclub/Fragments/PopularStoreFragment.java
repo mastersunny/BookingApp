@@ -47,7 +47,7 @@ public class PopularStoreFragment extends FragmentBase implements View.OnClickLi
 
     private void loaData() {
         try {
-            apiInterface.getPopularStores(Constants.getAccessToken(mActivity)).enqueue(new Callback<List<StoreDTO>>() {
+            apiInterface.getPopularStores(Constants.accessToken).enqueue(new Callback<List<StoreDTO>>() {
                 @Override
                 public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
                     Constants.debugLog(TAG, "" + response);

@@ -40,7 +40,7 @@ public class AllStoreFragment extends FragmentBase implements View.OnClickListen
 
     private void loaData() {
         try {
-            apiInterface.getAllStores(Constants.getAccessToken(mActivity)).enqueue(new Callback<List<StoreDTO>>() {
+            apiInterface.getAllStores(Constants.accessToken).enqueue(new Callback<List<StoreDTO>>() {
                 @Override
                 public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
                     Constants.debugLog(TAG, "" + response);
