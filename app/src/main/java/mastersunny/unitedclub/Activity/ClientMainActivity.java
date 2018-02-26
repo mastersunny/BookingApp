@@ -24,11 +24,15 @@ import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
+import mastersunny.unitedclub.Model.AccessModel;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 import mastersunny.unitedclub.utils.NotificationUtils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ClientMainActivity extends AppCompatActivity {
 
@@ -67,9 +71,19 @@ public class ClientMainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        Constants.debugLog(TAG, "" + isNewUser + " " + Constants.accessToken + " token " + FirebaseInstanceId.getInstance().getToken());
         if (isNewUser) {
-            apiInterface.sendRegistrationToServer(Constants.accessToken, FirebaseInstanceId.getInstance().getToken());
+            apiInterface.sendRegistrationToServer(Constants.accessToken, FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<AccessModel>() {
+                @Override
+                public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                    Constants.debugLog(TAG, response.body() + "");
+                }
+
+                @Override
+                public void onFailure(Call<AccessModel> call, Throwable t) {
+
+                }
+            });
         }
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
