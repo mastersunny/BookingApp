@@ -28,18 +28,18 @@ import retrofit2.Response;
 
 public class MobileVerificationActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public String TAG = "MobileVerificationActivity";
+    public String TAG = MobileVerificationActivity.class.getSimpleName();
     private EditText one_time_password;
     private TextView phone_number, timer_text;
     private Button btn_next, btn_resend_code;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor;
     private String phoneNumber = "";
     private ApiInterface apiInterface;
     private ProgressBar progressBar;
     private CountDownTimer timer;
     private Handler handler;
     private boolean alreadyRequest = false;
+    private int time = 60;
 
     public static void start(Context context, String phoneNumber) {
         Intent intent = new Intent(context, MobileVerificationActivity.class);
@@ -52,13 +52,11 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_mobile_verification);
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
-        editor = preferences.edit();
-
+        editor = getSharedPreferences(Constants.prefs, MODE_PRIVATE).edit();
         phoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);
 
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
         handler = new Handler();
         initLayout();
         updateUI();
@@ -68,7 +66,6 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         phone_number.setText(phoneNumber);
     }
 
-    int time = 60;
 
     private void initLayout() {
         one_time_password = findViewById(R.id.one_time_password);
