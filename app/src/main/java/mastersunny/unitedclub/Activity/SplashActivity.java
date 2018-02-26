@@ -75,6 +75,7 @@ public class SplashActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             Constants.debugLog(TAG, e.getMessage());
+            Constants.showDialog(SplashActivity.this, "Please try again later");
         }
     }
 
@@ -83,7 +84,6 @@ public class SplashActivity extends AppCompatActivity {
         public void run() {
             if (!isFinishing()) {
                 progressBar.setVisibility(View.GONE);
-                Constants.showDialog(SplashActivity.this, "Please try again later");
             }
         }
     };
