@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -26,21 +27,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Constants.debugLog(TAG, "From: " + remoteMessage.getFrom());
-
         if (remoteMessage == null)
             return;
 
-        // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Constants.debugLog(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
             handleNotification(remoteMessage.getNotification().getBody());
         }
 
-        // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Constants.debugLog(TAG, "Data Payload: " + remoteMessage.getData().toString());
-
             try {
                 JSONObject json = new JSONObject(remoteMessage.getData().toString());
                 handleDataMessage(json);
@@ -52,12 +48,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void handleNotification(String message) {
         if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
-            // app is in foreground, broadcast the push message
             Intent pushNotification = new Intent(Constants.PUSH_NOTIFICATION);
             pushNotification.putExtra("message", message);
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
-
-            // play notification sound
             NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
 //            notificationUtils.playNotificationSound();
         } else {

@@ -90,6 +90,7 @@ public class ClientMainActivity extends AppCompatActivity {
                     // new push notification is received
 
                     String message = intent.getStringExtra("message");
+                    Constants.debugLog(TAG, "Push message " + message);
 
                     Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
 
