@@ -76,7 +76,9 @@ public class ClientMainActivity extends AppCompatActivity {
             apiInterface.sendRegistrationToServer(Constants.accessToken, FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
-                    Constants.debugLog(TAG, response.body() + "");
+                    if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                        Constants.debugLog(TAG, response.body().getMessage());
+                    }
                 }
 
                 @Override
