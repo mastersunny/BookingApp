@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
                     alreadyRequest = false;
-                    Constants.debugLog(TAG, response.body().toString());
                     progressBar.setVisibility(View.GONE);
                     if (response != null && response.isSuccessful() && response.body().isSuccess()) {
                         MobileVerificationActivity.start(MainActivity.this, phoneNumber);
@@ -124,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onFailure(Call<AccessModel> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
                     Constants.showDialog(MainActivity.this, "Please try again");
                 }
             });
