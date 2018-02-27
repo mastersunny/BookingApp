@@ -43,7 +43,7 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
         if (storeOfferDTOS != null) {
-            StoreOfferDTO dto = storeOfferDTOS.get(position);
+            final StoreOfferDTO dto = storeOfferDTOS.get(position);
             if (dto.getStoreDTO().getImageUrl() != null) {
                 String imgUrl = ApiClient.BASE_URL + "" + dto.getStoreDTO().getImageUrl();
                 Constants.loadImage(mActivity, imgUrl, holder.store_image);
@@ -54,7 +54,7 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ItemDetailsActivity.start(mActivity, null);
+                    ItemDetailsActivity.start(mActivity, dto);
                 }
             });
         }

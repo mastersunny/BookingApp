@@ -215,7 +215,7 @@ public class MerchantHomeFragment extends Fragment implements View.OnClickListen
                     Log.d(TAG, "" + barCode.displayValue);
                     StoreDTO storeDTO = new StoreDTO();
                     storeDTO.setStoreName(barCode.displayValue);
-                    ItemDetailsActivity.start(mActivity, storeDTO);
+//                    ItemDetailsActivity.start(mActivity, storeDTO);
                 } else {
                     Toast.makeText(mActivity, R.string.no_barcode_captured, Toast.LENGTH_SHORT).show();
                 }

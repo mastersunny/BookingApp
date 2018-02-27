@@ -32,6 +32,7 @@ import java.util.List;
 import mastersunny.unitedclub.Activity.ItemDetailsActivity;
 import mastersunny.unitedclub.Activity.StoresActivity;
 import mastersunny.unitedclub.Activity.SearchActivity;
+import mastersunny.unitedclub.Activity.StoresDetailsActivity;
 import mastersunny.unitedclub.Adapter.AutoScrollAdapter;
 import mastersunny.unitedclub.Adapter.CategoryPagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
@@ -265,7 +266,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     Log.d(TAG, "" + barCode.displayValue);
                     StoreDTO storeDTO = new StoreDTO();
                     storeDTO.setStoreName(barCode.displayValue);
-                    ItemDetailsActivity.start(mActivity, storeDTO);
+                    StoresDetailsActivity.start(mActivity, storeDTO);
                 } else {
                     Toast.makeText(mActivity, R.string.no_barcode_captured, Toast.LENGTH_SHORT).show();
                 }

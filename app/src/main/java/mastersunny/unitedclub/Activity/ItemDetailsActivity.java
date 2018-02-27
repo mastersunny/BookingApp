@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,13 +18,13 @@ import android.widget.TextView;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.utils.CommonInerface;
 import mastersunny.unitedclub.utils.Constants;
 
-public class ItemDetailsActivity extends AppCompatActivity implements CommonInerface, View.OnClickListener {
+public class ItemDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     public String TAG = "ItemDetailsActivity";
-    private long storeId;
     private ImageView store_image;
     private TextView store_name, offer_details, description_text, description_details;
     private EditText total_amount;
@@ -40,22 +41,20 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
 
         getIntentData();
         initLayout();
-        loadData();
+        updateInfo();
     }
 
-    public static void start(Context context, StoreDTO storeDTO) {
+    public static void start(Context context, StoreOfferDTO storeOfferDTO) {
         Intent intent = new Intent(context, ItemDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.STORE_DTO, storeDTO);
+        intent.putExtra(Constants.STORE_OFFER_DTO, storeOfferDTO);
         context.startActivity(intent);
     }
 
-    @Override
     public void getIntentData() {
-        storeId = getIntent().getLongExtra(Constants.STORE_DTO, 0);
+        storeOfferDTO = (StoreOfferDTO) getIntent().getSerializableExtra(Constants.STORE_OFFER_DTO);
     }
 
-    @Override
     public void initLayout() {
         normal_toolbar = findViewById(R.id.normal_toolbar);
         normal_toolbar.setOnClickListener(this);
@@ -93,13 +92,11 @@ public class ItemDetailsActivity extends AppCompatActivity implements CommonIner
         });
     }
 
-    @Override
-    public void loadData() {
-
-    }
-
     private void updateInfo() {
-        Constants.loadImage(this, storeOfferDTO.getStoreDTO().getImageUrl(), store_image);
+        if (!TextUtils.isEmpty(storeOfferDTO.getStoreDTO().getImageUrl())) {
+            String imgUrl = ApiClient.BASE_URL + "" + storeOfferDTO.getStoreDTO().getImageUrl();
+            Constants.loadImage(this, imgUrl, store_image);
+        }
         store_name.setText(storeOfferDTO.getStoreDTO().getStoreName());
         offer_details.setText(storeOfferDTO.getOffer());
     }
