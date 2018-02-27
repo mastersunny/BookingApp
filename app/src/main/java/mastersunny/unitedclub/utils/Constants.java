@@ -41,6 +41,10 @@ public class Constants {
     public static final int USER_TYPE_MERCHANT = 2;
     public static final int USER_TYPE_ADMIN = 3;
 
+    public static final int STATUS_UNPAID = 1;
+    public static final int STATUS_PAID = 2;
+    public static final int STATUS_RECENT = 0;
+
     public static final int store_search = 1;
     public static final int category_search = 2;
     public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 101;

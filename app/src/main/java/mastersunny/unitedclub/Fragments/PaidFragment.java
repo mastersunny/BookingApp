@@ -97,7 +97,7 @@ public class PaidFragment extends FragmentBase implements View.OnClickListener {
 
     private void loaData() {
         try {
-            apiInterface.getPaidTransactions(Constants.getAccessToken(mActivity)).enqueue(new Callback<List<TransactionDTO>>() {
+            apiInterface.getTransactions(Constants.STATUS_PAID, Constants.accessToken).enqueue(new Callback<List<TransactionDTO>>() {
                 @Override
                 public void onResponse(Call<List<TransactionDTO>> call, Response<List<TransactionDTO>> response) {
                     Constants.debugLog(TAG, response + "");

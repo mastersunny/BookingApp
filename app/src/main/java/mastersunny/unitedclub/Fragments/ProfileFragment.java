@@ -130,7 +130,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void loaData() {
         try {
-            apiService.getRecentTransactions(Constants.getAccessToken(mActivity)).enqueue(new Callback<List<TransactionDTO>>() {
+            apiService.getTransactions(Constants.STATUS_RECENT, Constants.getAccessToken(mActivity)).enqueue(new Callback<List<TransactionDTO>>() {
                 @Override
                 public void onResponse(Call<List<TransactionDTO>> call, Response<List<TransactionDTO>> response) {
                     Constants.debugLog(TAG, response + "");
