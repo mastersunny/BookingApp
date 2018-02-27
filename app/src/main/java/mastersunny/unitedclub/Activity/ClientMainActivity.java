@@ -73,6 +73,7 @@ public class ClientMainActivity extends AppCompatActivity {
         super.onResume();
         Constants.debugLog(TAG, "" + isNewUser + " " + Constants.accessToken + " token " + FirebaseInstanceId.getInstance().getToken());
         if (isNewUser) {
+            isNewUser = false;
             apiInterface.sendRegistrationToServer(Constants.accessToken, FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {

@@ -27,7 +27,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Constants.debugLog(TAG, "remote " + remoteMessage);
         if (remoteMessage == null)
             return;
 
@@ -54,9 +53,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
             NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-//            notificationUtils.playNotificationSound();
+            notificationUtils.playNotificationSound();
         } else {
-            // If the app is in background, firebase itself handles the notification
+            NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+            notificationUtils.playNotificationSound();
             Constants.debugLog(TAG, "APP is in background");
         }
     }
