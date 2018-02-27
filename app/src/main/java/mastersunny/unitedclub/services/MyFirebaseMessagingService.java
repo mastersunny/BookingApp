@@ -27,6 +27,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        Constants.debugLog(TAG, "remote " + remoteMessage);
         if (remoteMessage == null)
             return;
 
