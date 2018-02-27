@@ -41,7 +41,7 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
-    public String TAG = "MostUsedFragment";
+    public String TAG = "ProfileFragment";
     private Activity mActivity;
     private View view;
     private RecyclerView transaction_rv;

@@ -74,7 +74,7 @@
             android:id="@+id/transaction_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_5" />
+            android:padding="@dimen/margin_5" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
