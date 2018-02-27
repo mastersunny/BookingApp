@@ -15,12 +15,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import mastersunny.unitedclub.Model.ResponseModel;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.CommonInerface;
 import mastersunny.unitedclub.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ItemDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,12 +37,14 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
     private StoreOfferDTO storeOfferDTO;
     private NestedScrollView nestedScrollView;
     private RelativeLayout hidden_toolbar, normal_toolbar;
+    private ApiInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_item_details);
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         getIntentData();
         initLayout();
@@ -121,14 +128,36 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void submitPurchase() {
-        Constants.showDialog(this, "Your payment has been submitted");
         double amount = 0;
         try {
             amount = Double.valueOf(total_amount.getText().toString().trim());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (amount == 0) {
+            Constants.showDialog(this, "Please specify a valid amount");
+            return;
+        }
 
+        try {
+            apiInterface.submitTransaction(storeOfferDTO.getOfferId(), amount, Constants.accessToken).enqueue(new Callback<ResponseModel>() {
+                @Override
+                public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                    if (response != null && response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                        Constants.showDialog(ItemDetailsActivity.this, "Payment has be submitted successfully");
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<ResponseModel> call, Throwable t) {
+                    Constants.showDialog(ItemDetailsActivity.this, "Cannot process transaction at this moment");
+                    Constants.debugLog(TAG, "" + t.getMessage());
+                }
+            });
+
+        } catch (Exception e) {
+            Constants.showDialog(ItemDetailsActivity.this, "Cannot process transaction at this moment");
+            Constants.debugLog(TAG, "" + e.getMessage());
+        }
     }
 }

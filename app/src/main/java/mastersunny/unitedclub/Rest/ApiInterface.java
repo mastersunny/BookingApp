@@ -5,6 +5,7 @@ import java.util.List;
 import mastersunny.unitedclub.Model.AccessModel;
 import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.MoviesResponse;
+import mastersunny.unitedclub.Model.ResponseModel;
 import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
@@ -39,7 +40,7 @@ public interface ApiInterface {
 
     //Offer List
     @GET("api/get_store")
-    Call<StoreDTO> getStoreById(@Query("id") int id, @Query("access_token") String accessToken);
+    Call<StoreDTO> getStoreById(@Query("store_id") int store_id, @Query("access_token") String accessToken);
 
     @GET("api/get_store_offer")
     Call<List<StoreOfferDTO>> getStoreOffers(@Query("store_id") int store_id, @Query("access_token") String accessToken);
@@ -85,6 +86,10 @@ public interface ApiInterface {
 
     @GET("api/due_transaction")
     Call<List<TransactionDTO>> getDueTransactions(@Query("access_token") String accessToken);
+
+    @POST("api/submit_transaction")
+    Call<ResponseModel> submitTransaction(@Field("offer_id") int offerId, @Field("amount") double amount,
+                                          @Query("access_token") String accessToken);
     //Transaction Details
 
 
