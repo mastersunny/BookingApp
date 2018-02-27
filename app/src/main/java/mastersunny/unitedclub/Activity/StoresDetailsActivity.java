@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -39,7 +40,6 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
     private RecyclerView offer_rv;
     private Toolbar toolbar;
     private RatingBar ratingBar;
-    private String accessToken = "";
     private ApiInterface apiService;
     private StoreDTO storeDTO;
 
@@ -52,6 +52,13 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
 
     private void getIntentData() {
         storeDTO = (StoreDTO) getIntent().getSerializableExtra(Constants.STORE_DTO);
+    }
+
+    private void updateStoreInfo() {
+        store_name.setText(storeDTO.getStoreName());
+        String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getImageUrl();
+        Constants.loadImage(this, imgUrl, store_image);
+        total_offer.setText(storeDTO.getTotalOffer() + " Offers");
     }
 
     @Override
@@ -85,10 +92,8 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
         total_offer = findViewById(R.id.total_offer);
         store_image = findViewById(R.id.store_image);
         store_name = findViewById(R.id.store_name);
-        store_name.setText(storeDTO.getStoreName());
-        String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getImageUrl();
-        Constants.loadImage(this, imgUrl, store_image);
-        total_offer.setText(storeDTO.getTotalOffer() + " Offers");
+
+        updateStoreInfo();
 
         offer_rv = findViewById(R.id.offer_rv);
         offer_rv.setHasFixedSize(true);
@@ -107,29 +112,32 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
 
     private void loadData() {
         try {
-            Constants.debugLog(TAG, "accessToken: " + accessToken);
-//        apiService.getStoreById(storeId, accessToken).enqueue(new Callback<StoreDTO>() {
-//            @Override
-//            public void onResponse(Call<StoreDTO> call, Response<StoreDTO> response) {
-//                Constants.debugLog(TAG, "" + response);
-//                if (response.isSuccessful() && response.body() != null) {
-//                    storeDTO = response.body();
-//                    updateStoreInfo();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<StoreDTO> call, Throwable t) {
-//                Constants.debugLog(TAG, "" + t.getMessage());
-//            }
-//        });
-            apiService.getStoreOffers(storeDTO.getStoreId(), Constants.getAccessToken(StoresDetailsActivity.this))
+            Constants.debugLog(TAG, "accessToken: " + Constants.accessToken);
+            if (TextUtils.isEmpty(storeDTO.getStoreName())) {
+                apiService.getStoreById(storeDTO.getStoreId(), Constants.accessToken).enqueue(new Callback<StoreDTO>() {
+                    @Override
+                    public void onResponse(Call<StoreDTO> call, Response<StoreDTO> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            Constants.debugLog(TAG, "StoreDTO: " + response.body());
+                            storeDTO = response.body();
+                            updateStoreInfo();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<StoreDTO> call, Throwable t) {
+                        Constants.debugLog(TAG, "" + t.getMessage());
+                    }
+                });
+            }
+
+            apiService.getStoreOffers(storeDTO.getStoreId(), Constants.accessToken)
                     .enqueue(new Callback<List<StoreOfferDTO>>() {
                         @Override
                         public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
                             Constants.debugLog(TAG, "" + response);
                             if (response.isSuccessful() && response.body() != null) {
-                                Constants.debugLog(TAG, "" + response.body());
+                                Constants.debugLog(TAG, "StoreOfferDTO: " + response.body());
                                 storeOfferDTOS.addAll(response.body());
                                 if (storeOfferAdapter != null) {
                                     storeOfferAdapter.notifyDataSetChanged();
