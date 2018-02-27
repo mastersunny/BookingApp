@@ -78,14 +78,8 @@ public interface ApiInterface {
     //Category
 
     //Transaction Details
-    @GET("api/recent_transaction")
-    Call<List<TransactionDTO>> getRecentTransactions(@Query("access_token") String accessToken);
-
-    @GET("api/paid_transaction")
-    Call<List<TransactionDTO>> getPaidTransactions(@Query("access_token") String accessToken);
-
-    @GET("api/due_transaction")
-    Call<List<TransactionDTO>> getDueTransactions(@Query("access_token") String accessToken);
+    @GET("api/get_transactions")
+    Call<List<TransactionDTO>> getTransactions(@Query("status") int status, @Query("access_token") String accessToken);
 
     @POST("api/submit_transaction")
     @FormUrlEncoded
