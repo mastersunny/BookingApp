@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
+import mastersunny.unitedclub.Adapter.StoreOfferAdapterDetails;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
@@ -32,16 +33,12 @@ import retrofit2.Response;
 public class StoresDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     public String TAG = "StoresDetailsActivity";
-    private TextView total_offer;
-    private ImageView store_image;
-    private TextView store_name;
-    private StoreOfferAdapter storeOfferAdapter;
+    private StoreOfferAdapterDetails storeOfferAdapter;
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private RecyclerView offer_rv;
-    private Toolbar toolbar;
-    private RatingBar ratingBar;
     private ApiInterface apiService;
     private StoreDTO storeDTO;
+    private TextView store_name;
 
     public static void start(Context context, StoreDTO storeDTO) {
         Intent intent = new Intent(context, StoresDetailsActivity.class);
@@ -52,13 +49,6 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
 
     private void getIntentData() {
         storeDTO = (StoreDTO) getIntent().getSerializableExtra(Constants.STORE_DTO);
-    }
-
-    private void updateStoreInfo() {
-        store_name.setText(storeDTO.getStoreName());
-        String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getImageUrl();
-        Constants.loadImage(this, imgUrl, store_image);
-        total_offer.setText(storeDTO.getTotalOffer() + " Offers");
     }
 
     @Override
@@ -73,35 +63,18 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
         getIntentData();
         initLayout();
         loadData();
+        store_name.setText(storeDTO.getStoreName());
     }
 
     private void initLayout() {
-        ratingBar = findViewById(R.id.ratingBar);
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                Toast.makeText(StoresDetailsActivity.this, Float.toString(v), Toast.LENGTH_LONG).show();
-            }
-        });
-
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        findViewById(R.id.back_button).setOnClickListener(this);
-
-        total_offer = findViewById(R.id.total_offer);
-        store_image = findViewById(R.id.store_image);
-        store_name = findViewById(R.id.store_name);
-
-        updateStoreInfo();
-
         offer_rv = findViewById(R.id.offer_rv);
         offer_rv.setHasFixedSize(true);
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapter(StoresDetailsActivity.this, storeOfferDTOS);
+        storeOfferAdapter = new StoreOfferAdapterDetails(StoresDetailsActivity.this, storeOfferDTOS, storeDTO);
         offer_rv.setAdapter(storeOfferAdapter);
 
-        findViewById(R.id.follow_layout).setOnClickListener(this);
+        findViewById(R.id.back_button).setOnClickListener(this);
+        store_name = findViewById(R.id.store_name);
     }
 
     @Override
@@ -120,7 +93,11 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
                         if (response.isSuccessful() && response.body() != null) {
                             Constants.debugLog(TAG, "StoreDTO: " + response.body());
                             storeDTO = response.body();
-                            updateStoreInfo();
+                            store_name.setText(storeDTO.getStoreName());
+                            if (storeOfferAdapter != null) {
+                                storeOfferAdapter.setStoreDTO(storeDTO);
+                                storeOfferAdapter.notifyItemChanged(0);
+                            }
                         }
                     }
 
