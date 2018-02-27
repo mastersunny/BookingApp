@@ -83,6 +83,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void run() {
             if (!isFinishing()) {
+                Constants.debugLog(TAG, "Timeout");
                 progressBar.setVisibility(View.GONE);
             }
         }

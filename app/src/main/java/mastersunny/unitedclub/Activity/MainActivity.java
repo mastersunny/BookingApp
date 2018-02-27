@@ -124,12 +124,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onFailure(Call<AccessModel> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
+                    Constants.debugLog(TAG, t.getMessage());
                     Constants.showDialog(MainActivity.this, "Please try again");
                 }
             });
         } catch (Exception e) {
-            Log.d(TAG, "" + e.getMessage());
             progressBar.setVisibility(View.GONE);
+            Constants.debugLog(TAG, e.getMessage());
             Constants.showDialog(MainActivity.this, "Please try again");
         }
     }
