@@ -88,6 +88,7 @@ public interface ApiInterface {
     Call<List<TransactionDTO>> getDueTransactions(@Query("access_token") String accessToken);
 
     @POST("api/submit_transaction")
+    @FormUrlEncoded
     Call<ResponseModel> submitTransaction(@Field("offer_id") int offerId, @Field("amount") double amount,
                                           @Query("access_token") String accessToken);
     //Transaction Details
