@@ -41,7 +41,7 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == HEADER_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_details_layout_header, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_offer_bottom_layout, parent, false);
             return new HeaderHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_offer_layout, parent, false);
@@ -51,27 +51,52 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (storeOfferDTOS != null) {
-            final StoreOfferDTO dto = storeOfferDTOS.get(position);
-            if (dto.getStoreDTO().getImageUrl() != null) {
-                String imgUrl = ApiClient.BASE_URL + "" + dto.getStoreDTO().getImageUrl();
-                Constants.loadImage(mActivity, imgUrl, holder.store_image);
-            }
-            holder.store_offer.setText(dto.getOffer());
-            holder.offer_end_date.setText(dto.getEndDate());
-            holder.store_offer.setTypeface(face);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ItemDetailsActivity.start(mActivity, dto);
+        switch (getItemViewType(position)) {
+            case HEADER_ITEM:
+                HeaderHolder headerHolder = (HeaderHolder) holder;
+                headerHolder.itemView.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                break;
+            case MAIN_ITEM:
+                if (storeOfferDTOS != null) {
+                    MainHolder mainHolder = (MainHolder) holder;
+                    final StoreOfferDTO dto = storeOfferDTOS.get(position);
+                    if (dto.getStoreDTO().getImageUrl() != null) {
+                        String imgUrl = ApiClient.BASE_URL + "" + dto.getStoreDTO().getImageUrl();
+                        Constants.loadImage(mActivity, imgUrl, mainHolder.store_image);
+                    }
+                    mainHolder.store_offer.setText(dto.getOffer());
+                    mainHolder.offer_end_date.setText(dto.getEndDate());
+                    mainHolder.store_offer.setTypeface(face);
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ItemDetailsActivity.start(mActivity, dto);
+                        }
+                    });
                 }
-            });
+                break;
+        }
+
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == storeOfferDTOS.size()) {
+            return HEADER_ITEM;
+        } else {
+            return MAIN_ITEM;
         }
     }
 
     @Override
     public int getItemCount() {
-        return storeOfferDTOS == null ? 0 : storeOfferDTOS.size();
+        return storeOfferDTOS == null ? 1 : storeOfferDTOS.size() + 1;
     }
 
     public static class MainHolder extends RecyclerView.ViewHolder {
