@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,12 +23,14 @@ import mastersunny.unitedclub.utils.Constants;
  * Created by sunnychowdhury on 1/19/18.
  */
 
-public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.MainHolder> {
+public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String TAG = "StoreOfferAdapter";
 
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private Activity mActivity;
-    Typeface face;
+    private Typeface face;
+    public static final int HEADER_ITEM = 1;
+    public static final int MAIN_ITEM = 2;
 
     public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS) {
         this.mActivity = mActivity;
@@ -35,13 +39,18 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
     }
 
     @Override
-    public MainHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_offer_layout, parent, false);
-        return new MainHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == HEADER_ITEM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_details_layout_header, parent, false);
+            return new HeaderHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_offer_layout, parent, false);
+            return new MainHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(MainHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (storeOfferDTOS != null) {
             final StoreOfferDTO dto = storeOfferDTOS.get(position);
             if (dto.getStoreDTO().getImageUrl() != null) {
@@ -77,6 +86,16 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<StoreOfferAdapter.Ma
             store_offer = itemView.findViewById(R.id.store_offer);
             offer_end_date = itemView.findViewById(R.id.offer_end_date);
 
+        }
+    }
+
+    public static class HeaderHolder extends RecyclerView.ViewHolder {
+
+        private TextView view_all;
+
+        public HeaderHolder(View itemView) {
+            super(itemView);
+            view_all = itemView.findViewById(R.id.view_all);
         }
     }
 }
