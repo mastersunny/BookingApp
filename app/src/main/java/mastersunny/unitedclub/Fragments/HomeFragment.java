@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView view_all_popular, popular_stores, search_text;
     private AppBarLayout appBarLayout;
     private LoopingViewPager loopingViewPager;
-    private LoopingPagerAdapter loopingPagerAdapter;
+    private AutoScrollAdapter autoScrollAdapter;
     private ArrayList<SliderDTO> autoScrollList;
     private ApiInterface apiService;
     private ArrayList<CategoryDTO> categoryDTOS;
@@ -164,8 +164,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void createAutoScrollViewPager() {
-        loopingPagerAdapter = new AutoScrollAdapter(mActivity, autoScrollList, true);
-        loopingViewPager.setAdapter(loopingPagerAdapter);
+        autoScrollAdapter = new AutoScrollAdapter(mActivity, autoScrollList, true);
+        loopingViewPager.setAdapter(autoScrollAdapter);
     }
 
     private void setUpTabLayout() {
@@ -280,7 +280,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (loopingPagerAdapter != null && loopingPagerAdapter.getCount() > 0) {
+                if (autoScrollAdapter != null && autoScrollAdapter.getCount() > 0) {
                     Log.d(TAG, "resumeAutoScroll");
                     loopingViewPager.resumeAutoScroll();
                 }
