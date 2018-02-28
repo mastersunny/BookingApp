@@ -7,13 +7,34 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class TransactionDTO {
+    @SerializedName("transaction_id")
     private long transactionId;
-    private StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
-    private UserDTO userDTO = new UserDTO();
-    private String date;
-    private double paidAmount;
-    private double dueAmount;
-    private int status;
+    @SerializedName("offer")
+    private StoreOfferDTO storeOfferDTO;
+    @SerializedName("users")
+    private UserDTO userDTO;
+    @SerializedName("status")
+    private int paidStatus;
+    @SerializedName("created_at")
+    private String transactionDate;
+    @SerializedName("amount")
+    private double amount;
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getTransactionDate() {
+        return transactionDate;
+    }
+
+    public void setTransactionDate(String transactionDate) {
+        this.transactionDate = transactionDate;
+    }
 
     public long getTransactionId() {
         return transactionId;
@@ -39,36 +60,12 @@ public class TransactionDTO {
         this.userDTO = userDTO;
     }
 
-    public String getDate() {
-        return date;
+    public int getPaidStatus() {
+        return paidStatus;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public double getPaidAmount() {
-        return paidAmount;
-    }
-
-    public void setPaidAmount(double paidAmount) {
-        this.paidAmount = paidAmount;
-    }
-
-    public double getDueAmount() {
-        return dueAmount;
-    }
-
-    public void setDueAmount(double dueAmount) {
-        this.dueAmount = dueAmount;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public void setPaidStatus(int paidStatus) {
+        this.paidStatus = paidStatus;
     }
 
     @Override
@@ -77,10 +74,9 @@ public class TransactionDTO {
                 "transactionId=" + transactionId +
                 ", storeOfferDTO=" + storeOfferDTO +
                 ", userDTO=" + userDTO +
-                ", date='" + date + '\'' +
-                ", paidAmount=" + paidAmount +
-                ", dueAmount=" + dueAmount +
-                ", status=" + status +
+                ", paidStatus=" + paidStatus +
+                ", transactionDate='" + transactionDate + '\'' +
+                ", amount=" + amount +
                 '}';
     }
 }

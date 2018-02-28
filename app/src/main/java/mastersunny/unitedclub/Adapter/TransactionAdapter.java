@@ -23,12 +23,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     private ArrayList<TransactionDTO> transactionDTOS;
     private Activity mActivity;
-    Typeface face;
+    static Typeface face;
+    private int colorGreen;
+    private int colorRed;
 
     public TransactionAdapter(Activity mActivity, ArrayList<TransactionDTO> transactionDTOS) {
         this.mActivity = mActivity;
         this.transactionDTOS = transactionDTOS;
         face = Typeface.createFromAsset(mActivity.getAssets(), "avenirltstd_medium.otf");
+        colorGreen = mActivity.getResources().getColor(R.color.green);
+        colorRed = mActivity.getResources().getColor(R.color.red);
     }
 
     @Override
@@ -40,11 +44,17 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
         if (transactionDTOS != null) {
-            TransactionDTO transactionDTO = transactionDTOS.get(position);
-
-            holder.offer_details.setTypeface(face);
-            holder.offer_date.setTypeface(face);
-            holder.total_amount.setTypeface(face);
+            TransactionDTO dto = transactionDTOS.get(position);
+            holder.offer_details.setText(dto.getStoreOfferDTO().getOffer());
+            holder.offer_date.setText(dto.getTransactionDate());
+            holder.total_amount.setText(dto.getAmount() + "");
+            if (dto.getPaidStatus() == Constants.STATUS_PAID) {
+                holder.paid_status.setText("Paid");
+                holder.paid_status.setTextColor(colorGreen);
+            } else {
+                holder.paid_status.setText("Unpaid");
+                holder.paid_status.setTextColor(colorRed);
+            }
             holder.paid_status.setTypeface(face);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,9 +78,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         public MainHolder(View itemView) {
             super(itemView);
             offer_details = itemView.findViewById(R.id.offer_details);
+            offer_details.setTypeface(face);
             offer_date = itemView.findViewById(R.id.offer_date);
+            offer_date.setTypeface(face);
             total_amount = itemView.findViewById(R.id.total_amount);
+            total_amount.setTypeface(face);
             paid_status = itemView.findViewById(R.id.paid_status);
+            paid_status.setTypeface(face);
         }
     }
 }

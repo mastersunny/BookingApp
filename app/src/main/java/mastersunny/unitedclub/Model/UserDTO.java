@@ -11,28 +11,20 @@ import java.io.Serializable;
 public class UserDTO implements Serializable {
     @SerializedName("user_id")
     private long userId;
-    @SerializedName("user_name")
-    private String userName;
+    @SerializedName("first_name")
+    private String firstName;
+    @SerializedName("last_name")
+    private String lastName;
     @SerializedName("email")
     private String email;
     @SerializedName("password")
     private String password;
-    @SerializedName("phone_no")
-    private String phoneNo;
-    @SerializedName("user_type")
+    @SerializedName("phone_number")
+    private String phoneNumber;
+    @SerializedName("type")
     private int userType;
-    @SerializedName("img_url")
+    @SerializedName("image")
     private String imgUrl;
-    @SerializedName("access_token")
-    private String accessToken;
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 
     public long getUserId() {
         return userId;
@@ -42,12 +34,20 @@ public class UserDTO implements Serializable {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -66,12 +66,12 @@ public class UserDTO implements Serializable {
         this.password = password;
     }
 
-    public String getPhoneNo() {
-        return phoneNo;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public int getUserType() {
@@ -94,13 +94,13 @@ public class UserDTO implements Serializable {
     public String toString() {
         return "UserDTO{" +
                 "userId=" + userId +
-                ", userName='" + userName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", phoneNo='" + phoneNo + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", userType=" + userType +
                 ", imgUrl='" + imgUrl + '\'' +
-                ", accessToken='" + accessToken + '\'' +
                 '}';
     }
 }
