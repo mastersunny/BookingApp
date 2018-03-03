@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -34,9 +33,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ClientMainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
-    public String TAG = ClientMainActivity.class.getSimpleName();
+    public String TAG = HomeActivity.class.getSimpleName();
     private BottomNavigationView bottomNavigationView;
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
@@ -48,7 +47,7 @@ public class ClientMainActivity extends AppCompatActivity {
     private ApiInterface apiInterface;
 
     public static void start(Context context, boolean isNewUser) {
-        Intent intent = new Intent(context, ClientMainActivity.class);
+        Intent intent = new Intent(context, HomeActivity.class);
         intent.putExtra(NEW_USER, isNewUser);
         context.startActivity(intent);
     }

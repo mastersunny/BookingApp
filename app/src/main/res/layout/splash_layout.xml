@@ -12,5 +12,15 @@
         android:scaleType="centerCrop"
         android:src="@drawable/splash_screen" />
 
+    <TextView
+        android:id="@+id/check_network"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_30"
+        android:text="@string/check_network"
+        android:textColor="@color/red"
+        android:visibility="gone" />
+
     <include layout="@layout/progress_layout"></include>
 </RelativeLayout>

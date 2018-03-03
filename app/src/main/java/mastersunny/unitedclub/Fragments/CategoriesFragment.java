@@ -81,7 +81,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
 //                        if (user != null) {
 //                            auth.signOut();
 //                        } else {
-//                            startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+//                            startActivity(new Intent(MobileLoginActivity.this, SignUpActivity.class));
 //                        }
                 }
                 drawerLayout.closeDrawers();

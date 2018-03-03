@@ -81,4 +81,5 @@
     <string name="no_camera_permission">Scanning cannot be completed without camera permission</string>
     <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
     <string name="view_all">View All</string>
+    <string name="check_network">Please check your network</string>
 </resources>

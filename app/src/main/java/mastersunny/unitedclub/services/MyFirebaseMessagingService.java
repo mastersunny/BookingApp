@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -12,7 +11,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import mastersunny.unitedclub.Activity.MainActivity;
+import mastersunny.unitedclub.Activity.MobileLoginActivity;
 import mastersunny.unitedclub.utils.Constants;
 import mastersunny.unitedclub.utils.NotificationUtils;
 
@@ -88,7 +87,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
 //                notificationUtils.playNotificationSound();
             } else {
-                Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent resultIntent = new Intent(getApplicationContext(), MobileLoginActivity.class);
                 resultIntent.putExtra("message", message);
 
                 if (TextUtils.isEmpty(imageUrl)) {

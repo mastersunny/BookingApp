@@ -172,7 +172,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         try {
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
-            apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
+            apiInterface.getCode(phoneNumber).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
                     alreadyRequest = false;
@@ -220,7 +220,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                             editor.putString(Constants.PHONE_NUMBER, phoneNumber);
                             editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
                             editor.apply();
-                            startActivity(new Intent(MobileVerificationActivity.this, ClientMainActivity.class));
+                            startActivity(new Intent(MobileVerificationActivity.this, HomeActivity.class));
                             finish();
                         }
                     } else {

@@ -1,7 +1,10 @@
 package mastersunny.unitedclub.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,9 +26,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MobileLoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public String TAG = MainActivity.class.getSimpleName();
+    public String TAG = MobileLoginActivity.class.getSimpleName();
     private EditText phone_number;
     private Button btn_send_code;
     private ApiInterface apiInterface;
@@ -109,15 +112,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             phoneNumber = phone_number.getText().toString().trim();
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
-            apiInterface.initRegistration(phoneNumber).enqueue(new Callback<AccessModel>() {
+            apiInterface.getCode(phoneNumber).enqueue(new Callback<AccessModel>() {
                 @Override
                 public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
                     alreadyRequest = false;
                     progressBar.setVisibility(View.GONE);
                     if (response != null && response.isSuccessful() && response.body().isSuccess()) {
-                        MobileVerificationActivity.start(MainActivity.this, phoneNumber);
+                        MobileVerificationActivity.start(MobileLoginActivity.this, phoneNumber);
                     } else {
-                        Constants.showDialog(MainActivity.this, "Please try again");
+                        Constants.showDialog(MobileLoginActivity.this, "Please try again");
                     }
                 }
 
@@ -125,13 +128,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onFailure(Call<AccessModel> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
                     Constants.debugLog(TAG, t.getMessage());
-                    Constants.showDialog(MainActivity.this, "Please try again");
+                    Constants.showDialog(MobileLoginActivity.this, "Please try again");
                 }
             });
         } catch (Exception e) {
             progressBar.setVisibility(View.GONE);
             Constants.debugLog(TAG, e.getMessage());
-            Constants.showDialog(MainActivity.this, "Please try again");
+            Constants.showDialog(MobileLoginActivity.this, "Please try again");
         }
     }
 

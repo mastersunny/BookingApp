@@ -3,13 +3,16 @@ package mastersunny.unitedclub.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import mastersunny.unitedclub.Model.AccessModel;
 import mastersunny.unitedclub.R;
@@ -32,21 +35,34 @@ public class SplashActivity extends AppCompatActivity {
     private String accessToken = "abcd";
     private ApiInterface apiInterface;
     private ProgressBar progressBar;
+    private TextView check_network;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_layout);
+
         SharedPreferences sharedpreferences = getSharedPreferences(Constants.prefs, Context.MODE_PRIVATE);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         accessToken = sharedpreferences.getString(Constants.ACCESS_TOKEN, "abcd");
         progressBar = findViewById(R.id.progressBar);
+        check_network = findViewById(R.id.check_network);
+        if (!isOnline()) {
+            check_network.setVisibility(View.VISIBLE);
+        }
 
         checkAccessToken();
         if (handler != null) {
             handler.postDelayed(runnable, SPLASH_DISPLAY_LENGTH);
         }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     private void checkAccessToken() {
@@ -59,9 +75,9 @@ public class SplashActivity extends AppCompatActivity {
                     Constants.debugLog(TAG, response.body() + "");
                     progressBar.setVisibility(View.GONE);
                     if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                        ClientMainActivity.start(SplashActivity.this, false);
+                        HomeActivity.start(SplashActivity.this, true);
                     } else {
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, MobileLoginActivity.class));
                     }
                     SplashActivity.this.finish();
                 }
