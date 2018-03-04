@@ -46,6 +46,9 @@ public interface ApiInterface {
     @GET("api/get_store_offer")
     Call<List<StoreOfferDTO>> getStoreOffers(@Query("store_id") int store_id, @Query("access_token") String accessToken);
 
+    @GET("api/get_store_offer_all")
+    Call<List<StoreOfferDTO>> getStoreOfferAll(@Query("store_id") int store_id, @Query("access_token") String accessToken);
+
     @GET("api/get_category_offer")
     Call<List<StoreOfferDTO>> getCategoryOffers(@Query("category_id") int category_id, @Query("access_token") String accessToken);
     //Offer List
