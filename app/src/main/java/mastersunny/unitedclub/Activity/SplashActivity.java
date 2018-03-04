@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import mastersunny.unitedclub.Model.AccessModel;
+import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -68,13 +69,13 @@ public class SplashActivity extends AppCompatActivity {
     private void checkAccessToken() {
         try {
             progressBar.setVisibility(View.VISIBLE);
-            apiInterface.isAccessTokenValid(accessToken).enqueue(new Callback<AccessModel>() {
+            apiInterface.isAccessTokenValid(accessToken).enqueue(new Callback<RestModel>() {
                 @Override
-                public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                public void onResponse(Call<RestModel> call, Response<RestModel> response) {
                     handler.removeCallbacksAndMessages(null);
-                    Constants.debugLog(TAG, response.body() + "");
                     progressBar.setVisibility(View.GONE);
-                    if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                    if (response.isSuccessful() && response.body() != null && response.body().getMetaData().isSuccess()) {
+                        Constants.debugLog(TAG, response.body().getMetaData().getMessage());
                         HomeActivity.start(SplashActivity.this, true);
                     } else {
                         startActivity(new Intent(SplashActivity.this, MobileLoginActivity.class));
@@ -83,7 +84,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<AccessModel> call, Throwable t) {
+                public void onFailure(Call<RestModel> call, Throwable t) {
                     Constants.showDialog(SplashActivity.this, "Please try again later");
                     Constants.debugLog(TAG, t.getMessage());
 

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import mastersunny.unitedclub.Model.AccessModel;
+import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -112,12 +113,12 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
             phoneNumber = phone_number.getText().toString().trim();
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
-            apiInterface.getCode(phoneNumber).enqueue(new Callback<AccessModel>() {
+            apiInterface.getCode(phoneNumber).enqueue(new Callback<RestModel>() {
                 @Override
-                public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                public void onResponse(Call<RestModel> call, Response<RestModel> response) {
                     alreadyRequest = false;
                     progressBar.setVisibility(View.GONE);
-                    if (response != null && response.isSuccessful() && response.body().isSuccess()) {
+                    if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
                         MobileVerificationActivity.start(MobileLoginActivity.this, phoneNumber);
                     } else {
                         Constants.showDialog(MobileLoginActivity.this, "Please try again");
@@ -125,7 +126,7 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
                 }
 
                 @Override
-                public void onFailure(Call<AccessModel> call, Throwable t) {
+                public void onFailure(Call<RestModel> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
                     Constants.debugLog(TAG, t.getMessage());
                     Constants.showDialog(MobileLoginActivity.this, "Please try again");

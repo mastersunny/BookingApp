@@ -1,5 +1,6 @@
 package mastersunny.unitedclub.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import mastersunny.unitedclub.Model.AccessModel;
+import mastersunny.unitedclub.Model.RestModel;
+import mastersunny.unitedclub.Model.UserDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -18,7 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener, Callback<AccessModel> {
+public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener, Callback<RestModel> {
 
     public String TAG = RegistrationActivity.class.getSimpleName();
     private EditText first_name, last_name, email;
@@ -72,19 +75,25 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
-    public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+    public void onResponse(Call<RestModel> call, Response<RestModel> response) {
         Constants.debugLog(TAG, "" + response);
         progressBar.setVisibility(View.GONE);
 
-        if (response.isSuccessful() && response.body() != null && !TextUtils.isEmpty(response.body().getAccessToken())) {
-            AccessModel accessModel = response.body();
-            editor.putString(Constants.FIRST_NAME, firstName);
-            editor.putString(Constants.LAST_NAME, lastName);
-            editor.putString(Constants.EMAIL, emailAddress);
-            editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
-            editor.apply();
-            HomeActivity.start(RegistrationActivity.this, true);
-            finish();
+        if (response.isSuccessful() && response.body() != null && response.body().getMetaData().isSuccess()) {
+            if (response.body().getMetaData().isData()) {
+                UserDTO userDTO = response.body().getUserDTO();
+                Constants.debugLog(TAG, userDTO.toString());
+                editor.putInt(Constants.STORE_ID, userDTO.getStoreId());
+                editor.putString(Constants.FIRST_NAME, userDTO.getFirstName());
+                editor.putString(Constants.LAST_NAME, userDTO.getLastName());
+                editor.putString(Constants.EMAIL, userDTO.getEmail());
+                editor.putString(Constants.PHONE_NUMBER, phoneNumber);
+                editor.putString(Constants.COVER_IMAGE_URL, userDTO.getImgUrl());
+                editor.putString(Constants.ACCESS_TOKEN, userDTO.getAccessToken());
+                editor.apply();
+                startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
+                finish();
+            }
         } else {
             Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");
             Constants.debugLog(TAG, "error in registration");
@@ -92,7 +101,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
-    public void onFailure(Call<AccessModel> call, Throwable t) {
+    public void onFailure(Call<RestModel> call, Throwable t) {
         Constants.debugLog(TAG, "" + t.getMessage());
         Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");
     }

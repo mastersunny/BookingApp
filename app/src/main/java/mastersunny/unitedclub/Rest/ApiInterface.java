@@ -5,7 +5,7 @@ import java.util.List;
 import mastersunny.unitedclub.Model.AccessModel;
 import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.MoviesResponse;
-import mastersunny.unitedclub.Model.ResponseModel;
+import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
@@ -53,18 +53,18 @@ public interface ApiInterface {
 
     //Login and registration
     @GET("api/is_client_access_token_valid/{access_token}")
-    Call<AccessModel> isAccessTokenValid(@Path("access_token") String accessToken);
+    Call<RestModel> isAccessTokenValid(@Path("access_token") String accessToken);
 
     @GET("api/get_code/{phone_number}")
-    Call<AccessModel> getCode(@Path("phone_number") String phoneNumber);
+    Call<RestModel> getCode(@Path("phone_number") String phoneNumber);
 
     @POST("api/get_client_access")
     @FormUrlEncoded
-    Call<UserDTO> verifyCode(@Field("phone_number") String phoneNumber, @Field("code") String code);
+    Call<RestModel> verifyCode(@Field("phone_number") String phoneNumber, @Field("code") String code);
 
     @POST("api/sign_up_client")
     @FormUrlEncoded
-    Call<AccessModel> signUp(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("email") String email, @Field("phone_number") String phoneNumber);
+    Call<RestModel> signUp(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("email") String email, @Field("phone_number") String phoneNumber);
 
     @POST("api/client_fcm_token")
     @FormUrlEncoded
@@ -83,8 +83,8 @@ public interface ApiInterface {
 
     @POST("api/submit_transaction")
     @FormUrlEncoded
-    Call<ResponseModel> submitTransaction(@Field("offer_id") int offerId, @Field("amount") double amount,
-                                          @Query("access_token") String accessToken);
+    Call<RestModel> submitTransaction(@Field("offer_id") int offerId, @Field("amount") double amount,
+                                      @Query("access_token") String accessToken);
     //Transaction Details
 
 

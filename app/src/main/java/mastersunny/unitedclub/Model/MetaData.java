@@ -2,20 +2,17 @@ package mastersunny.unitedclub.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 /**
- * Created by ASUS on 2/19/2018.
+ * Created by ASUS on 3/4/2018.
  */
 
-public class ResponseModel implements Serializable {
-
+public class MetaData {
     @SerializedName("success")
     private boolean success;
     @SerializedName("message")
     private String message;
-    @SerializedName("access_token")
-    private String accessToken;
+    @SerializedName("data")
+    private boolean data;
 
     public boolean isSuccess() {
         return success;
@@ -33,20 +30,20 @@ public class ResponseModel implements Serializable {
         this.message = message;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public boolean isData() {
+        return data;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setData(boolean data) {
+        this.data = data;
     }
 
     @Override
     public String toString() {
-        return "AccessModel{" +
+        return "MetaData{" +
                 "success=" + success +
                 ", message='" + message + '\'' +
-                ", accessToken='" + accessToken + '\'' +
+                ", data=" + data +
                 '}';
     }
 }

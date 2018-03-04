@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import mastersunny.unitedclub.Model.AccessModel;
+import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.Model.UserDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
@@ -174,12 +175,12 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         try {
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
-            apiInterface.getCode(phoneNumber).enqueue(new Callback<AccessModel>() {
+            apiInterface.getCode(phoneNumber).enqueue(new Callback<RestModel>() {
                 @Override
-                public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                public void onResponse(Call<RestModel> call, Response<RestModel> response) {
                     alreadyRequest = false;
                     progressBar.setVisibility(View.GONE);
-                    if (response != null && response.isSuccessful() && response.body().isSuccess()) {
+                    if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
                         Constants.showDialog(MobileVerificationActivity.this, "Verification code will be sent to your phone number.");
                     } else {
                         Constants.showDialog(MobileVerificationActivity.this, "Please try again");
@@ -187,7 +188,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                 }
 
                 @Override
-                public void onFailure(Call<AccessModel> call, Throwable t) {
+                public void onFailure(Call<RestModel> call, Throwable t) {
                     Constants.showDialog(MobileVerificationActivity.this, "Please try again");
                 }
             });
@@ -206,32 +207,34 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         try {
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
-            apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<UserDTO>() {
+            apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<RestModel>() {
                 @Override
-                public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                public void onResponse(Call<RestModel> call, Response<RestModel> response) {
                     alreadyRequest = false;
                     progressBar.setVisibility(View.GONE);
-                    if (response != null && response.isSuccessful() && !TextUtils.isEmpty(response.body().getAccessToken())) {
-                        UserDTO userDTO = response.body();
-                        Constants.debugLog(TAG, userDTO.toString());
-                        editor.putInt(Constants.STORE_ID, userDTO.getStoreId());
-                        editor.putString(Constants.FIRST_NAME, userDTO.getFirstName());
-                        editor.putString(Constants.LAST_NAME, userDTO.getLastName());
-                        editor.putString(Constants.EMAIL, userDTO.getEmail());
-                        editor.putString(Constants.PHONE_NUMBER, phoneNumber);
-                        editor.putString(Constants.COVER_IMAGE_URL, userDTO.getImgUrl());
-                        editor.putString(Constants.ACCESS_TOKEN, userDTO.getAccessToken());
-                        editor.apply();
-                        startActivity(new Intent(MobileVerificationActivity.this, HomeActivity.class));
-                        finish();
+                    if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
+                        if (response.body().getMetaData().isData()) {
+                            UserDTO userDTO = response.body().getUserDTO();
+                            Constants.debugLog(TAG, userDTO.toString());
+                            editor.putInt(Constants.STORE_ID, userDTO.getStoreId());
+                            editor.putString(Constants.FIRST_NAME, userDTO.getFirstName());
+                            editor.putString(Constants.LAST_NAME, userDTO.getLastName());
+                            editor.putString(Constants.EMAIL, userDTO.getEmail());
+                            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
+                            editor.putString(Constants.COVER_IMAGE_URL, userDTO.getImgUrl());
+                            editor.putString(Constants.ACCESS_TOKEN, userDTO.getAccessToken());
+                            editor.apply();
+                            startActivity(new Intent(MobileVerificationActivity.this, HomeActivity.class));
+                        } else {
+                            startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
+                        }
                     } else {
-                        startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
-                        finish();
+                        Constants.showDialog(MobileVerificationActivity.this, "" + response.body().getMetaData().getMessage());
                     }
                 }
 
                 @Override
-                public void onFailure(Call<UserDTO> call, Throwable t) {
+                public void onFailure(Call<RestModel> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
                     Constants.debugLog(TAG, "" + t.getMessage());
                     Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment");

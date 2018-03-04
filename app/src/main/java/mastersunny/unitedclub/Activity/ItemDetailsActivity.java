@@ -15,13 +15,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import mastersunny.unitedclub.Model.ResponseModel;
-import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
-import mastersunny.unitedclub.utils.CommonInerface;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -140,16 +138,16 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
         }
 
         try {
-            apiInterface.submitTransaction(storeOfferDTO.getOfferId(), amount, Constants.accessToken).enqueue(new Callback<ResponseModel>() {
+            apiInterface.submitTransaction(storeOfferDTO.getOfferId(), amount, Constants.accessToken).enqueue(new Callback<RestModel>() {
                 @Override
-                public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                public void onResponse(Call<RestModel> call, Response<RestModel> response) {
                     if (response != null && response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                         Constants.showDialog(ItemDetailsActivity.this, "Payment has be submitted successfully");
                     }
                 }
 
                 @Override
-                public void onFailure(Call<ResponseModel> call, Throwable t) {
+                public void onFailure(Call<RestModel> call, Throwable t) {
                     Constants.showDialog(ItemDetailsActivity.this, "Cannot process transaction at this moment");
                     Constants.debugLog(TAG, "" + t.getMessage());
                 }
