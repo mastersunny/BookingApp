@@ -119,6 +119,7 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
                     alreadyRequest = false;
                     progressBar.setVisibility(View.GONE);
                     if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
+                        Constants.debugLog(TAG, response.body().getMetaData() + " re " + response.body().getUserDTO());
                         MobileVerificationActivity.start(MobileLoginActivity.this, phoneNumber);
                     } else {
                         Constants.showDialog(MobileLoginActivity.this, "Please try again");

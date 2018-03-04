@@ -75,6 +75,9 @@ public class SplashActivity extends AppCompatActivity {
                     handler.removeCallbacksAndMessages(null);
                     progressBar.setVisibility(View.GONE);
                     if (response.isSuccessful() && response.body() != null && response.body().getMetaData().isSuccess()) {
+                        Constants.debugLog(TAG, response.body().getMetaData()
+                                + " re " + response.body().getUserDTO());
+
                         Constants.debugLog(TAG, response.body().getMetaData().getMessage());
                         HomeActivity.start(SplashActivity.this, true);
                     } else {

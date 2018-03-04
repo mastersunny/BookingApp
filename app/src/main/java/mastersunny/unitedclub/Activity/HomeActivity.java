@@ -43,7 +43,6 @@ public class HomeActivity extends AppCompatActivity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private SharedPreferences preferences;
     static final String NEW_USER = "new_user";
-    private boolean isNewUser;
     private ApiInterface apiInterface;
 
     public static void start(Context context, boolean isNewUser) {
@@ -64,29 +63,26 @@ public class HomeActivity extends AppCompatActivity {
         setUpTabLayout(savedInstanceState);
         setUpNavigationView();
         initBroadcastReceiver();
-        isNewUser = getIntent().getBooleanExtra(NEW_USER, false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Constants.debugLog(TAG, "" + isNewUser + " " + Constants.accessToken + " token " + FirebaseInstanceId.getInstance().getToken());
-        if (isNewUser) {
-            isNewUser = false;
-            apiInterface.sendRegistrationToServer(Constants.accessToken, FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<AccessModel>() {
-                @Override
-                public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                        Constants.debugLog(TAG, response.body().getMessage());
-                    }
+        Constants.debugLog(TAG, "" + Constants.accessToken + " token " + FirebaseInstanceId.getInstance().getToken());
+        apiInterface.sendRegistrationToServer(Constants.accessToken, FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<AccessModel>() {
+            @Override
+            public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                    Constants.debugLog(TAG, response.body().getMessage());
                 }
+            }
 
-                @Override
-                public void onFailure(Call<AccessModel> call, Throwable t) {
+            @Override
+            public void onFailure(Call<AccessModel> call, Throwable t) {
 
-                }
-            });
-        }
+            }
+        });
+
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Constants.REGISTRATION_COMPLETE));
