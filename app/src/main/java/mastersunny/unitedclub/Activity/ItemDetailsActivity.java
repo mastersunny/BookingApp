@@ -138,20 +138,21 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
         }
 
         try {
-//            apiInterface.submitTransaction(storeOfferDTO.getOfferId(), amount, Constants.accessToken).enqueue(new Callback<RestModel>() {
-//                @Override
-//                public void onResponse(Call<RestModel> call, Response<RestModel> response) {
-//                    if (response != null && response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-//                        Constants.showDialog(ItemDetailsActivity.this, "Payment has be submitted successfully");
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<RestModel> call, Throwable t) {
-//                    Constants.showDialog(ItemDetailsActivity.this, "Cannot process transaction at this moment");
-//                    Constants.debugLog(TAG, "" + t.getMessage());
-//                }
-//            });
+            apiInterface.submitTransaction(storeOfferDTO.getOfferId(), amount, Constants.accessToken).enqueue(new Callback<RestModel>() {
+                @Override
+                public void onResponse(Call<RestModel> call, Response<RestModel> response) {
+                    Constants.debugLog(TAG, response + "");
+                    if (response.isSuccessful() && response.body() != null && response.body().getMetaData().isSuccess()) {
+                    }
+                    Constants.showDialog(ItemDetailsActivity.this, response.body().getMetaData().getMessage());
+                }
+
+                @Override
+                public void onFailure(Call<RestModel> call, Throwable t) {
+                    Constants.showDialog(ItemDetailsActivity.this, "Cannot process transaction at this moment");
+                    Constants.debugLog(TAG, "" + t.getMessage());
+                }
+            });
 
         } catch (Exception e) {
             Constants.showDialog(ItemDetailsActivity.this, "Cannot process transaction at this moment");
