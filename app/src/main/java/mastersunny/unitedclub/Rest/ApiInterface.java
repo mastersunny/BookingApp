@@ -10,6 +10,7 @@ import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.Model.TransactionDTO;
+import mastersunny.unitedclub.Model.UserDTO;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -59,7 +60,7 @@ public interface ApiInterface {
 
     @POST("api/get_client_access")
     @FormUrlEncoded
-    Call<AccessModel> verifyCode(@Field("phone_number") String phoneNumber, @Field("code") String code);
+    Call<UserDTO> verifyCode(@Field("phone_number") String phoneNumber, @Field("code") String code);
 
     @POST("api/sign_up_client")
     @FormUrlEncoded

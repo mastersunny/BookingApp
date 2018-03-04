@@ -50,12 +50,14 @@ public class Constants {
     public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 101;
 
     public static final String prefs = "prefs";
+    public static final String STORE_ID = "store_id";
     public static final String FIRST_NAME = "first_name";
     public static final String LAST_NAME = "last_name";
     public static final String EMAIL = "email";
     public static final String PHONE_NUMBER = "phone_number";
     public static final String ACCESS_TOKEN = "access_token";
-    public static String accessToken = "";
+    public static final String COVER_IMAGE_URL = "cover_image_url";
+    public static String accessToken = "abcd";
 
     public static Typeface getRegularFace(Context context) {
         Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_regular.otf");
@@ -123,5 +125,23 @@ public class Constants {
         } finally {
             return rootPath;
         }
+    }
+
+    public static void showNotificationDialog(Context context, String message) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.notification_dialog_layout);
+
+        TextView text = dialog.findViewById(R.id.total_amount);
+        text.setText(message);
+
+        TextView ok_button = dialog.findViewById(R.id.accept);
+        ok_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

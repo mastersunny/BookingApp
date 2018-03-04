@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import mastersunny.unitedclub.Model.AccessModel;
+import mastersunny.unitedclub.Model.UserDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -204,32 +206,32 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         try {
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
-            apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<AccessModel>() {
+            apiInterface.verifyCode(phoneNumber, one_time_password.getText().toString()).enqueue(new Callback<UserDTO>() {
                 @Override
-                public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+                public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                     alreadyRequest = false;
                     progressBar.setVisibility(View.GONE);
-                    if (response != null && response.isSuccessful() && response.body().isSuccess()) {
-                        AccessModel accessModel = response.body();
-                        if (accessModel.getAccessToken().length() == 0) {
-                            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
-                            editor.apply();
-                            startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
-                            finish();
-                        } else {
-                            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
-                            editor.putString(Constants.ACCESS_TOKEN, accessModel.getAccessToken());
-                            editor.apply();
-                            startActivity(new Intent(MobileVerificationActivity.this, HomeActivity.class));
-                            finish();
-                        }
+                    if (response != null && response.isSuccessful() && !TextUtils.isEmpty(response.body().getAccessToken())) {
+                        UserDTO userDTO = response.body();
+                        Constants.debugLog(TAG, userDTO.toString());
+                        editor.putInt(Constants.STORE_ID, userDTO.getStoreId());
+                        editor.putString(Constants.FIRST_NAME, userDTO.getFirstName());
+                        editor.putString(Constants.LAST_NAME, userDTO.getLastName());
+                        editor.putString(Constants.EMAIL, userDTO.getEmail());
+                        editor.putString(Constants.PHONE_NUMBER, phoneNumber);
+                        editor.putString(Constants.COVER_IMAGE_URL, userDTO.getImgUrl());
+                        editor.putString(Constants.ACCESS_TOKEN, userDTO.getAccessToken());
+                        editor.apply();
+                        startActivity(new Intent(MobileVerificationActivity.this, HomeActivity.class));
+                        finish();
                     } else {
-                        Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment");
+                        startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
+                        finish();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<AccessModel> call, Throwable t) {
+                public void onFailure(Call<UserDTO> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
                     Constants.debugLog(TAG, "" + t.getMessage());
                     Constants.showDialog(MobileVerificationActivity.this, "Cannot verify at this moment");
@@ -240,6 +242,4 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
             Constants.debugLog(TAG, e.getMessage());
         }
     }
-
-
 }

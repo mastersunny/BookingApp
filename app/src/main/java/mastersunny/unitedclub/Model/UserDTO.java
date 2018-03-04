@@ -10,28 +10,36 @@ import java.io.Serializable;
 
 public class UserDTO implements Serializable {
     @SerializedName("user_id")
-    private long userId;
+    private int userId;
+    @SerializedName("store_id")
+    private int storeId;
     @SerializedName("first_name")
     private String firstName;
     @SerializedName("last_name")
     private String lastName;
     @SerializedName("email")
     private String email;
-    @SerializedName("password")
-    private String password;
     @SerializedName("phone_number")
     private String phoneNumber;
-    @SerializedName("type")
-    private int userType;
     @SerializedName("image")
     private String imgUrl;
+    @SerializedName("access_token")
+    private String accessToken;
 
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     public String getFirstName() {
@@ -58,28 +66,12 @@ public class UserDTO implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public int getUserType() {
-        return userType;
-    }
-
-    public void setUserType(int userType) {
-        this.userType = userType;
     }
 
     public String getImgUrl() {
@@ -90,17 +82,25 @@ public class UserDTO implements Serializable {
         this.imgUrl = imgUrl;
     }
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
                 "userId=" + userId +
+                ", storeId=" + storeId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", userType=" + userType +
                 ", imgUrl='" + imgUrl + '\'' +
+                ", accessToken='" + accessToken + '\'' +
                 '}';
     }
 }
