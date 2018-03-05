@@ -39,15 +39,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage == null)
             return;
 
-        if (remoteMessage.getNotification() != null) {
-            Constants.debugLog(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
-            if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
-//                sendNotificationBroadcast();
-            } else {
-                Constants.debugLog(TAG, "APP is in background");
-            }
-        }
-
         if (remoteMessage.getData().size() > 0) {
             Constants.debugLog(TAG, "Notification Body: " + remoteMessage.getData());
             try {
@@ -59,8 +50,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void sendNotificationBroadcast(int transactionId, String title, String message) {
-        Intent intent = new Intent(this, TransactionDetailsActivity.class);
+   /* private void sendNotificationBroadcast(int transactionId, String title, String message) {
+        Intent intent = new Intent(this, OfferDetailsActivity.class);
         intent.putExtra(Constants.STORE_OFFER_DTO, new StoreOfferDTO());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
@@ -85,7 +76,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
         notificationUtils.playNotificationSound();
-    }
+    }*/
 
     private void handleDataMessage(JSONObject jsonObject) {
         try {
@@ -101,8 +92,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
 
                 Intent pushNotification = new Intent(Constants.PUSH_NOTIFICATION);
-                pushNotification.putExtra(Constants.MESSAGE, message);
                 pushNotification.putExtra(Constants.TRANSACTION_ID, transactionId);
+                pushNotification.putExtra(Constants.TITLE, title);
+                pushNotification.putExtra(Constants.MESSAGE, message);
+                pushNotification.putExtra(Constants.IMG_URL, imgUrl);
                 pushNotification.putExtra(Constants.TRANSACTION_DATE, transactionDate);
 
                 LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
