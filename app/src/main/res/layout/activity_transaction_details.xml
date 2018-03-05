@@ -245,7 +245,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_5"
                         android:gravity="left"
-                        android:text="Pending"
+                        android:text="PENDING"
                         android:textColor="@color/red"
                         android:textSize="@dimen/text_size_13" />
 
