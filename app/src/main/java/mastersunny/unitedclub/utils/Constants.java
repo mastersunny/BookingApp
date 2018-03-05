@@ -43,8 +43,8 @@ public class Constants {
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
     public static final int REQUEST_TIMEOUT = 5000;
 
-    public static final int STATUS_UNPAID = 1;
-    public static final int STATUS_PAID = 0;
+    public static final int STATUS_UNPAID = 0;
+    public static final int STATUS_PAID = 1;
 
     public static String TRANSACTION_ALL = "all";
     public static String TRANSACTION_PAID = "paid";

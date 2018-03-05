@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class TransactionDTO implements Serializable{
     @SerializedName("transaction_id")
-    private long transactionId;
+    private int transactionId;
     @SerializedName("offer")
     private StoreOfferDTO storeOfferDTO;
     @SerializedName("users")
@@ -38,11 +38,11 @@ public class TransactionDTO implements Serializable{
         this.transactionDate = transactionDate;
     }
 
-    public long getTransactionId() {
+    public int getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(long transactionId) {
+    public void setTransactionId(int transactionId) {
         this.transactionId = transactionId;
     }
 

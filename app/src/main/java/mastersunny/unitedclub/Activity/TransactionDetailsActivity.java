@@ -14,15 +14,19 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TransactionDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public String TAG = "ItemDetailsActivity";
+    public String TAG = "TransactionDetailsActivity";
     private ImageView store_image;
     private TextView store_name, offer_details, client_name, email,
             phone_number, transaction_date, total_amount;
@@ -31,6 +35,7 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
     private NestedScrollView nestedScrollView;
     private RelativeLayout hidden_toolbar, normal_toolbar;
     private ApiInterface apiInterface;
+    private int transactionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +46,47 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
 
         getIntentData();
         initLayout();
-        updateInfo();
     }
 
-    public static void start(Context context, TransactionDTO transactionDTO) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+    private void loadData() {
+        try {
+            Constants.debugLog(TAG, "" + transactionId + " token " + Constants.accessToken);
+            apiInterface.getTransactionDetails(transactionId, Constants.accessToken).enqueue(new Callback<TransactionDTO>() {
+                @Override
+                public void onResponse(Call<TransactionDTO> call, Response<TransactionDTO> response) {
+                    Constants.debugLog(TAG, response + "");
+                    if (response != null && response.isSuccessful() && response.body() != null) {
+                        transactionDTO = response.body();
+                        Constants.debugLog(TAG, transactionDTO.toString());
+                        updateInfo();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TransactionDTO> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
+    }
+
+    public static void start(Context context, int transactionId) {
         Intent intent = new Intent(context, TransactionDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.TRANSACTION_DTO, transactionDTO);
+        intent.putExtra(Constants.TRANSACTION_ID, transactionId);
         context.startActivity(intent);
     }
 
     public void getIntentData() {
-        transactionDTO = (TransactionDTO) getIntent().getSerializableExtra(Constants.TRANSACTION_DTO);
+        transactionId = getIntent().getIntExtra(Constants.TRANSACTION_ID, 0);
     }
 
     public void initLayout() {
@@ -105,6 +139,11 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
         }
         store_name.setText(transactionDTO.getStoreOfferDTO().getStoreDTO().getStoreName());
         offer_details.setText(transactionDTO.getStoreOfferDTO().getOffer());
+        client_name.setText(transactionDTO.getUserDTO().getFirstName() + " " + transactionDTO.getUserDTO().getLastName());
+        email.setText(transactionDTO.getUserDTO().getEmail());
+        phone_number.setText(transactionDTO.getUserDTO().getPhoneNumber());
+        transaction_date.setText(transactionDTO.getTransactionDate());
+        total_amount.setText(transactionDTO.getAmount() + "");
     }
 
     @Override
@@ -116,41 +155,10 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.accept:
-                submitPurchase();
-                break;
-            case R.id.reject:
-                break;
             case R.id.normal_toolbar:
             case R.id.hidden_toolbar:
                 TransactionDetailsActivity.this.finish();
                 break;
-        }
-    }
-
-    private void submitPurchase() {
-
-
-        try {
-//            apiInterface.submitTransaction(storeOfferDTO.getOfferId(), amount, Constants.accessToken).enqueue(new Callback<RestModel>() {
-//                @Override
-//                public void onResponse(Call<RestModel> call, Response<RestModel> response) {
-//                    Constants.debugLog(TAG, response + "");
-//                    if (response.isSuccessful() && response.body() != null && response.body().getMetaData().isSuccess()) {
-//                    }
-//                    Constants.showDialog(ItemDetailsActivity.this, response.body().getMetaData().getMessage());
-//                }
-//
-//                @Override
-//                public void onFailure(Call<RestModel> call, Throwable t) {
-//                    Constants.showDialog(ItemDetailsActivity.this, "Cannot process transaction at this moment");
-//                    Constants.debugLog(TAG, "" + t.getMessage());
-//                }
-//            });
-
-        } catch (Exception e) {
-            Constants.showDialog(TransactionDetailsActivity.this, "Cannot process transaction at this moment");
-            Constants.debugLog(TAG, "" + e.getMessage());
         }
     }
 }
