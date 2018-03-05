@@ -29,6 +29,12 @@ public class Constants {
 
     public static boolean debugOn = true;
 
+    public static String TITLE = "title";
+    public static String MESSAGE = "message";
+    public static String TRANSACTION_ID = "transaction_id";
+    public static String IMG_URL = "img_url";
+    public static String TRANSACTION_DATE = "created_at";
+
     public static final String TOPIC_GLOBAL = "global";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String PUSH_NOTIFICATION = "pushNotification";
@@ -58,6 +64,7 @@ public class Constants {
     public static final String ACCESS_TOKEN = "access_token";
     public static final String COVER_IMAGE_URL = "cover_image_url";
     public static String accessToken = "abcd";
+    public static final String TRANSACTION_DTO = "transaction_dto";
 
     public static Typeface getRegularFace(Context context) {
         Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_regular.otf");

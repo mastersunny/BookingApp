@@ -3,6 +3,7 @@ package mastersunny.unitedclub.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,6 +38,8 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
     private NestedScrollView nestedScrollView;
     private RelativeLayout hidden_toolbar, normal_toolbar;
     private ApiInterface apiInterface;
+    private ProgressBar progressBar;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_item_details);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-
+        handler = new Handler();
         getIntentData();
         initLayout();
         updateInfo();
@@ -73,6 +77,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
         description_details = findViewById(R.id.description_details);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(this);
+        progressBar = findViewById(R.id.progressBar);
 
         store_name.setTypeface(Constants.getRegularFace(this));
         offer_details.setTypeface(Constants.getRegularFace(this));
@@ -138,13 +143,16 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
         }
 
         try {
+            progressBar.setVisibility(View.VISIBLE);
+            refreshHandler();
             apiInterface.submitTransaction(storeOfferDTO.getOfferId(), amount, Constants.accessToken).enqueue(new Callback<RestModel>() {
                 @Override
                 public void onResponse(Call<RestModel> call, Response<RestModel> response) {
                     Constants.debugLog(TAG, response + "");
                     if (response.isSuccessful() && response.body() != null && response.body().getMetaData().isSuccess()) {
+                        progressBar.setVisibility(View.GONE);
+                        Constants.showDialog(ItemDetailsActivity.this, response.body().getMetaData().getMessage());
                     }
-                    Constants.showDialog(ItemDetailsActivity.this, response.body().getMetaData().getMessage());
                 }
 
                 @Override
@@ -158,5 +166,24 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
             Constants.showDialog(ItemDetailsActivity.this, "Cannot process transaction at this moment");
             Constants.debugLog(TAG, "" + e.getMessage());
         }
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            progressBar.setVisibility(View.GONE);
+        }
+    };
+
+    private void refreshHandler() {
+        if (handler != null) {
+            handler.postDelayed(runnable, 5000);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
     }
 }
