@@ -50,34 +50,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-   /* private void sendNotificationBroadcast(int transactionId, String title, String message) {
-        Intent intent = new Intent(this, OfferDetailsActivity.class);
-        intent.putExtra(Constants.STORE_OFFER_DTO, new StoreOfferDTO());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.united_icon)
-
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(0, mBuilder.build());
-
-
-        Intent pushNotification = new Intent(Constants.PUSH_NOTIFICATION);
-        pushNotification.putExtra("message", message);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
-
-        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-        notificationUtils.playNotificationSound();
-    }*/
-
     private void handleDataMessage(JSONObject jsonObject) {
         try {
             int transactionId = jsonObject.getInt(Constants.TRANSACTION_ID);
