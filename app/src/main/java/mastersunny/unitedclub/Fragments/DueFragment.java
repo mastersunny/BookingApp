@@ -36,7 +36,7 @@ import retrofit2.Response;
 public class DueFragment extends FragmentBase implements View.OnClickListener {
 
     private Activity mActivity;
-    public String TAG = "PaidFragment";
+    public String TAG = "DueFragment";
     private RecyclerView transaction_details_rv;
     private ArrayList<TransactionDTO> transactionDTOS;
     private TransactionAdapter transactionAdapter;
