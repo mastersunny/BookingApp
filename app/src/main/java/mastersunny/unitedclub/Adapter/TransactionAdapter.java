@@ -3,15 +3,18 @@ package mastersunny.unitedclub.Adapter;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.utils.Constants;
 
 /**
@@ -45,6 +48,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(MainHolder holder, int position) {
         if (transactionDTOS != null) {
             TransactionDTO dto = transactionDTOS.get(position);
+            String imgUrl = dto.getStoreOfferDTO().getStoreDTO().getImageUrl();
+            if (!TextUtils.isEmpty(imgUrl)) {
+                Constants.loadImage(mActivity, (ApiClient.BASE_URL + imgUrl), holder.store_image);
+            }
+
+
             holder.offer_details.setText(dto.getStoreOfferDTO().getOffer());
             holder.offer_date.setText(dto.getTransactionDate());
             holder.total_amount.setText(dto.getAmount() + "");
@@ -73,10 +82,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public static class MainHolder extends RecyclerView.ViewHolder {
 
         private TextView offer_details, offer_date, total_amount, paid_status;
+        private ImageView store_image;
 
 
         public MainHolder(View itemView) {
             super(itemView);
+            store_image = itemView.findViewById(R.id.store_image);
             offer_details = itemView.findViewById(R.id.offer_details);
             offer_details.setTypeface(face);
             offer_date = itemView.findViewById(R.id.offer_date);
