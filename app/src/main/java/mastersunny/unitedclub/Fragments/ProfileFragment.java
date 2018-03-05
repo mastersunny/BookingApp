@@ -74,17 +74,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     };
 
-    @Override
-    public void onResume() {
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                sendInitialRequest();
-            }
-        });
-        super.onResume();
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -146,6 +135,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onResponse(Call<List<TransactionDTO>> call, Response<List<TransactionDTO>> response) {
                     Constants.debugLog(TAG, response + "");
+                    swipeRefresh.setRefreshing(false);
                     progressBar.setVisibility(View.GONE);
                     if (response != null && response.isSuccessful() && response.body() != null) {
                         transactionDTOS.clear();
