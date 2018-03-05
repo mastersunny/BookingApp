@@ -24,6 +24,7 @@ import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
 import mastersunny.unitedclub.Model.AccessModel;
+import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -106,24 +107,16 @@ public class HomeActivity extends AppCompatActivity {
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
-                // checking for type intent filter
                 if (intent.getAction().equals(Constants.REGISTRATION_COMPLETE)) {
-                    // gcm successfully registered
-                    // now subscribe to `global` topic to receive app wide notifications
                     FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC_GLOBAL);
-
                     displayFirebaseRegId();
 
                 } else if (intent.getAction().equals(Constants.PUSH_NOTIFICATION)) {
-                    // new push notification is received
 
-                    String message = intent.getStringExtra("message");
-                    Constants.debugLog(TAG, "Push message " + message);
-
-                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-
-//                    txtMessage.setText(message);
+                    String message = intent.getStringExtra(Constants.MESSAGE);
+                    String transactionDate = intent.getStringExtra(Constants.TRANSACTION_DATE);
+                    final int transactionId = intent.getIntExtra(Constants.TRANSACTION_ID, 0);
+                    Constants.showDialog(HomeActivity.this, message);
                 }
             }
         };
