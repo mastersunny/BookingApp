@@ -117,6 +117,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         transaction_rv.setAdapter(transactionAdapter);
 
         view.findViewById(R.id.edit_profile).setOnClickListener(this);
+        view.findViewById(R.id.view_all_transaction).setOnClickListener(this);
     }
 
     @Override
@@ -132,6 +133,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.edit_profile:
                 startActivity(new Intent(mActivity, EditProfileActivity.class));
+                break;
+            case R.id.view_all_transaction:
+                TransactionActivity.start(v.getContext(), new UserDTO());
                 break;
         }
     }
