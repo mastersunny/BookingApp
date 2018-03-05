@@ -81,13 +81,18 @@ public interface ApiInterface {
     //Category
 
     //Transaction Details
-    @GET("api/get_transactions")
-    Call<List<TransactionDTO>> getTransactions(@Query("status") int status, @Query("access_token") String accessToken);
+    @GET("api/get_transactions_client")
+    Call<List<TransactionDTO>> getTransactions(@Query("access_token") String accessToken,
+                                               @Query("action") String action);
 
     @POST("api/submit_transaction")
     @FormUrlEncoded
     Call<RestModel> submitTransaction(@Field("offer_id") int offerId, @Field("amount") double amount,
                                       @Query("access_token") String accessToken);
+
+    @GET("api/get_transaction")
+    Call<TransactionDTO> getTransactionDetails(@Query("transaction_id") int transaction_id,
+                                               @Query("access_token") String accessToken);
     //Transaction Details
 
 

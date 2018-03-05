@@ -43,13 +43,13 @@ public class Constants {
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
     public static final int REQUEST_TIMEOUT = 5000;
 
-    public static final int USER_TYPE_CLIENT = 1;
-    public static final int USER_TYPE_MERCHANT = 2;
-    public static final int USER_TYPE_ADMIN = 3;
-
     public static final int STATUS_UNPAID = 1;
-    public static final int STATUS_PAID = 2;
-    public static final int STATUS_RECENT = 0;
+    public static final int STATUS_PAID = 0;
+
+    public static String TRANSACTION_ALL = "all";
+    public static String TRANSACTION_PAID = "paid";
+    public static String TRANSACTION_DUE = "unpaid";
+    public static String TRANSACTION_PENDING = "pending";
 
     public static final int store_search = 1;
     public static final int category_search = 2;

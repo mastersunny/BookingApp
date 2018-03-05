@@ -102,7 +102,7 @@ public class DueFragment extends FragmentBase implements View.OnClickListener {
 
     private void loaData() {
         try {
-            apiInterface.getTransactions(Constants.STATUS_UNPAID, Constants.accessToken).enqueue(new Callback<List<TransactionDTO>>() {
+            apiInterface.getTransactions(Constants.accessToken, Constants.TRANSACTION_DUE).enqueue(new Callback<List<TransactionDTO>>() {
                 @Override
                 public void onResponse(Call<List<TransactionDTO>> call, Response<List<TransactionDTO>> response) {
                     progressBar.setVisibility(View.GONE);
