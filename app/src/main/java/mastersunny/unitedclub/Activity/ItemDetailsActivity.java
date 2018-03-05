@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import mastersunny.unitedclub.Listener.ClickListener;
 import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
@@ -40,6 +41,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
     private ApiInterface apiInterface;
     private ProgressBar progressBar;
     private Handler handler;
+    private boolean alreadyRequest = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +123,9 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.submit:
-                submitPurchase();
+                if (!alreadyRequest) {
+                    submitPurchase();
+                }
                 break;
             case R.id.normal_toolbar:
             case R.id.hidden_toolbar:
@@ -143,34 +147,52 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
         }
 
         try {
+            alreadyRequest = true;
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
             apiInterface.submitTransaction(storeOfferDTO.getOfferId(), amount, Constants.accessToken).enqueue(new Callback<RestModel>() {
                 @Override
                 public void onResponse(Call<RestModel> call, Response<RestModel> response) {
+                    handler.removeCallbacksAndMessages(null);
+                    alreadyRequest = false;
                     Constants.debugLog(TAG, response + "");
                     if (response.isSuccessful() && response.body() != null && response.body().getMetaData().isSuccess()) {
                         progressBar.setVisibility(View.GONE);
-                        Constants.showDialog(ItemDetailsActivity.this, response.body().getMetaData().getMessage());
+                        showResponse(response.body().getMetaData().getMessage());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RestModel> call, Throwable t) {
-                    Constants.showDialog(ItemDetailsActivity.this, "Cannot process transaction at this moment");
+                    showResponse("Cannot process transaction at this moment");
                     Constants.debugLog(TAG, "" + t.getMessage());
                 }
             });
 
         } catch (Exception e) {
-            Constants.showDialog(ItemDetailsActivity.this, "Cannot process transaction at this moment");
+            showResponse("Cannot process transaction at this moment");
             Constants.debugLog(TAG, "" + e.getMessage());
         }
+    }
+
+    private void showResponse(String message) {
+        Constants.showDialog(ItemDetailsActivity.this, message, new ClickListener() {
+            @Override
+            public void ok() {
+                finish();
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        });
     }
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            alreadyRequest = false;
             progressBar.setVisibility(View.GONE);
         }
     };

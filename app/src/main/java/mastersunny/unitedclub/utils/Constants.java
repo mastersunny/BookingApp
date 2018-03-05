@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.io.File;
 import java.security.PublicKey;
 
+import mastersunny.unitedclub.Listener.ClickListener;
 import mastersunny.unitedclub.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -103,6 +104,26 @@ public class Constants {
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public static void showDialog(Context context, String message, final ClickListener listener) {
+        final Dialog dialog = new Dialog(context);
+        dialog.setCancelable(false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.payment_dialog_layout);
+
+        TextView text = dialog.findViewById(R.id.message);
+        text.setText(message);
+
+        TextView ok_button = dialog.findViewById(R.id.ok_button);
+        ok_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.ok();
                 dialog.dismiss();
             }
         });
