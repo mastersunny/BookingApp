@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -39,14 +40,17 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     public static final int PICK_IMAGE = 1;
     private String TAG = "EditProfileActivity";
     private File destFile;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_edit_profile);
+        preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
 
         initLayout();
+        updateLayout();
     }
 
     private void initLayout() {
@@ -70,6 +74,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
         findViewById(R.id.back_button).setOnClickListener(this);
         findViewById(R.id.change_phone_number).setOnClickListener(this);
+    }
+
+    private void updateLayout() {
+        first_name.setText(preferences.getString(Constants.FIRST_NAME, ""));
+        last_name.setText(preferences.getString(Constants.LAST_NAME, ""));
+        email.setText(preferences.getString(Constants.EMAIL, ""));
     }
 
     private void updateInfo() {
