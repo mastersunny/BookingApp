@@ -129,7 +129,9 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
     private void updateInfo() {
         if (!TextUtils.isEmpty(transactionDTO.getStoreOfferDTO().getStoreDTO().getImageUrl())) {
             String imgUrl = ApiClient.BASE_URL + "" + transactionDTO.getStoreOfferDTO().getStoreDTO().getImageUrl();
-            Constants.loadImage(this, imgUrl, store_image);
+            if (!isFinishing()) {
+                Constants.loadImage(this, imgUrl, store_image);
+            }
         }
         store_name.setText(transactionDTO.getStoreOfferDTO().getStoreDTO().getStoreName());
         offer_details.setText(transactionDTO.getStoreOfferDTO().getOffer());
