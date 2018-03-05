@@ -81,6 +81,7 @@
         <activity android:name=".Activity.MobileVerificationActivity" />
         <activity android:name=".Activity.MobileLoginActivity" />
         <activity android:name=".Activity.RegistrationActivity"></activity>
+        <activity android:name=".Activity.TransactionDetailsActivity"/>
 
         <!-- Firebase Notifications -->
         <service android:name=".services.MyFirebaseMessagingService">
