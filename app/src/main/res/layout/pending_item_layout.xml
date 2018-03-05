@@ -4,6 +4,7 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     card_view:cardCornerRadius="@dimen/margin_2"
     card_view:cardElevation="@dimen/margin_2"
     card_view:cardUseCompatPadding="true">
@@ -59,26 +60,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/accept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
                 android:padding="@dimen/margin_10"
-                android:text="ACCEPTED"
-                android:textColor="@color/green"
+                android:text="PENDING"
+                android:textColor="@color/item_details"
                 android:textSize="@dimen/margin_12"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/decline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
-                android:padding="@dimen/margin_10"
-                android:text="REJECTED"
-                android:textColor="@color/red"
-                android:textSize="@dimen/margin_12"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
         </LinearLayout>
     </RelativeLayout>

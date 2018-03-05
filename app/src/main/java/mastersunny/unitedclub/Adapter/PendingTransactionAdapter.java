@@ -49,14 +49,6 @@ public class PendingTransactionAdapter extends RecyclerView.Adapter<PendingTrans
             holder.client_name.setText(dto.getUserDTO().getFirstName());
             holder.transaction_date.setText(dto.getTransactionDate());
             holder.total_amount.setText(dto.getAmount() + "");
-            if (dto.getPaidStatus() == Constants.STATUS_PAID) {
-                holder.accept.setVisibility(View.VISIBLE);
-                holder.decline.setVisibility(View.GONE);
-            } else {
-                holder.accept.setVisibility(View.GONE);
-                holder.decline.setVisibility(View.VISIBLE);
-            }
-
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -74,7 +66,7 @@ public class PendingTransactionAdapter extends RecyclerView.Adapter<PendingTrans
     public static class MainHolder extends RecyclerView.ViewHolder {
 
         private TextView client_name, transaction_date,
-                total_amount, accept, decline;
+                total_amount;
 
 
         public MainHolder(View itemView) {
@@ -85,8 +77,6 @@ public class PendingTransactionAdapter extends RecyclerView.Adapter<PendingTrans
             transaction_date.setTypeface(face);
             total_amount = itemView.findViewById(R.id.total_amount);
             total_amount.setTypeface(face);
-            accept = itemView.findViewById(R.id.accept);
-            decline = itemView.findViewById(R.id.decline);
         }
     }
 }

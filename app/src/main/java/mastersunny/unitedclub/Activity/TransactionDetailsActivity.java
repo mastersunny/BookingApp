@@ -30,7 +30,6 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
     private ImageView store_image;
     private TextView store_name, offer_details, client_name, email,
             phone_number, transaction_date, total_amount;
-    private Button accept, reject;
     private TransactionDTO transactionDTO;
     private NestedScrollView nestedScrollView;
     private RelativeLayout hidden_toolbar, normal_toolbar;
@@ -103,11 +102,6 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
         phone_number = findViewById(R.id.phone_number);
         transaction_date = findViewById(R.id.transaction_date);
         total_amount = findViewById(R.id.total_amount);
-
-        accept = findViewById(R.id.accept);
-        reject = findViewById(R.id.reject);
-        accept.setOnClickListener(this);
-        reject.setOnClickListener(this);
 
 //        store_name.setTypeface(Constants.getRegularFace(this));
 //        offer_details.setTypeface(Constants.getRegularFace(this));
