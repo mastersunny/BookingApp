@@ -218,12 +218,6 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                         if (response.body().getMetaData().isData()) {
                             UserDTO userDTO = response.body().getUserDTO();
                             Constants.debugLog(TAG, userDTO.toString());
-                            editor.putInt(Constants.STORE_ID, userDTO.getStoreId());
-                            editor.putString(Constants.FIRST_NAME, userDTO.getFirstName());
-                            editor.putString(Constants.LAST_NAME, userDTO.getLastName());
-                            editor.putString(Constants.EMAIL, userDTO.getEmail());
-                            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
-                            editor.putString(Constants.COVER_IMAGE_URL, userDTO.getImgUrl());
                             editor.putString(Constants.ACCESS_TOKEN, userDTO.getAccessToken());
                             editor.apply();
                             startActivity(new Intent(MobileVerificationActivity.this, HomeActivity.class));
