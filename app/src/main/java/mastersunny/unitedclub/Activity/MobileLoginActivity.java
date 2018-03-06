@@ -117,17 +117,16 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
     protected void sendCode() {
         try {
             phoneNumber = phone_number.getText().toString().trim();
-            phoneNumber = countryCode + phoneNumber;
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
-            apiInterface.getCode(phoneNumber).enqueue(new Callback<RestModel>() {
+            apiInterface.getCode(countryCode + phoneNumber).enqueue(new Callback<RestModel>() {
                 @Override
                 public void onResponse(Call<RestModel> call, Response<RestModel> response) {
                     alreadyRequest = false;
                     progressBar.setVisibility(View.GONE);
                     if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
                         Constants.debugLog(TAG, response.body().getMetaData() + " re " + response.body().getUserDTO());
-                        MobileVerificationActivity.start(MobileLoginActivity.this, phoneNumber);
+                        MobileVerificationActivity.start(MobileLoginActivity.this, (countryCode + phoneNumber));
                     } else {
                         Constants.showDialog(MobileLoginActivity.this, "Please try again");
                     }

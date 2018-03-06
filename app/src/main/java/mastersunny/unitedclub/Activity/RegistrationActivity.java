@@ -67,6 +67,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             lastName = last_name.getText().toString();
             emailAddress = email.getText().toString();
             phoneNumber = preferences.getString(Constants.PHONE_NUMBER, "");
+            Constants.debugLog(TAG,
+                    "firstName " + firstName
+                            + " lastName " + lastName
+                            + " email " + emailAddress
+                            + " phoneNumber " + phoneNumber);
             apiInterface.signUp(firstName, lastName, emailAddress, preferences.getString(Constants.PHONE_NUMBER, ""))
                     .enqueue(this);
         } catch (Exception e) {

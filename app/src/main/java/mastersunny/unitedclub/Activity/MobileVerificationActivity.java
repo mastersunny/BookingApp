@@ -229,6 +229,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                         } else {
                             startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
                         }
+                        MobileVerificationActivity.this.finish();
                     } else {
                         Constants.showDialog(MobileVerificationActivity.this, "" + response.body().getMetaData().getMessage());
                     }
