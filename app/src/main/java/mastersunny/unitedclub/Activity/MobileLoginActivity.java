@@ -116,6 +116,7 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
 
     protected void sendCode() {
         try {
+            countryCode = countryCodePicker.getSelectedCountryCode();
             phoneNumber = phone_number.getText().toString().trim();
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
