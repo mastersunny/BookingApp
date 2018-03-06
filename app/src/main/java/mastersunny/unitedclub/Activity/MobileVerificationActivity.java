@@ -229,6 +229,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                             startActivity(new Intent(MobileVerificationActivity.this, HomeActivity.class));
                         } else {
                             editor.putString(Constants.PHONE_NUMBER, phoneNumber);
+                            editor.apply();
                             startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
                         }
                         MobileVerificationActivity.this.finish();
