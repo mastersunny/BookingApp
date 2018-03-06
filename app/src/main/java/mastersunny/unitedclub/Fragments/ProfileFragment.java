@@ -24,6 +24,7 @@ import mastersunny.unitedclub.Activity.EditProfileActivity;
 import mastersunny.unitedclub.Activity.TransactionActivity;
 import mastersunny.unitedclub.Adapter.PendingTransactionAdapter;
 import mastersunny.unitedclub.Adapter.TransactionAdapter;
+import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.Model.TransactionDTO;
@@ -54,7 +55,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     protected boolean firstRequest = false;
     protected Handler handler = new Handler();
     private ApiInterface apiInterface;
-    private TextView pending_transaction_message;
+    private TextView pending_transaction_message, user_name;
 
     @Override
     public void onAttach(Context context) {
@@ -91,6 +92,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initLayout() {
+        user_name = view.findViewById(R.id.user_name);
+
         pending_transaction_message = view.findViewById(R.id.pending_transaction_message);
         progressBar = view.findViewById(R.id.progressBar);
         swipeRefresh = view.findViewById(R.id.swipeRefresh);
@@ -132,8 +135,28 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void updateProfile(UserDTO userDTO) {
+        user_name.setText(userDTO.getFirstName() + " " + userDTO.getLastName());
+    }
+
     private void loaData() {
         try {
+            apiInterface.getProfileDetails(Constants.accessToken).enqueue(new Callback<RestModel>() {
+                @Override
+                public void onResponse(Call<RestModel> call, Response<RestModel> response) {
+                    if (response != null && response.isSuccessful() && response.body().getMetaData().isData()) {
+                        UserDTO userDTO = response.body().getUserDTO();
+                        updateProfile(userDTO);
+                        Constants.debugLog(TAG, userDTO.toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RestModel> call, Throwable t) {
+                    Constants.debugLog(TAG, t.getMessage());
+                }
+            });
+
             apiInterface.getTransactions(Constants.accessToken, Constants.TRANSACTION_PENDING).enqueue(new Callback<List<TransactionDTO>>() {
                 @Override
                 public void onResponse(Call<List<TransactionDTO>> call, Response<List<TransactionDTO>> response) {

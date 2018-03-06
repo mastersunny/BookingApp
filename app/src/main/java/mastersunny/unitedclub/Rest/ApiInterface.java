@@ -95,5 +95,12 @@ public interface ApiInterface {
                                                @Query("access_token") String accessToken);
     //Transaction Details
 
+    //Profile update
+
+
+    @GET("api/get_profile")
+    Call<RestModel> getProfileDetails(@Query("access_token") String accessToken);
+    //Profile update
+
 
 }
