@@ -35,7 +35,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/margin_20"
-            android:text="John Doe"
+            android:text=""
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_18" />
 
