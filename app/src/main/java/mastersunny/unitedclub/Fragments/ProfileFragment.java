@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     protected boolean firstRequest = false;
     protected Handler handler = new Handler();
     private ApiInterface apiInterface;
+    private TextView pending_transaction_message;
 
     @Override
     public void onAttach(Context context) {
@@ -89,6 +91,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initLayout() {
+        pending_transaction_message = view.findViewById(R.id.pending_transaction_message);
         progressBar = view.findViewById(R.id.progressBar);
         swipeRefresh = view.findViewById(R.id.swipeRefresh);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -144,6 +147,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             transactionAdapter.notifyDataSetChanged();
                         }
                     }
+                    checkNoData();
                 }
 
                 @Override
@@ -153,6 +157,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             });
         } catch (Exception e) {
             Constants.debugLog(TAG, "Error in load data " + e.getMessage());
+        }
+    }
+
+    private void checkNoData() {
+        if (transactionDTOS.size() == 0) {
+            pending_transaction_message.setVisibility(View.VISIBLE);
+        } else {
+            pending_transaction_message.setVisibility(View.GONE);
         }
     }
 
