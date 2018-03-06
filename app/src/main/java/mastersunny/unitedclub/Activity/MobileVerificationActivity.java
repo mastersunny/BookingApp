@@ -85,9 +85,10 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         btn_resend_code = findViewById(R.id.btn_resend_code);
         btn_resend_code.setOnClickListener(this);
         btn_resend_code.setAlpha(0.4f);
+        btn_resend_code.setClickable(false);
         progressBar = findViewById(R.id.progressBar);
         findViewById(R.id.back_button).setOnClickListener(this);
-        btn_resend_code.setOnClickListener(this);
+
 
         pdLoading = new ProgressDialog(this);
 
@@ -177,6 +178,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
     protected void sendCode() {
         try {
+            Constants.debugLog(TAG, "btn_resend_code " + alreadyRequest);
             alreadyRequest = true;
             progressBar.setVisibility(View.VISIBLE);
             handler.postDelayed(sendCodeRunnable, Constants.REQUEST_TIMEOUT);
