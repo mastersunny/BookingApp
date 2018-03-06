@@ -27,21 +27,24 @@
             android:text="Enter your phone number"
             android:textSize="@dimen/text_size_16" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="@string/hint_phone_no"
-                android:inputType="phone"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/black" />
-        </android.support.design.widget.TextInputLayout>
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foreground="?selectableItemBackground"
+            app:ccp_defaultNameCode="US" />
+
+        <EditText
+            android:id="@+id/phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:hint="@string/hint_phone_no"
+            android:inputType="phone"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/grey_lite" />
 
         <Button
             android:id="@+id/btn_send_code"
@@ -49,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_10"
-            android:background="@color/colorAccent"
+            android:background="@drawable/button_selector"
             android:text="@string/text_send_code"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />

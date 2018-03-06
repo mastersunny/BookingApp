@@ -1,10 +1,5 @@
 package mastersunny.unitedclub.Activity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import mastersunny.unitedclub.Model.AccessModel;
+import com.hbb20.CountryCodePicker;
+
 import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
@@ -37,12 +33,14 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
     private ProgressBar progressBar;
     private Handler handler;
     private boolean alreadyRequest = false;
+    private CountryCodePicker countryCodePicker;
+    private String countryCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mobile_login);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         handler = new Handler();
         initLayout();
@@ -94,6 +92,14 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         });
+
+        countryCodePicker = findViewById(R.id.ccp);
+        countryCodePicker.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                countryCode = countryCodePicker.getSelectedCountryCode();
+            }
+        });
     }
 
     @Override
@@ -111,6 +117,7 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
     protected void sendCode() {
         try {
             phoneNumber = phone_number.getText().toString().trim();
+            phoneNumber = countryCode + phoneNumber;
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
             apiInterface.getCode(phoneNumber).enqueue(new Callback<RestModel>() {
