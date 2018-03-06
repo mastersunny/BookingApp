@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MobileLoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class MobileLoginActivity extends AppCompatActivity implements View.OnClickListener, Callback<RestModel> {
 
     public String TAG = MobileLoginActivity.class.getSimpleName();
     private EditText phone_number;
@@ -31,10 +31,10 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
     private ApiInterface apiInterface;
     private String phoneNumber = "";
     private ProgressBar progressBar;
-    private Handler handler;
-    private boolean alreadyRequest = false;
     private CountryCodePicker countryCodePicker;
     private String countryCode = "";
+    private Handler handler;
+    private boolean alreadyRequest = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,20 +44,6 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         handler = new Handler();
         initLayout();
-    }
-
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            alreadyRequest = false;
-            progressBar.setVisibility(View.GONE);
-        }
-    };
-
-    private void refreshHandler() {
-        if (handler != null) {
-            handler.postDelayed(runnable, 10000);
-        }
     }
 
     @Override
@@ -116,34 +102,49 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
 
     protected void sendCode() {
         try {
+            refreshHandler();
+            progressBar.setVisibility(View.VISIBLE);
             countryCode = countryCodePicker.getSelectedCountryCode();
             phoneNumber = phone_number.getText().toString().trim();
-            progressBar.setVisibility(View.VISIBLE);
-            refreshHandler();
-            apiInterface.getCode(countryCode + phoneNumber).enqueue(new Callback<RestModel>() {
-                @Override
-                public void onResponse(Call<RestModel> call, Response<RestModel> response) {
-                    alreadyRequest = false;
-                    progressBar.setVisibility(View.GONE);
-                    if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
-                        Constants.debugLog(TAG, response.body().getMetaData() + " re " + response.body().getUserDTO());
-                        MobileVerificationActivity.start(MobileLoginActivity.this, (countryCode + phoneNumber));
-                    } else {
-                        Constants.showDialog(MobileLoginActivity.this, "Please try again");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<RestModel> call, Throwable t) {
-                    progressBar.setVisibility(View.GONE);
-                    Constants.debugLog(TAG, t.getMessage());
-                    Constants.showDialog(MobileLoginActivity.this, "Please try again");
-                }
-            });
+            apiInterface.getCode(countryCode + phoneNumber).enqueue(this);
         } catch (Exception e) {
-            progressBar.setVisibility(View.GONE);
             Constants.debugLog(TAG, e.getMessage());
-            Constants.showDialog(MobileLoginActivity.this, "Please try again");
+            Constants.showDialog(MobileLoginActivity.this, getResources().getString(R.string.error_login));
+        }
+    }
+
+    @Override
+    public void onResponse(Call<RestModel> call, Response<RestModel> response) {
+        Constants.debugLog(TAG, response + "");
+        if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
+            if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
+                MobileVerificationActivity.start(MobileLoginActivity.this, (countryCode + phoneNumber));
+            } else {
+                Constants.showDialog(MobileLoginActivity.this, getResources().getString(R.string.error_login));
+            }
+        }
+
+        alreadyRequest = false;
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onFailure(Call<RestModel> call, Throwable t) {
+        Constants.debugLog(TAG, t.getMessage());
+        Constants.showDialog(MobileLoginActivity.this, getResources().getString(R.string.error_login));
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            alreadyRequest = false;
+            progressBar.setVisibility(View.GONE);
+        }
+    };
+
+    private void refreshHandler() {
+        if (handler != null) {
+            handler.postDelayed(runnable, Constants.REQUEST_TIMEOUT);
         }
     }
 
@@ -152,4 +153,5 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
         handler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
+
 }

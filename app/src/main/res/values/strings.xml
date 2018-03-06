@@ -74,6 +74,7 @@
     <string name="barcode_error_format">"Error reading barcode: %1$s"</string>
     <string name="change_phone_number">Looking to change phone number?</string>
     <string name="permission_storage">You need storage permission</string>
+    <string name="error_login">Cannot login at this moment</string>
 
     <!-- Strings related to barcode scanner -->
     <string name="ok">OK</string>

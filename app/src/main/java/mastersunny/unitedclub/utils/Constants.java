@@ -42,7 +42,7 @@ public class Constants {
     public static final String REFRESH_TOKEN = "refresh_token";
     public static final int NOTIFICATION_ID = 100;
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
-    public static final int REQUEST_TIMEOUT = 5000;
+    public static final int REQUEST_TIMEOUT = 10000;
 
     public static final int STATUS_UNPAID = 0;
     public static final int STATUS_PAID = 1;

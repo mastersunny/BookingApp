@@ -3,6 +3,7 @@ package mastersunny.unitedclub.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,6 +31,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private ApiInterface apiInterface;
     private ProgressBar progressBar;
     private String firstName, lastName, emailAddress, phoneNumber;
+    private boolean alreadyRequest = false;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,30 +52,40 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         progressBar = findViewById(R.id.progressBar);
         findViewById(R.id.btn_register).setOnClickListener(this);
 
+        findViewById(R.id.back_button).setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_register:
-                sendRegistration();
+                if (!alreadyRequest) {
+                    alreadyRequest = true;
+                    sendRegistration();
+                }
+                break;
+            case R.id.back_button:
+                RegistrationActivity.this.finish();
                 break;
         }
     }
 
     private void sendRegistration() {
         try {
+            refreshHandler();
             progressBar.setVisibility(View.VISIBLE);
-            firstName = first_name.getText().toString();
-            lastName = last_name.getText().toString();
-            emailAddress = email.getText().toString();
+            firstName = first_name.getText().toString().trim();
+            lastName = last_name.getText().toString().trim();
+            emailAddress = email.getText().toString().trim();
             phoneNumber = preferences.getString(Constants.PHONE_NUMBER, "");
             Constants.debugLog(TAG,
                     "firstName " + firstName
                             + " lastName " + lastName
                             + " email " + emailAddress
                             + " phoneNumber " + phoneNumber);
-            apiInterface.signUp(firstName, lastName, emailAddress, preferences.getString(Constants.PHONE_NUMBER, ""))
+            apiInterface
+                    .signUp(firstName, lastName, emailAddress, preferences.getString(Constants.PHONE_NUMBER, ""))
                     .enqueue(this);
         } catch (Exception e) {
             Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");
@@ -82,7 +95,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onResponse(Call<RestModel> call, Response<RestModel> response) {
         Constants.debugLog(TAG, "" + response);
-        progressBar.setVisibility(View.GONE);
 
         if (response.isSuccessful() && response.body() != null && response.body().getMetaData().isSuccess()) {
             if (response.body().getMetaData().isData()) {
@@ -103,11 +115,36 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");
             Constants.debugLog(TAG, "error in registration");
         }
+
+        progressBar.setVisibility(View.GONE);
+        alreadyRequest = false;
     }
 
     @Override
     public void onFailure(Call<RestModel> call, Throwable t) {
+        progressBar.setVisibility(View.GONE);
+        alreadyRequest = false;
         Constants.debugLog(TAG, "" + t.getMessage());
         Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            alreadyRequest = false;
+            progressBar.setVisibility(View.GONE);
+        }
+    };
+
+    private void refreshHandler() {
+        if (handler != null) {
+            handler.postDelayed(runnable, Constants.REQUEST_TIMEOUT);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
     }
 }
