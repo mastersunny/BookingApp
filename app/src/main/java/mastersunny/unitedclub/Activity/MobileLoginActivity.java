@@ -119,6 +119,7 @@ public class MobileLoginActivity extends AppCompatActivity implements View.OnCli
         if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
             if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
                 MobileVerificationActivity.start(MobileLoginActivity.this, (countryCode + phoneNumber));
+                MobileLoginActivity.this.finish();
             } else {
                 Constants.showDialog(MobileLoginActivity.this, getResources().getString(R.string.error_login));
             }
