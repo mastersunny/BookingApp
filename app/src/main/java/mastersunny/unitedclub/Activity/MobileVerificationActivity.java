@@ -46,6 +46,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
 
     public static void start(Context context, String phoneNumber) {
         Intent intent = new Intent(context, MobileVerificationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(Constants.PHONE_NUMBER, phoneNumber);
         context.startActivity(intent);
     }

@@ -81,7 +81,9 @@ public class SplashActivity extends AppCompatActivity {
                         Constants.debugLog(TAG, response.body().getMetaData().getMessage());
                         HomeActivity.start(SplashActivity.this, true);
                     } else {
-                        startActivity(new Intent(SplashActivity.this, MobileLoginActivity.class));
+                        Intent intent = new Intent(SplashActivity.this, MobileLoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                     SplashActivity.this.finish();
                 }
