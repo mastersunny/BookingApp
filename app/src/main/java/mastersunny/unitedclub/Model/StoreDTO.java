@@ -15,7 +15,7 @@ public class StoreDTO implements Serializable {
     private String storeName;
     @SerializedName("store_image_url")
     private String imageUrl;
-    @SerializedName("count")
+    @SerializedName("store_offer_count")
     private int totalOffer;
 
     public int getStoreId() {
