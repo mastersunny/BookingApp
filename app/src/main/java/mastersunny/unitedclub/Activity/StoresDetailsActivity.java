@@ -86,27 +86,25 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
     private void loadData() {
         try {
             Constants.debugLog(TAG, "accessToken: " + Constants.accessToken);
-            if (TextUtils.isEmpty(storeDTO.getStoreName())) {
-                apiService.getStoreById(storeDTO.getStoreId(), Constants.accessToken).enqueue(new Callback<StoreDTO>() {
-                    @Override
-                    public void onResponse(Call<StoreDTO> call, Response<StoreDTO> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            Constants.debugLog(TAG, "StoreDTO: " + response.body());
-                            storeDTO = response.body();
-                            store_name.setText(storeDTO.getStoreName());
-                            if (storeOfferAdapter != null) {
-                                storeOfferAdapter.setStoreDTO(storeDTO);
-                                storeOfferAdapter.notifyItemChanged(0);
-                            }
+            apiService.getStoreById(storeDTO.getStoreId(), Constants.accessToken).enqueue(new Callback<StoreDTO>() {
+                @Override
+                public void onResponse(Call<StoreDTO> call, Response<StoreDTO> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Constants.debugLog(TAG, "StoreDTO: " + response.body());
+                        storeDTO = response.body();
+                        store_name.setText(storeDTO.getStoreName());
+                        if (storeOfferAdapter != null) {
+                            storeOfferAdapter.setStoreDTO(storeDTO);
+                            storeOfferAdapter.notifyItemChanged(0);
                         }
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<StoreDTO> call, Throwable t) {
-                        Constants.debugLog(TAG, "" + t.getMessage());
-                    }
-                });
-            }
+                @Override
+                public void onFailure(Call<StoreDTO> call, Throwable t) {
+                    Constants.debugLog(TAG, "" + t.getMessage());
+                }
+            });
 
             apiService.getStoreOffers(storeDTO.getStoreId(), Constants.accessToken)
                     .enqueue(new Callback<List<StoreOfferDTO>>() {
