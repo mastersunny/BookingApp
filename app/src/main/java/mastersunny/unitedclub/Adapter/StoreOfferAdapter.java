@@ -33,13 +33,13 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Typeface face;
     public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
-    private int categoryId;
+    private CategoryDTO categoryDTO;
 
-    public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS, int categoryId) {
+    public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS, CategoryDTO categoryDTO) {
         this.mActivity = mActivity;
         this.storeOfferDTOS = storeOfferDTOS;
         face = Constants.getMediumFace(mActivity);
-        this.categoryId = categoryId;
+        this.categoryDTO = categoryDTO;
     }
 
     @Override
@@ -61,8 +61,6 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 headerHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CategoryDTO categoryDTO = new CategoryDTO();
-                        categoryDTO.setCategoryId(categoryId);
                         CategoryDetailsActivity.start(v.getContext(), categoryDTO);
                     }
                 });

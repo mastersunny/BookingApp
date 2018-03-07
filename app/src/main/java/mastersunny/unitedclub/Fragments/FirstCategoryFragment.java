@@ -134,7 +134,7 @@ public class FirstCategoryFragment extends Fragment implements View.OnClickListe
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setHasFixedSize(true);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapter(mActivity, storeOfferDTOS, categoryDTO.getCategoryId());
+        storeOfferAdapter = new StoreOfferAdapter(mActivity, storeOfferDTOS, categoryDTO);
         most_used_rv.setAdapter(storeOfferAdapter);
     }
 

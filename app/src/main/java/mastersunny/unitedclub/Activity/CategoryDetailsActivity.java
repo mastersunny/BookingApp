@@ -67,6 +67,7 @@ public class CategoryDetailsActivity extends AppCompatActivity implements View.O
         getIntentData();
         initLayout();
         loadData();
+        Constants.debugLog(TAG, "CATEGORY DTO" + categoryDTO.toString());
         store_name.setText(categoryDTO.getCategoryName());
     }
 
@@ -89,7 +90,7 @@ public class CategoryDetailsActivity extends AppCompatActivity implements View.O
 
     private void loadData() {
         try {
-            apiInterface.getStoreOffers(categoryDTO.getCategoryId(), Constants.accessToken)
+            apiInterface.getCategoryOffers(categoryDTO.getCategoryId(), Constants.accessToken)
                     .enqueue(new Callback<List<StoreOfferDTO>>() {
                         @Override
                         public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
