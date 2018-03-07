@@ -92,12 +92,12 @@ public class Constants {
         ViewTarget viewTarget = new ViewTarget<ImageView, GlideDrawable>(imageView) {
             @Override
             public void onLoadStarted(Drawable placeholder) {
-                imageView.setImageResource(R.mipmap.ic_launcher);
+//                imageView.setImageResource(R.mipmap.ic_launcher);
             }
 
             @Override
             public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                imageView.setImageResource(R.mipmap.ic_launcher);
+//                imageView.setImageResource(R.mipmap.ic_launcher);
             }
 
             @Override
