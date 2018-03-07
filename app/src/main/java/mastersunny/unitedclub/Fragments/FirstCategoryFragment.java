@@ -81,7 +81,7 @@ public class FirstCategoryFragment extends Fragment implements View.OnClickListe
 
     private void loaData() {
         try {
-            apiInterface.getStoreOffers(categoryDTO.getCategoryId(), Constants.getAccessToken(mActivity))
+            apiInterface.getCategoryOffers(categoryDTO.getCategoryId(), Constants.getAccessToken(mActivity))
                     .enqueue(new Callback<List<StoreOfferDTO>>() {
                         @Override
                         public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {

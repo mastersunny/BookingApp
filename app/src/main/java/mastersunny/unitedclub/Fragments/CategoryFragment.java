@@ -78,7 +78,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
 
     private void loaData() {
         try {
-            apiInterface.getStoreOffers(categoryDTO.getCategoryId(), Constants.accessToken)
+            apiInterface.getCategoryOffers(categoryDTO.getCategoryId(), Constants.accessToken)
                     .enqueue(new Callback<List<StoreOfferDTO>>() {
                         @Override
                         public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
