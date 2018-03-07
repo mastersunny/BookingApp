@@ -26,7 +26,7 @@ import mastersunny.unitedclub.utils.Constants;
  */
 
 public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private String TAG = "StoreOfferAdapter";
+    private String TAG = "StoreOfferAdapterDetails";
 
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private Activity mActivity;
@@ -40,6 +40,7 @@ public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.
         this.storeOfferDTOS = storeOfferDTOS;
         this.storeDTO = storeDTO;
         face = Constants.getMediumFace(mActivity);
+        Constants.debugLog(TAG, storeDTO.toString());
     }
 
     @Override
