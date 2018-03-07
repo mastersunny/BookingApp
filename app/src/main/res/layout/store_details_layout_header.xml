@@ -31,8 +31,7 @@
             android:id="@+id/store_image"
             android:layout_width="100dp"
             android:layout_height="80dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/deli_grocery_m" />
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:id="@+id/follow_layout"
