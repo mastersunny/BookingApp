@@ -3,6 +3,7 @@ package mastersunny.unitedclub.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.ViewTarget;
 
 import java.io.File;
 import java.security.PublicKey;
@@ -84,12 +88,44 @@ public class Constants {
     public static final String CATEGORY_DTO = "category_dto";
     public static final String SEARCH_TYPE = "search_type";
 
-    public static void loadImage(Context context, String imageUrl, ImageView imageView) {
-        Glide.with(context).load(imageUrl)
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(imageView);
+    public static void loadImage(Context context, String imageUrl, final ImageView imageView) {
+        ViewTarget viewTarget = new ViewTarget<ImageView, GlideDrawable>(imageView) {
+            @Override
+            public void onLoadStarted(Drawable placeholder) {
+                imageView.setImageResource(R.mipmap.ic_launcher);
+            }
+
+            @Override
+            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                imageView.setImageResource(R.mipmap.ic_launcher);
+            }
+
+            @Override
+            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                imageView.setImageDrawable(resource.getCurrent());
+            }
+        };
+        Glide.with(imageView.getContext()).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewTarget);
+    }
+
+    public static void loadNormalWay(String url, final ImageView iv) {
+        ViewTarget viewTarget = new ViewTarget<ImageView, GlideDrawable>(iv) {
+            @Override
+            public void onLoadStarted(Drawable placeholder) {
+                iv.setImageResource(R.mipmap.ic_launcher);
+            }
+
+            @Override
+            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                iv.setImageResource(R.mipmap.ic_launcher);
+            }
+
+            @Override
+            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                iv.setImageDrawable(resource.getCurrent());
+            }
+        };
+        Glide.with(iv.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewTarget);
     }
 
     public static void showDialog(Context context, String message) {
