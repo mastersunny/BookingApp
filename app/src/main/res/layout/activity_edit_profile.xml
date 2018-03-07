@@ -12,6 +12,7 @@
         android:src="@drawable/profile_background" />
 
     <mastersunny.unitedclub.utils.CircleImageView
+        android:id="@+id/profile_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
@@ -29,7 +30,7 @@
         app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
 
     <ImageView
-        android:id="@+id/change_cover_image"
+        android:id="@+id/change_profile_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -115,7 +116,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/save_change"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20"

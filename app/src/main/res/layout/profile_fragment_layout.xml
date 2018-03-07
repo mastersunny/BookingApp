@@ -6,8 +6,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/profile_cover_img_height"
-        android:background="@color/item_details">
+        android:layout_height="@dimen/profile_cover_img_height">
+
+        <ImageView
+            android:id="@+id/cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/profile_cover_img_height"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_background" />
 
         <mastersunny.unitedclub.utils.CircleImageView
             android:id="@+id/profile_image"
@@ -36,31 +42,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/margin_20"
             android:text=""
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="@dimen/text_size_18" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_10"
-        android:background="@color/white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin_10"
-            android:text="Your last transactions" />
-
-        <TextView
-            android:id="@+id/view_all_transaction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="@dimen/margin_10"
-            android:text="View All"
-            android:textColor="#006ff1" />
     </RelativeLayout>
 
     <include layout="@layout/progress_layout"></include>
@@ -87,4 +71,3 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
-

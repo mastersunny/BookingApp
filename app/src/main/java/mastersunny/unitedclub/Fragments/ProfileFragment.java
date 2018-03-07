@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import mastersunny.unitedclub.Model.UserDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.utils.CircleImageView;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,10 +54,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private ArrayList<TransactionDTO> transactionDTOS;
     private ProgressBar progressBar;
     protected SwipeRefreshLayout swipeRefresh;
-    protected boolean firstRequest = false;
     protected Handler handler = new Handler();
     private ApiInterface apiInterface;
     private TextView pending_transaction_message, user_name;
+    private UserDTO userDTO;
+    private CircleImageView profile_image;
 
     @Override
     public void onAttach(Context context) {
@@ -85,22 +88,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             apiInterface = ApiClient.getClient().create(ApiInterface.class);
             transactionDTOS = new ArrayList<>();
             initLayout();
-
+            checkNoData();
         }
 
         return view;
     }
 
     private void initLayout() {
+        profile_image = view.findViewById(R.id.profile_image);
         user_name = view.findViewById(R.id.user_name);
-
         pending_transaction_message = view.findViewById(R.id.pending_transaction_message);
         progressBar = view.findViewById(R.id.progressBar);
         swipeRefresh = view.findViewById(R.id.swipeRefresh);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                firstRequest = false;
                 sendInitialRequest();
             }
         });
@@ -112,31 +114,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         transaction_rv.setAdapter(transactionAdapter);
 
         view.findViewById(R.id.edit_profile).setOnClickListener(this);
-        view.findViewById(R.id.view_all_transaction).setOnClickListener(this);
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        if (isVisibleToUser) {
-            sendInitialRequest();
+    public void onResume() {
+        super.onResume();
+        sendInitialRequest();
+    }
+
+    private void updateProfile(UserDTO userDTO) {
+        user_name.setText(userDTO.getFirstName() + " " + userDTO.getLastName());
+        if (!TextUtils.isEmpty(userDTO.getImgUrl())) {
+            String imgUrl = ApiClient.BASE_URL + userDTO.getImgUrl();
+            Constants.loadImage(mActivity, imgUrl, profile_image);
         }
-        super.setUserVisibleHint(isVisibleToUser);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.edit_profile:
-                startActivity(new Intent(mActivity, EditProfileActivity.class));
-                break;
-            case R.id.view_all_transaction:
-                TransactionActivity.start(v.getContext(), new UserDTO());
+                EditProfileActivity.start(v.getContext(), userDTO);
                 break;
         }
     }
 
-    private void updateProfile(UserDTO userDTO) {
-        user_name.setText(userDTO.getFirstName() + " " + userDTO.getLastName());
+    private void checkNoData() {
+        if (transactionDTOS.size() == 0) {
+            pending_transaction_message.setVisibility(View.VISIBLE);
+        } else {
+            pending_transaction_message.setVisibility(View.GONE);
+        }
     }
 
     private void loaData() {
@@ -145,7 +153,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onResponse(Call<RestModel> call, Response<RestModel> response) {
                     if (response != null && response.isSuccessful() && response.body().getMetaData().isData()) {
-                        UserDTO userDTO = response.body().getUserDTO();
+                        userDTO = response.body().getUserDTO();
                         updateProfile(userDTO);
                         Constants.debugLog(TAG, userDTO.toString());
                     }
@@ -183,20 +191,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void checkNoData() {
-        if (transactionDTOS.size() == 0) {
-            pending_transaction_message.setVisibility(View.VISIBLE);
-        } else {
-            pending_transaction_message.setVisibility(View.GONE);
-        }
-    }
-
     public void sendInitialRequest() {
-        if (!firstRequest) {
-            firstRequest = true;
-            swipeRefresh.setRefreshing(true);
-            refreshHandler();
-            loaData();
-        }
+        swipeRefresh.setRefreshing(true);
+        refreshHandler();
+        loaData();
     }
 }

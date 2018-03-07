@@ -11,11 +11,15 @@ import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.Model.UserDTO;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -95,12 +99,22 @@ public interface ApiInterface {
                                                @Query("access_token") String accessToken);
     //Transaction Details
 
-    //Profile update
+    //user details
+    @POST("api/update_client_profile")
+    @FormUrlEncoded
+    Call<RestModel> updateUserInfo(@Field("first_name") String firstName,
+                                   @Field("last_name") String lastName,
+                                   @Field("email") String email,
+                                   @Field("phone_number") String phoneNumber,
+                                   @Field("access_token") String accessToken);
 
+    @Multipart
+    @POST("api/update_client_profile_image")
+    Call<RestModel> updateProfileImage(@Part MultipartBody.Part image, @Part("access_token") RequestBody accessToken);
 
     @GET("api/get_profile")
     Call<RestModel> getProfileDetails(@Query("access_token") String accessToken);
-    //Profile update
+    ///user details
 
 
 }
