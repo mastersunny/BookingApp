@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.Activity.ItemDetailsActivity;
+import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
@@ -25,20 +26,20 @@ import mastersunny.unitedclub.utils.Constants;
  * Created by sunnychowdhury on 1/19/18.
  */
 
-public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private String TAG = "StoreOfferAdapter";
+public class CategoryOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private String TAG = "CategoryOfferAdapterDetails";
 
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private Activity mActivity;
     private Typeface face;
     public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
-    private StoreDTO storeDTO;
+    private CategoryDTO categoryDTO;
 
-    public StoreOfferAdapterDetails(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS, StoreDTO storeDTO) {
+    public CategoryOfferAdapterDetails(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS, CategoryDTO categoryDTO) {
         this.mActivity = mActivity;
         this.storeOfferDTOS = storeOfferDTOS;
-        this.storeDTO = storeDTO;
+        this.categoryDTO = categoryDTO;
         face = Constants.getMediumFace(mActivity);
     }
 
@@ -57,7 +58,7 @@ public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case HEADER_ITEM:
-                if (storeDTO != null) {
+                if (categoryDTO != null) {
                     HeaderHolder headerHolder = (HeaderHolder) holder;
                     headerHolder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
@@ -72,9 +73,9 @@ public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.
                             Toast.makeText(mActivity, "Followed successfully", Toast.LENGTH_LONG).show();
                         }
                     });
-                    String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getImageUrl();
-                    Constants.loadImage(mActivity, imgUrl, headerHolder.store_image);
-                    headerHolder.total_offer.setText(storeDTO.getTotalOffer() + " Offers");
+//                    String imgUrl = ApiClient.BASE_URL + "" + categoryDTO.get();
+//                    Constants.loadImage(mActivity, imgUrl, headerHolder.store_image);
+                    headerHolder.total_offer.setText(categoryDTO.getTotalOffer() + " Offers");
                 }
                 break;
             case MAIN_ITEM:
@@ -98,10 +99,6 @@ public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.
                 break;
         }
 
-    }
-
-    public void setStoreDTO(StoreDTO storeDTO) {
-        this.storeDTO = storeDTO;
     }
 
     @Override

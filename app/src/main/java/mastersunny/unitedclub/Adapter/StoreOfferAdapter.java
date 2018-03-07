@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import mastersunny.unitedclub.Activity.CategoryDetailsActivity;
 import mastersunny.unitedclub.Activity.ItemDetailsActivity;
+import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
@@ -31,11 +33,13 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Typeface face;
     public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
+    private int categoryId;
 
-    public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS) {
+    public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS, int categoryId) {
         this.mActivity = mActivity;
         this.storeOfferDTOS = storeOfferDTOS;
         face = Constants.getMediumFace(mActivity);
+        this.categoryId = categoryId;
     }
 
     @Override
@@ -55,10 +59,11 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case HEADER_ITEM:
                 HeaderHolder headerHolder = (HeaderHolder) holder;
                 headerHolder.itemView.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
-
+                        CategoryDTO categoryDTO = new CategoryDTO();
+                        categoryDTO.setCategoryId(categoryId);
+                        CategoryDetailsActivity.start(v.getContext(), categoryDTO);
                     }
                 });
                 break;

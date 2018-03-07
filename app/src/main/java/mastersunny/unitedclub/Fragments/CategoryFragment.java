@@ -78,7 +78,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
 
     private void loaData() {
         try {
-            apiInterface.getStoreOffers(categoryDTO.getCategoryId(), Constants.getAccessToken(mActivity))
+            apiInterface.getStoreOffers(categoryDTO.getCategoryId(), Constants.accessToken)
                     .enqueue(new Callback<List<StoreOfferDTO>>() {
                         @Override
                         public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
@@ -109,7 +109,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setHasFixedSize(true);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapter(mActivity, storeOfferDTOS);
+        storeOfferAdapter = new StoreOfferAdapter(mActivity, storeOfferDTOS, categoryDTO.getCategoryId());
         most_used_rv.setAdapter(storeOfferAdapter);
     }
 

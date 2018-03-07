@@ -10,43 +10,49 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import mastersunny.unitedclub.Adapter.CategoryOfferAdapterDetails;
 import mastersunny.unitedclub.Adapter.PagerAdapter;
 import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
+import mastersunny.unitedclub.Adapter.StoreOfferAdapterDetails;
 import mastersunny.unitedclub.Model.CategoryDTO;
+import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class CategoryDetailsActivity extends AppCompatActivity {
+public class CategoryDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public String TAG = "StoresDetailsActivity";
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private Toolbar toolbar;
-    private PagerAdapter pagerAdapter;
-    private CategoryDTO categoryDTO;
-    private TextView total_offer;
-    private ImageView store_image;
-    private TextView store_name;
-    private StoreOfferAdapter storeOfferAdapter;
+    public String TAG = "CategoryDetailsActivity";
+    private CategoryOfferAdapterDetails storeOfferAdapter;
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private RecyclerView offer_rv;
+    private ApiInterface apiInterface;
+    private CategoryDTO categoryDTO;
+    private TextView store_name;
 
     public static void start(Context context, CategoryDTO categoryDTO) {
         Intent intent = new Intent(context, CategoryDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.STORE_DTO, categoryDTO);
+        intent.putExtra(Constants.CATEGORY_DTO, categoryDTO);
         context.startActivity(intent);
     }
 
     private void getIntentData() {
-        categoryDTO = (CategoryDTO) getIntent().getSerializableExtra(Constants.STORE_DTO);
+        categoryDTO = (CategoryDTO) getIntent().getSerializableExtra(Constants.CATEGORY_DTO);
     }
 
     @Override
@@ -55,89 +61,24 @@ public class CategoryDetailsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_stores_details);
 
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
         storeOfferDTOS = new ArrayList<>();
+
         getIntentData();
         initLayout();
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        setUpTabLayout(savedInstanceState);
-        if (categoryDTO != null && categoryDTO.getCategoryId() > 0) {
-            updateStoreInfo();
-            loadData();
-        }
-    }
-
-    private void updateStoreInfo() {
+        loadData();
         store_name.setText(categoryDTO.getCategoryName());
-//        String imgUrl = ApiClient.BASE_URL + "" + categoryDTO.getBannerImg();
-//        Constants.loadImage(this, imgUrl, store_image);
     }
-
 
     private void initLayout() {
-        toolbar = findViewById(R.id.toolbar);
-//        tabLayout = findViewById(R.id.tabLayout);
-//        viewPager = findViewById(R.id.viewPager);
-
-        total_offer = findViewById(R.id.total_offer);
-        store_image = findViewById(R.id.store_image);
-        store_name = findViewById(R.id.store_name);
-
-        for (int i = 0; i < 10; i++) {
-            StoreOfferDTO storeOfferDTO = new StoreOfferDTO();
-            storeOfferDTOS.add(storeOfferDTO);
-        }
-
         offer_rv = findViewById(R.id.offer_rv);
         offer_rv.setHasFixedSize(true);
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapter(CategoryDetailsActivity.this, storeOfferDTOS);
+        storeOfferAdapter = new CategoryOfferAdapterDetails(this, storeOfferDTOS, categoryDTO);
         offer_rv.setAdapter(storeOfferAdapter);
-    }
 
-    /*private void setUpTabLayout(Bundle savedInstanceState) {
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new MostUsedFragment(), "All");
-            pagerAdapter.addFragment(new MostUsedFragment(), "Coupons");
-            pagerAdapter.addFragment(new MostUsedFragment(), "Offers");
-        } else {
-            Integer count = savedInstanceState.getInt("tabsCount");
-            String[] titles = savedInstanceState.getStringArray("titles");
-            for (int i = 0; i < count; i++) {
-                pagerAdapter.addFragment(getFragment(i, savedInstanceState), titles[i]);
-            }
-        }
-
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-    }*/
-
-    private Fragment getFragment(int position, Bundle savedInstanceState) {
-        return savedInstanceState == null ? pagerAdapter.getItem(position) : getSupportFragmentManager().findFragmentByTag(getFragmentTag(position));
-    }
-
-    private String getFragmentTag(int position) {
-        String tag = "android:switcher:" + R.id.viewPager + ":" + position;
-        return tag;
+        findViewById(R.id.back_button).setOnClickListener(this);
+        store_name = findViewById(R.id.store_name);
     }
 
     @Override
@@ -147,23 +88,40 @@ public class CategoryDetailsActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-//        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-//        Call<List<StoreOfferDTO>> call = apiService.getStoreOffers(storeDTO.getStoreId());
-//        call.enqueue(new Callback<List<StoreOfferDTO>>() {
-//            @Override
-//            public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
-//                if (response.body() != null) {
-//                    for (StoreOfferDTO storeOfferDTO : response.body()) {
-//                        storeOfferDTOS.add(storeOfferDTO);
-//                    }
-//                    storeOfferAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
-//
-//            }
-//        });
+        try {
+            apiInterface.getStoreOffers(categoryDTO.getCategoryId(), Constants.accessToken)
+                    .enqueue(new Callback<List<StoreOfferDTO>>() {
+                        @Override
+                        public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
+                            Constants.debugLog(TAG, "" + response);
+                            if (response.isSuccessful() && response.body() != null) {
+                                Constants.debugLog(TAG, "" + response.body());
+                                storeOfferDTOS.addAll(response.body());
+                                if (storeOfferAdapter != null) {
+                                    storeOfferAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
+                            Constants.debugLog(TAG, "" + t.getMessage());
+                        }
+                    });
+        } catch (Exception e) {
+            Constants.debugLog(TAG, "" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back_button:
+                CategoryDetailsActivity.this.finish();
+                break;
+            case R.id.follow_layout:
+                Toast.makeText(CategoryDetailsActivity.this, "Followed successfully", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }
