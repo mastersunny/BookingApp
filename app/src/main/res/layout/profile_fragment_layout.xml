@@ -47,6 +47,28 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_10"
+            android:text="Your last transactions" />
+
+        <TextView
+            android:id="@+id/view_all_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/margin_10"
+            android:text="View All"
+            android:textColor="#006ff1" />
+    </RelativeLayout>
+
     <include layout="@layout/progress_layout"></include>
 
     <TextView
