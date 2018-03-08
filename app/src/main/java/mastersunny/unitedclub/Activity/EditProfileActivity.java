@@ -2,6 +2,7 @@ package mastersunny.unitedclub.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,10 +23,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +69,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
+    private ProgressBar progressBar;
 
     public static void start(Context context, UserDTO userDTO) {
         Intent intent = new Intent(context, EditProfileActivity.class);
@@ -94,6 +98,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initLayout() {
+        progressBar = findViewById(R.id.progressBar);
         save_change = findViewById(R.id.save_change);
         save_change.setOnClickListener(this);
         first_name = findViewById(R.id.first_name);
@@ -190,23 +195,28 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             return;
         }
         try {
+            progressBar.setVisibility(View.VISIBLE);
             apiInterface.updateUserInfo(firstName, lastName, emailAddress,
                     userDTO.getPhoneNumber(), Constants.accessToken).enqueue(new Callback<RestModel>() {
                 @Override
                 public void onResponse(Call<RestModel> call, Response<RestModel> response) {
+                    progressBar.setVisibility(View.GONE);
                     Constants.debugLog(TAG, response + "");
                     if (response != null && response.isSuccessful() && response.body().getMetaData().isData()) {
                         userDTO = response.body().getUserDTO();
                         updateInfo();
+                        Toast.makeText(EditProfileActivity.this, "Profile has been updated", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RestModel> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
                     Constants.debugLog(TAG, t.getMessage());
                 }
             });
         } catch (Exception e) {
+            progressBar.setVisibility(View.GONE);
             Constants.debugLog(TAG, e.getMessage());
         }
     }
@@ -219,15 +229,15 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void showPhotoChooserDialog() {
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditProfileActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.photo_choose_options, null);
-        alertDialog.setView(view);
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.photo_choose_options);
 
-        TextView take_photo = view.findViewById(R.id.take_photo);
+        TextView take_photo = dialog.findViewById(R.id.take_photo);
         take_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.dismiss();
                 if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
                     return;
                 }
@@ -237,17 +247,18 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         });
-        TextView browse_photo = view.findViewById(R.id.browse_photo);
+        TextView browse_photo = dialog.findViewById(R.id.browse_photo);
         browse_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.dismiss();
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent, PICK_IMAGE);
 
             }
         });
-        alertDialog.show();
+        dialog.show();
     }
 
     @Override

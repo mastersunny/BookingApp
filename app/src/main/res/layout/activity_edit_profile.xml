@@ -135,4 +135,6 @@
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <include layout="@layout/progress_layout" />
 </RelativeLayout>
