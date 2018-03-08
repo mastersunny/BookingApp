@@ -60,6 +60,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private UserDTO userDTO;
     private Button save_change;
     private ApiInterface apiInterface;
+    int PERMISSION_ALL = 1001;
+    String[] PERMISSIONS = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
 
     public static void start(Context context, UserDTO userDTO) {
         Intent intent = new Intent(context, EditProfileActivity.class);
@@ -114,15 +119,15 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private static void requestPermission(final Context context) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+    private void requestPermission(final Context context) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.CAMERA)) {
             new AlertDialog.Builder(context)
                     .setMessage(context.getResources().getString(R.string.permission_storage))
                     .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                    Constants.REQUEST_WRITE_EXTERNAL_STORAGE);
+                            ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, PERMISSION_ALL);
                         }
                     })
                     .setNegativeButton("no", new DialogInterface.OnClickListener() {
@@ -133,21 +138,19 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     }).show();
 
         } else {
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    Constants.REQUEST_WRITE_EXTERNAL_STORAGE);
+            ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, PERMISSION_ALL);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode != Constants.REQUEST_WRITE_EXTERNAL_STORAGE) {
+        if (requestCode != PERMISSION_ALL && requestCode != RESULT_OK) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             return;
         }
 
-        if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
             showPhotoChooserDialog();
-            return;
         }
     }
 
@@ -160,13 +163,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 EditProfileActivity.this.finish();
                 break;
             case R.id.change_phone_number:
-                startActivity(new Intent(EditProfileActivity.this, ChangePasswordActivity.class));
+                startActivity(new Intent(EditProfileActivity.this, ChangePhoneActivity.class));
                 break;
             case R.id.change_profile_image:
-                if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    showPhotoChooserDialog();
-                } else {
+                if (!hasPermissions(this, PERMISSIONS)) {
                     requestPermission(this);
+                } else {
+                    showPhotoChooserDialog();
                 }
                 break;
             case R.id.save_change:
@@ -280,7 +283,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             apiInterface.updateProfileImage(image, accessToken).enqueue(new Callback<RestModel>() {
                 @Override
                 public void onResponse(Call<RestModel> call, Response<RestModel> response) {
-                    if (response != null && response.isSuccessful() && response.body() != null) {
+                    if (response != null && response.isSuccessful() && response.body() != null &&
+                            response.body().getMetaData().isData()) {
                         Constants.debugLog(TAG, response.body().getUserDTO().toString());
                         Constants.loadImage(EditProfileActivity.this, ApiClient.BASE_URL + response.body().getUserDTO().getImgUrl(),
                                 profile_image);
@@ -299,5 +303,16 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     private void loadData() {
 
+    }
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

@@ -7,7 +7,7 @@ import android.view.WindowManager;
 
 import mastersunny.unitedclub.R;
 
-public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class ChangePhoneActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_button:
-                ChangePasswordActivity.this.finish();
+                ChangePhoneActivity.this.finish();
                 break;
         }
     }
