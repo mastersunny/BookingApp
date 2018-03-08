@@ -55,7 +55,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private TextView first_name, last_name, email;
     private ImageView change_profile_image;
     private CircleImageView profile_image;
-    public static final int PICK_IMAGE = 1;
+    public static final int REQUEST_IMAGE_CAPTURE = 1;
+    public static final int PICK_IMAGE = 2;
     private String TAG = "EditProfileActivity";
     private UserDTO userDTO;
     private Button save_change;
@@ -228,9 +229,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View view) {
                 if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-
+                    return;
                 }
 
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
             }
         });
         TextView browse_photo = view.findViewById(R.id.browse_photo);
@@ -284,8 +289,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 @Override
                 public void onResponse(Call<RestModel> call, Response<RestModel> response) {
                     if (response != null && response.isSuccessful() && response.body() != null &&
-                            response.body().getMetaData().isData()) {
-                        Constants.debugLog(TAG, response.body().getUserDTO().toString());
+                            response.body().getMetaData().isSuccess()) {
+                        Constants.debugLog(TAG, response.body().getMetaData().toString());
                         Constants.loadImage(EditProfileActivity.this, ApiClient.BASE_URL + response.body().getUserDTO().getImgUrl(),
                                 profile_image);
                     }
