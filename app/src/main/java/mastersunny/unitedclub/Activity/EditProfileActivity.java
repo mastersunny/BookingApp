@@ -231,6 +231,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private void showPhotoChooserDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         dialog.setContentView(R.layout.photo_choose_options);
 
         TextView take_photo = dialog.findViewById(R.id.take_photo);
