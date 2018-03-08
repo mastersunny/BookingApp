@@ -61,7 +61,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 holder.paid_status.setText("Paid");
                 holder.paid_status.setTextColor(colorGreen);
             } else {
-                holder.paid_status.setText("Unpaid");
+                holder.paid_status.setText("Due");
                 holder.paid_status.setTextColor(colorRed);
             }
             holder.paid_status.setTypeface(face);
