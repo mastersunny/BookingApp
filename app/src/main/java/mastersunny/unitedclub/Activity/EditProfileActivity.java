@@ -231,7 +231,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
                     return;
                 }
-
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -262,6 +261,30 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 FileOutputStream out = null;
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    out = new FileOutputStream(destFile);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 30, out);
+                    sendToServer(destFile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (out != null) {
+                            out.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            if (resultData != null) {
+                String rootPath = Constants.getRootDirectory();
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                File destFile = new File(rootPath + File.separator + timestamp + ".jpg");
+                FileOutputStream out = null;
+                try {
+                    Bundle extras = resultData.getExtras();
+                    Bitmap bitmap = (Bitmap) extras.get("data");
                     out = new FileOutputStream(destFile);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 30, out);
                     sendToServer(destFile);
