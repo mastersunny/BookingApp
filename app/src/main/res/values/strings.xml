@@ -70,7 +70,7 @@
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="tap_and_save">Tap &amp; Save</string>
     <string name="scan_barcode_button">Scan barcode</string>
-    <string name="no_barcode_captured">No barcode captured</string>
+    <string name="no_barcode_captured">No QR code captured</string>
     <string name="barcode_error_format">"Error reading barcode: %1$s"</string>
     <string name="change_phone_number">Looking to change phone number?</string>
     <string name="permission_storage">You need storage and camera permission</string>
