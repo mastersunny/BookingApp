@@ -41,4 +41,17 @@
         android:padding="@dimen/margin_10"
         app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/preview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_20"
+        android:gravity="center"
+        android:padding="@dimen/margin_10"
+        android:text="Scan your store and save more"
+        android:textColor="@android:color/black" />
+
 </RelativeLayout>
