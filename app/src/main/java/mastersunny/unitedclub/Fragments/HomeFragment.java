@@ -264,13 +264,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 if (data != null) {
                     Barcode barCode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     Log.d(TAG, "" + barCode.displayValue);
-                    StoreDTO storeDTO = new StoreDTO();
-                    storeDTO.setStoreName(barCode.displayValue);
-                    StoresDetailsActivity.start(mActivity, storeDTO);
+                    getStoreByCode(barCode.displayValue);
                 } else {
                     Toast.makeText(mActivity, R.string.no_barcode_captured, Toast.LENGTH_SHORT).show();
                 }
             }
+        }
+    }
+
+    private void getStoreByCode(String QRCode) {
+        try {
+            apiService.getStoreByCode(QRCode, Constants.accessToken).enqueue(new Callback<StoreDTO>() {
+                @Override
+                public void onResponse(Call<StoreDTO> call, Response<StoreDTO> response) {
+                    if (response != null && response.body() != null) {
+                        Constants.debugLog(TAG, response.body().toString());
+                        StoresDetailsActivity.start(mActivity, response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<StoreDTO> call, Throwable t) {
+                    Constants.debugLog(TAG, t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
         }
     }
 
