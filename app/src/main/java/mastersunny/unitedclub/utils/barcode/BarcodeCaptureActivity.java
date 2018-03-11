@@ -21,6 +21,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -52,6 +54,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
 
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
+    private ImageView back_button;
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -61,7 +64,14 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
         super.onCreate(icicle);
         setContentView(R.layout.barcode_capture);
 
-        mPreview = (CameraSourcePreview) findViewById(R.id.preview);
+        mPreview = findViewById(R.id.preview);
+        back_button = findViewById(R.id.back_button);
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         boolean autoFocus = true;
         boolean useFlash = false;
