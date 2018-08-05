@@ -174,7 +174,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         recommendedAdapter = new RecommendedAdapter(mActivity, roomDTOList);
         recommended_rv.setAdapter(recommendedAdapter);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 4; i++) {
             OfferDTO roomDTO = new OfferDTO();
             roomDTO.setId(i);
             offerDTOS.add(roomDTO);
