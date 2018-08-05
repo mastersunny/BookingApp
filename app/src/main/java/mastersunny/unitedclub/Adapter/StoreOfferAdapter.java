@@ -7,14 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Activity.CategoryDetailsActivity;
-import mastersunny.unitedclub.Activity.ItemDetailsActivity;
+import mastersunny.unitedclub.activities.CategoryDetailsActivity;
+import mastersunny.unitedclub.activities.ItemDetailsActivity;
 import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;

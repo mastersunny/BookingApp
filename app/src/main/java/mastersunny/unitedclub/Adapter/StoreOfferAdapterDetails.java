@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Activity.ItemDetailsActivity;
+import mastersunny.unitedclub.activities.ItemDetailsActivity;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;

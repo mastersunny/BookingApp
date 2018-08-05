@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.asksira.loopingviewpager.LoopingPagerAdapter;
 import com.asksira.loopingviewpager.LoopingViewPager;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -29,10 +28,9 @@ import com.google.android.gms.vision.barcode.Barcode;
 import java.util.ArrayList;
 import java.util.List;
 
-import mastersunny.unitedclub.Activity.ItemDetailsActivity;
-import mastersunny.unitedclub.Activity.StoresActivity;
-import mastersunny.unitedclub.Activity.SearchActivity;
-import mastersunny.unitedclub.Activity.StoresDetailsActivity;
+import mastersunny.unitedclub.activities.StoresActivity;
+import mastersunny.unitedclub.activities.SearchActivity;
+import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.Adapter.AutoScrollAdapter;
 import mastersunny.unitedclub.Adapter.CategoryPagerAdapter;
 import mastersunny.unitedclub.Adapter.PopularAdapter;
@@ -47,8 +45,6 @@ import mastersunny.unitedclub.utils.barcode.BarcodeCaptureActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 /**

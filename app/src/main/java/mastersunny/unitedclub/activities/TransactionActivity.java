@@ -1,4 +1,4 @@
-package mastersunny.unitedclub.Activity;
+package mastersunny.unitedclub.activities;
 
 import android.content.Context;
 import android.content.Intent;

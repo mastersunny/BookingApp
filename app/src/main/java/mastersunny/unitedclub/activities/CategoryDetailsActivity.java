@@ -1,18 +1,13 @@
-package mastersunny.unitedclub.Activity;
+package mastersunny.unitedclub.activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mastersunny.unitedclub.Adapter.CategoryOfferAdapterDetails;
-import mastersunny.unitedclub.Adapter.PagerAdapter;
-import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
-import mastersunny.unitedclub.Adapter.StoreOfferAdapterDetails;
 import mastersunny.unitedclub.Model.CategoryDTO;
-import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;

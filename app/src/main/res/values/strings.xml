@@ -83,4 +83,9 @@
     <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
     <string name="view_all">View All</string>
     <string name="check_network">Please check your network</string>
+
+    //facebook strings
+    <string name="FACEBOOK_APP_ID">373256413157863</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">b4c5b6707b2fbb74569675ebac3e149e</string>
+
 </resources>

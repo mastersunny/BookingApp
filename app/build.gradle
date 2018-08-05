@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.inflack.unitedclub"
+        applicationId "com.inflack.rooms"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
@@ -38,5 +38,6 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:11.8.0'
     implementation 'com.asksira.android:loopingviewpager:1.1.0'
     implementation 'com.hbb20:ccp:2.1.4'
+    implementation 'com.facebook.android:account-kit-sdk:4.+'
 }
 apply plugin: 'com.google.gms.google-services'

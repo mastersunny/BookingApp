@@ -2,7 +2,6 @@ package mastersunny.unitedclub.Adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Activity.ItemDetailsActivity;
-import mastersunny.unitedclub.Activity.StoresDetailsActivity;
+import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;

@@ -18,6 +18,18 @@
         android:theme="@style/AppTheme">
 
         <meta-data
+            android:name="com.facebook.accountkit.ApplicationName"
+            android:value="@string/app_name" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/FACEBOOK_APP_ID" />
+
+        <meta-data
+            android:name="com.facebook.accountkit.ClientToken"
+            android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
+
+        <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/united_icon" />
 
@@ -26,7 +38,7 @@
             android:resource="@color/colorAccent" />
 
         <activity
-            android:name=".Activity.SplashActivity"
+            android:name=".activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -35,37 +47,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.facebook.accountkit.ui.AccountKitActivity" />
+
         <activity
-            android:name=".Activity.ItemDetailsActivity"
+            android:name=".activities.ItemDetailsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".Activity.HomeActivity"
+            android:name=".activities.HomeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.MerchantMainActivity"
+            android:name=".activities.MerchantMainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".Activity.StoresActivity" />
+        <activity android:name=".activities.StoresActivity" />
         <activity
-            android:name=".Activity.ScrollingActivity"
+            android:name=".activities.ScrollingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_scrolling"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Activity.SearchActivity"
+            android:name=".activities.SearchActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.StoresDetailsActivity"
+            android:name=".activities.StoresDetailsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.CategoryDetailsActivity"
+            android:name=".activities.CategoryDetailsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
@@ -73,15 +88,15 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.TransactionActivity"
+            android:name=".activities.TransactionActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.ChangePhoneActivity" />
-        <activity android:name=".Activity.EditProfileActivity" />
-        <activity android:name=".Activity.MobileVerificationActivity" />
-        <activity android:name=".Activity.MobileLoginActivity" />
-        <activity android:name=".Activity.RegistrationActivity"></activity>
-        <activity android:name=".Activity.TransactionDetailsActivity"/>
+        <activity android:name=".activities.ChangePhoneActivity" />
+        <activity android:name=".activities.EditProfileActivity" />
+        <activity android:name=".activities.MobileVerificationActivity" />
+        <activity android:name=".activities.MobileLoginActivity" />
+        <activity android:name=".activities.RegistrationActivity"></activity>
+        <activity android:name=".activities.TransactionDetailsActivity" />
 
         <!-- Firebase Notifications -->
         <service android:name=".services.MyFirebaseMessagingService">

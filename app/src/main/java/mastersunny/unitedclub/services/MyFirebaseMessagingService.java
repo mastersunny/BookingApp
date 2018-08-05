@@ -6,21 +6,17 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import mastersunny.unitedclub.Activity.MobileLoginActivity;
-import mastersunny.unitedclub.Activity.TransactionDetailsActivity;
-import mastersunny.unitedclub.Model.StoreOfferDTO;
+import mastersunny.unitedclub.activities.TransactionDetailsActivity;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 import mastersunny.unitedclub.utils.NotificationUtils;

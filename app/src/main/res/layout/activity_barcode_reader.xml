@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/margin_10"
-    tools:context="mastersunny.unitedclub.Activity.BarcodeReaderActivity">
+    tools:context="mastersunny.unitedclub.activities.BarcodeReaderActivity">
 
     <TextView
         android:id="@+id/startReading"

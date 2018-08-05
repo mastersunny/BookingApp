@@ -1,11 +1,10 @@
-package mastersunny.unitedclub.Activity;
+package mastersunny.unitedclub.activities;
 
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;

@@ -1,17 +1,15 @@
-package mastersunny.unitedclub.Activity;
+package mastersunny.unitedclub.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import mastersunny.unitedclub.Model.AccessModel;
 import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.Model.UserDTO;
 import mastersunny.unitedclub.R;

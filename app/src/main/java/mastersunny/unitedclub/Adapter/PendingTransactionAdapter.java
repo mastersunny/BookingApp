@@ -10,12 +10,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Activity.TransactionDetailsActivity;
+import mastersunny.unitedclub.activities.TransactionDetailsActivity;
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
-import mastersunny.unitedclub.utils.Constants;
 
 /**
  * Created by sunnychowdhury on 1/19/18.

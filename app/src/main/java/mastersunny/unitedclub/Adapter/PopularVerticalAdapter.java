@@ -1,7 +1,6 @@
 package mastersunny.unitedclub.Adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Activity.StoresDetailsActivity;
-import mastersunny.unitedclub.Model.PopularDTO;
+import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
