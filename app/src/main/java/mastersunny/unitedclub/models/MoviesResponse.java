@@ -1,9 +1,8 @@
-package mastersunny.unitedclub.Model;
+package mastersunny.unitedclub.models;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ASUS on 1/20/2018.

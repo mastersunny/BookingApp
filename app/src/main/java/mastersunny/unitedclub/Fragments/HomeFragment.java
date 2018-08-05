@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,17 +27,23 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import mastersunny.unitedclub.activities.StoresActivity;
 import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.adapters.AutoScrollAdapter;
 import mastersunny.unitedclub.adapters.CategoryPagerAdapter;
 import mastersunny.unitedclub.adapters.NearbyPlaceAdapter;
-import mastersunny.unitedclub.Model.CategoryDTO;
-import mastersunny.unitedclub.Model.SliderDTO;
-import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.adapters.RecommendedAdapter;
+import mastersunny.unitedclub.models.CategoryDTO;
+import mastersunny.unitedclub.models.RoomDTO;
+import mastersunny.unitedclub.models.SliderDTO;
+import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -71,6 +78,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ApiInterface apiService;
     private ArrayList<CategoryDTO> categoryDTOS;
 
+
+    private Unbinder unbinder;
+
+    @BindView(R.id.recommended_rv)
+    RecyclerView recommended_rv;
+    private List<RoomDTO> roomDTOList;
+    private RecommendedAdapter recommendedAdapter;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -82,6 +97,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.home_fragment_layout, container, false);
+            unbinder = ButterKnife.bind(this, view);
+
+            roomDTOList = new ArrayList<>();
+
             apiService = ApiClient.getClient().create(ApiInterface.class);
             storeDTOS = new ArrayList<>();
             autoScrollList = new ArrayList<>();
@@ -95,9 +114,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 //            loadData();
 
+
+
         }
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     private void loadData() {
@@ -226,12 +253,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             storeDTOS.add(storeDTO);
         }
 
-        popular_rv = view.findViewById(R.id.popular_rv);
+        popular_rv = view.findViewById(R.id.nearby_rv);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         nearbyPlaceAdapter = new NearbyPlaceAdapter(mActivity, storeDTOS);
         popular_rv.setAdapter(nearbyPlaceAdapter);
 
         view.findViewById(R.id.search_layout).setOnClickListener(this);
+
+
+        for (int i = 0; i < 10; i++) {
+            RoomDTO roomDTO = new RoomDTO();
+            roomDTO.setId(i);
+            roomDTO.setName("name");
+            roomDTOList.add(roomDTO);
+        }
+        recommended_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayout.HORIZONTAL, false));
+        recommendedAdapter = new RecommendedAdapter(mActivity, roomDTOList);
+        recommended_rv.setAdapter(recommendedAdapter);
     }
 
     @Override

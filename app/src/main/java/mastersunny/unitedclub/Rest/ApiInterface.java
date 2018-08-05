@@ -2,15 +2,14 @@ package mastersunny.unitedclub.Rest;
 
 import java.util.List;
 
-import mastersunny.unitedclub.Model.AccessModel;
-import mastersunny.unitedclub.Model.CategoryDTO;
-import mastersunny.unitedclub.Model.MoviesResponse;
-import mastersunny.unitedclub.Model.RestModel;
-import mastersunny.unitedclub.Model.SliderDTO;
-import mastersunny.unitedclub.Model.StoreDTO;
-import mastersunny.unitedclub.Model.StoreOfferDTO;
-import mastersunny.unitedclub.Model.TransactionDTO;
-import mastersunny.unitedclub.Model.UserDTO;
+import mastersunny.unitedclub.models.AccessModel;
+import mastersunny.unitedclub.models.CategoryDTO;
+import mastersunny.unitedclub.models.MoviesResponse;
+import mastersunny.unitedclub.models.RestModel;
+import mastersunny.unitedclub.models.SliderDTO;
+import mastersunny.unitedclub.models.StoreDTO;
+import mastersunny.unitedclub.models.StoreOfferDTO;
+import mastersunny.unitedclub.models.TransactionDTO;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;

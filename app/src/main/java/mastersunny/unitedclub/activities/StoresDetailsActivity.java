@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mastersunny.unitedclub.adapters.StoreOfferAdapterDetails;
-import mastersunny.unitedclub.Model.StoreDTO;
-import mastersunny.unitedclub.Model.StoreOfferDTO;
+import mastersunny.unitedclub.models.StoreDTO;
+import mastersunny.unitedclub.models.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;

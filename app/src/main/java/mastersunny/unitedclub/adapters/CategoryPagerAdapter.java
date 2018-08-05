@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import mastersunny.unitedclub.Fragments.CategoryFragment;
 import mastersunny.unitedclub.Fragments.FirstCategoryFragment;
-import mastersunny.unitedclub.Model.CategoryDTO;
+import mastersunny.unitedclub.models.CategoryDTO;
 
 /**
  * Created by sunnychowdhury on 1/19/18.

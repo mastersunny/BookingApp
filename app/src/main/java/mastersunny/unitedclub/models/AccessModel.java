@@ -1,18 +1,21 @@
-package mastersunny.unitedclub.Model;
+package mastersunny.unitedclub.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
- * Created by ASUS on 3/4/2018.
+ * Created by ASUS on 2/19/2018.
  */
 
-public class MetaData {
+public class AccessModel implements Serializable {
+
     @SerializedName("success")
     private boolean success;
     @SerializedName("message")
     private String message;
-    @SerializedName("data")
-    private boolean data;
+    @SerializedName("access_token")
+    private String accessToken;
 
     public boolean isSuccess() {
         return success;
@@ -30,20 +33,20 @@ public class MetaData {
         this.message = message;
     }
 
-    public boolean isData() {
-        return data;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setData(boolean data) {
-        this.data = data;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     @Override
     public String toString() {
-        return "MetaData{" +
+        return "AccessModel{" +
                 "success=" + success +
                 ", message='" + message + '\'' +
-                ", data=" + data +
+                ", accessToken='" + accessToken + '\'' +
                 '}';
     }
 }

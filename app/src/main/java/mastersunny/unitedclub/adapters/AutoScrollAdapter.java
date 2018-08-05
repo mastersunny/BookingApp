@@ -10,8 +10,8 @@ import com.asksira.loopingviewpager.LoopingPagerAdapter;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
-import mastersunny.unitedclub.Model.SliderDTO;
-import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.models.SliderDTO;
+import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.utils.Constants;

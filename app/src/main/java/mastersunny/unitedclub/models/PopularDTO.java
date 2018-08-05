@@ -1,4 +1,4 @@
-package mastersunny.unitedclub.Model;
+package mastersunny.unitedclub.models;
 
 /**
  * Created by ASUS on 1/21/2018.

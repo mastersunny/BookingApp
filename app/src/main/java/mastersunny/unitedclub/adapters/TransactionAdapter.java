@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Model.TransactionDTO;
+import mastersunny.unitedclub.models.TransactionDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.utils.Constants;

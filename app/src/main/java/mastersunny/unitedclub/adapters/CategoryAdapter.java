@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.activities.CategoryDetailsActivity;
-import mastersunny.unitedclub.Model.CategoryDTO;
+import mastersunny.unitedclub.models.CategoryDTO;
 import mastersunny.unitedclub.R;
 
 /**

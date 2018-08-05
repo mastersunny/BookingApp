@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 import mastersunny.unitedclub.activities.CategoryDetailsActivity;
 import mastersunny.unitedclub.activities.ItemDetailsActivity;
-import mastersunny.unitedclub.Model.CategoryDTO;
-import mastersunny.unitedclub.Model.StoreOfferDTO;
+import mastersunny.unitedclub.models.CategoryDTO;
+import mastersunny.unitedclub.models.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.utils.Constants;

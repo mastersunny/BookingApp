@@ -1,4 +1,4 @@
-package mastersunny.unitedclub.Model;
+package mastersunny.unitedclub.models;
 
 import com.google.gson.annotations.SerializedName;
 

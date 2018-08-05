@@ -88,4 +88,6 @@
     <string name="FACEBOOK_APP_ID">373256413157863</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">b4c5b6707b2fbb74569675ebac3e149e</string>
 
+    <string name="recommended_text">Recommended to you</string>
+
 </resources>

@@ -18,8 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import mastersunny.unitedclub.Listener.ClickListener;
-import mastersunny.unitedclub.Model.RestModel;
-import mastersunny.unitedclub.Model.StoreOfferDTO;
+import mastersunny.unitedclub.models.RestModel;
+import mastersunny.unitedclub.models.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;

@@ -22,7 +22,7 @@ import mastersunny.unitedclub.adapters.PagerAdapter;
 import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
-import mastersunny.unitedclub.Model.AccessModel;
+import mastersunny.unitedclub.models.AccessModel;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;

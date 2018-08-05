@@ -10,8 +10,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import mastersunny.unitedclub.Model.RestModel;
-import mastersunny.unitedclub.Model.UserDTO;
+import mastersunny.unitedclub.models.RestModel;
+import mastersunny.unitedclub.models.UserDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mastersunny.unitedclub.adapters.PopularVerticalAdapter;
-import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;

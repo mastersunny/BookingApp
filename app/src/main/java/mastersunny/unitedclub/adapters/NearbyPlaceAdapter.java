@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mastersunny.unitedclub.activities.StoresDetailsActivity;
-import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.activities.StoresDetailsActivity;
+import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.utils.Constants;
 
 /**
@@ -36,10 +36,10 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public MainHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == HEADER_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nearby_item_header, parent, false);
-            return new MainHolder(view);
+            return new HeaderHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nearby_item_layout, parent, false);
             return new MainHolder(view);
@@ -92,6 +92,15 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public MainHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+    }
+
+    static class HeaderHolder extends RecyclerView.ViewHolder {
+
+        private TextView view_all;
+
+        public HeaderHolder(View itemView) {
+            super(itemView);
         }
     }
 }

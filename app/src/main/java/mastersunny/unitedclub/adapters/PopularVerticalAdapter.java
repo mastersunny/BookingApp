@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
-import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 

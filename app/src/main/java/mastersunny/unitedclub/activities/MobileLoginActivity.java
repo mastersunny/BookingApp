@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 
 import com.hbb20.CountryCodePicker;
 
-import mastersunny.unitedclub.Model.RestModel;
+import mastersunny.unitedclub.models.RestModel;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;

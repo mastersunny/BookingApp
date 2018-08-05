@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mastersunny.unitedclub.adapters.TransactionAdapter;
-import mastersunny.unitedclub.Model.TransactionDTO;
+import mastersunny.unitedclub.models.TransactionDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;

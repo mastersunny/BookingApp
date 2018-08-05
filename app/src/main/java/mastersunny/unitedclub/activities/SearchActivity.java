@@ -12,8 +12,8 @@ import android.view.WindowManager;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.Model.CategoryDTO;
-import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.models.CategoryDTO;
+import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 

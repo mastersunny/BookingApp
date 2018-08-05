@@ -31,8 +31,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 
-import mastersunny.unitedclub.Model.RestModel;
-import mastersunny.unitedclub.Model.UserDTO;
+import mastersunny.unitedclub.models.RestModel;
+import mastersunny.unitedclub.models.UserDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;

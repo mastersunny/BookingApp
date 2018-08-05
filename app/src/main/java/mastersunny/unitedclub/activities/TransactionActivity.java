@@ -15,7 +15,7 @@ import android.widget.TextView;
 import mastersunny.unitedclub.adapters.PagerAdapter;
 import mastersunny.unitedclub.Fragments.DueFragment;
 import mastersunny.unitedclub.Fragments.PaidFragment;
-import mastersunny.unitedclub.Model.UserDTO;
+import mastersunny.unitedclub.models.UserDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 
