@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import mastersunny.unitedclub.Listener.ClickListener;
+import mastersunny.unitedclub.Listener.ConfirmListener;
 import mastersunny.unitedclub.models.RestModel;
 import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.R;
@@ -176,7 +176,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void showResponse(String message) {
-        Constants.showDialog(ItemDetailsActivity.this, message, new ClickListener() {
+        Constants.showDialog(ItemDetailsActivity.this, message, new ConfirmListener() {
             @Override
             public void ok() {
                 finish();

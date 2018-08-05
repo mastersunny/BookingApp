@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mastersunny.unitedclub.Listener.ClickListener;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
@@ -29,6 +30,7 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Activity mActivity;
     public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
+    private ClickListener clickListener;
 
     public NearbyPlaceAdapter(Activity mActivity, ArrayList<StoreDTO> storeDTOS) {
         this.mActivity = mActivity;
@@ -50,6 +52,8 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case HEADER_ITEM:
+                if (clickListener != null)
+                    clickListener.click();
                 break;
             case MAIN_ITEM:
                 MainHolder mainHolder = (MainHolder) holder;
@@ -102,5 +106,9 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public HeaderHolder(View itemView) {
             super(itemView);
         }
+    }
+
+    public void setClickListener(ClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 }

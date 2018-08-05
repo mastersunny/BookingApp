@@ -8,7 +8,6 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,9 +18,8 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
 
 import java.io.File;
-import java.security.PublicKey;
 
-import mastersunny.unitedclub.Listener.ClickListener;
+import mastersunny.unitedclub.Listener.ConfirmListener;
 import mastersunny.unitedclub.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -70,6 +68,8 @@ public class Constants {
     public static final String COVER_IMAGE_URL = "cover_image_url";
     public static String accessToken = "abcd";
     public static final String TRANSACTION_DTO = "transaction_dto";
+
+    public static final int REQUEST_LOCATION = 111;
 
     public static Typeface getRegularFace(Context context) {
         Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_regular.otf");
@@ -146,7 +146,7 @@ public class Constants {
         dialog.show();
     }
 
-    public static void showDialog(Context context, String message, final ClickListener listener) {
+    public static void showDialog(Context context, String message, final ConfirmListener listener) {
         final Dialog dialog = new Dialog(context);
         dialog.setCancelable(false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

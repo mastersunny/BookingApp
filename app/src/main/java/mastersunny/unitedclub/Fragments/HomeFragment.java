@@ -1,13 +1,19 @@
 package mastersunny.unitedclub.Fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +33,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
+import mastersunny.unitedclub.Listener.ClickListener;
 import mastersunny.unitedclub.activities.StoresActivity;
 import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
@@ -162,6 +170,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         nearbyPlaceAdapter = new NearbyPlaceAdapter(mActivity, storeDTOS);
         nearby_rv.setAdapter(nearbyPlaceAdapter);
+        nearbyPlaceAdapter.setClickListener(new ClickListener() {
+            @Override
+            public void click() {
+                if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                } else {
+                    requestPermission(mActivity);
+                }
+            }
+        });
 
         for (int i = 0; i < 10; i++) {
             RoomDTO roomDTO = new RoomDTO();
@@ -179,7 +197,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             roomDTO.setId(i);
             offerDTOS.add(roomDTO);
         }
-        offer_rv.setLayoutManager(new GridLayoutManager(mActivity,2));
+        offer_rv.setLayoutManager(new GridLayoutManager(mActivity, 2));
         offer_rv.setNestedScrollingEnabled(false);
         offerAdapter = new OfferAdapter(mActivity, offerDTOS);
         offer_rv.setAdapter(offerAdapter);
@@ -198,6 +216,39 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
         }
 
+    }
+
+    private void requestPermission(final Context context) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            new AlertDialog.Builder(context)
+                    .setMessage(context.getResources().getString(R.string.permission_location))
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    Constants.REQUEST_LOCATION);
+                        }
+                    })
+                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+
+        } else {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    Constants.REQUEST_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == Constants.REQUEST_LOCATION) {
+            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            }
+        }
     }
 
     public static final int BARCODE_READER_REQUEST_CODE = 101;
