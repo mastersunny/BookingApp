@@ -39,28 +39,11 @@
                         app:scrollInterval="5000"
                         app:viewpagerAspectRatio="1.6" />
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/coupon_finder_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_below="@+id/autoViewPager"
-                        android:layout_margin="@dimen/margin_10"
-                        android:foreground="@drawable/coupon_finder_bg"
-                        card_view:cardCornerRadius="@dimen/margin_2"
-                        card_view:cardElevation="@dimen/margin_2">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/coupon_bg" />
-
-                    </android.support.v7.widget.CardView>
-
                     <RelativeLayout
                         android:id="@+id/popular_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/coupon_finder_layout"
+                        android:layout_below="@+id/autoViewPager"
                         android:paddingBottom="@dimen/margin_5"
                         android:paddingLeft="@dimen/margin_10"
                         android:paddingRight="@dimen/margin_10"
