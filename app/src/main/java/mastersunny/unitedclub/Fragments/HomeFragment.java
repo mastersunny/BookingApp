@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //            }
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            loadData();
+//            loadData();
 
         }
 
@@ -224,6 +224,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+        for (int i = 0; i < 10; i++) {
+            StoreDTO storeDTO = new StoreDTO();
+            storeDTO.setStoreName("adpaokfp");
+            storeDTO.setStoreId(i);
+            storeDTOS.add(storeDTO);
+        }
+
         popular_rv = view.findViewById(R.id.popular_rv);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         popularAdapter = new PopularAdapter(mActivity, storeDTOS);
@@ -231,7 +238,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         view.findViewById(R.id.search_layout).setOnClickListener(this);
         view.findViewById(R.id.coupon_finder_layout).setOnClickListener(this);
-
     }
 
     @Override

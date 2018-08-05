@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
@@ -41,7 +44,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHold
         if (storeDTOS != null) {
             final StoreDTO storeDTO = storeDTOS.get(position);
             String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getImageUrl();
-            Constants.loadImage(mActivity, imgUrl, holder.store_image);
+            Constants.loadImage(mActivity, imgUrl, holder.place_image);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -56,14 +59,17 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHold
         return storeDTOS == null ? 0 : storeDTOS.size();
     }
 
-    public static class MainHolder extends RecyclerView.ViewHolder {
+    static class MainHolder extends RecyclerView.ViewHolder {
 
-        private ImageView store_image;
+        @BindView(R.id.place_image)
+        ImageView place_image;
+
+        @BindView(R.id.place_name)
+        TextView place_name;
 
         public MainHolder(View itemView) {
             super(itemView);
-            store_image = itemView.findViewById(R.id.store_image);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 }
