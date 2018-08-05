@@ -52,8 +52,14 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case HEADER_ITEM:
-                if (clickListener != null)
-                    clickListener.click();
+                HeaderHolder headerHolder = (HeaderHolder) holder;
+                headerHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (clickListener != null)
+                            clickListener.click();
+                    }
+                });
                 break;
             case MAIN_ITEM:
                 MainHolder mainHolder = (MainHolder) holder;
