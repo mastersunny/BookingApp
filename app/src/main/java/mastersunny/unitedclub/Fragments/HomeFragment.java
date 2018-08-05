@@ -7,9 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +25,6 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,7 +34,6 @@ import mastersunny.unitedclub.activities.StoresActivity;
 import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.adapters.AutoScrollAdapter;
-import mastersunny.unitedclub.adapters.CategoryPagerAdapter;
 import mastersunny.unitedclub.adapters.NearbyPlaceAdapter;
 import mastersunny.unitedclub.adapters.RecommendedAdapter;
 import mastersunny.unitedclub.models.CategoryDTO;
@@ -63,20 +59,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public String TAG = "HomeFragment";
     private Activity mActivity;
     private View view;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    //    private ViewPager viewPager;
     private Toolbar toolbar;
-    private CategoryPagerAdapter categoryPagerAdapter;
     private NearbyPlaceAdapter nearbyPlaceAdapter;
-    private RecyclerView popular_rv;
+    private RecyclerView nearby_rv;
     private ArrayList<StoreDTO> storeDTOS;
-    private TextView search_text;
+    //    private TextView search_text;
     private AppBarLayout appBarLayout;
-    private LoopingViewPager loopingViewPager;
     private AutoScrollAdapter autoScrollAdapter;
     private ArrayList<SliderDTO> autoScrollList;
     private ApiInterface apiService;
-    private ArrayList<CategoryDTO> categoryDTOS;
 
 
     private Unbinder unbinder;
@@ -104,16 +96,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             apiService = ApiClient.getClient().create(ApiInterface.class);
             storeDTOS = new ArrayList<>();
             autoScrollList = new ArrayList<>();
-            categoryDTOS = new ArrayList<>();
-//            for (int i = 0; i < 4; i++) {
-//                CategoryDTO categoryDTO = new CategoryDTO();
-//                categoryDTO.setCategoryName("Fashion");
-//                categoryDTOS.add(categoryDTO);
-//            }
             initLayout();
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 //            loadData();
-
 
 
         }
@@ -129,23 +114,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void loadData() {
         try {
-            Constants.debugLog(TAG, Constants.accessToken);
-            apiService.getSliders(Constants.accessToken).enqueue(new Callback<List<SliderDTO>>() {
-                @Override
-                public void onResponse(Call<List<SliderDTO>> call, Response<List<SliderDTO>> response) {
-                    Constants.debugLog(TAG, "" + response.body());
-                    if (response.isSuccessful() && response.body() != null) {
-                        autoScrollList.addAll(response.body());
-                        createAutoScrollViewPager();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<SliderDTO>> call, Throwable t) {
-
-                }
-            });
-
             apiService.getPopularStores(Constants.accessToken).enqueue(new Callback<List<StoreDTO>>() {
                 @Override
                 public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
@@ -162,87 +130,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
-            apiService.getCategories(Constants.accessToken).enqueue(new Callback<List<CategoryDTO>>() {
-                @Override
-                public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
-                    Constants.debugLog(TAG, "getCategories " + response);
-                    if (response != null && response.isSuccessful()) {
-                        Constants.debugLog(TAG, "getCategories " + response.body());
-                        categoryDTOS.addAll(response.body());
-                        setUpTabLayout();
-                        if (categoryPagerAdapter != null) {
-                            categoryPagerAdapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<CategoryDTO>> call, Throwable t) {
-                    Constants.debugLog(TAG, "Error in load data" + t.getMessage());
-                }
-            });
         } catch (Exception e) {
             Constants.debugLog(TAG, "Error in load data " + e.getMessage());
         }
-    }
-
-    private void createAutoScrollViewPager() {
-        autoScrollAdapter = new AutoScrollAdapter(mActivity, autoScrollList, true);
-        loopingViewPager.setAdapter(autoScrollAdapter);
-    }
-
-    private void setUpTabLayout() {
-        categoryPagerAdapter = new CategoryPagerAdapter(getChildFragmentManager());
-        categoryPagerAdapter.addItems(categoryDTOS);
-        viewPager.setAdapter(categoryPagerAdapter);
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-//                tabLayout.getTabAt(position).setText(categoryDTOS.get(position).getCategoryName());
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        tabLayout = view.findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void initLayout() {
         Typeface face = Typeface.createFromAsset(mActivity.getAssets(), "avenirltstd_regular.otf");
 
         toolbar = view.findViewById(R.id.toolbar);
-        tabLayout = view.findViewById(R.id.tabLayout);
-        viewPager = view.findViewById(R.id.viewPager);
-
-        search_text = view.findViewById(R.id.search_text);
-        loopingViewPager = view.findViewById(R.id.autoViewPager);
-
-        search_text.setTypeface(face);
-        view.findViewById(R.id.search_layout).setOnClickListener(this);
-
         appBarLayout = view.findViewById(R.id.appBarLayout);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-
-                if (verticalOffset == 0) {
-                    loopingViewPager.resumeAutoScroll();
-                }
-                if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
-                    toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
-                    loopingViewPager.pauseAutoScroll();
-                } else {
-                    toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.transparent_100));
-                }
             }
         });
 
@@ -253,13 +153,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             storeDTOS.add(storeDTO);
         }
 
-        popular_rv = view.findViewById(R.id.nearby_rv);
-        popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
+        nearby_rv = view.findViewById(R.id.nearby_rv);
+        nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         nearbyPlaceAdapter = new NearbyPlaceAdapter(mActivity, storeDTOS);
-        popular_rv.setAdapter(nearbyPlaceAdapter);
-
-        view.findViewById(R.id.search_layout).setOnClickListener(this);
-
+        nearby_rv.setAdapter(nearbyPlaceAdapter);
 
         for (int i = 0; i < 10; i++) {
             RoomDTO roomDTO = new RoomDTO();
@@ -326,20 +223,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (autoScrollAdapter != null && autoScrollAdapter.getCount() > 0) {
-                    Log.d(TAG, "resumeAutoScroll");
-                    loopingViewPager.resumeAutoScroll();
-                }
-            }
-        });
     }
 
     @Override
     public void onPause() {
-        loopingViewPager.pauseAutoScroll();
         super.onPause();
     }
 }
