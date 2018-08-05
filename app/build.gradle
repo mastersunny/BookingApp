@@ -45,10 +45,12 @@ dependencies {
     implementation 'com.asksira.android:loopingviewpager:1.1.0'
     implementation 'com.hbb20:ccp:2.1.4'
     implementation 'com.facebook.android:account-kit-sdk:4.+'
+
     implementation 'com.google.firebase:firebase-messaging:11.8.0'
     implementation 'com.google.android.gms:play-services-vision:11.8.0'
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
     implementation 'com.google.android.gms:play-services-places:11.8.0'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
 
     //epoxy from airbnb
     implementation 'com.airbnb.android:epoxy:2.14.0'
