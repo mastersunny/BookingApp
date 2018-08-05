@@ -39,37 +39,6 @@
                         app:scrollInterval="5000"
                         app:viewpagerAspectRatio="1.6" />
 
-                    <RelativeLayout
-                        android:id="@+id/popular_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/autoViewPager"
-                        android:paddingBottom="@dimen/margin_5"
-                        android:paddingLeft="@dimen/margin_10"
-                        android:paddingRight="@dimen/margin_10"
-                        android:paddingTop="@dimen/margin_5">
-
-                        <TextView
-                            android:id="@+id/popular_stores"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:elevation="@dimen/margin_5"
-                            android:text="Popular Stores"
-                            android:textColor="#616161"
-                            android:textSize="@dimen/text_size_13" />
-
-                        <TextView
-                            android:id="@+id/view_all_popular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:elevation="@dimen/margin_5"
-                            android:text="View All"
-                            android:textColor="#006ff1"
-                            android:textSize="@dimen/text_size_13" />
-                    </RelativeLayout>
-
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/popular_rv"
                         android:layout_width="match_parent"
