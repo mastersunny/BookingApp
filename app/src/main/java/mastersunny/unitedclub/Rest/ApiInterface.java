@@ -5,10 +5,10 @@ import java.util.List;
 import mastersunny.unitedclub.models.AccessModel;
 import mastersunny.unitedclub.models.CategoryDTO;
 import mastersunny.unitedclub.models.MoviesResponse;
+import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.models.RestModel;
 import mastersunny.unitedclub.models.SliderDTO;
 import mastersunny.unitedclub.models.StoreDTO;
-import mastersunny.unitedclub.models.StoreOfferDTO;
 import mastersunny.unitedclub.models.TransactionDTO;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -50,13 +50,13 @@ public interface ApiInterface {
     Call<StoreDTO> getStoreById(@Query("store_id") int store_id, @Query("access_token") String accessToken);
 
     @GET("api/get_store_offer")
-    Call<List<StoreOfferDTO>> getStoreOffers(@Query("store_id") int store_id, @Query("access_token") String accessToken);
+    Call<List<OfferDTO>> getStoreOffers(@Query("store_id") int store_id, @Query("access_token") String accessToken);
 
     @GET("api/get_store_offer_all")
-    Call<List<StoreOfferDTO>> getStoreOfferAll(@Query("store_id") int store_id, @Query("access_token") String accessToken);
+    Call<List<OfferDTO>> getStoreOfferAll(@Query("store_id") int store_id, @Query("access_token") String accessToken);
 
     @GET("api/get_category_offer")
-    Call<List<StoreOfferDTO>> getCategoryOffers(@Query("category_id") int category_id, @Query("access_token") String accessToken);
+    Call<List<OfferDTO>> getCategoryOffers(@Query("category_id") int category_id, @Query("access_token") String accessToken);
     //Offer List
 
 

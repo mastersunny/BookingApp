@@ -125,14 +125,14 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
     }
 
     private void updateInfo() {
-        if (!TextUtils.isEmpty(transactionDTO.getStoreOfferDTO().getStoreDTO().getImageUrl())) {
-            String imgUrl = ApiClient.BASE_URL + "" + transactionDTO.getStoreOfferDTO().getStoreDTO().getImageUrl();
+        if (!TextUtils.isEmpty(transactionDTO.getOfferDTO().getStoreDTO().getImageUrl())) {
+            String imgUrl = ApiClient.BASE_URL + "" + transactionDTO.getOfferDTO().getStoreDTO().getImageUrl();
             if (!isFinishing()) {
                 Constants.loadImage(this, imgUrl, store_image);
             }
         }
-        store_name.setText(transactionDTO.getStoreOfferDTO().getStoreDTO().getStoreName());
-        offer_details.setText(transactionDTO.getStoreOfferDTO().getOffer());
+        store_name.setText(transactionDTO.getOfferDTO().getStoreDTO().getStoreName());
+        offer_details.setText(transactionDTO.getOfferDTO().getOffer());
         client_name.setText(transactionDTO.getUserDTO().getFirstName() + " " + transactionDTO.getUserDTO().getLastName());
         email.setText(transactionDTO.getUserDTO().getEmail());
         phone_number.setText(transactionDTO.getUserDTO().getPhoneNumber());

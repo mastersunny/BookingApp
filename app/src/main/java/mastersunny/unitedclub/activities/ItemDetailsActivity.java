@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import mastersunny.unitedclub.Listener.ClickListener;
 import mastersunny.unitedclub.models.RestModel;
-import mastersunny.unitedclub.models.StoreOfferDTO;
+import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -35,7 +35,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
     private TextView store_name, offer_details, description_text, description_details;
     private EditText total_amount;
     private Button submit;
-    private StoreOfferDTO storeOfferDTO;
+    private OfferDTO offerDTO;
     private NestedScrollView nestedScrollView;
     private RelativeLayout hidden_toolbar, normal_toolbar;
     private ApiInterface apiInterface;
@@ -55,15 +55,15 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
         updateInfo();
     }
 
-    public static void start(Context context, StoreOfferDTO storeOfferDTO) {
+    public static void start(Context context, OfferDTO offerDTO) {
         Intent intent = new Intent(context, ItemDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.STORE_OFFER_DTO, storeOfferDTO);
+        intent.putExtra(Constants.STORE_OFFER_DTO, offerDTO);
         context.startActivity(intent);
     }
 
     public void getIntentData() {
-        storeOfferDTO = (StoreOfferDTO) getIntent().getSerializableExtra(Constants.STORE_OFFER_DTO);
+        offerDTO = (OfferDTO) getIntent().getSerializableExtra(Constants.STORE_OFFER_DTO);
     }
 
     public void initLayout() {
@@ -105,12 +105,12 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void updateInfo() {
-        if (!TextUtils.isEmpty(storeOfferDTO.getStoreDTO().getImageUrl())) {
-            String imgUrl = ApiClient.BASE_URL + "" + storeOfferDTO.getStoreDTO().getImageUrl();
+        if (!TextUtils.isEmpty(offerDTO.getStoreDTO().getImageUrl())) {
+            String imgUrl = ApiClient.BASE_URL + "" + offerDTO.getStoreDTO().getImageUrl();
             Constants.loadImage(this, imgUrl, store_image);
         }
-        store_name.setText(storeOfferDTO.getStoreDTO().getStoreName());
-        offer_details.setText(storeOfferDTO.getOffer());
+        store_name.setText(offerDTO.getStoreDTO().getStoreName());
+        offer_details.setText(offerDTO.getOffer());
     }
 
     @Override
@@ -150,7 +150,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
             alreadyRequest = true;
             progressBar.setVisibility(View.VISIBLE);
             refreshHandler();
-            apiInterface.submitTransaction(storeOfferDTO.getOfferId(), amount, Constants.accessToken).enqueue(new Callback<RestModel>() {
+            apiInterface.submitTransaction(offerDTO.getId(), amount, Constants.accessToken).enqueue(new Callback<RestModel>() {
                 @Override
                 public void onResponse(Call<RestModel> call, Response<RestModel> response) {
                     handler.removeCallbacksAndMessages(null);

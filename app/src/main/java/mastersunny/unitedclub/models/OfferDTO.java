@@ -8,9 +8,9 @@ import java.io.Serializable;
  * Created by ASUS on 1/25/2018.
  */
 
-public class StoreOfferDTO implements Serializable {
+public class OfferDTO implements Serializable {
     @SerializedName("offer_id")
-    private int offerId;
+    private int id;
     @SerializedName("store")
     private StoreDTO storeDTO;
     @SerializedName("category")
@@ -20,12 +20,12 @@ public class StoreOfferDTO implements Serializable {
     @SerializedName("endDate")
     private String endDate;
 
-    public int getOfferId() {
-        return offerId;
+    public int getId() {
+        return id;
     }
 
-    public void setOfferId(int offerId) {
-        this.offerId = offerId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public StoreDTO getStoreDTO() {
@@ -62,8 +62,8 @@ public class StoreOfferDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "StoreOfferDTO{" +
-                "offerId=" + offerId +
+        return "OfferDTO{" +
+                "id=" + id +
                 ", storeDTO=" + storeDTO +
                 ", categoryDTO=" + categoryDTO +
                 ", offer='" + offer + '\'' +

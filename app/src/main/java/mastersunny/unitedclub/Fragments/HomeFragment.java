@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,10 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.asksira.loopingviewpager.LoopingViewPager;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
@@ -35,14 +33,15 @@ import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.adapters.AutoScrollAdapter;
 import mastersunny.unitedclub.adapters.NearbyPlaceAdapter;
+import mastersunny.unitedclub.adapters.OfferAdapter;
 import mastersunny.unitedclub.adapters.RecommendedAdapter;
-import mastersunny.unitedclub.models.CategoryDTO;
 import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.models.SliderDTO;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.utils.Constants;
 import mastersunny.unitedclub.utils.barcode.BarcodeCaptureActivity;
 import retrofit2.Call;
@@ -78,6 +77,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private List<RoomDTO> roomDTOList;
     private RecommendedAdapter recommendedAdapter;
 
+    @BindView(R.id.offer_rv)
+    RecyclerView offer_rv;
+    private List<OfferDTO> offerDTOS;
+    private OfferAdapter offerAdapter;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -92,12 +96,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             unbinder = ButterKnife.bind(this, view);
 
             roomDTOList = new ArrayList<>();
+            offerDTOS = new ArrayList<>();
 
             apiService = ApiClient.getClient().create(ApiInterface.class);
             storeDTOS = new ArrayList<>();
             autoScrollList = new ArrayList<>();
             initLayout();
-            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 //            loadData();
 
 
@@ -154,6 +158,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
 
         nearby_rv = view.findViewById(R.id.nearby_rv);
+        nearby_rv.setNestedScrollingEnabled(false);
         nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         nearbyPlaceAdapter = new NearbyPlaceAdapter(mActivity, storeDTOS);
         nearby_rv.setAdapter(nearbyPlaceAdapter);
@@ -165,8 +170,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             roomDTOList.add(roomDTO);
         }
         recommended_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayout.HORIZONTAL, false));
+        recommended_rv.setNestedScrollingEnabled(false);
         recommendedAdapter = new RecommendedAdapter(mActivity, roomDTOList);
         recommended_rv.setAdapter(recommendedAdapter);
+
+        for (int i = 0; i < 10; i++) {
+            OfferDTO roomDTO = new OfferDTO();
+            roomDTO.setId(i);
+            offerDTOS.add(roomDTO);
+        }
+        offer_rv.setLayoutManager(new GridLayoutManager(mActivity,2));
+        offer_rv.setNestedScrollingEnabled(false);
+        offerAdapter = new OfferAdapter(mActivity, offerDTOS);
+        offer_rv.setAdapter(offerAdapter);
+
+
     }
 
     @Override

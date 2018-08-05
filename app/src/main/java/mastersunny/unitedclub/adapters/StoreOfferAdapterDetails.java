@@ -15,8 +15,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import mastersunny.unitedclub.activities.ItemDetailsActivity;
+import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.models.StoreDTO;
-import mastersunny.unitedclub.models.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.utils.Constants;
@@ -28,16 +28,16 @@ import mastersunny.unitedclub.utils.Constants;
 public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String TAG = "StoreOfferAdapter";
 
-    private ArrayList<StoreOfferDTO> storeOfferDTOS;
+    private ArrayList<OfferDTO> offerDTOS;
     private Activity mActivity;
     private Typeface face;
     public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
     private StoreDTO storeDTO;
 
-    public StoreOfferAdapterDetails(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS, StoreDTO storeDTO) {
+    public StoreOfferAdapterDetails(Activity mActivity, ArrayList<OfferDTO> offerDTOS, StoreDTO storeDTO) {
         this.mActivity = mActivity;
-        this.storeOfferDTOS = storeOfferDTOS;
+        this.offerDTOS = offerDTOS;
         this.storeDTO = storeDTO;
         face = Constants.getMediumFace(mActivity);
     }
@@ -48,7 +48,7 @@ public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_details_layout_header, parent, false);
             return new HeaderHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_offer_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_item_layout, parent, false);
             return new MainHolder(view);
         }
     }
@@ -78,9 +78,9 @@ public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.
                 }
                 break;
             case MAIN_ITEM:
-                if (storeOfferDTOS != null) {
+                if (offerDTOS != null) {
                     MainHolder mainHolder = (MainHolder) holder;
-                    final StoreOfferDTO dto = storeOfferDTOS.get(position - 1);
+                    final OfferDTO dto = offerDTOS.get(position - 1);
                     if (dto.getStoreDTO().getImageUrl() != null) {
                         String imgUrl = ApiClient.BASE_URL + "" + dto.getStoreDTO().getImageUrl();
                         Constants.loadImage(mActivity, imgUrl, mainHolder.store_image);
@@ -115,7 +115,7 @@ public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public int getItemCount() {
-        return storeOfferDTOS == null ? 1 : storeOfferDTOS.size() + 1;
+        return offerDTOS == null ? 1 : offerDTOS.size() + 1;
     }
 
     public static class MainHolder extends RecyclerView.ViewHolder {
@@ -126,9 +126,9 @@ public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.
 
         public MainHolder(View itemView) {
             super(itemView);
-            store_image = itemView.findViewById(R.id.store_image);
-            store_offer = itemView.findViewById(R.id.store_offer);
-            offer_end_date = itemView.findViewById(R.id.offer_end_date);
+//            store_image = itemView.findViewById(R.id.store_image);
+//            store_offer = itemView.findViewById(R.id.store_offer);
+//            offer_end_date = itemView.findViewById(R.id.offer_end_date);
 
         }
     }

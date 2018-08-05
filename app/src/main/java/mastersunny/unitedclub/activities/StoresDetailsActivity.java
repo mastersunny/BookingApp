@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mastersunny.unitedclub.adapters.StoreOfferAdapterDetails;
+import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.models.StoreDTO;
-import mastersunny.unitedclub.models.StoreOfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -29,7 +29,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
 
     public String TAG = "StoresDetailsActivity";
     private StoreOfferAdapterDetails storeOfferAdapter;
-    private ArrayList<StoreOfferDTO> storeOfferDTOS;
+    private ArrayList<OfferDTO> offerDTOS;
     private RecyclerView offer_rv;
     private ApiInterface apiService;
     private StoreDTO storeDTO;
@@ -53,7 +53,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_stores_details);
 
         apiService = ApiClient.getClient().create(ApiInterface.class);
-        storeOfferDTOS = new ArrayList<>();
+        offerDTOS = new ArrayList<>();
 
         getIntentData();
         initLayout();
@@ -65,7 +65,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
         offer_rv = findViewById(R.id.offer_rv);
         offer_rv.setHasFixedSize(true);
         offer_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapterDetails(StoresDetailsActivity.this, storeOfferDTOS, storeDTO);
+        storeOfferAdapter = new StoreOfferAdapterDetails(StoresDetailsActivity.this, offerDTOS, storeDTO);
         offer_rv.setAdapter(storeOfferAdapter);
 
         findViewById(R.id.back_button).setOnClickListener(this);
@@ -102,13 +102,13 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
             });
 
             apiService.getStoreOffers(storeDTO.getStoreId(), Constants.accessToken)
-                    .enqueue(new Callback<List<StoreOfferDTO>>() {
+                    .enqueue(new Callback<List<OfferDTO>>() {
                         @Override
-                        public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
+                        public void onResponse(Call<List<OfferDTO>> call, Response<List<OfferDTO>> response) {
                             Constants.debugLog(TAG, "" + response);
                             if (response.isSuccessful() && response.body() != null) {
-                                Constants.debugLog(TAG, "StoreOfferDTO: " + response.body());
-                                storeOfferDTOS.addAll(response.body());
+                                Constants.debugLog(TAG, "OfferDTO: " + response.body());
+                                offerDTOS.addAll(response.body());
                                 if (storeOfferAdapter != null) {
                                     storeOfferAdapter.notifyDataSetChanged();
                                 }
@@ -116,7 +116,7 @@ public class StoresDetailsActivity extends AppCompatActivity implements View.OnC
                         }
 
                         @Override
-                        public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
+                        public void onFailure(Call<List<OfferDTO>> call, Throwable t) {
                             Constants.debugLog(TAG, "" + t.getMessage());
                         }
                     });

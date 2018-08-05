@@ -17,7 +17,7 @@ import java.util.List;
 
 import mastersunny.unitedclub.adapters.StoreOfferAdapter;
 import mastersunny.unitedclub.models.CategoryDTO;
-import mastersunny.unitedclub.models.StoreOfferDTO;
+import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -37,7 +37,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
     private Activity mActivity;
     private View view;
     private RecyclerView most_used_rv;
-    private ArrayList<StoreOfferDTO> storeOfferDTOS;
+    private ArrayList<OfferDTO> offerDTOS;
     private StoreOfferAdapter storeOfferAdapter;
     private ProgressBar progressBar;
     private boolean firstRequest = false;
@@ -64,7 +64,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_layout, container, false);
             apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            storeOfferDTOS = new ArrayList<>();
+            offerDTOS = new ArrayList<>();
             getIntentData();
             initLayout();
         }
@@ -79,13 +79,13 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
     private void loaData() {
         try {
             apiInterface.getCategoryOffers(categoryDTO.getCategoryId(), Constants.accessToken)
-                    .enqueue(new Callback<List<StoreOfferDTO>>() {
+                    .enqueue(new Callback<List<OfferDTO>>() {
                         @Override
-                        public void onResponse(Call<List<StoreOfferDTO>> call, Response<List<StoreOfferDTO>> response) {
+                        public void onResponse(Call<List<OfferDTO>> call, Response<List<OfferDTO>> response) {
                             Constants.debugLog(TAG, "" + response);
                             if (response.isSuccessful() && response.body() != null) {
                                 Constants.debugLog(TAG, "" + response.body());
-                                storeOfferDTOS.addAll(response.body());
+                                offerDTOS.addAll(response.body());
                                 if (storeOfferAdapter != null) {
                                     storeOfferAdapter.notifyDataSetChanged();
                                 }
@@ -93,7 +93,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onFailure(Call<List<StoreOfferDTO>> call, Throwable t) {
+                        public void onFailure(Call<List<OfferDTO>> call, Throwable t) {
                             Constants.debugLog(TAG, "" + t.getMessage());
                         }
                     });
@@ -109,7 +109,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener {
         most_used_rv = view.findViewById(R.id.most_used_rv);
         most_used_rv.setHasFixedSize(true);
         most_used_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        storeOfferAdapter = new StoreOfferAdapter(mActivity, storeOfferDTOS, categoryDTO);
+        storeOfferAdapter = new StoreOfferAdapter(mActivity, offerDTOS, categoryDTO);
         most_used_rv.setAdapter(storeOfferAdapter);
     }
 

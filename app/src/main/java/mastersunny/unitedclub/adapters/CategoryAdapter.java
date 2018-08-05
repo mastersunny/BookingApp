@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.activities.CategoryDetailsActivity;
 import mastersunny.unitedclub.models.CategoryDTO;
 import mastersunny.unitedclub.R;
 
@@ -42,7 +41,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MainHo
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    CategoryDetailsActivity.start(view.getContext(), categoryDTO);
+//                    CategoryDetailsActivity.start(view.getContext(), categoryDTO);
                 }
             });
         }

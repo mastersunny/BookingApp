@@ -11,10 +11,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.activities.CategoryDetailsActivity;
 import mastersunny.unitedclub.activities.ItemDetailsActivity;
 import mastersunny.unitedclub.models.CategoryDTO;
-import mastersunny.unitedclub.models.StoreOfferDTO;
+import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.utils.Constants;
@@ -26,16 +25,16 @@ import mastersunny.unitedclub.utils.Constants;
 public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String TAG = "StoreOfferAdapter";
 
-    private ArrayList<StoreOfferDTO> storeOfferDTOS;
+    private ArrayList<OfferDTO> offerDTOS;
     private Activity mActivity;
     private Typeface face;
     public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
     private CategoryDTO categoryDTO;
 
-    public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS, CategoryDTO categoryDTO) {
+    public StoreOfferAdapter(Activity mActivity, ArrayList<OfferDTO> offerDTOS, CategoryDTO categoryDTO) {
         this.mActivity = mActivity;
-        this.storeOfferDTOS = storeOfferDTOS;
+        this.offerDTOS = offerDTOS;
         face = Constants.getMediumFace(mActivity);
         this.categoryDTO = categoryDTO;
     }
@@ -46,7 +45,7 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_offer_bottom_layout, parent, false);
             return new HeaderHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_offer_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_item_layout, parent, false);
             return new MainHolder(view);
         }
     }
@@ -59,14 +58,14 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 headerHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CategoryDetailsActivity.start(v.getContext(), categoryDTO);
+//                        CategoryDetailsActivity.start(v.getContext(), categoryDTO);
                     }
                 });
                 break;
             case MAIN_ITEM:
-                if (storeOfferDTOS != null) {
+                if (offerDTOS != null) {
                     MainHolder mainHolder = (MainHolder) holder;
-                    final StoreOfferDTO dto = storeOfferDTOS.get(position);
+                    final OfferDTO dto = offerDTOS.get(position);
                     if (dto.getStoreDTO().getImageUrl() != null) {
                         String imgUrl = ApiClient.BASE_URL + "" + dto.getStoreDTO().getImageUrl();
                         Constants.loadImage(mActivity, imgUrl, mainHolder.store_image);
@@ -88,7 +87,7 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemViewType(int position) {
-        if (position == storeOfferDTOS.size()) {
+        if (position == offerDTOS.size()) {
             return HEADER_ITEM;
         } else {
             return MAIN_ITEM;
@@ -97,7 +96,7 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return storeOfferDTOS == null ? 1 : storeOfferDTOS.size() + 1;
+        return offerDTOS == null ? 1 : offerDTOS.size() + 1;
     }
 
     public static class MainHolder extends RecyclerView.ViewHolder {
@@ -108,9 +107,9 @@ public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public MainHolder(View itemView) {
             super(itemView);
-            store_image = itemView.findViewById(R.id.store_image);
-            store_offer = itemView.findViewById(R.id.store_offer);
-            offer_end_date = itemView.findViewById(R.id.offer_end_date);
+//            store_image = itemView.findViewById(R.id.store_image);
+//            store_offer = itemView.findViewById(R.id.store_offer);
+//            offer_end_date = itemView.findViewById(R.id.offer_end_date);
 
         }
     }

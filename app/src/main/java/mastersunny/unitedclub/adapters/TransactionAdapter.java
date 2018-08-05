@@ -48,13 +48,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(MainHolder holder, int position) {
         if (transactionDTOS != null) {
             TransactionDTO dto = transactionDTOS.get(position);
-            String imgUrl = dto.getStoreOfferDTO().getStoreDTO().getImageUrl();
+            String imgUrl = dto.getOfferDTO().getStoreDTO().getImageUrl();
             if (!TextUtils.isEmpty(imgUrl)) {
                 Constants.loadImage(mActivity, (ApiClient.BASE_URL + imgUrl), holder.store_image);
             }
 
 
-            holder.offer_details.setText(dto.getStoreOfferDTO().getOffer());
+            holder.offer_details.setText(dto.getOfferDTO().getOffer());
             holder.offer_date.setText(dto.getTransactionDate());
             holder.total_amount.setText(dto.getAmount() + "");
             if (dto.getPaidStatus() == Constants.STATUS_PAID) {

@@ -12,7 +12,7 @@ public class TransactionDTO implements Serializable{
     @SerializedName("transaction_id")
     private int transactionId;
     @SerializedName("offer")
-    private StoreOfferDTO storeOfferDTO;
+    private OfferDTO offerDTO;
     @SerializedName("users")
     private UserDTO userDTO;
     @SerializedName("status")
@@ -46,12 +46,12 @@ public class TransactionDTO implements Serializable{
         this.transactionId = transactionId;
     }
 
-    public StoreOfferDTO getStoreOfferDTO() {
-        return storeOfferDTO;
+    public OfferDTO getOfferDTO() {
+        return offerDTO;
     }
 
-    public void setStoreOfferDTO(StoreOfferDTO storeOfferDTO) {
-        this.storeOfferDTO = storeOfferDTO;
+    public void setOfferDTO(OfferDTO offerDTO) {
+        this.offerDTO = offerDTO;
     }
 
     public UserDTO getUserDTO() {
@@ -74,7 +74,7 @@ public class TransactionDTO implements Serializable{
     public String toString() {
         return "TransactionDTO{" +
                 "transactionId=" + transactionId +
-                ", storeOfferDTO=" + storeOfferDTO +
+                ", offerDTO=" + offerDTO +
                 ", userDTO=" + userDTO +
                 ", paidStatus=" + paidStatus +
                 ", transactionDate='" + transactionDate + '\'' +
