@@ -13,6 +13,8 @@ import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
@@ -78,6 +80,8 @@ public class SplashActivity extends AppCompatActivity {
             } else if (loginResult.wasCancelled()) {
                 toastMessage = "Login Cancelled";
             } else {
+                createUser();
+
                 toastMessage = "Success:" + loginResult.getAccessToken().getAccountId();
 
                 Intent mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
@@ -97,5 +101,12 @@ public class SplashActivity extends AppCompatActivity {
     protected void onDestroy() {
         handler.removeCallbacksAndMessages(null);
         super.onDestroy();
+    }
+
+    private void createUser() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
     }
 }

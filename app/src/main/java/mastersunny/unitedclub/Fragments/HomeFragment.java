@@ -18,40 +18,33 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import mastersunny.unitedclub.Listener.ClickListener;
-import mastersunny.unitedclub.activities.StoresActivity;
+import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.activities.SearchActivity;
+import mastersunny.unitedclub.activities.StoresActivity;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.adapters.AutoScrollAdapter;
 import mastersunny.unitedclub.adapters.NearbyPlaceAdapter;
 import mastersunny.unitedclub.adapters.OfferAdapter;
 import mastersunny.unitedclub.adapters.RecommendedAdapter;
+import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.models.SliderDTO;
 import mastersunny.unitedclub.models.StoreDTO;
-import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
-import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.utils.Constants;
-import mastersunny.unitedclub.utils.barcode.BarcodeCaptureActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -252,21 +245,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     public static final int BARCODE_READER_REQUEST_CODE = 101;
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == BARCODE_READER_REQUEST_CODE) {
-            if (resultCode == CommonStatusCodes.SUCCESS) {
-                if (data != null) {
-                    Barcode barCode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-                    Log.d(TAG, "" + barCode.displayValue);
-                    getStoreByCode(barCode.displayValue);
-                } else {
-                    Toast.makeText(mActivity, R.string.no_barcode_captured, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
 
     private void getStoreByCode(String QRCode) {
         try {
