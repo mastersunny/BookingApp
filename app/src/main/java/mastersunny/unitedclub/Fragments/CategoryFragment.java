@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import mastersunny.unitedclub.Adapter.StoreOfferAdapter;
+import mastersunny.unitedclub.adapters.StoreOfferAdapter;
 import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;

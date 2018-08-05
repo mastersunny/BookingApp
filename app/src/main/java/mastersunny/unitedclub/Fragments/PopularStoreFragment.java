@@ -3,24 +3,17 @@ package mastersunny.unitedclub.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import mastersunny.unitedclub.Adapter.PopularVerticalAdapter;
+import mastersunny.unitedclub.adapters.PopularVerticalAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;

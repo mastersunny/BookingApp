@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import mastersunny.unitedclub.Adapter.PagerAdapter;
+import mastersunny.unitedclub.adapters.PagerAdapter;
 import mastersunny.unitedclub.Fragments.AllStoreFragment;
 import mastersunny.unitedclub.Fragments.PopularStoreFragment;
 import mastersunny.unitedclub.R;

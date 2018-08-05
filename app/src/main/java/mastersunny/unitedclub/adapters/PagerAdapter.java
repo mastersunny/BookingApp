@@ -1,4 +1,4 @@
-package mastersunny.unitedclub.Adapter;
+package mastersunny.unitedclub.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

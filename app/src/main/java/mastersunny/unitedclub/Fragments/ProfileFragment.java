@@ -21,7 +21,7 @@ import java.util.List;
 
 import mastersunny.unitedclub.activities.EditProfileActivity;
 import mastersunny.unitedclub.activities.TransactionActivity;
-import mastersunny.unitedclub.Adapter.PendingTransactionAdapter;
+import mastersunny.unitedclub.adapters.PendingTransactionAdapter;
 import mastersunny.unitedclub.Model.RestModel;
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.Model.UserDTO;

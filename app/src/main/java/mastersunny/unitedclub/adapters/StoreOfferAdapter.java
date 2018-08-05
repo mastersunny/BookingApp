@@ -1,4 +1,4 @@
-package mastersunny.unitedclub.Adapter;
+package mastersunny.unitedclub.adapters;
 
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import mastersunny.unitedclub.activities.CategoryDetailsActivity;
 import mastersunny.unitedclub.activities.ItemDetailsActivity;
 import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
@@ -25,8 +23,8 @@ import mastersunny.unitedclub.utils.Constants;
  * Created by sunnychowdhury on 1/19/18.
  */
 
-public class CategoryOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private String TAG = "CategoryOfferAdapterDetails";
+public class StoreOfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private String TAG = "StoreOfferAdapter";
 
     private ArrayList<StoreOfferDTO> storeOfferDTOS;
     private Activity mActivity;
@@ -35,17 +33,17 @@ public class CategoryOfferAdapterDetails extends RecyclerView.Adapter<RecyclerVi
     public static final int MAIN_ITEM = 2;
     private CategoryDTO categoryDTO;
 
-    public CategoryOfferAdapterDetails(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS, CategoryDTO categoryDTO) {
+    public StoreOfferAdapter(Activity mActivity, ArrayList<StoreOfferDTO> storeOfferDTOS, CategoryDTO categoryDTO) {
         this.mActivity = mActivity;
         this.storeOfferDTOS = storeOfferDTOS;
-        this.categoryDTO = categoryDTO;
         face = Constants.getMediumFace(mActivity);
+        this.categoryDTO = categoryDTO;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == HEADER_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_details_layout_header, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_offer_bottom_layout, parent, false);
             return new HeaderHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_offer_layout, parent, false);
@@ -57,30 +55,18 @@ public class CategoryOfferAdapterDetails extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case HEADER_ITEM:
-                if (categoryDTO != null) {
-                    HeaderHolder headerHolder = (HeaderHolder) holder;
-                    headerHolder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-
-                        @Override
-                        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                            Toast.makeText(mActivity, Float.toString(v), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    headerHolder.follow_layout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(mActivity, "Followed successfully", Toast.LENGTH_LONG).show();
-                        }
-                    });
-//                    String imgUrl = ApiClient.BASE_URL + "" + categoryDTO.get();
-//                    Constants.loadImage(mActivity, imgUrl, headerHolder.store_image);
-                    headerHolder.total_offer.setText(categoryDTO.getTotalOffer() + " Offers");
-                }
+                HeaderHolder headerHolder = (HeaderHolder) holder;
+                headerHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CategoryDetailsActivity.start(v.getContext(), categoryDTO);
+                    }
+                });
                 break;
             case MAIN_ITEM:
                 if (storeOfferDTOS != null) {
                     MainHolder mainHolder = (MainHolder) holder;
-                    final StoreOfferDTO dto = storeOfferDTOS.get(position - 1);
+                    final StoreOfferDTO dto = storeOfferDTOS.get(position);
                     if (dto.getStoreDTO().getImageUrl() != null) {
                         String imgUrl = ApiClient.BASE_URL + "" + dto.getStoreDTO().getImageUrl();
                         Constants.loadImage(mActivity, imgUrl, mainHolder.store_image);
@@ -102,7 +88,7 @@ public class CategoryOfferAdapterDetails extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
+        if (position == storeOfferDTOS.size()) {
             return HEADER_ITEM;
         } else {
             return MAIN_ITEM;
@@ -131,17 +117,11 @@ public class CategoryOfferAdapterDetails extends RecyclerView.Adapter<RecyclerVi
 
     public static class HeaderHolder extends RecyclerView.ViewHolder {
 
-        private ImageView store_image;
-        private TextView total_offer;
-        private RatingBar ratingBar;
-        private LinearLayout follow_layout;
+        private TextView view_all;
 
         public HeaderHolder(View itemView) {
             super(itemView);
-            store_image = itemView.findViewById(R.id.store_image);
-            total_offer = itemView.findViewById(R.id.total_offer);
-            ratingBar = itemView.findViewById(R.id.ratingBar);
-            follow_layout = itemView.findViewById(R.id.follow_layout);
+            view_all = itemView.findViewById(R.id.view_all);
         }
     }
 }

@@ -2,27 +2,17 @@ package mastersunny.unitedclub.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import mastersunny.unitedclub.Adapter.TransactionAdapter;
-import mastersunny.unitedclub.Model.StoreDTO;
-import mastersunny.unitedclub.Model.StoreOfferDTO;
+import mastersunny.unitedclub.adapters.TransactionAdapter;
 import mastersunny.unitedclub.Model.TransactionDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;

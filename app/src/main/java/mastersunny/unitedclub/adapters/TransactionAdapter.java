@@ -1,4 +1,4 @@
-package mastersunny.unitedclub.Adapter;
+package mastersunny.unitedclub.adapters;
 
 import android.app.Activity;
 import android.graphics.Typeface;

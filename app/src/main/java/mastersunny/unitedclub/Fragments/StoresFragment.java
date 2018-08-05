@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import mastersunny.unitedclub.activities.SearchActivity;
-import mastersunny.unitedclub.Adapter.PagerAdapter;
+import mastersunny.unitedclub.adapters.PagerAdapter;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 

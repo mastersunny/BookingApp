@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import mastersunny.unitedclub.Adapter.PagerAdapter;
+import mastersunny.unitedclub.adapters.PagerAdapter;
 import mastersunny.unitedclub.Fragments.DueFragment;
 import mastersunny.unitedclub.Fragments.PaidFragment;
 import mastersunny.unitedclub.Model.UserDTO;

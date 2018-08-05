@@ -18,7 +18,7 @@ import android.view.WindowManager;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import mastersunny.unitedclub.Adapter.PagerAdapter;
+import mastersunny.unitedclub.adapters.PagerAdapter;
 import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;

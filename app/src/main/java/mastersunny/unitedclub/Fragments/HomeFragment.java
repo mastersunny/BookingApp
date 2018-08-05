@@ -31,9 +31,9 @@ import java.util.List;
 import mastersunny.unitedclub.activities.StoresActivity;
 import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
-import mastersunny.unitedclub.Adapter.AutoScrollAdapter;
-import mastersunny.unitedclub.Adapter.CategoryPagerAdapter;
-import mastersunny.unitedclub.Adapter.PopularAdapter;
+import mastersunny.unitedclub.adapters.AutoScrollAdapter;
+import mastersunny.unitedclub.adapters.CategoryPagerAdapter;
+import mastersunny.unitedclub.adapters.NearbyPlaceAdapter;
 import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.Model.SliderDTO;
 import mastersunny.unitedclub.Model.StoreDTO;
@@ -60,10 +60,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ViewPager viewPager;
     private Toolbar toolbar;
     private CategoryPagerAdapter categoryPagerAdapter;
-    private PopularAdapter popularAdapter;
+    private NearbyPlaceAdapter nearbyPlaceAdapter;
     private RecyclerView popular_rv;
     private ArrayList<StoreDTO> storeDTOS;
-    private TextView view_all_popular, popular_stores, search_text;
+    private TextView search_text;
     private AppBarLayout appBarLayout;
     private LoopingViewPager loopingViewPager;
     private AutoScrollAdapter autoScrollAdapter;
@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     Constants.debugLog(TAG, "" + response.body());
                     if (response.isSuccessful() & response.body() != null) {
                         storeDTOS.addAll(response.body());
-                        popularAdapter.notifyDataSetChanged();
+                        nearbyPlaceAdapter.notifyDataSetChanged();
                     }
                 }
 
@@ -195,16 +195,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         toolbar = view.findViewById(R.id.toolbar);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
-        popular_stores = view.findViewById(R.id.popular_stores);
-        view_all_popular = view.findViewById(R.id.view_all_popular);
+
         search_text = view.findViewById(R.id.search_text);
         loopingViewPager = view.findViewById(R.id.autoViewPager);
 
         search_text.setTypeface(face);
-        popular_stores.setTypeface(face);
-        view_all_popular.setTypeface(face);
-
-        view_all_popular.setOnClickListener(this);
         view.findViewById(R.id.search_layout).setOnClickListener(this);
 
         appBarLayout = view.findViewById(R.id.appBarLayout);
@@ -233,8 +228,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         popular_rv = view.findViewById(R.id.popular_rv);
         popular_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
-        popularAdapter = new PopularAdapter(mActivity, storeDTOS);
-        popular_rv.setAdapter(popularAdapter);
+        nearbyPlaceAdapter = new NearbyPlaceAdapter(mActivity, storeDTOS);
+        popular_rv.setAdapter(nearbyPlaceAdapter);
 
         view.findViewById(R.id.search_layout).setOnClickListener(this);
     }

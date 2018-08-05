@@ -1,7 +1,6 @@
-package mastersunny.unitedclub.Adapter;
+package mastersunny.unitedclub.adapters;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,25 +9,22 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import mastersunny.unitedclub.activities.StoresDetailsActivity;
-import mastersunny.unitedclub.Model.StoreDTO;
+import mastersunny.unitedclub.activities.CategoryDetailsActivity;
+import mastersunny.unitedclub.Model.CategoryDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.utils.Constants;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
  */
 
-public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVerticalAdapter.MainHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MainHolder> {
 
-    private ArrayList<StoreDTO> storeDTOS;
+    private ArrayList<CategoryDTO> offerCategories;
     private Activity mActivity;
-    private Typeface face;
 
-    public PopularVerticalAdapter(Activity mActivity, ArrayList<StoreDTO> storeDTOS) {
+    public CategoryAdapter(Activity mActivity, ArrayList<CategoryDTO> offerCategories) {
         this.mActivity = mActivity;
-        this.storeDTOS = storeDTOS;
-        face = Constants.getMediumFace(mActivity);
+        this.offerCategories = offerCategories;
     }
 
     @Override
@@ -39,16 +35,14 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
 
     @Override
     public void onBindViewHolder(MainHolder holder, int position) {
-        if (storeDTOS != null) {
-            final StoreDTO storeDTO = storeDTOS.get(position);
-            holder.store_name.setText(storeDTO.getStoreName());
-            holder.store_name.setTypeface(face);
-            holder.total_offer.setText(storeDTO.getTotalOffer() + " Offers");
-            holder.total_offer.setTypeface(face);
+        if (offerCategories != null) {
+            final CategoryDTO categoryDTO = offerCategories.get(position);
+            holder.store_name.setText(categoryDTO.getCategoryName());
+            holder.total_offer.setText(categoryDTO.getTotalOffer() + " Offers");
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    StoresDetailsActivity.start(view.getContext(), storeDTO);
+                    CategoryDetailsActivity.start(view.getContext(), categoryDTO);
                 }
             });
         }
@@ -56,7 +50,7 @@ public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVertical
 
     @Override
     public int getItemCount() {
-        return storeDTOS == null ? 0 : storeDTOS.size();
+        return offerCategories == null ? 0 : offerCategories.size();
     }
 
     public static class MainHolder extends RecyclerView.ViewHolder {

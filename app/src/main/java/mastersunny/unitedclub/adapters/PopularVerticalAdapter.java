@@ -1,41 +1,39 @@
-package mastersunny.unitedclub.Adapter;
+package mastersunny.unitedclub.adapters;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.utils.Constants;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
  */
 
-public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHolder> {
-    private String TAG = "PopularAdapter";
+public class PopularVerticalAdapter extends RecyclerView.Adapter<PopularVerticalAdapter.MainHolder> {
 
     private ArrayList<StoreDTO> storeDTOS;
     private Activity mActivity;
+    private Typeface face;
 
-    public PopularAdapter(Activity mActivity, ArrayList<StoreDTO> storeDTOS) {
+    public PopularVerticalAdapter(Activity mActivity, ArrayList<StoreDTO> storeDTOS) {
         this.mActivity = mActivity;
         this.storeDTOS = storeDTOS;
+        face = Constants.getMediumFace(mActivity);
     }
 
     @Override
     public MainHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.popular_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.popular_item_verical, parent, false);
         return new MainHolder(view);
     }
 
@@ -43,8 +41,10 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHold
     public void onBindViewHolder(MainHolder holder, int position) {
         if (storeDTOS != null) {
             final StoreDTO storeDTO = storeDTOS.get(position);
-            String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getImageUrl();
-            Constants.loadImage(mActivity, imgUrl, holder.place_image);
+            holder.store_name.setText(storeDTO.getStoreName());
+            holder.store_name.setTypeface(face);
+            holder.total_offer.setText(storeDTO.getTotalOffer() + " Offers");
+            holder.total_offer.setTypeface(face);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -59,17 +59,16 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MainHold
         return storeDTOS == null ? 0 : storeDTOS.size();
     }
 
-    static class MainHolder extends RecyclerView.ViewHolder {
+    public static class MainHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.place_image)
-        ImageView place_image;
 
-        @BindView(R.id.place_name)
-        TextView place_name;
+        private TextView store_name;
+        private TextView total_offer;
 
         public MainHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            store_name = itemView.findViewById(R.id.store_name);
+            total_offer = itemView.findViewById(R.id.total_offer);
         }
     }
 }

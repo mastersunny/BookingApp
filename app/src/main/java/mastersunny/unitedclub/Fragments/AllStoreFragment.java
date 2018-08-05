@@ -11,7 +11,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import mastersunny.unitedclub.Adapter.PopularVerticalAdapter;
+import mastersunny.unitedclub.adapters.PopularVerticalAdapter;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;

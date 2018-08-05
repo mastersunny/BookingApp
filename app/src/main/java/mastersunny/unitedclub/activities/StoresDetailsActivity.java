@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import mastersunny.unitedclub.Adapter.StoreOfferAdapterDetails;
+import mastersunny.unitedclub.adapters.StoreOfferAdapterDetails;
 import mastersunny.unitedclub.Model.StoreDTO;
 import mastersunny.unitedclub.Model.StoreOfferDTO;
 import mastersunny.unitedclub.R;

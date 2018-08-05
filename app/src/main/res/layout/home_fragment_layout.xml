@@ -43,7 +43,7 @@
                         android:id="@+id/popular_rv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/popular_layout"
+                        android:layout_below="@+id/autoViewPager"
                         app:layout_scrollFlags="scroll|enterAlways" />
 
                 </RelativeLayout>

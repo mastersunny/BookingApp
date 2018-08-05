@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import mastersunny.unitedclub.Adapter.PagerAdapter;
+import mastersunny.unitedclub.adapters.PagerAdapter;
 import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.R;
