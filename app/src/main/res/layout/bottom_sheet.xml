@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <LinearLayout
+            android:id="@+id/home_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_10">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                app:srcCompat="@drawable/ic_home_black_24dp" />
+
+            <TextView
+                android:id="@+id/home_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin_1"
+                android:text="@string/nav_home"
+                android:textSize="@dimen/text_size_13" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/saved_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_10">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                app:srcCompat="@drawable/ic_person_black_24dp" />
+
+            <TextView
+                android:id="@+id/saved_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin_1"
+                android:text="@string/nav_saved"
+                android:textSize="@dimen/text_size_13" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/booking_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_10">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                app:srcCompat="@drawable/ic_person_black_24dp" />
+
+            <TextView
+                android:id="@+id/booking_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin_1"
+                android:text="@string/nav_booking"
+                android:textSize="@dimen/text_size_13" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_10">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                app:srcCompat="@drawable/ic_person_black_24dp" />
+
+            <TextView
+                android:id="@+id/profile_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin_1"
+                android:text="@string/nav_profile"
+                android:textSize="@dimen/text_size_13" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

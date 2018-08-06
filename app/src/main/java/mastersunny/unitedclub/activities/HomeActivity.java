@@ -33,7 +33,6 @@ import retrofit2.Response;
 public class HomeActivity extends AppCompatActivity {
 
     public String TAG = HomeActivity.class.getSimpleName();
-    private BottomNavigationView bottomNavigationView;
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
     private MenuItem prevMenuItem;
@@ -151,14 +150,14 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (prevMenuItem != null) {
-                    prevMenuItem.setChecked(false);
-                } else {
-                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
-                }
-
-                bottomNavigationView.getMenu().getItem(position).setChecked(true);
-                prevMenuItem = bottomNavigationView.getMenu().getItem(position);
+//                if (prevMenuItem != null) {
+//                    prevMenuItem.setChecked(false);
+//                } else {
+//                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
+//                }
+//
+//                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+//                prevMenuItem = bottomNavigationView.getMenu().getItem(position);
             }
 
             @Override
@@ -178,24 +177,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setUpNavigationView() {
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_bottom_home:
-                        viewPager.setCurrentItem(0, true);
-                        break;
-                    case R.id.nav_bottom_saved:
-                        viewPager.setCurrentItem(1, true);
-                        break;
-                    case R.id.nav_bottom_profile:
-                        viewPager.setCurrentItem(2, true);
-                        break;
-                }
-                return true;
-            }
-        });
+
     }
 
     @Override
