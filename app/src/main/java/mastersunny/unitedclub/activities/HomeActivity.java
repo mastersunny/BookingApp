@@ -82,6 +82,11 @@ public class HomeActivity extends AppCompatActivity {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         setUpNavigationView();
         initBroadcastReceiver();
+
+        if(savedInstanceState==null){
+            fragment = new HomeFragment();
+            loadFragment(fragment);
+        }
     }
 
     @Override
