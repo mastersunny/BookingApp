@@ -88,7 +88,7 @@ public class SearchActivity extends AppCompatActivity {
         try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            String cityName = addresses.get(0).getAddressLine(0);
+            String cityName = addresses.get(0).getLocality();
             toolbar_title.setText("Where in " + cityName + "?");
             Constants.debugLog(TAG, cityName);
 
@@ -104,8 +104,6 @@ public class SearchActivity extends AppCompatActivity {
     private void initLayout() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -123,8 +121,8 @@ public class SearchActivity extends AppCompatActivity {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(SearchActivity.this.getComponentName()));
         }
 
-        searchView.setQueryHint("Search");
-        searchView.onActionViewExpanded();
+        searchView.setQueryHint("where to stay?");
+//        searchView.onActionViewExpanded();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
