@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -44,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     static final String NEW_USER = "new_user";
     private ApiInterface apiInterface;
+    private Handler mHandler;
 
     private Unbinder unbinder;
 
@@ -86,10 +88,12 @@ public class HomeActivity extends AppCompatActivity {
         setUpNavigationView();
         initBroadcastReceiver();
 
+        mHandler = new Handler();
+
         if (savedInstanceState == null) {
             fragment = new HomeFragment();
             CURRENT_FRAGMENT = HOME_FRAGMENT;
-            loadFragment(fragment);
+            loadHomeFragment(fragment);
         }
     }
 
@@ -178,6 +182,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     @OnClick({R.id.home_layout, R.id.saved_layout, R.id.booking_layout, R.id.profile_layout})
@@ -186,31 +191,45 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.home_layout:
                 fragment = new HomeFragment();
                 CURRENT_FRAGMENT = HOME_FRAGMENT;
-                loadFragment(fragment);
+                loadHomeFragment(fragment);
                 break;
             case R.id.saved_layout:
                 fragment = new PopularStoreFragment();
                 CURRENT_FRAGMENT = SAVED_FRAGMENT;
-                loadFragment(fragment);
+                loadHomeFragment(fragment);
                 break;
             case R.id.booking_layout:
                 fragment = new AllStoreFragment();
                 CURRENT_FRAGMENT = BOOKING_FRAGMENT;
-                loadFragment(fragment);
+                loadHomeFragment(fragment);
                 break;
             case R.id.profile_layout:
                 fragment = new ProfileFragment();
                 CURRENT_FRAGMENT = PROFILE_FRAGMENT;
-                loadFragment(fragment);
+                loadHomeFragment(fragment);
                 break;
         }
 
     }
 
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.content, fragment);
-        transaction.addToBackStack(CURRENT_FRAGMENT);
-        transaction.commit();
+    private void loadHomeFragment(final Fragment fragment) {
+        if (getSupportFragmentManager().findFragmentByTag(CURRENT_FRAGMENT) != null) {
+            return;
+        }
+
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.content, fragment, CURRENT_FRAGMENT);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        };
+
+        // If mPendingRunnable is not null, then add to the message queue
+        if (mPendingRunnable != null) {
+            mHandler.post(mPendingRunnable);
+        }
     }
 }
