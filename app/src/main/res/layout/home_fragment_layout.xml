@@ -25,13 +25,14 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/deli_grocery_bg" />
+                android:background="@drawable/deli_grocery_bg"
+                app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
+                app:layout_collapseMode="parallax"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
 
