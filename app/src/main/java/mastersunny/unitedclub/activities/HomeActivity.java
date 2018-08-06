@@ -16,16 +16,14 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
-
-import mastersunny.unitedclub.adapters.PagerAdapter;
 import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.Fragments.StoresFragment;
-import mastersunny.unitedclub.models.AccessModel;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.adapters.PagerAdapter;
+import mastersunny.unitedclub.models.AccessModel;
 import mastersunny.unitedclub.utils.Constants;
 import mastersunny.unitedclub.utils.NotificationUtils;
 import retrofit2.Call;
@@ -106,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(Constants.REGISTRATION_COMPLETE)) {
-                    FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC_GLOBAL);
+//                    FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC_GLOBAL);
                     displayFirebaseRegId();
 
                 } else if (intent.getAction().equals(Constants.PUSH_NOTIFICATION)) {

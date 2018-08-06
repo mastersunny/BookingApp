@@ -35,7 +35,7 @@ import mastersunny.unitedclub.utils.Constants;
 public class SplashActivity extends AppCompatActivity {
 
     public String TAG = SplashActivity.class.getSimpleName();
-    private final int SPLASH_DISPLAY_LENGTH = 100;
+    private final int SPLASH_DISPLAY_LENGTH = 10000;
     private Handler handler;
     public static int APP_REQUEST_CODE = 99;
 
@@ -47,7 +47,6 @@ public class SplashActivity extends AppCompatActivity {
 
 //        PackageInfo info;
 //        try {
-//            Constants.debugLog("TAG", "dsfkpsodkf");
 //            info = getPackageManager().getPackageInfo("com.inflack.unitel", PackageManager.GET_SIGNATURES);
 //            for (Signature signature : info.signatures) {
 //                MessageDigest md;
@@ -55,7 +54,7 @@ public class SplashActivity extends AppCompatActivity {
 //                md.update(signature.toByteArray());
 //                String something = new String(Base64.encode(md.digest(), 0));
 //                //String something = new String(Base64.encodeBytes(md.digest()));
-//                Constants.debugLog("TAG", something);
+//                Constants.("hash key", something);
 //            }
 //        } catch (PackageManager.NameNotFoundException e1) {
 //            Log.e("name not found", e1.toString());
