@@ -7,13 +7,22 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import mastersunny.unitedclub.Fragments.HomeFragment;
+import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -31,9 +40,30 @@ public class HomeActivity extends AppCompatActivity {
     private PagerAdapter pagerAdapter;
     private MenuItem prevMenuItem;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private SharedPreferences preferences;
     static final String NEW_USER = "new_user";
     private ApiInterface apiInterface;
+
+    private Unbinder unbinder;
+
+    @BindView(R.id.home_layout)
+    LinearLayout home_layout;
+
+    @BindView(R.id.saved_layout)
+    LinearLayout saved_layout;
+
+    @BindView(R.id.booking_layout)
+    LinearLayout booking_layout;
+
+    @BindView(R.id.profile_layout)
+    LinearLayout profile_layout;
+
+    private String HOME_FRAGMENT = "home_fragment";
+    private String SAVED_FRAGMENT = "saved_fragment";
+    private String BOOKING_FRAGMENT = "booking_fragment";
+    private String PROFILE_FRAGMENT = "profile_fragment";
+
+    Fragment fragment;
+
 
     public static void start(Context context, boolean isNewUser) {
         Intent intent = new Intent(context, HomeActivity.class);
@@ -47,9 +77,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.home_activity);
+        unbinder = ButterKnife.bind(this);
+
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
-        Constants.accessToken = preferences.getString(Constants.ACCESS_TOKEN, "");
         setUpNavigationView();
         initBroadcastReceiver();
     }
@@ -133,5 +163,41 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
+    @OnClick({R.id.home_layout, R.id.saved_layout, R.id.booking_layout, R.id.profile_layout})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.home_layout:
+                fragment = new HomeFragment();
+                loadFragment(fragment);
+                break;
+            case R.id.saved_layout:
+                fragment = new HomeFragment();
+                loadFragment(fragment);
+                break;
+            case R.id.booking_layout:
+                fragment = new HomeFragment();
+                loadFragment(fragment);
+                break;
+            case R.id.profile_layout:
+                fragment = new ProfileFragment();
+                loadFragment(fragment);
+                break;
+        }
+
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
