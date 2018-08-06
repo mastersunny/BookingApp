@@ -35,7 +35,7 @@ import mastersunny.unitedclub.utils.Constants;
 public class SplashActivity extends AppCompatActivity {
 
     public String TAG = SplashActivity.class.getSimpleName();
-    private final int SPLASH_DISPLAY_LENGTH = 10000;
+    private final int SPLASH_DISPLAY_LENGTH = 100;
     private Handler handler;
     public static int APP_REQUEST_CODE = 99;
 
