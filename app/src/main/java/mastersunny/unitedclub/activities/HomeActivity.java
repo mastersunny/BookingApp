@@ -21,7 +21,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import mastersunny.unitedclub.Fragments.AllStoreFragment;
 import mastersunny.unitedclub.Fragments.HomeFragment;
+import mastersunny.unitedclub.Fragments.PopularStoreFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
@@ -61,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
     private String SAVED_FRAGMENT = "saved_fragment";
     private String BOOKING_FRAGMENT = "booking_fragment";
     private String PROFILE_FRAGMENT = "profile_fragment";
+    private String CURRENT_FRAGMENT = HOME_FRAGMENT;
 
     Fragment fragment;
 
@@ -83,8 +86,9 @@ public class HomeActivity extends AppCompatActivity {
         setUpNavigationView();
         initBroadcastReceiver();
 
-        if(savedInstanceState==null){
+        if (savedInstanceState == null) {
             fragment = new HomeFragment();
+            CURRENT_FRAGMENT = HOME_FRAGMENT;
             loadFragment(fragment);
         }
     }
@@ -181,18 +185,22 @@ public class HomeActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.home_layout:
                 fragment = new HomeFragment();
+                CURRENT_FRAGMENT = HOME_FRAGMENT;
                 loadFragment(fragment);
                 break;
             case R.id.saved_layout:
-                fragment = new HomeFragment();
+                fragment = new PopularStoreFragment();
+                CURRENT_FRAGMENT = SAVED_FRAGMENT;
                 loadFragment(fragment);
                 break;
             case R.id.booking_layout:
-                fragment = new HomeFragment();
+                fragment = new AllStoreFragment();
+                CURRENT_FRAGMENT = BOOKING_FRAGMENT;
                 loadFragment(fragment);
                 break;
             case R.id.profile_layout:
                 fragment = new ProfileFragment();
+                CURRENT_FRAGMENT = PROFILE_FRAGMENT;
                 loadFragment(fragment);
                 break;
         }
@@ -201,8 +209,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content, fragment);
-        transaction.addToBackStack(null);
+        transaction.add(R.id.content, fragment);
+        transaction.addToBackStack(CURRENT_FRAGMENT);
         transaction.commit();
     }
 }
