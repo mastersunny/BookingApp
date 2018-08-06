@@ -95,6 +95,6 @@
 
     //facebook strings
     <string name="FACEBOOK_APP_ID">696380264038189</string>
-    <string name="ACCOUNT_KIT_CLIENT_TOKEN"></string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">f8a02238eede52fac438978a4d2aa843</string>
 
 </resources>
