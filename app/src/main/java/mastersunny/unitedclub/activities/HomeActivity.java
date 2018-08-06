@@ -8,15 +8,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import mastersunny.unitedclub.Fragments.HomeFragment;
-import mastersunny.unitedclub.Fragments.ProfileFragment;
-import mastersunny.unitedclub.Fragments.StoresFragment;
+
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
 import mastersunny.unitedclub.Rest.ApiInterface;
@@ -32,7 +29,6 @@ public class HomeActivity extends AppCompatActivity {
 
     public String TAG = HomeActivity.class.getSimpleName();
     private PagerAdapter pagerAdapter;
-    private ViewPager viewPager;
     private MenuItem prevMenuItem;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private SharedPreferences preferences;
@@ -54,7 +50,6 @@ public class HomeActivity extends AppCompatActivity {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         preferences = getSharedPreferences(Constants.prefs, MODE_PRIVATE);
         Constants.accessToken = preferences.getString(Constants.ACCESS_TOKEN, "");
-        setUpTabLayout(savedInstanceState);
         setUpNavigationView();
         initBroadcastReceiver();
     }
@@ -120,49 +115,6 @@ public class HomeActivity extends AppCompatActivity {
         String regId = pref.getString("regId", null);
 
         Constants.debugLog(TAG, "Firebase reg id: " + regId);
-    }
-
-    private void setUpTabLayout(Bundle savedInstanceState) {
-        viewPager = findViewById(R.id.viewPager);
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new HomeFragment(), getResources().getString(R.string.nav_home));
-            pagerAdapter.addFragment(new StoresFragment(), getResources().getString(R.string.nav_saved));
-            pagerAdapter.addFragment(new StoresFragment(), getResources().getString(R.string.nav_booking));
-            pagerAdapter.addFragment(new ProfileFragment(), getResources().getString(R.string.profile));
-        } else {
-            Integer count = savedInstanceState.getInt("tabsCount");
-            String[] titles = savedInstanceState.getStringArray("titles");
-            for (int i = 0; i < count; i++) {
-                pagerAdapter.addFragment(getFragment(i, savedInstanceState), titles[i]);
-            }
-        }
-
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-//                if (prevMenuItem != null) {
-//                    prevMenuItem.setChecked(false);
-//                } else {
-//                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
-//                }
-//
-//                bottomNavigationView.getMenu().getItem(position).setChecked(true);
-//                prevMenuItem = bottomNavigationView.getMenu().getItem(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     private Fragment getFragment(int position, Bundle savedInstanceState) {
