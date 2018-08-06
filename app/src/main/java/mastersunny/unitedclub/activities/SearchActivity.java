@@ -102,8 +102,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
     }
 
     @Override
