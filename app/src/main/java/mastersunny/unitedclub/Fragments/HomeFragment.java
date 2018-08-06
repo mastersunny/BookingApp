@@ -45,6 +45,7 @@ import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.models.SliderDTO;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.utils.Constants;
+import mastersunny.unitedclub.utils.SearchType;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -167,7 +168,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void click() {
                 if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
-
+                    SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
                 } else {
                     requestPermission(mActivity);
                 }
