@@ -130,7 +130,8 @@ public class HomeActivity extends AppCompatActivity {
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         if (savedInstanceState == null) {
             pagerAdapter.addFragment(new HomeFragment(), getResources().getString(R.string.nav_home));
-            pagerAdapter.addFragment(new StoresFragment(), getResources().getString(R.string.stores));
+            pagerAdapter.addFragment(new StoresFragment(), getResources().getString(R.string.nav_saved));
+            pagerAdapter.addFragment(new StoresFragment(), getResources().getString(R.string.nav_booking));
             pagerAdapter.addFragment(new ProfileFragment(), getResources().getString(R.string.profile));
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
