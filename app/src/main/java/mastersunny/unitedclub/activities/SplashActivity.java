@@ -1,9 +1,14 @@
 package mastersunny.unitedclub.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -15,6 +20,9 @@ import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
@@ -36,6 +44,26 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(icicle);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_layout);
+
+//        PackageInfo info;
+//        try {
+//            Constants.debugLog("TAG", "dsfkpsodkf");
+//            info = getPackageManager().getPackageInfo("com.inflack.unitel", PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures) {
+//                MessageDigest md;
+//                md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                String something = new String(Base64.encode(md.digest(), 0));
+//                //String something = new String(Base64.encodeBytes(md.digest()));
+//                Constants.debugLog("TAG", something);
+//            }
+//        } catch (PackageManager.NameNotFoundException e1) {
+//            Log.e("name not found", e1.toString());
+//        } catch (NoSuchAlgorithmException e) {
+//            Log.e("name not found", e.toString());
+//        } catch (Exception e) {
+//            Log.e("name not found", e.toString());
+//        }
 
         handler = new Handler();
 
