@@ -16,7 +16,9 @@ import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -29,6 +31,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mastersunny.unitedclub.models.CategoryDTO;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
@@ -46,6 +49,9 @@ public class SearchActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
+
+    @BindView(R.id.back_button)
+    ImageView back_button;
 
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -137,9 +143,12 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+    @OnClick
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back_button:
+                finish();
+                break;
+        }
     }
 }
