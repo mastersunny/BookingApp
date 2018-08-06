@@ -1,14 +1,9 @@
 package mastersunny.unitedclub.activities;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -18,9 +13,6 @@ import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
@@ -105,8 +97,6 @@ public class SplashActivity extends AppCompatActivity {
             } else if (loginResult.wasCancelled()) {
                 toastMessage = "Login Cancelled";
             } else {
-//                createUser();
-
                 toastMessage = "Success:" + loginResult.getAccessToken().getAccountId();
 
                 Intent mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
@@ -126,9 +116,5 @@ public class SplashActivity extends AppCompatActivity {
     protected void onDestroy() {
         handler.removeCallbacksAndMessages(null);
         super.onDestroy();
-    }
-
-    private void createUser() {
-
     }
 }
