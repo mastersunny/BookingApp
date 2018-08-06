@@ -59,16 +59,16 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                AccessToken accessToken = AccountKit.getCurrentAccessToken();
+//                AccessToken accessToken = AccountKit.getCurrentAccessToken();
 
-                if (accessToken != null) {
-                    Constants.debugLog(TAG, accessToken.getToken());
-                    Intent mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
-                    startActivity(mainIntent);
-                    finish();
-                } else {
-                    phoneLogin();
-                }
+//                if (accessToken != null) {
+//                    Constants.debugLog(TAG, accessToken.getToken());
+                Intent mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
+                startActivity(mainIntent);
+                finish();
+//                } else {
+//                    phoneLogin();
+//                }
             }
         }, SPLASH_DISPLAY_LENGTH);
     }
