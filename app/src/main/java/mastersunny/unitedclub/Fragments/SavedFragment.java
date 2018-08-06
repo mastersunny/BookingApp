@@ -24,9 +24,9 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class AllStoreFragment extends FragmentBase implements View.OnClickListener {
+public class SavedFragment extends FragmentBase implements View.OnClickListener {
 
-    public String TAG = AllStoreFragment.class.getName();
+    public String TAG = SavedFragment.class.getName();
     private Activity mActivity;
     private ArrayList<StoreDTO> storeDTOS;
     private RecyclerView popular_rv;
@@ -40,7 +40,7 @@ public class AllStoreFragment extends FragmentBase implements View.OnClickListen
 
     private void loaData() {
         try {
-            apiInterface.getAllStores(Constants.accessToken).enqueue(new Callback<List<StoreDTO>>() {
+            apiInterface.getPopularStores(Constants.accessToken).enqueue(new Callback<List<StoreDTO>>() {
                 @Override
                 public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
                     Constants.debugLog(TAG, "" + response);
@@ -70,30 +70,6 @@ public class AllStoreFragment extends FragmentBase implements View.OnClickListen
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    sendInitialRequest();
-                }
-            });
-        } else {
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onCreate() {
         storeDTOS = new ArrayList<>();
         initLayout();
@@ -114,12 +90,33 @@ public class AllStoreFragment extends FragmentBase implements View.OnClickListen
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                sendInitialRequest();
+            }
+        });
+    }
+
+    @Override
     public void sendInitialRequest() {
         if (!firstRequest) {
-            firstRequest = true;
-            swipeRefresh.setRefreshing(true);
-            refreshHandler();
-            loaData();
+//            firstRequest = true;
+//            swipeRefresh.setRefreshing(true);
+//            refreshHandler();
+//            loaData();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

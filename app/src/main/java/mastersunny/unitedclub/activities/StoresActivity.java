@@ -12,8 +12,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import mastersunny.unitedclub.adapters.PagerAdapter;
-import mastersunny.unitedclub.Fragments.AllStoreFragment;
-import mastersunny.unitedclub.Fragments.PopularStoreFragment;
+import mastersunny.unitedclub.Fragments.BookingFragment;
+import mastersunny.unitedclub.Fragments.SavedFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
 
@@ -41,8 +41,8 @@ public class StoresActivity extends AppCompatActivity implements View.OnClickLis
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new PopularStoreFragment(), "Popular");
-            pagerAdapter.addFragment(new AllStoreFragment(), "All");
+            pagerAdapter.addFragment(new SavedFragment(), "Popular");
+            pagerAdapter.addFragment(new BookingFragment(), "All");
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
             String[] titles = savedInstanceState.getStringArray("titles");

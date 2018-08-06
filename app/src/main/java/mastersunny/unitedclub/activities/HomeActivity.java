@@ -22,9 +22,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import mastersunny.unitedclub.Fragments.AllStoreFragment;
+import mastersunny.unitedclub.Fragments.BookingFragment;
 import mastersunny.unitedclub.Fragments.HomeFragment;
-import mastersunny.unitedclub.Fragments.PopularStoreFragment;
+import mastersunny.unitedclub.Fragments.SavedFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.Rest.ApiClient;
@@ -194,12 +194,12 @@ public class HomeActivity extends AppCompatActivity {
                 loadHomeFragment(fragment);
                 break;
             case R.id.saved_layout:
-                fragment = new PopularStoreFragment();
+                fragment = new SavedFragment();
                 CURRENT_FRAGMENT = SAVED_FRAGMENT;
                 loadHomeFragment(fragment);
                 break;
             case R.id.booking_layout:
-                fragment = new AllStoreFragment();
+                fragment = new BookingFragment();
                 CURRENT_FRAGMENT = BOOKING_FRAGMENT;
                 loadHomeFragment(fragment);
                 break;

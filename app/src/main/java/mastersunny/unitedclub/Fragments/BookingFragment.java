@@ -24,9 +24,9 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class PopularStoreFragment extends FragmentBase implements View.OnClickListener {
+public class BookingFragment extends FragmentBase implements View.OnClickListener {
 
-    public String TAG = PopularStoreFragment.class.getName();
+    public String TAG = BookingFragment.class.getName();
     private Activity mActivity;
     private ArrayList<StoreDTO> storeDTOS;
     private RecyclerView popular_rv;
@@ -40,7 +40,7 @@ public class PopularStoreFragment extends FragmentBase implements View.OnClickLi
 
     private void loaData() {
         try {
-            apiInterface.getPopularStores(Constants.accessToken).enqueue(new Callback<List<StoreDTO>>() {
+            apiInterface.getAllStores(Constants.accessToken).enqueue(new Callback<List<StoreDTO>>() {
                 @Override
                 public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
                     Constants.debugLog(TAG, "" + response);
@@ -70,6 +70,30 @@ public class PopularStoreFragment extends FragmentBase implements View.OnClickLi
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    sendInitialRequest();
+                }
+            });
+        } else {
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void onCreate() {
         storeDTOS = new ArrayList<>();
         initLayout();
@@ -90,17 +114,6 @@ public class PopularStoreFragment extends FragmentBase implements View.OnClickLi
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                sendInitialRequest();
-            }
-        });
-    }
-
-    @Override
     public void sendInitialRequest() {
         if (!firstRequest) {
             firstRequest = true;
@@ -108,15 +121,5 @@ public class PopularStoreFragment extends FragmentBase implements View.OnClickLi
             refreshHandler();
             loaData();
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 }
