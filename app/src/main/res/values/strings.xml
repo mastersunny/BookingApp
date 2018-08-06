@@ -7,7 +7,9 @@
     <string name="closeDrawer">close_drawer</string>
 
     <string name="nav_home">Home</string>
-    <string name="stores">Stores</string>
+    <string name="nav_saved">Saved</string>
+    <string name="nav_booking">Bookings</string>
+    <string name="nav_profile">Profile</string>
     <string name="search">Search</string>
     <string name="categories">Categories</string>
     <string name="profile">Profile</string>

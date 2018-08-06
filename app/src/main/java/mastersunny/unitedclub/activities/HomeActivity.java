@@ -185,7 +185,7 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_bottom_home:
                         viewPager.setCurrentItem(0, true);
                         break;
-                    case R.id.nav_bottom_stores:
+                    case R.id.nav_bottom_saved:
                         viewPager.setCurrentItem(1, true);
                         break;
                     case R.id.nav_bottom_profile:
