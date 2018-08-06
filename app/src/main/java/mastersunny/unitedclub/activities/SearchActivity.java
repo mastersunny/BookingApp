@@ -1,21 +1,39 @@
 package mastersunny.unitedclub.activities;
 
+import android.Manifest;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.TextView;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import mastersunny.unitedclub.models.CategoryDTO;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
+import mastersunny.unitedclub.utils.SearchType;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -24,6 +42,12 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<StoreDTO> storeDTOS;
     private ArrayList<CategoryDTO> categoryDTOS;
     private int searchType;
+    private String TAG = "SearchActivity";
+
+    @BindView(R.id.toolbar_title)
+    TextView toolbar_title;
+
+    private FusedLocationProviderClient mFusedLocationClient;
 
     public static void start(Context context, int searchType) {
         Intent intent = new Intent(context, SearchActivity.class);
@@ -37,8 +61,40 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_search);
+        ButterKnife.bind(this);
+
         getIntentData();
         initLayout();
+
+        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                getCityName(location);
+                            }
+                        }
+                    });
+        }
+
+
+    }
+
+    private void getCityName(Location location) {
+        // Logic to handle location object
+        try {
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            String cityName = addresses.get(0).getAddressLine(0);
+            toolbar_title.setText("Where in " + cityName + "?");
+            Constants.debugLog(TAG, cityName);
+
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
     }
 
     private void getIntentData() {
