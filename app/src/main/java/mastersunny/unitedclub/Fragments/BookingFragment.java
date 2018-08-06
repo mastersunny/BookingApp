@@ -116,10 +116,10 @@ public class BookingFragment extends FragmentBase implements View.OnClickListene
     @Override
     public void sendInitialRequest() {
         if (!firstRequest) {
-            firstRequest = true;
-            swipeRefresh.setRefreshing(true);
-            refreshHandler();
-            loaData();
+//            firstRequest = true;
+//            swipeRefresh.setRefreshing(true);
+//            refreshHandler();
+//            loaData();
         }
     }
 }
