@@ -46,18 +46,17 @@ dependencies {
     implementation 'com.hbb20:ccp:2.1.4'
     implementation 'com.facebook.android:account-kit-sdk:4.+'
 
-    implementation 'com.google.firebase:firebase-messaging:11.8.0'
-    implementation 'com.google.android.gms:play-services-vision:11.8.0'
-    implementation 'com.google.android.gms:play-services-maps:11.8.0'
-    implementation 'com.google.android.gms:play-services-places:11.8.0'
+    implementation 'com.google.firebase:firebase-messaging:17.1.0'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-places:15.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.1'
 
     //epoxy from airbnb
-    implementation 'com.airbnb.android:epoxy:2.14.0'
+//    implementation 'com.airbnb.android:epoxy:2.14.0'
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
-    annotationProcessor 'com.airbnb.android:epoxy-processor:2.14.0'
-    implementation 'com.airbnb.android:lottie:2.5.5'
+//    annotationProcessor 'com.airbnb.android:epoxy-processor:2.14.0'
+//    implementation 'com.airbnb.android:lottie:2.5.5'
 
 }
 apply plugin: 'com.google.gms.google-services'

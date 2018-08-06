@@ -80,7 +80,7 @@ public class SplashActivity extends AppCompatActivity {
             } else if (loginResult.wasCancelled()) {
                 toastMessage = "Login Cancelled";
             } else {
-                createUser();
+//                createUser();
 
                 toastMessage = "Success:" + loginResult.getAccessToken().getAccountId();
 
