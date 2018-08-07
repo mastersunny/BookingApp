@@ -120,13 +120,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
-
-        for (int i = 0; i < 10; i++) {
-            ExamDTO examDTO = new ExamDTO();
-            examDTO.setId(1L);
-            examDTO.setExamDate("12/12/2018");
-            examDTOList.add(examDTO);
-        }
         exam_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         examAdapter = new ExamAdapter(this, examDTOList);
         exam_rv.setAdapter(examAdapter);
