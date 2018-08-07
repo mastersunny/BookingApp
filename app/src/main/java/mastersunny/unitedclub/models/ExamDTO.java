@@ -12,9 +12,6 @@ public class ExamDTO implements Serializable {
     @SerializedName("examDate")
     private String examDate;
 
-    @SerializedName("place")
-    private PlaceDTO place;
-
     public Long getId() {
         return id;
     }
@@ -31,20 +28,11 @@ public class ExamDTO implements Serializable {
         this.examDate = examDate;
     }
 
-    public PlaceDTO getPlace() {
-        return place;
-    }
-
-    public void setPlace(PlaceDTO place) {
-        this.place = place;
-    }
-
     @Override
     public String toString() {
         return "ExamDTO{" +
                 "id=" + id +
                 ", examDate='" + examDate + '\'' +
-                ", place=" + place +
                 '}';
     }
 }

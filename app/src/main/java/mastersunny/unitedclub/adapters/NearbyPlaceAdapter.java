@@ -9,11 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.unitedclub.listeners.ClickListener;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.models.StoreDTO;
@@ -24,17 +26,18 @@ import mastersunny.unitedclub.utils.Constants;
  */
 
 public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private String TAG = "NearbyPlaceAdapter";
 
-    private ArrayList<StoreDTO> storeDTOS;
+    private List<PlaceDTO> placeDTOS;
     private Activity mActivity;
     public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
     private ClickListener clickListener;
 
-    public NearbyPlaceAdapter(Activity mActivity, ArrayList<StoreDTO> storeDTOS) {
+    public NearbyPlaceAdapter(Activity mActivity, List<PlaceDTO> placeDTOS) {
         this.mActivity = mActivity;
-        this.storeDTOS = storeDTOS;
+        this.placeDTOS = placeDTOS;
     }
 
     @Override
@@ -63,15 +66,7 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 break;
             case MAIN_ITEM:
                 MainHolder mainHolder = (MainHolder) holder;
-                final StoreDTO storeDTO = storeDTOS.get(position - 1);
-                String imgUrl = ApiClient.BASE_URL + "" + storeDTO.getImageUrl();
-                Constants.loadImage(mActivity, imgUrl, mainHolder.place_image);
-                mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        StoresDetailsActivity.start(view.getContext(), storeDTO);
-                    }
-                });
+                final PlaceDTO dto = placeDTOS.get(position - 1);
 
                 break;
         }
@@ -88,7 +83,7 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return storeDTOS == null ? 1 : storeDTOS.size() + 1;
+        return placeDTOS == null ? 1 : placeDTOS.size() + 1;
     }
 
     static class MainHolder extends RecyclerView.ViewHolder {
@@ -106,9 +101,6 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     static class HeaderHolder extends RecyclerView.ViewHolder {
-
-        private TextView view_all;
-
         public HeaderHolder(View itemView) {
             super(itemView);
         }

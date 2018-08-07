@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import mastersunny.unitedclub.listeners.ClickListener;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.activities.SearchActivity;
@@ -60,18 +61,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public String TAG = "HomeFragment";
     private Activity mActivity;
     private View view;
-    //    private ViewPager viewPager;
     private Toolbar toolbar;
-    private NearbyPlaceAdapter nearbyPlaceAdapter;
-    private RecyclerView nearby_rv;
-    private ArrayList<StoreDTO> storeDTOS;
-    //    private TextView search_text;
     private AppBarLayout appBarLayout;
-    private AutoScrollAdapter autoScrollAdapter;
-    private ArrayList<SliderDTO> autoScrollList;
-    private ApiInterface apiService;
-
-
+    private ApiInterface apiInterface;
     private Unbinder unbinder;
 
     @BindView(R.id.recommended_rv)
@@ -83,6 +75,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     RecyclerView offer_rv;
     private List<OfferDTO> offerDTOS;
     private OfferAdapter offerAdapter;
+
+    @BindView(R.id.nearby_rv)
+    RecyclerView nearby_rv;
+    private List<PlaceDTO> placeDTOS;
+    private NearbyPlaceAdapter nearbyPlaceAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -96,17 +93,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (view == null) {
             view = inflater.inflate(R.layout.home_fragment_layout, container, false);
             unbinder = ButterKnife.bind(this, view);
+            apiInterface = ApiClient.createService(getActivity(), ApiInterface.class);
 
             roomDTOList = new ArrayList<>();
             offerDTOS = new ArrayList<>();
+            placeDTOS = new ArrayList<>();
 
-            apiService = ApiClient.getClient().create(ApiInterface.class);
-            storeDTOS = new ArrayList<>();
-            autoScrollList = new ArrayList<>();
             initLayout();
-//            loadData();
-
-
         }
 
         return view;
@@ -116,29 +109,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    private void loadData() {
-        try {
-            apiService.getPopularStores(Constants.accessToken).enqueue(new Callback<List<StoreDTO>>() {
-                @Override
-                public void onResponse(Call<List<StoreDTO>> call, Response<List<StoreDTO>> response) {
-                    Constants.debugLog(TAG, "" + response.body());
-                    if (response.isSuccessful() & response.body() != null) {
-                        storeDTOS.addAll(response.body());
-                        nearbyPlaceAdapter.notifyDataSetChanged();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<StoreDTO>> call, Throwable t) {
-
-                }
-            });
-
-        } catch (Exception e) {
-            Constants.debugLog(TAG, "Error in load data " + e.getMessage());
-        }
     }
 
     private void initLayout() {
@@ -152,17 +122,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        for (int i = 0; i < 10; i++) {
-            StoreDTO storeDTO = new StoreDTO();
-            storeDTO.setStoreName("adpaokfp");
-            storeDTO.setStoreId(i);
-            storeDTOS.add(storeDTO);
-        }
-
-        nearby_rv = view.findViewById(R.id.nearby_rv);
         nearby_rv.setNestedScrollingEnabled(false);
         nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
-        nearbyPlaceAdapter = new NearbyPlaceAdapter(mActivity, storeDTOS);
+        nearbyPlaceAdapter = new NearbyPlaceAdapter(mActivity, placeDTOS);
         nearby_rv.setAdapter(nearbyPlaceAdapter);
         nearbyPlaceAdapter.setClickListener(new ClickListener() {
             @Override
@@ -240,37 +202,43 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constants.REQUEST_LOCATION) {
             if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+                SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
             }
         }
     }
 
-    public static final int BARCODE_READER_REQUEST_CODE = 101;
+    private void loadData() {
+        apiInterface.getPlaces(0, 10, "").enqueue(new Callback<List<PlaceDTO>>() {
+            @Override
+            public void onResponse(Call<List<PlaceDTO>> call, Response<List<PlaceDTO>> response) {
 
-    private void getStoreByCode(String QRCode) {
-        try {
-            apiService.getStoreByCode(QRCode, Constants.accessToken).enqueue(new Callback<StoreDTO>() {
-                @Override
-                public void onResponse(Call<StoreDTO> call, Response<StoreDTO> response) {
-                    if (response != null && response.body() != null) {
-                        Constants.debugLog(TAG, response.body().toString());
-                        StoresDetailsActivity.start(mActivity, response.body());
-                    }
-                }
+                Constants.debugLog(TAG, response + "");
 
-                @Override
-                public void onFailure(Call<StoreDTO> call, Throwable t) {
-                    Constants.debugLog(TAG, t.getMessage());
+                if (response.isSuccessful()) {
+                    placeDTOS.clear();
+                    placeDTOS.addAll(response.body());
+                    notifyPlaceAdapter();
                 }
-            });
-        } catch (Exception e) {
-            Constants.debugLog(TAG, e.getMessage());
+            }
+
+            @Override
+            public void onFailure(Call<List<PlaceDTO>> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+            }
+        });
+    }
+
+    private void notifyPlaceAdapter() {
+        if (nearbyPlaceAdapter != null) {
+            nearbyPlaceAdapter.notifyDataSetChanged();
         }
     }
+
 
     @Override
     public void onResume() {
         super.onResume();
+        loadData();
     }
 
     @Override

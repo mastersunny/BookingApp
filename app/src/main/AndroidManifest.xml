@@ -88,6 +88,8 @@
         <activity android:name=".activities.RegistrationActivity" />
         <activity android:name=".activities.TransactionDetailsActivity" />
 
+        <activity android:name=".activities.LoginActivity" />
+
         <!-- Firebase Notifications -->
         <!--<service android:name=".services.MyFirebaseMessagingService">-->
         <!--<intent-filter>-->

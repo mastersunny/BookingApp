@@ -8,11 +8,9 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -34,22 +32,19 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mastersunny.unitedclub.adapters.ExamAdapter;
-import mastersunny.unitedclub.models.CategoryDTO;
-import mastersunny.unitedclub.models.ExamDTO;
-import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.adapters.ExamAdapter;
+import mastersunny.unitedclub.models.ExamDTO;
+import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
-import mastersunny.unitedclub.utils.SearchType;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private android.support.v7.widget.Toolbar toolbar;
-    private SearchView searchView;
-    private ArrayList<StoreDTO> storeDTOS;
-    private ArrayList<CategoryDTO> categoryDTOS;
-    private int searchType;
     private String TAG = "SearchActivity";
+    private SearchView searchView;
+    private int searchType;
+    private ApiInterface apiInterface;
 
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
@@ -79,6 +74,7 @@ public class SearchActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
+        apiInterface = ApiClient.createService(this, ApiInterface.class);
 
         examDTOList = new ArrayList<>();
         getIntentData();
@@ -90,19 +86,17 @@ public class SearchActivity extends AppCompatActivity {
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
                             if (location != null) {
                                 getCityName(location);
                             }
                         }
                     });
-        }
 
+        }
 
     }
 
     private void getCityName(Location location) {
-        // Logic to handle location object
         try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
@@ -125,7 +119,7 @@ public class SearchActivity extends AppCompatActivity {
         exam_rv.setAdapter(examAdapter);
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -155,7 +149,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         return true;
-    }
+    }*/
 
     @OnClick
     public void onClick(View v) {

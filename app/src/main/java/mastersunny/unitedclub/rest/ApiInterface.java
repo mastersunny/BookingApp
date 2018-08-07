@@ -6,6 +6,7 @@ import mastersunny.unitedclub.models.AccessModel;
 import mastersunny.unitedclub.models.CategoryDTO;
 import mastersunny.unitedclub.models.MoviesResponse;
 import mastersunny.unitedclub.models.OfferDTO;
+import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.models.RestModel;
 import mastersunny.unitedclub.models.SliderDTO;
 import mastersunny.unitedclub.models.StoreDTO;
@@ -123,6 +124,11 @@ public interface ApiInterface {
     @POST(ApiClient.APP_NAME + "api/login")
     @FormUrlEncoded
     Call<UserDTO> login(@Field("access_token") String accessToken);
+
+    @GET(ApiClient.APP_NAME + "api/places")
+    Call<List<PlaceDTO>> getPlaces(@Query("page") int page,
+                                   @Query("size") int size,
+                                   @Query("sort") String sort);
 
 
 }
