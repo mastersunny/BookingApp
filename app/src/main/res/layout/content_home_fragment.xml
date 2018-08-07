@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_5"
-                android:layout_marginLeft="@dimen/margin_5"
+                android:layout_marginLeft="@dimen/margin_1"
                 android:text="@string/popular_text" />
 
             <android.support.v7.widget.RecyclerView
@@ -52,7 +52,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:orientation="vertical"
             android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:layout_marginLeft="@dimen/margin_1"
+                android:text="@string/offer_text" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/offer_rv"
