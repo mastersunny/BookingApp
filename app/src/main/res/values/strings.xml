@@ -103,4 +103,5 @@
     <string name="check_out_time">11AM</string>
     <string name="check_in_person_count">1 Adult</string>
     <string name="number_prompt">We need your number to communicate\nwith you. Please login with your\nphone number</string>
+    <string name="popular_text">Popular!</string>
 </resources>

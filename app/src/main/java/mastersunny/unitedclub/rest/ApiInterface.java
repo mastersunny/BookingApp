@@ -125,7 +125,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<UserDTO> login(@Field("access_token") String accessToken);
 
-    @GET(ApiClient.APP_NAME + "api/places")
+    @GET(ApiClient.APP_NAME + "api/v1/places")
     Call<List<PlaceDTO>> getPlaces(@Query("page") int page,
                                    @Query("size") int size,
                                    @Query("sort") String sort);
