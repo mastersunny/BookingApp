@@ -208,7 +208,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadData() {
-        apiInterface.getPlaces(0, 10, "").enqueue(new Callback<List<PlaceDTO>>() {
+        apiInterface.getPlaces(0, 10, "id,desc").enqueue(new Callback<List<PlaceDTO>>() {
             @Override
             public void onResponse(Call<List<PlaceDTO>> call, Response<List<PlaceDTO>> response) {
 
