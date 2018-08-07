@@ -29,6 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import mastersunny.unitedclub.adapters.PlaceAdapter;
 import mastersunny.unitedclub.listeners.ClickListener;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.models.PlaceDTO;
@@ -36,15 +37,10 @@ import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.activities.StoresActivity;
-import mastersunny.unitedclub.activities.StoresDetailsActivity;
-import mastersunny.unitedclub.adapters.AutoScrollAdapter;
-import mastersunny.unitedclub.adapters.NearbyPlaceAdapter;
 import mastersunny.unitedclub.adapters.OfferAdapter;
 import mastersunny.unitedclub.adapters.RecommendedAdapter;
 import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.models.RoomDTO;
-import mastersunny.unitedclub.models.SliderDTO;
-import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.utils.Constants;
 import mastersunny.unitedclub.utils.SearchType;
 import retrofit2.Call;
@@ -79,7 +75,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.nearby_rv)
     RecyclerView nearby_rv;
     private List<PlaceDTO> placeDTOS;
-    private NearbyPlaceAdapter nearbyPlaceAdapter;
+    private PlaceAdapter placeAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -124,9 +120,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         nearby_rv.setNestedScrollingEnabled(false);
         nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
-        nearbyPlaceAdapter = new NearbyPlaceAdapter(mActivity, placeDTOS);
-        nearby_rv.setAdapter(nearbyPlaceAdapter);
-        nearbyPlaceAdapter.setClickListener(new ClickListener() {
+        placeAdapter = new PlaceAdapter(mActivity, placeDTOS);
+        nearby_rv.setAdapter(placeAdapter);
+        placeAdapter.setClickListener(new ClickListener() {
             @Override
             public void click() {
                 if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -229,8 +225,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void notifyPlaceAdapter() {
-        if (nearbyPlaceAdapter != null) {
-            nearbyPlaceAdapter.notifyDataSetChanged();
+        if (placeAdapter != null) {
+            placeAdapter.notifyDataSetChanged();
         }
     }
 

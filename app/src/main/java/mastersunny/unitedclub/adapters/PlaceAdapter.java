@@ -25,9 +25,9 @@ import mastersunny.unitedclub.utils.Constants;
  * Created by sunnychowdhury on 1/19/18.
  */
 
-public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private String TAG = "NearbyPlaceAdapter";
+    private String TAG = "PlaceAdapter";
 
     private List<PlaceDTO> placeDTOS;
     private Activity mActivity;
@@ -35,7 +35,7 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public static final int MAIN_ITEM = 2;
     private ClickListener clickListener;
 
-    public NearbyPlaceAdapter(Activity mActivity, List<PlaceDTO> placeDTOS) {
+    public PlaceAdapter(Activity mActivity, List<PlaceDTO> placeDTOS) {
         this.mActivity = mActivity;
         this.placeDTOS = placeDTOS;
     }
@@ -67,7 +67,7 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case MAIN_ITEM:
                 MainHolder mainHolder = (MainHolder) holder;
                 final PlaceDTO dto = placeDTOS.get(position - 1);
-
+                mainHolder.place_name.setText(dto.getName());
                 break;
         }
     }
