@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nearby_layout"
+    android:id="@+id/round_item_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
@@ -12,15 +12,19 @@
 
     <mastersunny.unitedclub.utils.CircleImageView
         android:id="@+id/place_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@color/colorAccent" />
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:src="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/place_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/margin_5"
-        android:text="@string/nearby_text" />
+        android:maxLines="1"
+        android:text="Nearby"
+        android:textSize="@dimen/text_size_10" />
 
 </LinearLayout>
