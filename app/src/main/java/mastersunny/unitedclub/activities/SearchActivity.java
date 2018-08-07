@@ -13,6 +13,8 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +34,9 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mastersunny.unitedclub.adapters.ExamAdapter;
 import mastersunny.unitedclub.models.CategoryDTO;
+import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
@@ -53,6 +57,13 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.back_button)
     ImageView back_button;
 
+    @BindView(R.id.exam_rv)
+    RecyclerView exam_rv;
+
+    ExamAdapter examAdapter;
+
+    private List<ExamDTO> examDTOList;
+
     private FusedLocationProviderClient mFusedLocationClient;
 
     public static void start(Context context, int searchType) {
@@ -69,6 +80,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
+        examDTOList = new ArrayList<>();
         getIntentData();
         initLayout();
 
@@ -109,6 +121,15 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initLayout() {
 
+        for (int i = 0; i < 10; i++) {
+            ExamDTO examDTO = new ExamDTO();
+            examDTO.setId(1L);
+            examDTO.setExamDate("12/12/2018");
+            examDTOList.add(examDTO);
+        }
+        exam_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        examAdapter = new ExamAdapter(this, examDTOList);
+        exam_rv.setAdapter(examAdapter);
     }
 
     @Override
