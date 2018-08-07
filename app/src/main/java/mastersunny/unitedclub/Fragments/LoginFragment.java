@@ -81,6 +81,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sms_login:
+                Constants.debugLog(TAG,"afsdpofkdsop");
                 if (!PermissionUtils.hasPermissions(getContext(), PermissionUtils.PERMISSION_SMS)) {
                     requestPermissions(PermissionUtils.PERMISSION_SMS, Constants.PERMISSION_READ_SMS);
                 } else {
