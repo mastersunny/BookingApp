@@ -1,61 +1,65 @@
 package mastersunny.unitedclub.models;
 
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-/**
- * Created by ASUS on 1/25/2018.
- */
 
 public class UserDTO implements Serializable {
-    @SerializedName("user_id")
-    private int userId;
-    @SerializedName("store_id")
-    private int storeId;
-    @SerializedName("first_name")
-    private String firstName;
-    @SerializedName("last_name")
-    private String lastName;
+
+    private static final long serialVersionUID = 1L;
+
+    @SerializedName("id")
+    private Long id;
+
+    @SerializedName("name")
+    private String name;
+
     @SerializedName("email")
     private String email;
-    @SerializedName("phone_number")
+
+    @SerializedName("phoneNumber")
     private String phoneNumber;
-    @SerializedName("image")
-    private String imgUrl;
-    @SerializedName("access_token")
-    private String accessToken;
 
-    public int getUserId() {
-        return userId;
+    @SerializedName("enabled")
+    private boolean enabled;
+
+    @SerializedName("profileImage")
+    private String profileImage;
+
+    @SerializedName("createdAt")
+    private String createdAt;
+
+    @SerializedName("createdBy")
+    private Long createdBy;
+
+    @SerializedName("updatedAt")
+    private String updatedAt;
+
+    @SerializedName("updatedBy")
+    private Long updatedBy;
+
+    @SerializedName("deleted")
+    private boolean deleted;
+
+    @SerializedName("defaultAgent")
+    private boolean defaultAgent;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public int getStoreId() {
-        return storeId;
+    public String getName() {
+        return name;
     }
 
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -74,33 +78,85 @@ public class UserDTO implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getProfileImage() {
+        return profileImage;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Long getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Long getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public boolean isDefaultAgent() {
+        return defaultAgent;
+    }
+
+    public void setDefaultAgent(boolean defaultAgent) {
+        this.defaultAgent = defaultAgent;
     }
 
     @Override
     public String toString() {
         return "UserDTO{" +
-                "userId=" + userId +
-                ", storeId=" + storeId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", accessToken='" + accessToken + '\'' +
+                ", enabled=" + enabled +
+                ", profileImage='" + profileImage + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", createdBy=" + createdBy +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", updatedBy=" + updatedBy +
+                ", deleted=" + deleted +
+                ", defaultAgent=" + defaultAgent +
                 '}';
     }
 }

@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import mastersunny.unitedclub.activities.TransactionDetailsActivity;
 import mastersunny.unitedclub.models.TransactionDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiInterface;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
@@ -45,7 +45,7 @@ public class PendingTransactionAdapter extends RecyclerView.Adapter<PendingTrans
     public void onBindViewHolder(MainHolder holder, int position) {
         if (transactionDTOS != null) {
             final TransactionDTO dto = transactionDTOS.get(position);
-            holder.client_name.setText(dto.getUserDTO().getFirstName());
+            holder.client_name.setText(dto.getUserDTO().getName());
             holder.transaction_date.setText(dto.getTransactionDate());
             holder.total_amount.setText(dto.getAmount() + "");
             holder.itemView.setOnClickListener(new View.OnClickListener() {

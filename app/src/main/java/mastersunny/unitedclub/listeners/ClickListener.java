@@ -1,4 +1,4 @@
-package mastersunny.unitedclub.Listener;
+package mastersunny.unitedclub.listeners;
 
 public interface ClickListener {
 

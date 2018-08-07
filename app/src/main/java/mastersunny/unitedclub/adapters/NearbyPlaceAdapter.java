@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mastersunny.unitedclub.Listener.ClickListener;
+import mastersunny.unitedclub.listeners.ClickListener;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.utils.Constants;

@@ -17,12 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import mastersunny.unitedclub.Listener.ConfirmListener;
+import mastersunny.unitedclub.listeners.ConfirmListener;
 import mastersunny.unitedclub.models.RestModel;
 import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;

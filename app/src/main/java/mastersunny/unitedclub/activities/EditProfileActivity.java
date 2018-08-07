@@ -34,8 +34,8 @@ import java.sql.Timestamp;
 import mastersunny.unitedclub.models.RestModel;
 import mastersunny.unitedclub.models.UserDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.CircleImageView;
 import mastersunny.unitedclub.utils.Constants;
 import okhttp3.MediaType;
@@ -108,11 +108,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void updateInfo() {
-        first_name.setText(userDTO.getFirstName());
-        last_name.setText(userDTO.getLastName());
+        first_name.setText(userDTO.getName());
+        last_name.setText(userDTO.getName());
         email.setText(userDTO.getEmail());
-        if (!TextUtils.isEmpty(userDTO.getImgUrl())) {
-            String imgUrl = ApiClient.BASE_URL + "" + userDTO.getImgUrl();
+        if (!TextUtils.isEmpty(userDTO.getProfileImage())) {
+            String imgUrl = ApiClient.BASE_URL + "" + userDTO.getProfileImage();
             Constants.loadImage(EditProfileActivity.this, imgUrl, profile_image);
         }
     }
@@ -318,7 +318,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     if (response != null && response.isSuccessful() && response.body() != null &&
                             response.body().getMetaData().isSuccess()) {
                         Constants.debugLog(TAG, response.body().getMetaData().toString());
-                        Constants.loadImage(EditProfileActivity.this, ApiClient.BASE_URL + response.body().getUserDTO().getImgUrl(),
+                        Constants.loadImage(EditProfileActivity.this, ApiClient.BASE_URL + response.body().getUserDTO().getProfileImage(),
                                 profile_image);
                     }
                 }

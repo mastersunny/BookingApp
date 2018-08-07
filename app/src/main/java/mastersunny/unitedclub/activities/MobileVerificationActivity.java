@@ -21,8 +21,8 @@ import android.widget.TextView;
 import mastersunny.unitedclub.models.RestModel;
 import mastersunny.unitedclub.models.UserDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -223,7 +223,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                         if (response.body().getMetaData().isData()) {
                             UserDTO userDTO = response.body().getUserDTO();
                             Constants.debugLog(TAG, userDTO.toString());
-                            editor.putString(Constants.ACCESS_TOKEN, userDTO.getAccessToken());
+                            editor.putString(Constants.ACCESS_TOKEN, userDTO.getEmail());
                             editor.apply();
                             startActivity(new Intent(MobileVerificationActivity.this, HomeActivity.class));
                         } else {

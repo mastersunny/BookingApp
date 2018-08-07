@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import mastersunny.unitedclub.models.TransactionDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -133,7 +133,7 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
         }
         store_name.setText(transactionDTO.getOfferDTO().getStoreDTO().getStoreName());
         offer_details.setText(transactionDTO.getOfferDTO().getOffer());
-        client_name.setText(transactionDTO.getUserDTO().getFirstName() + " " + transactionDTO.getUserDTO().getLastName());
+        client_name.setText(transactionDTO.getUserDTO().getName() + " " + transactionDTO.getUserDTO().getName());
         email.setText(transactionDTO.getUserDTO().getEmail());
         phone_number.setText(transactionDTO.getUserDTO().getPhoneNumber());
         transaction_date.setText(transactionDTO.getTransactionDate());

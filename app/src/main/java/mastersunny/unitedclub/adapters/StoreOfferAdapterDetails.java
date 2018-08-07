@@ -18,7 +18,7 @@ import mastersunny.unitedclub.activities.ItemDetailsActivity;
 import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.utils.Constants;
 
 /**

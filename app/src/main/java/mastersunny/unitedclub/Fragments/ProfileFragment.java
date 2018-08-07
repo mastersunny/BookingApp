@@ -26,8 +26,8 @@ import mastersunny.unitedclub.models.RestModel;
 import mastersunny.unitedclub.models.TransactionDTO;
 import mastersunny.unitedclub.models.UserDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
-import mastersunny.unitedclub.Rest.ApiInterface;
+import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.CircleImageView;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
@@ -119,9 +119,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updateProfile(UserDTO userDTO) {
-        user_name.setText(userDTO.getFirstName() + " " + userDTO.getLastName());
-        if (!TextUtils.isEmpty(userDTO.getImgUrl())) {
-            String imgUrl = ApiClient.BASE_URL + userDTO.getImgUrl();
+        user_name.setText(userDTO.getName() + " " + userDTO.getName());
+        if (!TextUtils.isEmpty(userDTO.getProfileImage())) {
+            String imgUrl = ApiClient.BASE_URL + userDTO.getCreatedAt();
             Constants.loadImage(mActivity, imgUrl, profile_image);
         }
     }

@@ -24,4 +24,6 @@
     <color name="dark_grey">#888888</color>
     <color name="green">#008000</color>
     <color name="red">#FF0000</color>
+    <color name="background_color">#f4f6fd</color>
+    <color name="toolbar_text_color">#242529</color>
 </resources>

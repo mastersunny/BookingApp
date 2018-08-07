@@ -1,4 +1,4 @@
-package mastersunny.unitedclub.Listener;
+package mastersunny.unitedclub.listeners;
 
 /**
  * Created by ASUS on 2/24/2018.

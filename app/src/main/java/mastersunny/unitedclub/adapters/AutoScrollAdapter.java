@@ -13,7 +13,7 @@ import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.models.SliderDTO;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.Rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.utils.Constants;
 
 /**

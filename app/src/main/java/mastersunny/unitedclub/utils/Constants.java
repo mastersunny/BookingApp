@@ -19,7 +19,7 @@ import com.bumptech.glide.request.target.ViewTarget;
 
 import java.io.File;
 
-import mastersunny.unitedclub.Listener.ConfirmListener;
+import mastersunny.unitedclub.listeners.ConfirmListener;
 import mastersunny.unitedclub.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -69,7 +69,8 @@ public class Constants {
     public static String accessToken = "abcd";
     public static final String TRANSACTION_DTO = "transaction_dto";
 
-    public static final int REQUEST_LOCATION = 111;
+    public static final String PREF_COOKIES = "pref_cookies";
+
 
     public static Typeface getRegularFace(Context context) {
         Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_regular.otf");
@@ -208,4 +209,8 @@ public class Constants {
         });
         dialog.show();
     }
+
+    public static final int REQUEST_LOCATION = 111;
+    public static final int PERMISSION_READ_SMS = 222;
+    public static int REQUEST_FACEBOOK_LOGIN_CODE = 199;
 }

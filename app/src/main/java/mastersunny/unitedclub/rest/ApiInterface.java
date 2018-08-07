@@ -1,4 +1,4 @@
-package mastersunny.unitedclub.Rest;
+package mastersunny.unitedclub.rest;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import mastersunny.unitedclub.models.RestModel;
 import mastersunny.unitedclub.models.SliderDTO;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.models.TransactionDTO;
+import mastersunny.unitedclub.models.UserDTO;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -117,6 +118,11 @@ public interface ApiInterface {
     @GET("api/get_profile")
     Call<RestModel> getProfileDetails(@Query("access_token") String accessToken);
     ///user details
+
+
+    @POST(ApiClient.APP_NAME + "api/login")
+    @FormUrlEncoded
+    Call<UserDTO> login(@Field("access_token") String accessToken);
 
 
 }
