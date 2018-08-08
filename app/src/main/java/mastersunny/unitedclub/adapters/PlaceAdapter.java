@@ -31,7 +31,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private List<PlaceDTO> placeDTOS;
     private Activity mActivity;
-    public static final int HEADER_ITEM = 1;
+//    public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
     private ClickListener clickListener;
 
@@ -42,31 +42,31 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == HEADER_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nearby_item_header, parent, false);
-            return new HeaderHolder(view);
-        } else {
+//        if (viewType == HEADER_ITEM) {
+//            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nearby_item_header, parent, false);
+//            return new HeaderHolder(view);
+//        } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nearby_item_layout, parent, false);
             return new MainHolder(view);
-        }
+//        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
-            case HEADER_ITEM:
-                HeaderHolder headerHolder = (HeaderHolder) holder;
-                headerHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (clickListener != null)
-                            clickListener.click();
-                    }
-                });
-                break;
+//            case HEADER_ITEM:
+//                HeaderHolder headerHolder = (HeaderHolder) holder;
+//                headerHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (clickListener != null)
+//                            clickListener.click();
+//                    }
+//                });
+//                break;
             case MAIN_ITEM:
                 MainHolder mainHolder = (MainHolder) holder;
-                final PlaceDTO dto = placeDTOS.get(position - 1);
+                final PlaceDTO dto = placeDTOS.get(position);
                 mainHolder.place_name.setText(dto.getName());
                 break;
         }
@@ -74,16 +74,17 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return HEADER_ITEM;
-        } else {
+//        if (position == 0) {
+//            return HEADER_ITEM;
+//        } else {
             return MAIN_ITEM;
-        }
+//        }
     }
 
     @Override
     public int getItemCount() {
-        return placeDTOS == null ? 1 : placeDTOS.size() + 1;
+//        return placeDTOS == null ? 1 : placeDTOS.size() + 1;
+        return placeDTOS == null ? 0 : placeDTOS.size();
     }
 
     static class MainHolder extends RecyclerView.ViewHolder {
