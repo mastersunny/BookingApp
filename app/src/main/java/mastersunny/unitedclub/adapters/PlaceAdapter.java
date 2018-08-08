@@ -74,7 +74,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SearchActivity.start(v.getContext(), (ArrayList<ExamDTO>) dto.getExams(), SearchType.TYPE_PLACE.getStatus());
+                        SearchActivity.start(v.getContext(), dto, SearchType.TYPE_PLACE.getStatus());
                     }
                 });
                 break;

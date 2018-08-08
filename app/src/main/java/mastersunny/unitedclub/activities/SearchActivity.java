@@ -40,6 +40,7 @@ import butterknife.OnClick;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.adapters.ExamAdapter;
 import mastersunny.unitedclub.models.ExamDTO;
+import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
@@ -62,14 +63,14 @@ public class SearchActivity extends AppCompatActivity {
 
     ExamAdapter examAdapter;
 
-    private ArrayList<ExamDTO> examDTOList;
+    private PlaceDTO placeDTO;
 
     private FusedLocationProviderClient mFusedLocationClient;
 
-    public static void start(Context context, ArrayList<ExamDTO> examDTOList, int searchType) {
+    public static void start(Context context, PlaceDTO placeDTO, int searchType) {
         Intent intent = new Intent(context, SearchActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.EXAM_DTO_LIST, examDTOList);
+        intent.putExtra(Constants.EXAM_DTO_LIST, placeDTO);
         intent.putExtra(Constants.SEARCH_TYPE, searchType);
         context.startActivity(intent);
     }
@@ -81,23 +82,22 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
-        examDTOList = new ArrayList<>();
         getIntentData();
         initLayout();
 
-        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-            mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                getCityName(location);
-                            }
-                        }
-                    });
-
-        }
+//        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+//            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//            mFusedLocationClient.getLastLocation()
+//                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//                        @Override
+//                        public void onSuccess(Location location) {
+//                            if (location != null) {
+//                                getCityName(location);
+//                            }
+//                        }
+//                    });
+//
+//        }
 
     }
 
@@ -116,13 +116,15 @@ public class SearchActivity extends AppCompatActivity {
 
     private void getIntentData() {
         searchType = getIntent().getIntExtra(Constants.SEARCH_TYPE, 0);
-        examDTOList = (ArrayList<ExamDTO>) getIntent().getSerializableExtra(Constants.EXAM_DTO_LIST);
+        placeDTO = (PlaceDTO) getIntent().getSerializableExtra(Constants.EXAM_DTO_LIST);
     }
 
     private void initLayout() {
         exam_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        examAdapter = new ExamAdapter(this, examDTOList);
+        examAdapter = new ExamAdapter(this, placeDTO.getExams());
         exam_rv.setAdapter(examAdapter);
+
+        toolbar_title.setText("Where in " + placeDTO.getName() + "?");
     }
 
     /*@Override
