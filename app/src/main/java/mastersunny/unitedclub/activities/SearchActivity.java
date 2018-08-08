@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -41,6 +42,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -58,7 +60,7 @@ import mastersunny.unitedclub.utils.Constants;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private String TAG = "SearchActivity";
+    private static String TAG = "SearchActivity";
     private SearchView searchView;
     private int searchType;
     private ApiInterface apiInterface;
@@ -284,6 +286,13 @@ public class SearchActivity extends AppCompatActivity {
 
         public void populateSetDate(int year, int month, int day) {
 //            dob.setText(month+"/"+day+"/"+year);
+            try {
+                String dateInString = String.format("%02d", day) + "-" + String.format("%02d", month) + "-" + year;
+                Date date = Constants.sdf.parse(dateInString);
+                Constants.debugLog(TAG, date.toString());
+            } catch (Exception e) {
+                Constants.debugLog(TAG, e.getMessage());
+            }
         }
 
     }

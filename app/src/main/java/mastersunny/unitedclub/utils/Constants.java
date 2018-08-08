@@ -18,6 +18,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 
 import mastersunny.unitedclub.listeners.ConfirmListener;
 import mastersunny.unitedclub.R;
@@ -31,6 +32,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class Constants {
 
     public static boolean debugOn = true;
+
+    public static final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
 
     public static String TITLE = "title";
     public static String MESSAGE = "message";
