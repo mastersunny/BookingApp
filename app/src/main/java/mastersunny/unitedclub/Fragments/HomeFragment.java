@@ -125,12 +125,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         placeAdapter = new PlaceAdapter(mActivity, placeDTOS);
         nearby_rv.setAdapter(placeAdapter);
-//        placeAdapter.setClickListener(new ClickListener() {
-//            @Override
-//            public void click() {
-//
-//            }
-//        });
 
         for (int i = 0; i < 10; i++) {
             RoomDTO roomDTO = new RoomDTO();
@@ -197,7 +191,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constants.REQUEST_LOCATION) {
             if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Constants.debugLog(TAG, "Location permission taken");
+//                SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
             }
         }
     }
@@ -234,11 +228,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         loadData();
-        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            Constants.debugLog(TAG, "Location permission taken");
-        } else {
-            requestPermission(mActivity);
-        }
     }
 
     @Override
