@@ -125,16 +125,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         placeAdapter = new PlaceAdapter(mActivity, placeDTOS);
         nearby_rv.setAdapter(placeAdapter);
-        placeAdapter.setClickListener(new ClickListener() {
-            @Override
-            public void click() {
-                if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
-//                    SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
-                } else {
-                    requestPermission(mActivity);
-                }
-            }
-        });
 
         for (int i = 0; i < 10; i++) {
             RoomDTO roomDTO = new RoomDTO();
@@ -238,6 +228,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         loadData();
+        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
+//                    SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
+        } else {
+            requestPermission(mActivity);
+        }
     }
 
     @Override
