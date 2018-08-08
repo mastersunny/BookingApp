@@ -39,6 +39,10 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/GOOGLE_PLACE_API_KEY" />
+
         <activity
             android:name=".activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
