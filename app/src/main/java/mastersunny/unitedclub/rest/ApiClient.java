@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
     public static String TAG = "ApiClient";
 
-    public static String serverUrl = "http://258f2a0b.ngrok.io/";
+    public static String serverUrl = "http://788d2d04.ngrok.io/";
     public static final String BASE_URL = serverUrl;
     public static final String APP_NAME = "unitel/";
 
