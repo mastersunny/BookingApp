@@ -69,6 +69,28 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.back_button)
     LinearLayout back_button;
 
+    @BindView(R.id.start_date_layout)
+    LinearLayout start_date_layout;
+
+    @BindView(R.id.end_date_layout)
+    LinearLayout end_date_layout;
+
+    @BindView(R.id.room_person_layout)
+    LinearLayout room_person_layout;
+
+    @BindView(R.id.startDate)
+    TextView startDate;
+
+    @BindView(R.id.endDate)
+    TextView endDate;
+
+    @BindView(R.id.room_count)
+    TextView room_count;
+
+    @BindView(R.id.person_count)
+    TextView person_count;
+
+
     @BindView(R.id.exam_rv)
     RecyclerView exam_rv;
 
@@ -182,7 +204,8 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }*/
 
-    @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title})
+    @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title, R.id.start_date_layout,
+            R.id.end_date_layout, R.id.room_person_layout})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_button:
@@ -195,6 +218,14 @@ public class SearchActivity extends AppCompatActivity {
                 } else {
 //                    requestPermission(mActivity);
                 }
+                break;
+            case R.id.start_date_layout:
+                showDatePicker();
+                break;
+            case R.id.end_date_layout:
+                showDatePicker();
+                break;
+            case R.id.room_person_layout:
                 break;
         }
     }
@@ -248,12 +279,18 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         public void onDateSet(DatePicker view, int yy, int mm, int dd) {
-            populateSetDate(yy, mm+1, dd);
+            populateSetDate(yy, mm + 1, dd);
         }
+
         public void populateSetDate(int year, int month, int day) {
 //            dob.setText(month+"/"+day+"/"+year);
         }
 
+    }
+
+    private void showDatePicker() {
+        DialogFragment newFragment = new SelectDateFragment();
+        newFragment.show(getSupportFragmentManager(), "DatePicker");
     }
 
 

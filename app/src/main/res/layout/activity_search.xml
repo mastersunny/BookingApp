@@ -60,6 +60,7 @@
             android:weightSum="3">
 
             <LinearLayout
+                android:id="@+id/start_date_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -74,6 +75,7 @@
                     android:textColor="@color/colorPrimary" />
 
                 <TextView
+                    android:id="@+id/startDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1 September" />
@@ -81,6 +83,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/end_date_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -95,6 +98,7 @@
                     android:textColor="@color/colorPrimary" />
 
                 <TextView
+                    android:id="@+id/endDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2 September" />
@@ -102,6 +106,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/room_person_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -109,13 +114,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/required_room_count"
+                    android:id="@+id/room_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1 Room"
                     android:textColor="@color/colorPrimary" />
 
                 <TextView
+                    android:id="@+id/person_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/check_in_person_count" />
