@@ -55,7 +55,6 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (selectedIndex == position) {
                     selectedIndex = -1;
                 } else {
-                    Constants.debugLog(TAG, "" + examSelectionListener + " " + examDTO);
                     if (examSelectionListener != null) {
                         examSelectionListener.selectedExam(examDTO);
                     }
