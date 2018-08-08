@@ -20,6 +20,7 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ExamDTO> examDTOList;
     private Activity mActivity;
+    private int selectedIndex = -1;
 
     public ExamAdapter(Activity mActivity, List<ExamDTO> examDTOList) {
         this.mActivity = mActivity;
@@ -34,11 +35,27 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ExamDTO examDTO = examDTOList.get(0);
         MainHolder mainHolder = (MainHolder) holder;
+        if (selectedIndex == position) {
+            holder.itemView.setBackgroundColor(mActivity.getResources().getColor(R.color.colorPrimary));
+        } else {
+            holder.itemView.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
+        }
         mainHolder.exam_name.setText(examDTO.getName());
         mainHolder.exam_date.setText(examDTO.getExamDate());
+        mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedIndex == position) {
+                    selectedIndex = -1;
+                } else {
+                    selectedIndex = position;
+                }
+                notifyDataSetChanged();
+            }
+        });
 
 
     }
