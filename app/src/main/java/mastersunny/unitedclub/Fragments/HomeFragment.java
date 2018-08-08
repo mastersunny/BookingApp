@@ -163,39 +163,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void requestPermission(final Context context) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            new AlertDialog.Builder(context)
-                    .setMessage(context.getResources().getString(R.string.permission_location))
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                    Constants.REQUEST_LOCATION);
-                        }
-                    })
-                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).show();
-
-        } else {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    Constants.REQUEST_LOCATION);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Constants.REQUEST_LOCATION) {
-            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
-            }
-        }
-    }
-
     private void loadData() {
         apiInterface.getPlaces(0, 10, "id,asc").enqueue(new Callback<List<PlaceDTO>>() {
             @Override
