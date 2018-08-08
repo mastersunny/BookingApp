@@ -85,19 +85,6 @@ public class SearchActivity extends AppCompatActivity {
         initLayout();
     }
 
-    private void getCityName(Location location) {
-        try {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            String cityName = addresses.get(0).getLocality();
-            toolbar_title.setText("Where in " + cityName + "?");
-            Constants.debugLog(TAG, cityName);
-
-        } catch (Exception e) {
-            Constants.debugLog(TAG, e.getMessage());
-        }
-    }
-
     private void getIntentData() {
         searchType = getIntent().getIntExtra(Constants.SEARCH_TYPE, 0);
         examDTOList = (ArrayList<ExamDTO>) getIntent().getSerializableExtra(Constants.EXAM_DTO_LIST);
@@ -208,6 +195,19 @@ public class SearchActivity extends AppCompatActivity {
                     });
         } catch (SecurityException s) {
             Constants.debugLog(TAG, s.getMessage());
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
+    }
+
+    private void getCityName(Location location) {
+        try {
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            String cityName = addresses.get(0).getLocality();
+            toolbar_title.setText("Where in " + cityName + "?");
+            Constants.debugLog(TAG, cityName);
+
         } catch (Exception e) {
             Constants.debugLog(TAG, e.getMessage());
         }
