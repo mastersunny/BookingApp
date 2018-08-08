@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
 
         nearby_rv.setNestedScrollingEnabled(false);
-        nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
+        nearby_rv.setLayoutManager(new GridLayoutManager(mActivity, 3));
         placeAdapter = new PlaceAdapter(mActivity, placeDTOS);
         nearby_rv.setAdapter(placeAdapter);
 
