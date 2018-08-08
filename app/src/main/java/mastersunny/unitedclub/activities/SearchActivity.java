@@ -49,8 +49,10 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mastersunny.unitedclub.Fragments.SelectDateFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.adapters.ExamAdapter;
+import mastersunny.unitedclub.listeners.DateSelectionListener;
 import mastersunny.unitedclub.listeners.ExamSelectionListener;
 import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.models.PlaceDTO;
@@ -91,6 +93,8 @@ public class SearchActivity extends AppCompatActivity {
 
     @BindView(R.id.person_count)
     TextView person_count;
+
+    private int datePos;
 
 
     @BindView(R.id.exam_rv)
@@ -174,38 +178,6 @@ public class SearchActivity extends AppCompatActivity {
         toolbar_title.setText("Where in " + placeName + "?");
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-
-        SearchManager searchManager = (SearchManager) SearchActivity.this.getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView searchView = null;
-        if (searchItem != null) {
-            searchView = (SearchView) searchItem.getActionView();
-        }
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(SearchActivity.this.getComponentName()));
-        }
-
-        searchView.setQueryHint("where to stay?");
-//        searchView.onActionViewExpanded();
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-        return true;
-    }*/
-
     @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title, R.id.start_date_layout,
             R.id.end_date_layout, R.id.room_person_layout})
     public void onClick(View v) {
@@ -222,9 +194,11 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.start_date_layout:
+                datePos = 0;
                 showDatePicker();
                 break;
             case R.id.end_date_layout:
+                datePos = 1;
                 showDatePicker();
                 break;
             case R.id.room_person_layout:
@@ -264,41 +238,26 @@ public class SearchActivity extends AppCompatActivity {
                 Status status = PlaceAutocomplete.getStatus(SearchActivity.this, data);
                 Constants.debugLog(TAG, status.getStatusMessage());
             } else if (resultCode == Activity.RESULT_CANCELED) {
-
+                Constants.debugLog(TAG, "RESULT_CANCELED");
             }
         }
-    }
-
-    public static class SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar calendar = Calendar.getInstance();
-            int yy = calendar.get(Calendar.YEAR);
-            int mm = calendar.get(Calendar.MONTH);
-            int dd = calendar.get(Calendar.DAY_OF_MONTH);
-            return new DatePickerDialog(getActivity(), this, yy, mm, dd);
-        }
-
-        public void onDateSet(DatePicker view, int yy, int mm, int dd) {
-            populateSetDate(yy, mm + 1, dd);
-        }
-
-        public void populateSetDate(int year, int month, int day) {
-//            dob.setText(month+"/"+day+"/"+year);
-            try {
-                String dateInString = String.format("%02d", day) + "-" + String.format("%02d", month) + "-" + year;
-                Date date = Constants.sdf.parse(dateInString);
-                Constants.debugLog(TAG, date.toString());
-            } catch (Exception e) {
-                Constants.debugLog(TAG, e.getMessage());
-            }
-        }
-
     }
 
     private void showDatePicker() {
-        DialogFragment newFragment = new SelectDateFragment();
+        SelectDateFragment newFragment = new SelectDateFragment();
+        newFragment.setListener(new DateSelectionListener() {
+            @Override
+            public void selectedDate(String date) {
+                switch (datePos) {
+                    case 0:
+                        startDate.setText(date);
+                        break;
+                    case 1:
+                        endDate.setText(date);
+                        break;
+                }
+            }
+        });
         newFragment.show(getSupportFragmentManager(), "DatePicker");
     }
 
