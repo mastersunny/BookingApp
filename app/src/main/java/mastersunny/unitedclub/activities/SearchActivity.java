@@ -83,6 +83,34 @@ public class SearchActivity extends AppCompatActivity {
         examDTOList = new ArrayList<>();
         getIntentData();
         initLayout();
+
+        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+                                getCityName(location);
+                            }
+                        }
+                    });
+
+        }
+
+    }
+
+    private void getCityName(Location location) {
+        try {
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            String cityName = addresses.get(0).getLocality();
+            toolbar_title.setText("Where in " + cityName + "?");
+            Constants.debugLog(TAG, cityName);
+
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
     }
 
     private void getIntentData() {
@@ -140,76 +168,8 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            getCityName();
-        } else {
-            requestPermission(this);
-        }
     }
 
-    private void requestPermission(final Context context) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            new AlertDialog.Builder(context)
-                    .setMessage(context.getResources().getString(R.string.permission_location))
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(SearchActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                    Constants.REQUEST_LOCATION);
-                        }
-                    })
-                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).show();
 
-        } else {
-            ActivityCompat.requestPermissions(SearchActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    Constants.REQUEST_LOCATION);
-        }
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Constants.REQUEST_LOCATION) {
-            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCityName();
-            }
-        }
-    }
-
-    private void getCityName() {
-        try {
-            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-            mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                getCityName(location);
-                            }
-                        }
-                    });
-        } catch (SecurityException s) {
-            Constants.debugLog(TAG, s.getMessage());
-        } catch (Exception e) {
-            Constants.debugLog(TAG, e.getMessage());
-        }
-    }
-
-    private void getCityName(Location location) {
-        try {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            String cityName = addresses.get(0).getLocality();
-            toolbar_title.setText("Where in " + cityName + "?");
-            Constants.debugLog(TAG, cityName);
-
-        } catch (Exception e) {
-            Constants.debugLog(TAG, e.getMessage());
-        }
-    }
 }

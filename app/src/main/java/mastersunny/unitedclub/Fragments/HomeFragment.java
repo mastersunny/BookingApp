@@ -125,6 +125,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         placeAdapter = new PlaceAdapter(mActivity, placeDTOS);
         nearby_rv.setAdapter(placeAdapter);
+        placeAdapter.setClickListener(new ClickListener() {
+            @Override
+            public void click() {
+                if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
+//                    SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
+                } else {
+                    requestPermission(mActivity);
+                }
+            }
+        });
 
         for (int i = 0; i < 10; i++) {
             RoomDTO roomDTO = new RoomDTO();
@@ -161,6 +171,39 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
         }
 
+    }
+
+    private void requestPermission(final Context context) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            new AlertDialog.Builder(context)
+                    .setMessage(context.getResources().getString(R.string.permission_location))
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    Constants.REQUEST_LOCATION);
+                        }
+                    })
+                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+
+        } else {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    Constants.REQUEST_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == Constants.REQUEST_LOCATION) {
+            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
+            }
+        }
     }
 
     private void loadData() {
