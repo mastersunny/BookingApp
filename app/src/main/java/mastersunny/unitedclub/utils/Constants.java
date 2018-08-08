@@ -69,6 +69,7 @@ public class Constants {
     public static String accessToken = "abcd";
     public static final String TRANSACTION_DTO = "transaction_dto";
     public static final String EXAM_DTO_LIST = "exam_dto_list";
+    public static final String PLACE_NAME = "place_name";
 
     public static final String PREF_COOKIES = "pref_cookies";
 

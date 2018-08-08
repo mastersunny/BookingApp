@@ -204,6 +204,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Constants.debugLog(TAG, response + "");
 
                 if (response.isSuccessful()) {
+                    Constants.debugLog(TAG, response.body() + "");
                     placeDTOS.clear();
                     placeDTOS.addAll(response.body());
                     notifyPlaceAdapter();

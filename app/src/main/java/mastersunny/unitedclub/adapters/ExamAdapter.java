@@ -14,13 +14,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.listeners.ExamSelectionListener;
 import mastersunny.unitedclub.models.ExamDTO;
+import mastersunny.unitedclub.utils.Constants;
 
 public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ExamDTO> examDTOList;
     private Activity mActivity;
     private int selectedIndex = -1;
+    private ExamSelectionListener examSelectionListener;
+    private String TAG = "ExamAdapter";
 
     public ExamAdapter(Activity mActivity, List<ExamDTO> examDTOList) {
         this.mActivity = mActivity;
@@ -36,7 +40,7 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ExamDTO examDTO = examDTOList.get(0);
+        final ExamDTO examDTO = examDTOList.get(position);
         MainHolder mainHolder = (MainHolder) holder;
         if (selectedIndex == position) {
             holder.itemView.setBackgroundColor(mActivity.getResources().getColor(R.color.colorPrimary));
@@ -51,6 +55,10 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (selectedIndex == position) {
                     selectedIndex = -1;
                 } else {
+                    Constants.debugLog(TAG, "" + examSelectionListener + " " + examDTO);
+                    if (examSelectionListener != null) {
+                        examSelectionListener.selectedExam(examDTO);
+                    }
                     selectedIndex = position;
                 }
                 notifyDataSetChanged();
@@ -77,5 +85,9 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public void setListener(ExamSelectionListener examSelectionListener) {
+        this.examSelectionListener = examSelectionListener;
     }
 }

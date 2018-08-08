@@ -44,6 +44,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.adapters.ExamAdapter;
+import mastersunny.unitedclub.listeners.ExamSelectionListener;
 import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.rest.ApiClient;
@@ -68,16 +69,19 @@ public class SearchActivity extends AppCompatActivity {
 
     ExamAdapter examAdapter;
 
-    private PlaceDTO placeDTO;
+    private String placeName;
+
+    private ArrayList<ExamDTO> examDTOS;
 
     private FusedLocationProviderClient mFusedLocationClient;
 
     private double latitude, longitude;
 
-    public static void start(Context context, PlaceDTO placeDTO, int searchType) {
+    public static void start(Context context, String placeName, ArrayList<ExamDTO> examDTOS, int searchType) {
         Intent intent = new Intent(context, SearchActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.EXAM_DTO_LIST, placeDTO);
+        intent.putExtra(Constants.PLACE_NAME, placeName);
+        intent.putExtra(Constants.EXAM_DTO_LIST, examDTOS);
         intent.putExtra(Constants.SEARCH_TYPE, searchType);
         context.startActivity(intent);
     }
@@ -123,15 +127,22 @@ public class SearchActivity extends AppCompatActivity {
 
     private void getIntentData() {
         searchType = getIntent().getIntExtra(Constants.SEARCH_TYPE, 0);
-        placeDTO = (PlaceDTO) getIntent().getSerializableExtra(Constants.EXAM_DTO_LIST);
+        placeName = getIntent().getStringExtra(Constants.PLACE_NAME);
+        examDTOS = (ArrayList<ExamDTO>) getIntent().getSerializableExtra(Constants.EXAM_DTO_LIST);
     }
 
     private void initLayout() {
         exam_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        examAdapter = new ExamAdapter(this, placeDTO.getExams());
+        examAdapter = new ExamAdapter(this, examDTOS);
         exam_rv.setAdapter(examAdapter);
+        examAdapter.setListener(new ExamSelectionListener() {
+            @Override
+            public void selectedExam(ExamDTO examDTO) {
+                Constants.debugLog(TAG, examDTO.getExamDate());
+            }
+        });
 
-        toolbar_title.setText("Where in " + placeDTO.getName() + "?");
+        toolbar_title.setText("Where in " + placeName + "?");
     }
 
     /*@Override
