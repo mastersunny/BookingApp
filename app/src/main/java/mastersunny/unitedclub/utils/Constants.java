@@ -213,5 +213,6 @@ public class Constants {
 
     public static final int REQUEST_LOCATION = 111;
     public static final int PERMISSION_READ_SMS = 222;
+    public static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 333;
     public static int REQUEST_FACEBOOK_LOGIN_CODE = 199;
 }

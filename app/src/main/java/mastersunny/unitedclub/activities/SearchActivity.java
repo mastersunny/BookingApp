@@ -26,8 +26,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
@@ -66,6 +71,8 @@ public class SearchActivity extends AppCompatActivity {
     private PlaceDTO placeDTO;
 
     private FusedLocationProviderClient mFusedLocationClient;
+
+    private double latitude, longitude;
 
     public static void start(Context context, PlaceDTO placeDTO, int searchType) {
         Intent intent = new Intent(context, SearchActivity.class);
@@ -159,11 +166,19 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }*/
 
-    @OnClick({R.id.back_button})
+    @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_button:
                 finish();
+                break;
+            case R.id.search_icon:
+            case R.id.toolbar_title:
+                if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(SearchActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    startPlaceAutoComplete();
+                } else {
+//                    requestPermission(mActivity);
+                }
                 break;
         }
     }
@@ -171,6 +186,38 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    private void startPlaceAutoComplete() {
+        try {
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+            startActivityForResult(intent, Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException e) {
+
+        } catch (GooglePlayServicesNotAvailableException e) {
+
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(SearchActivity.this, data);
+
+                toolbar_title.setText(place.getName());
+                latitude = place.getLatLng().latitude;
+                longitude = place.getLatLng().longitude;
+
+                Constants.debugLog(TAG, "lat " + latitude + " lon " + longitude);
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(SearchActivity.this, data);
+                Constants.debugLog(TAG, status.getStatusMessage());
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
     }
 
 
