@@ -100,7 +100,7 @@
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">f8a02238eede52fac438978a4d2aa843</string>
 
     //google maps settings
-    <string name="GOOGLE_PLACE_API_KEY">AIzaSyCgv-ggY33jKbr0SSEkMo9Kx923kz_neM0</string>
+    <string name="GOOGLE_PLACE_API_KEY">AIzaSyDM3COh3qs2Ul1892Bptff01HDJ7YgjY-A</string>
 
     <string name="check_in_time">12PM</string>
     <string name="check_out_time">11AM</string>
