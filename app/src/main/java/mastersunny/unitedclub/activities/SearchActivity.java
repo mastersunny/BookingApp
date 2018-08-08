@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -54,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
     TextView toolbar_title;
 
     @BindView(R.id.back_button)
-    ImageView back_button;
+    LinearLayout back_button;
 
     @BindView(R.id.exam_rv)
     RecyclerView exam_rv;
@@ -156,7 +157,7 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }*/
 
-    @OnClick
+    @OnClick({R.id.back_button})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_button:
@@ -169,7 +170,6 @@ public class SearchActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
-
 
 
 }
