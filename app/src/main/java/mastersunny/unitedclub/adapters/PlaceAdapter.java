@@ -13,13 +13,16 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.listeners.ClickListener;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.activities.StoresDetailsActivity;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.utils.Constants;
+import mastersunny.unitedclub.utils.SearchType;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
@@ -31,7 +34,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private List<PlaceDTO> placeDTOS;
     private Activity mActivity;
-//    public static final int HEADER_ITEM = 1;
+    //    public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
     private ClickListener clickListener;
 
@@ -46,8 +49,8 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 //            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nearby_item_header, parent, false);
 //            return new HeaderHolder(view);
 //        } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nearby_item_layout, parent, false);
-            return new MainHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nearby_item_layout, parent, false);
+        return new MainHolder(view);
 //        }
     }
 
@@ -68,6 +71,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 MainHolder mainHolder = (MainHolder) holder;
                 final PlaceDTO dto = placeDTOS.get(position);
                 mainHolder.place_name.setText(dto.getName());
+                mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SearchActivity.start(v.getContext(), (ArrayList<ExamDTO>) dto.getExams(), SearchType.TYPE_PLACE.getStatus());
+                    }
+                });
                 break;
         }
     }
@@ -77,7 +86,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 //        if (position == 0) {
 //            return HEADER_ITEM;
 //        } else {
-            return MAIN_ITEM;
+        return MAIN_ITEM;
 //        }
     }
 

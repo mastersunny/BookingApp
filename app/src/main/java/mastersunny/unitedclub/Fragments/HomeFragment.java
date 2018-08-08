@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void click() {
                 if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
+//                    SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
                 } else {
                     requestPermission(mActivity);
                 }
@@ -201,7 +201,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constants.REQUEST_LOCATION) {
             if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
+//                SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
             }
         }
     }

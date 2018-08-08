@@ -12,20 +12,32 @@ public class ExamDTO implements Serializable {
     @SerializedName("examDate")
     private String examDate;
 
-    public Long getId() {
-        return id;
-    }
+    @SerializedName("name")
+    private String name;
+
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setExamDate(String examDate) {
+        this.examDate = examDate;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getExamDate() {
         return examDate;
     }
 
-    public void setExamDate(String examDate) {
-        this.examDate = examDate;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -33,6 +45,7 @@ public class ExamDTO implements Serializable {
         return "ExamDTO{" +
                 "id=" + id +
                 ", examDate='" + examDate + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

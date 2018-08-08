@@ -57,13 +57,14 @@ public class SearchActivity extends AppCompatActivity {
 
     ExamAdapter examAdapter;
 
-    private List<ExamDTO> examDTOList;
+    private ArrayList<ExamDTO> examDTOList;
 
     private FusedLocationProviderClient mFusedLocationClient;
 
-    public static void start(Context context, int searchType) {
+    public static void start(Context context, ArrayList<ExamDTO> examDTOList, int searchType) {
         Intent intent = new Intent(context, SearchActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(Constants.EXAM_DTO_LIST, examDTOList);
         intent.putExtra(Constants.SEARCH_TYPE, searchType);
         context.startActivity(intent);
     }
@@ -75,7 +76,6 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
-
         examDTOList = new ArrayList<>();
         getIntentData();
         initLayout();
@@ -111,6 +111,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void getIntentData() {
         searchType = getIntent().getIntExtra(Constants.SEARCH_TYPE, 0);
+        examDTOList = (ArrayList<ExamDTO>) getIntent().getSerializableExtra(Constants.EXAM_DTO_LIST);
     }
 
     private void initLayout() {

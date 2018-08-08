@@ -112,7 +112,7 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_button:
-                SearchActivity.start(v.getContext(), Constants.store_search);
+//                SearchActivity.start(v.getContext(), Constants.store_search);
                 break;
         }
     }
