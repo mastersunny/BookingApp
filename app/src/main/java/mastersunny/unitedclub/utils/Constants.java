@@ -79,7 +79,7 @@ public class Constants {
         Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_medium.otf");
         return face;
     }
-    
+
     public static final String STORE_DTO = "store_dto";
     public static final String STORE_OFFER_DTO = "store_offer_dto";
     public static final String USER_DTO = "user_dto";
@@ -211,6 +211,17 @@ public class Constants {
     public static String populateSetDate(int year, int month, int day) {
         try {
             String dateInString = String.format("%02d", day) + "-" + String.format("%02d", month) + "-" + year;
+            Date date = Constants.sdf.parse(dateInString);
+            String[] strings = date.toString().split(" ");
+            return (strings[0] + ", " + strings[1] + " " + strings[2]);
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
+        return "";
+    }
+
+    public static String populateSetDate(String dateInString) {
+        try {
             Date date = Constants.sdf.parse(dateInString);
             String[] strings = date.toString().split(" ");
             return (strings[0] + ", " + strings[1] + " " + strings[2]);
