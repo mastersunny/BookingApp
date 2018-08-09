@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +30,16 @@ public class DateRoomSelectActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.toolbar_title)
+    TextView toolbar_title;
+
     PagerAdapter pagerAdapter;
+
+    String[] toolbarTitles = {
+            "Select Check-In Date",
+            "Select Check-Out Date",
+            "Select Rooms & Guests"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +81,7 @@ public class DateRoomSelectActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-
-
+                toolbar_title.setText(toolbarTitles[position]);
             }
 
             @Override
