@@ -35,7 +35,10 @@ public class Constants {
 
     public static boolean debugOn = true;
 
+    static String TAG = "Constants";
+
     public static final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+    public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 
     public static String MESSAGE = "message";
     public static String TRANSACTION_ID = "transaction_id";
@@ -222,7 +225,8 @@ public class Constants {
 
     public static String populateSetDate(String dateInString) {
         try {
-            Date date = Constants.sdf.parse(dateInString);
+            Date date = Constants.sdf2.parse(dateInString);
+            Constants.debugLog(TAG, date.toString());
             String[] strings = date.toString().split(" ");
             return (strings[0] + ", " + strings[1] + " " + strings[2]);
         } catch (Exception e) {
