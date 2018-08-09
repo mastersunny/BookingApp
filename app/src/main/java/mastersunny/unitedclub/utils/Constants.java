@@ -37,13 +37,10 @@ public class Constants {
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
 
-    public static String TITLE = "title";
     public static String MESSAGE = "message";
     public static String TRANSACTION_ID = "transaction_id";
-    public static String IMG_URL = "img_url";
     public static String TRANSACTION_DATE = "created_at";
 
-    public static final String TOPIC_GLOBAL = "global";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String PUSH_NOTIFICATION = "pushNotification";
     public static final String REFRESH_TOKEN = "refresh_token";
@@ -51,17 +48,12 @@ public class Constants {
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
     public static final int REQUEST_TIMEOUT = 10000;
 
-    public static final int STATUS_UNPAID = 0;
     public static final int STATUS_PAID = 1;
 
-    public static String TRANSACTION_ALL = "all";
     public static String TRANSACTION_PAID = "paid";
     public static String TRANSACTION_DUE = "unpaid";
     public static String TRANSACTION_PENDING = "pending";
 
-    public static final int store_search = 1;
-    public static final int category_search = 2;
-    public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 101;
 
     public static final String prefs = "prefs";
     public static final String STORE_ID = "store_id";
@@ -72,7 +64,6 @@ public class Constants {
     public static final String ACCESS_TOKEN = "access_token";
     public static final String COVER_IMAGE_URL = "cover_image_url";
     public static String accessToken = "abcd";
-    public static final String TRANSACTION_DTO = "transaction_dto";
     public static final String EXAM_DTO_LIST = "exam_dto_list";
     public static final String PLACE_NAME = "place_name";
 
@@ -88,8 +79,7 @@ public class Constants {
         Typeface face = Typeface.createFromAsset(context.getAssets(), "avenirltstd_medium.otf");
         return face;
     }
-
-    public static final String ITEM_DTO = "item_dto";
+    
     public static final String STORE_DTO = "store_dto";
     public static final String STORE_OFFER_DTO = "store_offer_dto";
     public static final String USER_DTO = "user_dto";
