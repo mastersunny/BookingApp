@@ -8,10 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mastersunny.unitedclub.Fragments.CheckinFragment;
 import mastersunny.unitedclub.Fragments.CheckoutFragment;
 import mastersunny.unitedclub.Fragments.RoomSelectionFragment;
@@ -32,6 +35,9 @@ public class DateRoomSelectActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
+
+    @BindView(R.id.back_button)
+    ImageView back_button;
 
     PagerAdapter pagerAdapter;
 
@@ -100,5 +106,13 @@ public class DateRoomSelectActivity extends AppCompatActivity {
     private String getFragmentTag(int position) {
         String tag = "android:switcher:" + R.id.viewPager + ":" + position;
         return tag;
+    }
+
+    @OnClick({R.id.back_button})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back_button:
+                finish();
+        }
     }
 }
