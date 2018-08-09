@@ -83,19 +83,16 @@ public class SearchActivity extends AppCompatActivity {
     LinearLayout room_person_layout;
 
     @BindView(R.id.startDate)
-    TextView startDate;
+    TextView start_date;
 
     @BindView(R.id.endDate)
-    TextView endDate;
+    TextView end_date;
 
     @BindView(R.id.room_count)
     TextView room_count;
 
     @BindView(R.id.person_count)
     TextView person_count;
-
-    private int selectedPosition;
-
 
     @BindView(R.id.exam_rv)
     RecyclerView exam_rv;
@@ -128,6 +125,7 @@ public class SearchActivity extends AppCompatActivity {
         apiInterface = ApiClient.createService(this, ApiInterface.class);
         getIntentData();
         initLayout();
+
 
 //        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
 //            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -176,6 +174,15 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         toolbar_title.setText("Where in " + placeName + "?");
+
+        Calendar now = Calendar.getInstance();
+        int year = now.get(Calendar.YEAR);
+        int month = now.get(Calendar.MONTH) + 1; // Note: zero based!
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        start_date.setText(Constants.populateSetDate(year, month, day));
+        end_date.setText(Constants.populateSetDate(year, month, day + 1));
+        room_count.setText("1 Room");
+        person_count.setText("1 Adult");
     }
 
     @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title, R.id.start_date_layout,
