@@ -71,6 +71,8 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 MainHolder mainHolder = (MainHolder) holder;
                 final PlaceDTO dto = placeDTOS.get(position);
                 mainHolder.place_name.setText(dto.getName());
+                Constants.debugLog(TAG,dto.getImageUrl());
+                Constants.loadImage(mActivity, ApiClient.BASE_URL + ApiClient.APP_NAME + dto.getImageUrl(), mainHolder.place_image);
                 mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
