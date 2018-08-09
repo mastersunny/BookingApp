@@ -37,7 +37,7 @@ public class SelectDateFragment extends DialogFragment implements DatePickerDial
             Constants.debugLog(TAG, date.toString());
             String[] strings = date.toString().split(" ");
             if (dateSelectionListener != null) {
-                dateSelectionListener.selectedDate(strings[0] + ", " + strings[1] + " " + strings[2]);
+                dateSelectionListener.startDate(strings[0] + ", " + strings[1] + " " + strings[2]);
             }
 
         } catch (Exception e) {

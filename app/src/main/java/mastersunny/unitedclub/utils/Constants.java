@@ -19,11 +19,13 @@ import com.bumptech.glide.request.target.ViewTarget;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import mastersunny.unitedclub.listeners.ConfirmListener;
 import mastersunny.unitedclub.R;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.support.constraint.Constraints.TAG;
 
 /**
  * Created by ASUS on 1/20/2018.
@@ -93,6 +95,7 @@ public class Constants {
     public static final String USER_DTO = "user_dto";
     public static final String CATEGORY_DTO = "category_dto";
     public static final String SEARCH_TYPE = "search_type";
+    public static final String SELECTED_POSITION = "selected_position";
 
     public static void loadImage(Context context, String imageUrl, final ImageView imageView) {
         ViewTarget viewTarget = new ViewTarget<ImageView, GlideDrawable>(imageView) {
@@ -213,6 +216,18 @@ public class Constants {
             }
         });
         dialog.show();
+    }
+
+    public static String populateSetDate(int year, int month, int day) {
+        try {
+            String dateInString = String.format("%02d", day) + "-" + String.format("%02d", month) + "-" + year;
+            Date date = Constants.sdf.parse(dateInString);
+            String[] strings = date.toString().split(" ");
+            return (strings[0] + ", " + strings[1] + " " + strings[2]);
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
+        return "";
     }
 
     public static final int REQUEST_LOCATION = 111;

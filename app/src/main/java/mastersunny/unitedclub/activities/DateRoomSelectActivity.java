@@ -20,8 +20,10 @@ import mastersunny.unitedclub.Fragments.CheckoutFragment;
 import mastersunny.unitedclub.Fragments.RoomSelectionFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.adapters.PagerAdapter;
+import mastersunny.unitedclub.listeners.DateSelectionListener;
+import mastersunny.unitedclub.utils.Constants;
 
-public class DateRoomSelectActivity extends AppCompatActivity {
+public class DateRoomSelectActivity extends AppCompatActivity implements DateSelectionListener {
 
 
     @BindView(R.id.tabLayout)
@@ -41,6 +43,8 @@ public class DateRoomSelectActivity extends AppCompatActivity {
 
     PagerAdapter pagerAdapter;
 
+    private int selectedPosition;
+
     String[] toolbarTitles = {
             "Select Check-In Date",
             "Select Check-Out Date",
@@ -54,14 +58,19 @@ public class DateRoomSelectActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getIntentData();
         setUpTabLayout(savedInstanceState);
     }
 
-    public static void start(Context context) {
+    public static void start(Context context, int selectedPosition) {
         Intent intent = new Intent(context, DateRoomSelectActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        intent.putExtra(Constants.SEARCH_TYPE, searchType);
+        intent.putExtra(Constants.SELECTED_POSITION, selectedPosition);
         context.startActivity(intent);
+    }
+
+    private void getIntentData() {
+        selectedPosition = getIntent().getIntExtra(Constants.SELECTED_POSITION, 0);
     }
 
     private void setUpTabLayout(Bundle savedInstanceState) {
@@ -69,7 +78,7 @@ public class DateRoomSelectActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             pagerAdapter.addFragment(new CheckinFragment(), "Start Date");
             pagerAdapter.addFragment(new CheckoutFragment(), "End Date");
-            pagerAdapter.addFragment(new RoomSelectionFragment(), "1 Room");
+            pagerAdapter.addFragment(new RoomSelectionFragment(), "Room");
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
             String[] titles = savedInstanceState.getStringArray("titles");
@@ -88,6 +97,8 @@ public class DateRoomSelectActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 toolbar_title.setText(toolbarTitles[position]);
+                selectedPosition = position;
+
             }
 
             @Override
@@ -95,8 +106,10 @@ public class DateRoomSelectActivity extends AppCompatActivity {
 
             }
         });
+        viewPager.setOffscreenPageLimit(3);
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(selectedPosition);
     }
 
     private Fragment getFragment(int position, Bundle savedInstanceState) {
@@ -114,5 +127,25 @@ public class DateRoomSelectActivity extends AppCompatActivity {
             case R.id.back_button:
                 finish();
         }
+    }
+
+    @Override
+    public void startDate(String date) {
+        tabLayout.getTabAt(selectedPosition).setText("Start Date\n" + date);
+    }
+
+    @Override
+    public void endDate(String date) {
+        tabLayout.getTabAt(selectedPosition).setText("End Date\n" + date);
+    }
+
+    @Override
+    public void totalRoom(int roomCount) {
+
+    }
+
+    @Override
+    public void totalGuest(int guestCount) {
+
     }
 }

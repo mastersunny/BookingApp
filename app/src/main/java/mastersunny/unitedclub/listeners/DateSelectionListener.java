@@ -1,5 +1,12 @@
 package mastersunny.unitedclub.listeners;
 
 public interface DateSelectionListener {
-    void selectedDate(String date);
+
+    void startDate(String date);
+
+    void endDate(String date);
+
+    void totalRoom(int roomCount);
+
+    void totalGuest(int guestCount);
 }

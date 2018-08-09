@@ -94,7 +94,7 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.person_count)
     TextView person_count;
 
-    private int datePos;
+    private int selectedPosition;
 
 
     @BindView(R.id.exam_rv)
@@ -194,14 +194,13 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.start_date_layout:
-                datePos = 0;
-                DateRoomSelectActivity.start(v.getContext());
+                DateRoomSelectActivity.start(v.getContext(), 0);
                 break;
             case R.id.end_date_layout:
-                datePos = 1;
-                DateRoomSelectActivity.start(v.getContext());
+                DateRoomSelectActivity.start(v.getContext(), 1);
                 break;
             case R.id.room_person_layout:
+                DateRoomSelectActivity.start(v.getContext(), 2);
                 break;
         }
     }
@@ -242,24 +241,5 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
     }
-
-    private void showDatePicker() {
-        SelectDateFragment newFragment = new SelectDateFragment();
-        newFragment.setListener(new DateSelectionListener() {
-            @Override
-            public void selectedDate(String date) {
-                switch (datePos) {
-                    case 0:
-                        startDate.setText(date);
-                        break;
-                    case 1:
-                        endDate.setText(date);
-                        break;
-                }
-            }
-        });
-        newFragment.show(getSupportFragmentManager(), "DatePicker");
-    }
-
 
 }
