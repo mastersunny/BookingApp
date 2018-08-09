@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.unitedclub.Fragments.CheckinFragment;
+import mastersunny.unitedclub.Fragments.CheckoutFragment;
+import mastersunny.unitedclub.Fragments.RoomSelectionFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.adapters.PagerAdapter;
 
@@ -35,6 +37,7 @@ public class DateRoomSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_date_room_select);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         setUpTabLayout(savedInstanceState);
     }
 
@@ -48,8 +51,9 @@ public class DateRoomSelectActivity extends AppCompatActivity {
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new CheckinFragment(), "checkin");
-            pagerAdapter.addFragment(new CheckinFragment(), "checkout");
+            pagerAdapter.addFragment(new CheckinFragment(), "Start Date");
+            pagerAdapter.addFragment(new CheckoutFragment(), "End Date");
+            pagerAdapter.addFragment(new RoomSelectionFragment(), "1 Room");
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
             String[] titles = savedInstanceState.getStringArray("titles");

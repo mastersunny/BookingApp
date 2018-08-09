@@ -24,8 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="1 Guest"
-            android:textSize="@dimen/text_size_18"
-            android:textStyle="bold" />
+            android:textSize="@dimen/text_size_16" />
 
     </RelativeLayout>
 
@@ -42,14 +41,14 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:text="1 Adults"
-            android:textSize="@dimen/text_size_18"
-            android:textStyle="bold" />
+            android:textSize="@dimen/text_size_16" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/adult_text"
-            android:text="(5+ years)" />
+            android:text="(5+ years)"
+            android:textSize="@dimen/text_size_12" />
 
         <LinearLayout
             android:layout_width="wrap_content"
