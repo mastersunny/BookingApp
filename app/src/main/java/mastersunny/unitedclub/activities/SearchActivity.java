@@ -195,11 +195,11 @@ public class SearchActivity extends AppCompatActivity {
                 break;
             case R.id.start_date_layout:
                 datePos = 0;
-                showDatePicker();
+                DateRoomSelectActivity.start(v.getContext());
                 break;
             case R.id.end_date_layout:
                 datePos = 1;
-                showDatePicker();
+                DateRoomSelectActivity.start(v.getContext());
                 break;
             case R.id.room_person_layout:
                 break;
