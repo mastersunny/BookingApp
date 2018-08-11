@@ -14,6 +14,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.listeners.ExamSelectionListener;
 import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.utils.Constants;
@@ -42,25 +43,27 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         final ExamDTO examDTO = examDTOList.get(position);
         MainHolder mainHolder = (MainHolder) holder;
-        if (selectedIndex == position) {
-            holder.itemView.setBackgroundColor(mActivity.getResources().getColor(R.color.colorPrimary));
-        } else {
-            holder.itemView.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
-        }
+//        if (selectedIndex == position) {
+//            holder.itemView.setBackgroundColor(mActivity.getResources().getColor(R.color.colorPrimary));
+//        } else {
+//            holder.itemView.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
+//        }
         mainHolder.exam_name.setText(examDTO.getName());
         mainHolder.exam_date.setText(examDTO.getExamDate());
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedIndex == position) {
-                    selectedIndex = -1;
-                } else {
-                    if (examSelectionListener != null) {
-                        examSelectionListener.selectedExam(examDTO);
-                    }
-                    selectedIndex = position;
-                }
-                notifyDataSetChanged();
+                SearchActivity.start(v.getContext(), examDTO);
+
+//                if (selectedIndex == position) {
+//                    selectedIndex = -1;
+//                } else {
+//                    if (examSelectionListener != null) {
+//                        examSelectionListener.selectedExam(examDTO);
+//                    }
+//                    selectedIndex = position;
+//                }
+//                notifyDataSetChanged();
             }
         });
 

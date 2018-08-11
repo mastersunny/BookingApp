@@ -101,7 +101,7 @@ public class SearchActivity extends AppCompatActivity {
 
     ExamAdapter examAdapter;
 
-    private String placeName;
+    private ExamDTO examDTO;
 
     private ArrayList<ExamDTO> examDTOS;
 
@@ -109,12 +109,10 @@ public class SearchActivity extends AppCompatActivity {
 
     private double latitude, longitude;
 
-    public static void start(Context context, String placeName, ArrayList<ExamDTO> examDTOS, int searchType) {
+    public static void start(Context context, ExamDTO examDTO) {
         Intent intent = new Intent(context, SearchActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.PLACE_NAME, placeName);
-        intent.putExtra(Constants.EXAM_DTO_LIST, examDTOS);
-        intent.putExtra(Constants.SEARCH_TYPE, searchType);
+        intent.putExtra(Constants.EXAM_DTO, examDTO);
         context.startActivity(intent);
     }
 
@@ -159,9 +157,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getIntentData() {
-        searchType = getIntent().getIntExtra(Constants.SEARCH_TYPE, 0);
-        placeName = getIntent().getStringExtra(Constants.PLACE_NAME);
-        examDTOS = (ArrayList<ExamDTO>) getIntent().getSerializableExtra(Constants.EXAM_DTO_LIST);
+        examDTO = (ExamDTO) getIntent().getSerializableExtra(Constants.EXAM_DTO);
     }
 
     private void initLayout() {
@@ -184,7 +180,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        toolbar_title.setText("Where in " + placeName + "?");
+        toolbar_title.setText(examDTO.getPlace().getName());
         room_count.setText("1 Room");
         person_count.setText("1 Adult");
         Pair<String, String> pair = Constants.getStartEndDate(new Date());
