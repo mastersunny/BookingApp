@@ -1,7 +1,5 @@
 package mastersunny.unitedclub.models;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 public class ExamDTO implements Serializable {
@@ -13,6 +11,8 @@ public class ExamDTO implements Serializable {
     private String examDate;
 
     private String name;
+
+    private PlaceDTO place;
 
     public Long getId() {
         return id;
@@ -46,6 +46,14 @@ public class ExamDTO implements Serializable {
         this.name = name;
     }
 
+    public PlaceDTO getPlace() {
+        return place;
+    }
+
+    public void setPlace(PlaceDTO place) {
+        this.place = place;
+    }
+
     @Override
     public String toString() {
         return "ExamDTO{" +
@@ -53,6 +61,7 @@ public class ExamDTO implements Serializable {
                 ", expired=" + expired +
                 ", examDate='" + examDate + '\'' +
                 ", name='" + name + '\'' +
+                ", place=" + place +
                 '}';
     }
 }

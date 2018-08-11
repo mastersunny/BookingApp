@@ -19,19 +19,24 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import mastersunny.unitedclub.adapters.ExamAdapter;
 import mastersunny.unitedclub.adapters.PlaceAdapter;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.listeners.ExamSelectionListener;
+import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
@@ -61,20 +66,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ApiInterface apiInterface;
     private Unbinder unbinder;
 
-    @BindView(R.id.recommended_rv)
-    RecyclerView recommended_rv;
-    private List<RoomDTO> roomDTOList;
-    private RecommendedAdapter recommendedAdapter;
-
-    @BindView(R.id.offer_rv)
-    RecyclerView offer_rv;
-    private List<OfferDTO> offerDTOS;
-    private OfferAdapter offerAdapter;
+//    @BindView(R.id.recommended_rv)
+//    RecyclerView recommended_rv;
+//    private List<RoomDTO> roomDTOList;
+//    private RecommendedAdapter recommendedAdapter;
+//
+//    @BindView(R.id.offer_rv)
+//    RecyclerView offer_rv;
+//    private List<OfferDTO> offerDTOS;
+//    private OfferAdapter offerAdapter;
 
     @BindView(R.id.nearby_rv)
     RecyclerView nearby_rv;
-    private List<PlaceDTO> placeDTOS;
-    private PlaceAdapter placeAdapter;
+    private ArrayList<ExamDTO> examDTOS;
+    ExamAdapter examAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -90,9 +95,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             unbinder = ButterKnife.bind(this, view);
             apiInterface = ApiClient.createService(getActivity(), ApiInterface.class);
 
-            roomDTOList = new ArrayList<>();
-            offerDTOS = new ArrayList<>();
-            placeDTOS = new ArrayList<>();
+//            roomDTOList = new ArrayList<>();
+//            offerDTOS = new ArrayList<>();
+            examDTOS = new ArrayList<>();
 
             initLayout();
         }
@@ -119,12 +124,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        nearby_rv.setNestedScrollingEnabled(false);
-        nearby_rv.setLayoutManager(new GridLayoutManager(mActivity, 3));
-        placeAdapter = new PlaceAdapter(mActivity, placeDTOS);
-        nearby_rv.setAdapter(placeAdapter);
+        nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
+        examAdapter = new ExamAdapter(mActivity, examDTOS);
+        nearby_rv.setAdapter(examAdapter);
+        examAdapter.setListener(new ExamSelectionListener() {
+            @Override
+            public void selectedExam(ExamDTO examDTO) {
+                try {
+                    Date currentDate = Constants.sdf2.parse(examDTO.getExamDate());
+                    Pair<String, String> pair = Constants.getStartEndDate(currentDate);
+//                    start_date.setText(pair.first);
+//                    end_date.setText(pair.second);
+                } catch (Exception e) {
+                    Constants.debugLog(TAG, e.getMessage());
+                }
 
-        for (int i = 0; i < 10; i++) {
+
+            }
+        });
+
+       /* for (int i = 0; i < 10; i++) {
             RoomDTO roomDTO = new RoomDTO();
             roomDTO.setId(i);
             roomDTO.setName("name");
@@ -143,7 +162,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         offer_rv.setLayoutManager(new GridLayoutManager(mActivity, 2));
         offer_rv.setNestedScrollingEnabled(false);
         offerAdapter = new OfferAdapter(mActivity, offerDTOS);
-        offer_rv.setAdapter(offerAdapter);
+        offer_rv.setAdapter(offerAdapter);*/
 
 
     }
@@ -195,30 +214,30 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadData() {
-        apiInterface.getPlaces(0, 10, "id,asc").enqueue(new Callback<List<PlaceDTO>>() {
+        apiInterface.getExams(0, 10, "exam_date,asc").enqueue(new Callback<List<ExamDTO>>() {
             @Override
-            public void onResponse(Call<List<PlaceDTO>> call, Response<List<PlaceDTO>> response) {
+            public void onResponse(Call<List<ExamDTO>> call, Response<List<ExamDTO>> response) {
 
                 Constants.debugLog(TAG, response + "");
 
                 if (response.isSuccessful()) {
                     Constants.debugLog(TAG, response.body() + "");
-                    placeDTOS.clear();
-                    placeDTOS.addAll(response.body());
+                    examDTOS.clear();
+                    examDTOS.addAll(response.body());
                     notifyPlaceAdapter();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<PlaceDTO>> call, Throwable t) {
+            public void onFailure(Call<List<ExamDTO>> call, Throwable t) {
                 Constants.debugLog(TAG, t.getMessage());
             }
         });
     }
 
     private void notifyPlaceAdapter() {
-        if (placeAdapter != null) {
-            placeAdapter.notifyDataSetChanged();
+        if (examAdapter != null) {
+            examAdapter.notifyDataSetChanged();
         }
     }
 

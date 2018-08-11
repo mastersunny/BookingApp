@@ -4,6 +4,7 @@ import java.util.List;
 
 import mastersunny.unitedclub.models.AccessModel;
 import mastersunny.unitedclub.models.CategoryDTO;
+import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.models.MoviesResponse;
 import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.models.PlaceDTO;
@@ -129,6 +130,11 @@ public interface ApiInterface {
     Call<List<PlaceDTO>> getPlaces(@Query("page") int page,
                                    @Query("size") int size,
                                    @Query("sort") String sort);
+
+    @GET(ApiClient.APP_NAME + "api/v1/exams")
+    Call<List<ExamDTO>> getExams(@Query("page") int page,
+                                 @Query("size") int size,
+                                 @Query("sort") String sort);
 
 
 }
