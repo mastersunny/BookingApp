@@ -169,7 +169,9 @@ public class SearchActivity extends AppCompatActivity {
         examAdapter.setListener(new ExamSelectionListener() {
             @Override
             public void selectedExam(ExamDTO examDTO) {
-                Constants.debugLog(TAG, examDTO.getExamDate());
+                String[] dates = examDTO.getExamDate().split("-");
+                start_date.setText(Constants.populateSetDate(Integer.valueOf(dates[0]), Integer.valueOf(dates[1]), Integer.valueOf(dates[2])));
+                end_date.setText(Constants.populateSetDate(Integer.valueOf(dates[0]), Integer.valueOf(dates[1]), Integer.valueOf(dates[2] + 1)));
             }
         });
 
