@@ -32,7 +32,7 @@ public class RoomSelectionFragment extends Fragment {
     private Unbinder unbinder;
     private DateSelectionListener dateSelectionListener;
 
-    private int count = 0;
+    private int count = 1;
 
     @BindView(R.id.guest_count1)
     Button guest_count1;
