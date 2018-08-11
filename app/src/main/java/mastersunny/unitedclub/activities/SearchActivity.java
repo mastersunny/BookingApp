@@ -14,6 +14,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -207,13 +208,13 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.start_date_layout:
-                DateRoomSelectActivity.start(v.getContext(), 0);
+                startDateRoomSelectActivity(0);
                 break;
             case R.id.end_date_layout:
-                DateRoomSelectActivity.start(v.getContext(), 1);
+                startDateRoomSelectActivity(1);
                 break;
             case R.id.room_person_layout:
-                DateRoomSelectActivity.start(v.getContext(), 2);
+                startDateRoomSelectActivity(2);
                 break;
         }
     }
@@ -221,6 +222,13 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    private void startDateRoomSelectActivity(int position) {
+        Intent intent = new Intent(this, DateRoomSelectActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(Constants.SELECTED_POSITION, 0);
+        startActivityForResult(intent, Constants.ROOM_DATE_REQUEST_CODE);
     }
 
     private void startPlaceAutoComplete() {
@@ -252,6 +260,12 @@ public class SearchActivity extends AppCompatActivity {
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Constants.debugLog(TAG, "RESULT_CANCELED");
             }
+        }
+        if (requestCode == Constants.ROOM_DATE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Constants.debugLog(TAG, Constants.startDate + " " + Constants.endDate + " " + Constants.totalGuest);
+            }
+
         }
     }
 

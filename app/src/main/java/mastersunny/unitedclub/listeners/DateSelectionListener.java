@@ -6,7 +6,5 @@ public interface DateSelectionListener {
 
     void endDate(String date);
 
-    void totalRoom(int roomCount);
-
     void totalGuest(int guestCount);
 }

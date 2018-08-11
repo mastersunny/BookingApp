@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +46,9 @@ public class DateRoomSelectActivity extends AppCompatActivity implements DateSel
 
     private int selectedPosition;
 
+    @BindView(R.id.btn_change_room_date)
+    Button btn_change_room_date;
+
     String[] toolbarTitles = {
             "Select Check-In Date",
             "Select Check-Out Date",
@@ -60,13 +64,6 @@ public class DateRoomSelectActivity extends AppCompatActivity implements DateSel
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getIntentData();
         setUpTabLayout(savedInstanceState);
-    }
-
-    public static void start(Context context, int selectedPosition) {
-        Intent intent = new Intent(context, DateRoomSelectActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.SELECTED_POSITION, selectedPosition);
-        context.startActivity(intent);
     }
 
     private void getIntentData() {
@@ -121,11 +118,17 @@ public class DateRoomSelectActivity extends AppCompatActivity implements DateSel
         return tag;
     }
 
-    @OnClick({R.id.back_button})
+    @OnClick({R.id.back_button, R.id.btn_change_room_date})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_button:
                 finish();
+            case R.id.btn_change_room_date:
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
+                finish();
+                break;
+
         }
     }
 
@@ -140,12 +143,8 @@ public class DateRoomSelectActivity extends AppCompatActivity implements DateSel
     }
 
     @Override
-    public void totalRoom(int roomCount) {
-
-    }
-
-    @Override
     public void totalGuest(int guestCount) {
-
+        Constants.totalGuest = guestCount;
     }
+
 }

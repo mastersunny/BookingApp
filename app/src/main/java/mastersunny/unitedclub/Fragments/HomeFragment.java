@@ -31,7 +31,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import mastersunny.unitedclub.adapters.PlaceAdapter;
-import mastersunny.unitedclub.listeners.ClickListener;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.rest.ApiClient;
@@ -43,7 +42,6 @@ import mastersunny.unitedclub.adapters.RecommendedAdapter;
 import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.utils.Constants;
-import mastersunny.unitedclub.utils.SearchType;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -171,7 +169,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                    Constants.REQUEST_LOCATION);
+                                    Constants.PERMISSION_LOCATION);
                         }
                     })
                     .setNegativeButton("no", new DialogInterface.OnClickListener() {
@@ -183,13 +181,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         } else {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    Constants.REQUEST_LOCATION);
+                    Constants.PERMISSION_LOCATION);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Constants.REQUEST_LOCATION) {
+        if (requestCode == Constants.PERMISSION_LOCATION) {
             if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //                SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
             }

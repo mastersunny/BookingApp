@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="1 Guest"
+                android:text="Guest"
                 android:textSize="@dimen/text_size_16" />
 
         </RelativeLayout>
@@ -65,18 +65,21 @@
                 android:weightSum="3">
 
                 <Button
+                    android:id="@+id/guest_count1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="1" />
 
                 <Button
+                    android:id="@+id/guest_count2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="2" />
 
                 <Button
+                    android:id="@+id/guest_count3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -106,10 +109,17 @@
                 android:text="Female" />
 
             <CheckBox
-                android:id="@+id/child_checkbox"
+                android:id="@+id/tv_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Children" />
+                android:text="TV" />
+
+            <CheckBox
+                android:id="@+id/ac_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AC" />
+
 
         </LinearLayout>
     </LinearLayout>

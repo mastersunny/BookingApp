@@ -61,7 +61,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <Button
-        android:id="@+id/btn_apply_room_constraint"
+        android:id="@+id/btn_change_room_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
