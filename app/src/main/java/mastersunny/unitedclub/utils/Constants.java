@@ -228,7 +228,9 @@ public class Constants {
             int nextMonth = now.get(Calendar.MONTH) + 1;
             int nextDay = now.get(Calendar.DAY_OF_MONTH);
 
-            pair = new Pair<>(Constants.calculateDate(year, month, day), Constants.calculateDate(nextYear, nextMonth, nextDay));
+            String startDate = Constants.calculateDate(year, month, day);
+            String endDate = Constants.calculateDate(nextYear, nextMonth, nextDay);
+            pair = new Pair<>(startDate, endDate);
             return pair;
 
         } catch (Exception e) {
