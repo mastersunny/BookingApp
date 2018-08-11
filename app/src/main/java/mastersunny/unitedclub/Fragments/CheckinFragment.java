@@ -13,17 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.activities.DateRoomSelectActivity;
 import mastersunny.unitedclub.listeners.DateSelectionListener;
-import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 
@@ -70,7 +65,7 @@ public class CheckinFragment extends Fragment {
         calender_view.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                dateSelectionListener.startDate(Constants.populateSetDate(year, month + 1, dayOfMonth));
+                dateSelectionListener.startDate(Constants.calculateDate(year, month + 1, dayOfMonth));
             }
         });
     }

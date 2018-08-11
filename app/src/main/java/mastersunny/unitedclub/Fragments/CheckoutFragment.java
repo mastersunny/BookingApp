@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -68,7 +66,7 @@ public class CheckoutFragment extends Fragment {
         calender_view.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                dateSelectionListener.startDate(Constants.populateSetDate(year, month + 1, dayOfMonth));
+                dateSelectionListener.startDate(Constants.calculateDate(year, month + 1, dayOfMonth));
             }
         });
     }

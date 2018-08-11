@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -19,13 +20,13 @@ import com.bumptech.glide.request.target.ViewTarget;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import mastersunny.unitedclub.listeners.ConfirmListener;
 import mastersunny.unitedclub.R;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.support.constraint.Constraints.TAG;
 
 /**
  * Created by ASUS on 1/20/2018.
@@ -211,7 +212,32 @@ public class Constants {
         dialog.show();
     }
 
-    public static String populateSetDate(int year, int month, int day) {
+    public static Pair<String, String> getStartEndDate(Date date) {
+        Pair pair = null;
+        try {
+            Calendar now = Calendar.getInstance();
+            now.setTime(date);
+
+            int year = now.get(Calendar.YEAR);
+            int month = now.get(Calendar.MONTH) + 1;
+            int day = now.get(Calendar.DAY_OF_MONTH);
+
+            now.add(Calendar.DAY_OF_MONTH, 1);
+
+            int nextYear = now.get(Calendar.YEAR);
+            int nextMonth = now.get(Calendar.MONTH) + 1;
+            int nextDay = now.get(Calendar.DAY_OF_MONTH);
+
+            pair = new Pair<>(Constants.calculateDate(year, month, day), Constants.calculateDate(nextYear, nextMonth, nextDay));
+            return pair;
+
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
+        return pair;
+    }
+
+    public static String calculateDate(int year, int month, int day) {
         try {
             String dateInString = String.format("%02d", day) + "-" + String.format("%02d", month) + "-" + year;
             Date date = Constants.sdf.parse(dateInString);
@@ -223,7 +249,7 @@ public class Constants {
         return "";
     }
 
-    public static String populateSetDate(String dateInString) {
+    public static String calculateDate(String dateInString) {
         try {
             Date date = Constants.sdf2.parse(dateInString);
             Constants.debugLog(TAG, date.toString());

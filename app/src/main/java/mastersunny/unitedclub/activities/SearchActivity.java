@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -169,22 +170,25 @@ public class SearchActivity extends AppCompatActivity {
         examAdapter.setListener(new ExamSelectionListener() {
             @Override
             public void selectedExam(ExamDTO examDTO) {
-                String[] dates = examDTO.getExamDate().split("-");
-                start_date.setText(Constants.populateSetDate(Integer.valueOf(dates[0]), Integer.valueOf(dates[1]), Integer.valueOf(dates[2])));
-                end_date.setText(Constants.populateSetDate(Integer.valueOf(dates[0]), Integer.valueOf(dates[1]), Integer.valueOf(dates[2] + 1)));
+                try {
+                    Date currentDate = Constants.sdf2.parse(examDTO.getExamDate());
+                    Pair<String, String> pair = Constants.getStartEndDate(currentDate);
+                    start_date.setText(pair.first);
+                    end_date.setText(pair.second);
+                } catch (Exception e) {
+                    Constants.debugLog(TAG, e.getMessage());
+                }
+
+
             }
         });
 
         toolbar_title.setText("Where in " + placeName + "?");
-
-        Calendar now = Calendar.getInstance();
-        int year = now.get(Calendar.YEAR);
-        int month = now.get(Calendar.MONTH) + 1; // Note: zero based!
-        int day = now.get(Calendar.DAY_OF_MONTH);
-        start_date.setText(Constants.populateSetDate(year, month, day));
-        end_date.setText(Constants.populateSetDate(year, month, day + 1));
         room_count.setText("1 Room");
         person_count.setText("1 Adult");
+        Pair<String, String> pair = Constants.getStartEndDate(new Date());
+        start_date.setText(pair.first);
+        end_date.setText(pair.second);
     }
 
     @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title, R.id.start_date_layout,
