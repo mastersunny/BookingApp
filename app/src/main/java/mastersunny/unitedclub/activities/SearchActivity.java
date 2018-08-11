@@ -223,7 +223,7 @@ public class SearchActivity extends AppCompatActivity {
     private void startDateRoomSelectActivity(int position) {
         Intent intent = new Intent(this, DateRoomSelectActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.SELECTED_POSITION, 0);
+        intent.putExtra(Constants.SELECTED_POSITION, position);
         startActivityForResult(intent, Constants.ROOM_DATE_REQUEST_CODE);
     }
 
