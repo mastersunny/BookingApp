@@ -1,28 +1,20 @@
 package mastersunny.unitedclub.models;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
-import java.util.List;
 
 public class PlaceDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @SerializedName("id")
     private Long id;
 
-    @SerializedName("name")
     private String name;
 
-    @SerializedName("bnName")
     private String bnName;
 
-    @SerializedName("imageUrl")
     private String imageUrl;
 
-    @SerializedName("exams")
-    private List<ExamDTO> exams;
+    private double latitude;
+
+    private double longitude;
 
     public Long getId() {
         return id;
@@ -56,12 +48,20 @@ public class PlaceDTO implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public List<ExamDTO> getExams() {
-        return exams;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setExams(List<ExamDTO> exams) {
-        this.exams = exams;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     @Override
@@ -71,7 +71,8 @@ public class PlaceDTO implements Serializable {
                 ", name='" + name + '\'' +
                 ", bnName='" + bnName + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", exams=" + exams +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }

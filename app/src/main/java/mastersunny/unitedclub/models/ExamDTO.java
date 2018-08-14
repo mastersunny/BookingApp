@@ -6,13 +6,11 @@ public class ExamDTO implements Serializable {
 
     private Long id;
 
-    private boolean expired;
-
-    private String examDate;
+    private UniversityDTO university;
 
     private String name;
 
-    private PlaceDTO place;
+    private String date;
 
     public Long getId() {
         return id;
@@ -22,20 +20,12 @@ public class ExamDTO implements Serializable {
         this.id = id;
     }
 
-    public boolean isExpired() {
-        return expired;
+    public UniversityDTO getUniversity() {
+        return university;
     }
 
-    public void setExpired(boolean expired) {
-        this.expired = expired;
-    }
-
-    public String getExamDate() {
-        return examDate;
-    }
-
-    public void setExamDate(String examDate) {
-        this.examDate = examDate;
+    public void setUniversity(UniversityDTO university) {
+        this.university = university;
     }
 
     public String getName() {
@@ -46,22 +36,21 @@ public class ExamDTO implements Serializable {
         this.name = name;
     }
 
-    public PlaceDTO getPlace() {
-        return place;
+    public String getDate() {
+        return date;
     }
 
-    public void setPlace(PlaceDTO place) {
-        this.place = place;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
         return "ExamDTO{" +
                 "id=" + id +
-                ", expired=" + expired +
-                ", examDate='" + examDate + '\'' +
+                ", university=" + university +
                 ", name='" + name + '\'' +
-                ", place=" + place +
+                ", date='" + date + '\'' +
                 '}';
     }
 }
