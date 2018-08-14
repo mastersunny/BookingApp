@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -17,7 +16,6 @@ import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.listeners.ExamSelectionListener;
 import mastersunny.unitedclub.models.ExamDTO;
-import mastersunny.unitedclub.utils.Constants;
 
 public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -48,6 +46,7 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        } else {
 //            holder.itemView.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
 //        }
+        mainHolder.university_name.setText(examDTO.getUniversity().getName());
         mainHolder.exam_name.setText(examDTO.getName());
         mainHolder.exam_date.setText(examDTO.getDate());
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +75,9 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     static class MainHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.university_name)
+        TextView university_name;
 
         @BindView(R.id.exam_name)
         TextView exam_name;
