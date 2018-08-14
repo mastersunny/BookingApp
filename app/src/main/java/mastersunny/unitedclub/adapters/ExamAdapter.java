@@ -49,7 +49,7 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //            holder.itemView.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
 //        }
         mainHolder.exam_name.setText(examDTO.getName());
-        mainHolder.exam_date.setText(examDTO.getExamDate());
+        mainHolder.exam_date.setText(examDTO.getDate());
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

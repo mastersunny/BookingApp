@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void selectedExam(ExamDTO examDTO) {
                 try {
-                    Date currentDate = Constants.sdf2.parse(examDTO.getExamDate());
+                    Date currentDate = Constants.sdf2.parse(examDTO.getDate());
                     Pair<String, String> pair = Constants.getStartEndDate(currentDate);
 //                    start_date.setText(pair.first);
 //                    end_date.setText(pair.second);

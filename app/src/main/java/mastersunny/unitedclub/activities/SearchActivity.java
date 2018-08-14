@@ -168,7 +168,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void selectedExam(ExamDTO examDTO) {
                 try {
-                    Date currentDate = Constants.sdf2.parse(examDTO.getExamDate());
+                    Date currentDate = Constants.sdf2.parse(examDTO.getDate());
                     Pair<String, String> pair = Constants.getStartEndDate(currentDate);
                     start_date.setText(pair.first);
                     end_date.setText(pair.second);
@@ -180,7 +180,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        toolbar_title.setText(examDTO.getPlace().getName());
+        toolbar_title.setText(examDTO.getUniversity().getPlace().getName());
         room_count.setText("1 Room");
         person_count.setText("1 Adult");
         Pair<String, String> pair = Constants.getStartEndDate(new Date());
