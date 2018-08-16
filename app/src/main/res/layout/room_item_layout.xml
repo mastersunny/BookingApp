@@ -24,6 +24,21 @@
             android:src="@drawable/sylhet" />
 
         <TextView
+            android:id="@+id/female_friendly_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/room_image"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="@dimen/margin_3"
+            android:paddingLeft="@dimen/margin_10"
+            android:paddingRight="@dimen/margin_10"
+            android:text="Female Friendly"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

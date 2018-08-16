@@ -87,7 +87,6 @@
                     android:paddingBottom="@dimen/margin_3"
                     android:paddingLeft="@dimen/margin_10"
                     android:paddingRight="@dimen/margin_10"
-                    android:paddingTop="@dimen/margin_3"
                     android:text="Female Friendly"
                     android:textColor="@color/white" />
 

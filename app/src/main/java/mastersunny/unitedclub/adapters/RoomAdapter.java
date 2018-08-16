@@ -40,6 +40,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         MainHolder mainHolder = (MainHolder) holder;
         mainHolder.address.setText(roomDTO.getAddress());
         mainHolder.room_cost.setText(roomDTO.getRoomCost() + "");
+        if (roomDTO.isFemaleFriendly()) {
+            mainHolder.female_friendly_layout.setVisibility(View.VISIBLE);
+        } else {
+            mainHolder.female_friendly_layout.setVisibility(View.GONE);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +71,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @BindView(R.id.room_cost)
         TextView room_cost;
+
+        @BindView(R.id.female_friendly_layout)
+        TextView female_friendly_layout;
 
         public MainHolder(View itemView) {
             super(itemView);
