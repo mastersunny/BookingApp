@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.models.RoomDTO;
+import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.utils.Constants;
 
 public class RoomDetailsActivity extends AppCompatActivity {
@@ -62,6 +64,9 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.transport_checkbox)
     CheckBox transport_checkbox;
+
+    @BindView(R.id.room_image)
+    ImageView room_image;
 
     double amount;
 
@@ -149,6 +154,9 @@ public class RoomDetailsActivity extends AppCompatActivity {
                 updateTotalCost();
             }
         });
+
+        Constants.loadImage(this, ApiClient.BASE_URL + ApiClient.APP_NAME + roomDTO.getImages().get(0).getImageUrl(),
+                room_image);
     }
 
     private void updateTotalCost() {
