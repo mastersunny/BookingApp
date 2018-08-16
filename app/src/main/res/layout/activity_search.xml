@@ -69,14 +69,14 @@
                     android:id="@+id/check_in_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start Date"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="Start Date" />
 
                 <TextView
                     android:id="@+id/startDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1 September" />
+                    android:text="1 September"
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 
@@ -92,14 +92,14 @@
                     android:id="@+id/check_out_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="End Date"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="End Date" />
 
                 <TextView
                     android:id="@+id/endDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2 September" />
+                    android:text="2 September"
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 
@@ -115,14 +115,14 @@
                     android:id="@+id/room_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1 Room"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="1 Room" />
 
                 <TextView
                     android:id="@+id/person_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/check_in_person_count" />
+                    android:text="@string/check_in_person_count"
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 
