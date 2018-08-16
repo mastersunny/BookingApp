@@ -43,7 +43,7 @@ public class RoomDTO implements Serializable {
 
     private boolean disabled;
 
-    private List<RoomImageDTO> roomImageDTOs;
+    private List<RoomImageDTO> images;
 
     public double getLatitude() {
         return latitude;
@@ -189,11 +189,11 @@ public class RoomDTO implements Serializable {
         this.disabled = disabled;
     }
 
-    public List<RoomImageDTO> getRoomImageDTOs() {
-        return roomImageDTOs;
+    public List<RoomImageDTO> getImages() {
+        return images;
     }
 
-    public void setRoomImageDTOs(List<RoomImageDTO> roomImageDTOs) {
-        this.roomImageDTOs = roomImageDTOs;
+    public void setImages(List<RoomImageDTO> images) {
+        this.images = images;
     }
 }

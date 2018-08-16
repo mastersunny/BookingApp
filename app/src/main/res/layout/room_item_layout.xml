@@ -3,7 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="230dp"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_3"
     android:foreground="?selectableItemBackground"
     card_view:cardCornerRadius="@dimen/margin_2"
@@ -16,60 +16,56 @@
         android:padding="@dimen/margin_16">
 
         <ImageView
-            android:id="@+id/prescription_image"
+            android:id="@+id/room_image"
             android:layout_width="match_parent"
             android:layout_height="148dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/deli_grocery_m" />
+            android:src="@drawable/sylhet" />
 
         <TextView
-            android:id="@+id/university_name"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_16"
-            android:layout_toRightOf="@+id/prescription_image"
+            android:layout_below="@+id/room_image"
+            android:layout_marginTop="@dimen/margin_16"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:text="" />
+            android:text="Title"
+            android:textSize="@dimen/text_size_18" />
 
         <TextView
-            android:id="@+id/exam_name"
+            android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/university_name"
-            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_below="@id/title"
             android:layout_marginTop="@dimen/margin_2"
-            android:layout_toRightOf="@+id/prescription_image"
             android:ellipsize="end"
             android:gravity="bottom"
             android:maxLines="1"
-            android:text=""
+            android:text="dfsfsdfdsfdsf"
             android:textSize="@dimen/text_size_12" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/exam_name"
-            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_below="@id/address"
             android:layout_marginTop="@dimen/margin_2"
-            android:layout_toRightOf="@+id/prescription_image"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/exam_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:text="Price: "
+                android:textColor="@color/colorPrimary" />
 
             <TextView
-                android:id="@+id/status"
+                android:id="@+id/room_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="BDT 880"
                 android:textAllCaps="false"
-                android:textColor="#00b84a"
-                android:visibility="gone" />
+                android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
     </RelativeLayout>

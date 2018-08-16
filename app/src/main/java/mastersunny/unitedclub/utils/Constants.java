@@ -22,6 +22,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import mastersunny.unitedclub.listeners.ConfirmListener;
 import mastersunny.unitedclub.R;
@@ -229,8 +230,8 @@ public class Constants {
             int nextMonth = now.get(Calendar.MONTH) + 1;
             int nextDay = now.get(Calendar.DAY_OF_MONTH);
 
-            startDate = year + "-" + month + "-" + day;
-            endDate = nextDay + "-" + nextMonth + "-" + nextDay;
+            startDate = year + "-" + String.format("%02d", month, Locale.ENGLISH) + "-" + String.format("%02d", day, Locale.ENGLISH);
+            endDate = nextYear + "-" + String.format("%02d", nextMonth, Locale.ENGLISH) + "-" + String.format("%02d", nextDay, Locale.ENGLISH);
 
             pair = new Pair<>(Constants.calculateDate(year, month, day), Constants.calculateDate(nextYear, nextMonth, nextDay));
             return pair;

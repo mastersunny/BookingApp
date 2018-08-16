@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.nearby_rv)
     RecyclerView nearby_rv;
-    private ArrayList<ExamDTO> examDTOS;
+    private List<ExamDTO> examDTOS;
     ExamAdapter examAdapter;
 
     @Override
@@ -126,21 +126,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         examAdapter = new ExamAdapter(mActivity, examDTOS);
         nearby_rv.setAdapter(examAdapter);
-        examAdapter.setListener(new ExamSelectionListener() {
-            @Override
-            public void selectedExam(ExamDTO examDTO) {
-                try {
-                    Date currentDate = Constants.sdf2.parse(examDTO.getDate());
-                    Pair<String, String> pair = Constants.getStartEndDate(currentDate);
-//                    start_date.setText(pair.first);
-//                    end_date.setText(pair.second);
-                } catch (Exception e) {
-                    Constants.debugLog(TAG, e.getMessage());
-                }
-
-
-            }
-        });
+//        examAdapter.setListener(new ExamSelectionListener() {
+//            @Override
+//            public void selectedExam(ExamDTO examDTO) {
+//                try {
+//                    Date currentDate = Constants.sdf2.parse(examDTO.getDate());
+//                    Pair<String, String> pair = Constants.getStartEndDate(currentDate);
+////                    start_date.setText(pair.first);
+////                    end_date.setText(pair.second);
+//                } catch (Exception e) {
+//                    Constants.debugLog(TAG, e.getMessage());
+//                }
+//
+//
+//            }
+//        });
 
        /* for (int i = 0; i < 10; i++) {
             RoomDTO roomDTO = new RoomDTO();

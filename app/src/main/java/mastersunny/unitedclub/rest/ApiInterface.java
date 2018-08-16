@@ -9,6 +9,7 @@ import mastersunny.unitedclub.models.MoviesResponse;
 import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.models.RestModel;
+import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.models.SliderDTO;
 import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.models.TransactionDTO;
@@ -135,6 +136,14 @@ public interface ApiInterface {
     Call<List<ExamDTO>> getExams(@Query("page") int page,
                                  @Query("size") int size,
                                  @Query("sort") String sort);
+
+
+    @GET(ApiClient.APP_NAME + "api/v1/searchrooms")
+    Call<List<RoomDTO>> getRooms(@Query("start_date") String startDate,
+                                 @Query("end_date") String endDate,
+                                 @Query("latitude") double latitude,
+                                 @Query("longitude") double longitude,
+                                 @Query("guest") int guest);
 
 
 }

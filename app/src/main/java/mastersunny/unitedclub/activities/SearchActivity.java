@@ -2,34 +2,21 @@ package mastersunny.unitedclub.activities;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Pair;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,13 +24,10 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -51,16 +35,16 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mastersunny.unitedclub.Fragments.SelectDateFragment;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.adapters.ExamAdapter;
-import mastersunny.unitedclub.listeners.DateSelectionListener;
-import mastersunny.unitedclub.listeners.ExamSelectionListener;
+import mastersunny.unitedclub.adapters.RoomAdapter;
 import mastersunny.unitedclub.models.ExamDTO;
-import mastersunny.unitedclub.models.PlaceDTO;
+import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -96,14 +80,14 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.person_count)
     TextView person_count;
 
-    @BindView(R.id.exam_rv)
-    RecyclerView exam_rv;
+    @BindView(R.id.recycler_view)
+    RecyclerView recycler_view;
 
-    ExamAdapter examAdapter;
+    RoomAdapter roomAdapter;
 
     private ExamDTO examDTO;
 
-    private ArrayList<ExamDTO> examDTOS;
+    private List<RoomDTO> roomDTOS;
 
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -123,6 +107,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
+        roomDTOS = new ArrayList<>();
         getIntentData();
         initLayout();
 
@@ -161,9 +146,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
-        exam_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        examAdapter = new ExamAdapter(this, examDTOS);
-        exam_rv.setAdapter(examAdapter);
+        recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        roomAdapter = new RoomAdapter(this, roomDTOS);
+        recycler_view.setAdapter(roomAdapter);
 //        examAdapter.setListener(new ExamSelectionListener() {
 //            @Override
 //            public void selectedExam(ExamDTO examDTO) {
@@ -223,6 +208,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        loadData();
     }
 
     private void startDateRoomSelectActivity(int position) {
@@ -268,6 +254,35 @@ public class SearchActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    private void notifyPlaceAdapter() {
+        if (roomAdapter != null) {
+            roomAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void loadData() {
+        apiInterface.getRooms(Constants.startDate, Constants.endDate, examDTO.getUniversity().getPlace().getLatitude(),
+                examDTO.getUniversity().getPlace().getLongitude(), 2).enqueue(new Callback<List<RoomDTO>>() {
+            @Override
+            public void onResponse(Call<List<RoomDTO>> call, Response<List<RoomDTO>> response) {
+
+                Constants.debugLog(TAG, response + "");
+
+                if (response.isSuccessful()) {
+                    Constants.debugLog(TAG, response.body() + "");
+                    roomDTOS.clear();
+                    roomDTOS.addAll(response.body());
+                    notifyPlaceAdapter();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RoomDTO>> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+            }
+        });
     }
 
 }
