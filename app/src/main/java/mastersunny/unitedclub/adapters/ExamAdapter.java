@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -16,6 +17,7 @@ import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.listeners.ExamSelectionListener;
 import mastersunny.unitedclub.models.ExamDTO;
+import mastersunny.unitedclub.utils.Constants;
 
 public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -48,7 +50,11 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        }
         mainHolder.university_name.setText(examDTO.getUniversity().getName());
         mainHolder.exam_name.setText(examDTO.getName());
-        mainHolder.exam_date.setText(examDTO.getDate());
+        try {
+            mainHolder.exam_date.setText(Constants.calculateDate(examDTO.getDate()));
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
