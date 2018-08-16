@@ -16,6 +16,8 @@ import butterknife.ButterKnife;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.activities.RoomDetailsActivity;
 import mastersunny.unitedclub.models.RoomDTO;
+import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.utils.Constants;
 
 public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -40,6 +42,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         MainHolder mainHolder = (MainHolder) holder;
         mainHolder.address.setText(roomDTO.getAddress());
         mainHolder.room_cost.setText(roomDTO.getRoomCost() + "");
+
+        Constants.loadImage(mActivity, ApiClient.BASE_URL + ApiClient.APP_NAME + roomDTO.getImages().get(0).getImageUrl(),
+                mainHolder.room_image);
+
         if (roomDTO.isFemaleFriendly()) {
             mainHolder.female_friendly_layout.setVisibility(View.VISIBLE);
         } else {
