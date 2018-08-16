@@ -36,7 +36,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
     private void initLayout() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Room Details");
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
