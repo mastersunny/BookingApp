@@ -164,28 +164,33 @@ public class SearchActivity extends AppCompatActivity {
         exam_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         examAdapter = new ExamAdapter(this, examDTOS);
         exam_rv.setAdapter(examAdapter);
-        examAdapter.setListener(new ExamSelectionListener() {
-            @Override
-            public void selectedExam(ExamDTO examDTO) {
-                try {
-                    Date currentDate = Constants.sdf2.parse(examDTO.getDate());
-                    Pair<String, String> pair = Constants.getStartEndDate(currentDate);
-                    start_date.setText(pair.first);
-                    end_date.setText(pair.second);
-                } catch (Exception e) {
-                    Constants.debugLog(TAG, e.getMessage());
-                }
+//        examAdapter.setListener(new ExamSelectionListener() {
+//            @Override
+//            public void selectedExam(ExamDTO examDTO) {
+//                try {
+//                    Date currentDate = Constants.sdf2.parse(examDTO.getDate());
+//                    Pair<String, String> pair = Constants.getStartEndDate(currentDate);
+//                    start_date.setText(pair.first);
+//                    end_date.setText(pair.second);
+//                } catch (Exception e) {
+//                    Constants.debugLog(TAG, e.getMessage());
+//                }
+//
+//
+//            }
+//        });
 
-
-            }
-        });
-
-        toolbar_title.setText(examDTO.getUniversity().getPlace().getName());
+        toolbar_title.setText("Rooms in " + examDTO.getUniversity().getPlace().getName());
         room_count.setText("1 Room");
         person_count.setText("1 Adult");
-        Pair<String, String> pair = Constants.getStartEndDate(new Date());
-        start_date.setText(pair.first);
-        end_date.setText(pair.second);
+        try {
+            Date currentDate = Constants.sdf2.parse(examDTO.getDate());
+            Pair<String, String> pair = Constants.getStartEndDate(currentDate);
+            start_date.setText(pair.first);
+            end_date.setText(pair.second);
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
     }
 
     @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title, R.id.start_date_layout,
