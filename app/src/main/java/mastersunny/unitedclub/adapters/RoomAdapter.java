@@ -14,6 +14,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.activities.RoomDetailsActivity;
 import mastersunny.unitedclub.models.RoomDTO;
 
 public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -35,10 +36,16 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        RoomDTO roomDTO = roomDTOS.get(position);
+        final RoomDTO roomDTO = roomDTOS.get(position);
         MainHolder mainHolder = (MainHolder) holder;
         mainHolder.address.setText(roomDTO.getAddress());
         mainHolder.room_cost.setText(roomDTO.getRoomCost() + "");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RoomDetailsActivity.start(v.getContext(), roomDTO);
+            }
+        });
     }
 
     @Override

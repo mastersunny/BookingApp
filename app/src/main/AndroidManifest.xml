@@ -105,7 +105,7 @@
         <!-- </service> -->
         <!-- ./Firebase Notifications -->
         <activity
-            android:name=".activities.ScrollingActivity2"
+            android:name=".activities.RoomDetailsActivity"
             android:label="@string/title_activity_scrolling2"
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.DateRoomSelectActivity"></activity>
