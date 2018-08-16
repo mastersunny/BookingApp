@@ -1,11 +1,15 @@
 package mastersunny.unitedclub.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class RoomDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private Long id;
 
     private double latitude;
 
@@ -19,21 +23,23 @@ public class RoomDTO implements Serializable {
 
     private boolean femaleFriendly;
 
-    private boolean isTvAvailable;
+    private boolean tvAvailable;
 
-    private boolean isAcAvailable;
+    private boolean acAvailable;
 
-    private boolean isWifiAvailable;
+    private boolean wifiAvailable;
 
-    private boolean isLunchAvailable;
+    private boolean lunchAvailable;
 
     private double lunchCost;
 
-    private boolean isTransportAvailable;
+    private boolean transportAvailable;
 
     private double transportCost;
 
     private double roomCost;
+
+    private boolean disabled;
 
     private UserDTO user;
 
@@ -41,9 +47,15 @@ public class RoomDTO implements Serializable {
 
     private String endDate;
 
-    private boolean disabled;
-
     private List<RoomImageDTO> images;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public double getLatitude() {
         return latitude;
@@ -94,35 +106,35 @@ public class RoomDTO implements Serializable {
     }
 
     public boolean isTvAvailable() {
-        return isTvAvailable;
+        return tvAvailable;
     }
 
     public void setTvAvailable(boolean tvAvailable) {
-        isTvAvailable = tvAvailable;
+        this.tvAvailable = tvAvailable;
     }
 
     public boolean isAcAvailable() {
-        return isAcAvailable;
+        return acAvailable;
     }
 
     public void setAcAvailable(boolean acAvailable) {
-        isAcAvailable = acAvailable;
+        this.acAvailable = acAvailable;
     }
 
     public boolean isWifiAvailable() {
-        return isWifiAvailable;
+        return wifiAvailable;
     }
 
     public void setWifiAvailable(boolean wifiAvailable) {
-        isWifiAvailable = wifiAvailable;
+        this.wifiAvailable = wifiAvailable;
     }
 
     public boolean isLunchAvailable() {
-        return isLunchAvailable;
+        return lunchAvailable;
     }
 
     public void setLunchAvailable(boolean lunchAvailable) {
-        isLunchAvailable = lunchAvailable;
+        this.lunchAvailable = lunchAvailable;
     }
 
     public double getLunchCost() {
@@ -134,11 +146,11 @@ public class RoomDTO implements Serializable {
     }
 
     public boolean isTransportAvailable() {
-        return isTransportAvailable;
+        return transportAvailable;
     }
 
     public void setTransportAvailable(boolean transportAvailable) {
-        isTransportAvailable = transportAvailable;
+        this.transportAvailable = transportAvailable;
     }
 
     public double getTransportCost() {
@@ -155,6 +167,14 @@ public class RoomDTO implements Serializable {
 
     public void setRoomCost(double roomCost) {
         this.roomCost = roomCost;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 
     public UserDTO getUser() {
@@ -179,14 +199,6 @@ public class RoomDTO implements Serializable {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
-    }
-
-    public boolean isDisabled() {
-        return disabled;
-    }
-
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
     }
 
     public List<RoomImageDTO> getImages() {
