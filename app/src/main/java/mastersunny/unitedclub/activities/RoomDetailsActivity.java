@@ -36,5 +36,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
     private void initLayout() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Room Details");
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
