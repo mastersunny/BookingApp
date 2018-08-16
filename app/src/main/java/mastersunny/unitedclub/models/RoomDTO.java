@@ -1,65 +1,199 @@
 package mastersunny.unitedclub.models;
 
-public class RoomDTO {
+import java.io.Serializable;
+import java.util.List;
 
-    private int id;
+public class RoomDTO implements Serializable {
 
-    private String image;
+    private static final long serialVersionUID = 1L;
 
-    private String name;
+    private double latitude;
 
-    private PlaceDTO place;
+    private double longitude;
 
-    private String rating;
+    private String address;
 
-    public int getId() {
-        return id;
+    private String details;
+
+    private int noOfAccomodation;
+
+    private boolean femaleFriendly;
+
+    private boolean isTvAvailable;
+
+    private boolean isAcAvailable;
+
+    private boolean isWifiAvailable;
+
+    private boolean isLunchAvailable;
+
+    private double lunchCost;
+
+    private boolean isTransportAvailable;
+
+    private double transportCost;
+
+    private double roomCost;
+
+    private UserDTO user;
+
+    private String startDate;
+
+    private String endDate;
+
+    private boolean disabled;
+
+    private List<RoomImageDTO> roomImageDTOs;
+
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public String getImage() {
-        return image;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
-    public String getName() {
-        return name;
+    public String getAddress() {
+        return address;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public PlaceDTO getPlace() {
-        return place;
+    public String getDetails() {
+        return details;
     }
 
-    public void setPlace(PlaceDTO place) {
-        this.place = place;
+    public void setDetails(String details) {
+        this.details = details;
     }
 
-    public String getRating() {
-        return rating;
+    public int getNoOfAccomodation() {
+        return noOfAccomodation;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setNoOfAccomodation(int noOfAccomodation) {
+        this.noOfAccomodation = noOfAccomodation;
     }
 
-    @Override
-    public String toString() {
-        return "RoomDTO{" +
-                "id=" + id +
-                ", image='" + image + '\'' +
-                ", name='" + name + '\'' +
-                ", place=" + place +
-                ", rating='" + rating + '\'' +
-                '}';
+    public boolean isFemaleFriendly() {
+        return femaleFriendly;
+    }
+
+    public void setFemaleFriendly(boolean femaleFriendly) {
+        this.femaleFriendly = femaleFriendly;
+    }
+
+    public boolean isTvAvailable() {
+        return isTvAvailable;
+    }
+
+    public void setTvAvailable(boolean tvAvailable) {
+        isTvAvailable = tvAvailable;
+    }
+
+    public boolean isAcAvailable() {
+        return isAcAvailable;
+    }
+
+    public void setAcAvailable(boolean acAvailable) {
+        isAcAvailable = acAvailable;
+    }
+
+    public boolean isWifiAvailable() {
+        return isWifiAvailable;
+    }
+
+    public void setWifiAvailable(boolean wifiAvailable) {
+        isWifiAvailable = wifiAvailable;
+    }
+
+    public boolean isLunchAvailable() {
+        return isLunchAvailable;
+    }
+
+    public void setLunchAvailable(boolean lunchAvailable) {
+        isLunchAvailable = lunchAvailable;
+    }
+
+    public double getLunchCost() {
+        return lunchCost;
+    }
+
+    public void setLunchCost(double lunchCost) {
+        this.lunchCost = lunchCost;
+    }
+
+    public boolean isTransportAvailable() {
+        return isTransportAvailable;
+    }
+
+    public void setTransportAvailable(boolean transportAvailable) {
+        isTransportAvailable = transportAvailable;
+    }
+
+    public double getTransportCost() {
+        return transportCost;
+    }
+
+    public void setTransportCost(double transportCost) {
+        this.transportCost = transportCost;
+    }
+
+    public double getRoomCost() {
+        return roomCost;
+    }
+
+    public void setRoomCost(double roomCost) {
+        this.roomCost = roomCost;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public List<RoomImageDTO> getRoomImageDTOs() {
+        return roomImageDTOs;
+    }
+
+    public void setRoomImageDTOs(List<RoomImageDTO> roomImageDTOs) {
+        this.roomImageDTOs = roomImageDTOs;
     }
 }
