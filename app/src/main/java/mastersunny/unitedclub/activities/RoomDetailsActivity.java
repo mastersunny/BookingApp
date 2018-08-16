@@ -6,9 +6,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +56,16 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.room_details)
     TextView room_details;
+
+    @BindView(R.id.lunch_checkbox)
+    CheckBox lunch_checkbox;
+
+    @BindView(R.id.transport_checkbox)
+    CheckBox transport_checkbox;
+
+    double amount;
+
+    private static DecimalFormat df2 = new DecimalFormat(".##");
 
 
     public static void start(Context context, RoomDTO roomDTO) {
@@ -108,7 +123,36 @@ public class RoomDetailsActivity extends AppCompatActivity {
             transport_layout.setVisibility(View.VISIBLE);
         }
 
-        total_cost.setText(roomDTO.getRoomCost() + "");
+        amount = roomDTO.getRoomCost();
+        updateTotalCost();
+
+        lunch_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    amount += roomDTO.getLunchCost();
+                } else {
+                    amount -= roomDTO.getLunchCost();
+                }
+                updateTotalCost();
+            }
+        });
+
+        transport_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    amount += roomDTO.getTransportCost();
+                } else {
+                    amount -= roomDTO.getTransportCost();
+                }
+                updateTotalCost();
+            }
+        });
+    }
+
+    private void updateTotalCost() {
+        total_cost.setText(df2.format(amount));
     }
 
     @Override
