@@ -149,11 +149,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
         lunch_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    amount += (roomDTO.getLunchCost() * guestCount);
-                } else {
-                    amount -= (roomDTO.getLunchCost() * guestCount);
-                }
                 updateTotalCost();
             }
         });
@@ -161,11 +156,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
         transport_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    amount += (roomDTO.getTransportCost() * guestCount);
-                } else {
-                    amount -= (roomDTO.getTransportCost() * guestCount);
-                }
                 updateTotalCost();
             }
         });
@@ -175,6 +165,15 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void updateTotalCost() {
+        amount = 0;
+        if (lunch_checkbox.isChecked()) {
+            amount += (roomDTO.getLunchCost() * guestCount);
+        }
+        if (transport_checkbox.isChecked()) {
+            amount += (roomDTO.getTransportCost() * guestCount);
+        }
+        amount += (roomDTO.getRoomCost() * guestCount);
+
         total_cost.setText(df2.format(amount));
     }
 
@@ -185,16 +184,19 @@ public class RoomDetailsActivity extends AppCompatActivity {
                 deselectAll();
                 guest_count1.setSelected(true);
                 guestCount = 1;
+                updateTotalCost();
                 break;
             case R.id.guest_count2:
                 deselectAll();
                 guest_count2.setSelected(true);
                 guestCount = 2;
+                updateTotalCost();
                 break;
             case R.id.guest_count3:
                 deselectAll();
                 guest_count3.setSelected(true);
                 guestCount = 3;
+                updateTotalCost();
                 break;
             case R.id.btn_book_room:
                 break;
