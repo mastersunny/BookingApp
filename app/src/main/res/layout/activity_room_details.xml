@@ -301,7 +301,7 @@
                         android:background="@drawable/button_left_selector"
                         android:gravity="center"
                         android:text="1"
-                        android:textColor="@drawable/button_text_color" />
+                        android:textColor="@color/red" />
 
                     <Button
                         android:id="@+id/guest_count2"
@@ -310,7 +310,7 @@
                         android:background="@drawable/button__middle_selector"
                         android:gravity="center"
                         android:text="2"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/red" />
 
                     <Button
                         android:id="@+id/guest_count3"
@@ -319,7 +319,7 @@
                         android:background="@drawable/button_right_selector"
                         android:gravity="center"
                         android:text="3"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/red" />
 
                 </LinearLayout>
 
@@ -351,7 +351,7 @@
             </RelativeLayout>
 
             <Button
-                android:id="@+id/btn_add_room"
+                android:id="@+id/btn_book_room"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

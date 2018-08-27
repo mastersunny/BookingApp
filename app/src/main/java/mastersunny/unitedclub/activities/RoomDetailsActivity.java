@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.rest.ApiClient;
@@ -68,7 +70,19 @@ public class RoomDetailsActivity extends AppCompatActivity {
     @BindView(R.id.room_image)
     ImageView room_image;
 
-    double amount;
+    @BindView(R.id.guest_count1)
+    Button guest_count1;
+
+    @BindView(R.id.guest_count2)
+    Button guest_count2;
+
+    @BindView(R.id.guest_count3)
+    Button guest_count3;
+
+    @BindView(R.id.btn_book_room)
+    Button btn_book_room;
+
+    double amount, guestCount = 1;
 
     private static DecimalFormat df2 = new DecimalFormat(".##");
 
@@ -129,15 +143,16 @@ public class RoomDetailsActivity extends AppCompatActivity {
         }
 
         amount = roomDTO.getRoomCost();
+        guest_count1.setSelected(true);
         updateTotalCost();
 
         lunch_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    amount += roomDTO.getLunchCost();
+                    amount += (roomDTO.getLunchCost() * guestCount);
                 } else {
-                    amount -= roomDTO.getLunchCost();
+                    amount -= (roomDTO.getLunchCost() * guestCount);
                 }
                 updateTotalCost();
             }
@@ -147,9 +162,9 @@ public class RoomDetailsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    amount += roomDTO.getTransportCost();
+                    amount += (roomDTO.getTransportCost() * guestCount);
                 } else {
-                    amount -= roomDTO.getTransportCost();
+                    amount -= (roomDTO.getTransportCost() * guestCount);
                 }
                 updateTotalCost();
             }
@@ -161,6 +176,35 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     private void updateTotalCost() {
         total_cost.setText(df2.format(amount));
+    }
+
+    @OnClick({R.id.guest_count1, R.id.guest_count2, R.id.guest_count3, R.id.btn_book_room})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.guest_count1:
+                deselectAll();
+                guest_count1.setSelected(true);
+                guestCount = 1;
+                break;
+            case R.id.guest_count2:
+                deselectAll();
+                guest_count2.setSelected(true);
+                guestCount = 2;
+                break;
+            case R.id.guest_count3:
+                deselectAll();
+                guest_count3.setSelected(true);
+                guestCount = 3;
+                break;
+            case R.id.btn_book_room:
+                break;
+        }
+    }
+
+    private void deselectAll() {
+        guest_count1.setSelected(false);
+        guest_count2.setSelected(false);
+        guest_count3.setSelected(false);
     }
 
     @Override
