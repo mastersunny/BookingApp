@@ -75,7 +75,7 @@ public class DateRoomSelectActivity extends AppCompatActivity implements DateSel
         if (savedInstanceState == null) {
             pagerAdapter.addFragment(new CheckinFragment(), "Start Date");
             pagerAdapter.addFragment(new CheckoutFragment(), "End Date");
-            pagerAdapter.addFragment(new RoomSelectionFragment(), "Room");
+//            pagerAdapter.addFragment(new RoomSelectionFragment(), "Room");
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");
             String[] titles = savedInstanceState.getStringArray("titles");
@@ -103,7 +103,7 @@ public class DateRoomSelectActivity extends AppCompatActivity implements DateSel
 
             }
         });
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(2);
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(selectedPosition);
