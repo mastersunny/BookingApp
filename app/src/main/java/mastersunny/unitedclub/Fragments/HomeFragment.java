@@ -56,7 +56,7 @@ import retrofit2.Response;
  * Created by sunnychowdhury on 12/16/17.
  */
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment {
 
     public String TAG = "HomeFragment";
     private Activity mActivity;
@@ -163,19 +163,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         offerAdapter = new OfferAdapter(mActivity, offerDTOS);
         offer_rv.setAdapter(offerAdapter);*/
 
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.view_all_popular:
-                startActivity(new Intent(v.getContext(), StoresActivity.class));
-                break;
-            case R.id.search_layout:
-                startActivity(new Intent(v.getContext(), SearchActivity.class));
-                break;
-        }
 
     }
 
