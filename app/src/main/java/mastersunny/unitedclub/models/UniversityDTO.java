@@ -8,6 +8,8 @@ public class UniversityDTO implements Serializable {
 
     private String name;
 
+    private String imageUrl;
+
     private PlaceDTO place;
 
     public Long getId() {
@@ -34,11 +36,20 @@ public class UniversityDTO implements Serializable {
         this.place = place;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public String toString() {
         return "UniversityDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", place=" + place +
                 '}';
     }

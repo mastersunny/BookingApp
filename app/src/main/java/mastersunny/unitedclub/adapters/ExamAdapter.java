@@ -17,6 +17,8 @@ import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.listeners.ExamSelectionListener;
 import mastersunny.unitedclub.models.ExamDTO;
+import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.utils.CircleImageView;
 import mastersunny.unitedclub.utils.Constants;
 
 public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -55,6 +57,10 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } catch (Exception e) {
             Constants.debugLog(TAG, e.getMessage());
         }
+
+        Constants.loadImage(mActivity, ApiClient.BASE_URL + ApiClient.APP_NAME + examDTO.getUniversity().getImageUrl(),
+                mainHolder.university_image);
+
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +87,9 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     static class MainHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.university_image)
+        CircleImageView university_image;
 
         @BindView(R.id.university_name)
         TextView university_name;

@@ -16,7 +16,7 @@
         android:padding="@dimen/margin_16">
 
         <mastersunny.unitedclub.utils.CircleImageView
-            android:id="@+id/prescription_image"
+            android:id="@+id/university_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_16"
-            android:layout_toRightOf="@+id/prescription_image"
+            android:layout_toRightOf="@+id/university_image"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
@@ -42,7 +42,7 @@
             android:layout_below="@id/university_name"
             android:layout_marginLeft="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_2"
-            android:layout_toRightOf="@+id/prescription_image"
+            android:layout_toRightOf="@+id/university_image"
             android:ellipsize="end"
             android:gravity="bottom"
             android:maxLines="1"
@@ -55,7 +55,7 @@
             android:layout_below="@id/exam_name"
             android:layout_marginLeft="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_2"
-            android:layout_toRightOf="@+id/prescription_image"
+            android:layout_toRightOf="@+id/university_image"
             android:orientation="horizontal">
 
             <TextView
