@@ -23,6 +23,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<RoomDTO> roomDTOS;
     private Activity mActivity;
+    private String TAG = "RoomAdapter";
 
     public RoomAdapter(Activity mActivity, List<RoomDTO> roomDTOS) {
         this.mActivity = mActivity;
@@ -40,7 +41,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final RoomDTO roomDTO = roomDTOS.get(position);
         MainHolder mainHolder = (MainHolder) holder;
-        mainHolder.title.setText(roomDTO.getNoOfAccomodation() > 0 ? " Seats Room" : " Seat Room");
+        mainHolder.title.setText(roomDTO.getNoOfAccomodation() > 1 ? roomDTO.getNoOfAccomodation()
+                + " Seats Room" : roomDTO.getNoOfAccomodation() + " Seat Room");
         mainHolder.address.setText(roomDTO.getAddress());
         mainHolder.room_cost.setText(roomDTO.getRoomCost() + "");
 
