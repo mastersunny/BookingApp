@@ -86,9 +86,16 @@
                 android:id="@+id/room_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BDT 880"
+                android:text=""
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:text="per person"
+                android:textColor="@color/toolbar_text_color" />
 
         </LinearLayout>
     </RelativeLayout>
