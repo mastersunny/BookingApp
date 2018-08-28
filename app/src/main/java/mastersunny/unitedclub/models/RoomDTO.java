@@ -1,7 +1,5 @@
 package mastersunny.unitedclub.models;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,7 +17,7 @@ public class RoomDTO implements Serializable {
 
     private String details;
 
-    private int noOfAccomodation;
+    private int noOfAccommodation;
 
     private boolean femaleFriendly;
 
@@ -89,12 +87,12 @@ public class RoomDTO implements Serializable {
         this.details = details;
     }
 
-    public int getNoOfAccomodation() {
-        return noOfAccomodation;
+    public int getNoOfAccommodation() {
+        return noOfAccommodation;
     }
 
-    public void setNoOfAccomodation(int noOfAccomodation) {
-        this.noOfAccomodation = noOfAccomodation;
+    public void setNoOfAccommodation(int noOfAccommodation) {
+        this.noOfAccommodation = noOfAccommodation;
     }
 
     public boolean isFemaleFriendly() {

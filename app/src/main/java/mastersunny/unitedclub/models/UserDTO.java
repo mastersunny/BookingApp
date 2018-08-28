@@ -10,41 +10,32 @@ public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @SerializedName("id")
     private Long id;
 
-    @SerializedName("name")
     private String name;
 
-    @SerializedName("email")
-    private String email;
-
-    @SerializedName("phoneNumber")
     private String phoneNumber;
 
-    @SerializedName("enabled")
-    private boolean enabled;
+    private String email;
 
-    @SerializedName("profileImage")
+    private String nid;
+
+    private String sscRegNo;
+
+    private String hscRegNo;
+
     private String profileImage;
 
-    @SerializedName("createdAt")
-    private String createdAt;
+    public UserDTO() {
+    }
 
-    @SerializedName("createdBy")
-    private Long createdBy;
-
-    @SerializedName("updatedAt")
-    private String updatedAt;
-
-    @SerializedName("updatedBy")
-    private Long updatedBy;
-
-    @SerializedName("deleted")
-    private boolean deleted;
-
-    @SerializedName("defaultAgent")
-    private boolean defaultAgent;
+    public UserDTO(String name, String email, String nid, String sscRegNo, String hscRegNo) {
+        this.name = name;
+        this.email = email;
+        this.nid = nid;
+        this.sscRegNo = sscRegNo;
+        this.hscRegNo = hscRegNo;
+    }
 
     public Long getId() {
         return id;
@@ -62,14 +53,6 @@ public class UserDTO implements Serializable {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -78,12 +61,36 @@ public class UserDTO implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNid() {
+        return nid;
+    }
+
+    public void setNid(String nid) {
+        this.nid = nid;
+    }
+
+    public String getSscRegNo() {
+        return sscRegNo;
+    }
+
+    public void setSscRegNo(String sscRegNo) {
+        this.sscRegNo = sscRegNo;
+    }
+
+    public String getHscRegNo() {
+        return hscRegNo;
+    }
+
+    public void setHscRegNo(String hscRegNo) {
+        this.hscRegNo = hscRegNo;
     }
 
     public String getProfileImage() {
@@ -94,69 +101,17 @@ public class UserDTO implements Serializable {
         this.profileImage = profileImage;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public boolean isDefaultAgent() {
-        return defaultAgent;
-    }
-
-    public void setDefaultAgent(boolean defaultAgent) {
-        this.defaultAgent = defaultAgent;
-    }
-
     @Override
     public String toString() {
         return "UserDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", enabled=" + enabled +
+                ", email='" + email + '\'' +
+                ", nid='" + nid + '\'' +
+                ", sscRegNo='" + sscRegNo + '\'' +
+                ", hscRegNo='" + hscRegNo + '\'' +
                 ", profileImage='" + profileImage + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", createdBy=" + createdBy +
-                ", updatedAt='" + updatedAt + '\'' +
-                ", updatedBy=" + updatedBy +
-                ", deleted=" + deleted +
-                ", defaultAgent=" + defaultAgent +
                 '}';
     }
 }

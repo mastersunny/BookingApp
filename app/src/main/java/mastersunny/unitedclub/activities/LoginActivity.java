@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import mastersunny.unitedclub.Fragments.LoginFragment;
+import mastersunny.unitedclub.Fragments.SignUpFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.listeners.LoginListener;
 
@@ -38,6 +39,16 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     @Override
     public void loginCompleted() {
         finish();
+    }
+
+    @Override
+    public void signUp() {
+        if (!isFinishing()) {
+            SignUpFragment fragment = new SignUpFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.content, fragment);
+            transaction.commitAllowingStateLoss();
+        }
     }
 
     @Override

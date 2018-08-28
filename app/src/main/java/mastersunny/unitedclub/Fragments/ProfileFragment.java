@@ -121,7 +121,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void updateProfile(UserDTO userDTO) {
         user_name.setText(userDTO.getName() + " " + userDTO.getName());
         if (!TextUtils.isEmpty(userDTO.getProfileImage())) {
-            String imgUrl = ApiClient.BASE_URL + userDTO.getCreatedAt();
+            String imgUrl = ApiClient.BASE_URL + userDTO.getProfileImage();
             Constants.loadImage(mActivity, imgUrl, profile_image);
         }
     }

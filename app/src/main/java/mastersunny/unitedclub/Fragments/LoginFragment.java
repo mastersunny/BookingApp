@@ -124,14 +124,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 login_layout.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
                 try {
-                    Constants.debugLog(TAG, AccountKit.getCurrentAccessToken().getToken());
                     apiInterface.login(AccountKit.getCurrentAccessToken().getToken()).enqueue(new Callback<UserDTO>() {
                         @Override
                         public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                             progressBar.setVisibility(View.GONE);
                             if (response.isSuccessful()) {
                                 Constants.debugLog(TAG, "response " + response.body().toString());
-                                loginListener.loginCompleted();
+                                if (response.body().getId() != null && response.body().getPhoneNumber() != null) {
+                                    loginListener.loginCompleted();
+                                } else {
+                                    loginListener.signUp();
+                                }
                             }
                         }
 

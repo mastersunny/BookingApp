@@ -21,13 +21,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.models.RoomBookingDTO;
 import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RoomDetailsActivity extends AppCompatActivity {
 
     private String TAG = "RoomDetailsActivity";
+
+    private ApiInterface apiInterface;
 
     RoomDTO roomDTO;
 
@@ -99,7 +106,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
         ButterKnife.bind(this);
-
+        apiInterface = ApiClient.createService(this, ApiInterface.class);
         getIntentData();
         initLayout();
     }
@@ -199,6 +206,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
                 updateTotalCost();
                 break;
             case R.id.btn_book_room:
+                bookRoom();
                 break;
         }
     }
@@ -213,5 +221,30 @@ public class RoomDetailsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private void bookRoom() {
+        try {
+            apiInterface.bookRoom(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
+                @Override
+                public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
+
+                    Constants.debugLog(TAG, response + " ");
+
+                    if (response.isSuccessful()) {
+                        Constants.debugLog(TAG, response.body().toString());
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
     }
 }

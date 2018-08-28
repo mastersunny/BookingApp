@@ -9,6 +9,7 @@ import mastersunny.unitedclub.models.MoviesResponse;
 import mastersunny.unitedclub.models.OfferDTO;
 import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.models.RestModel;
+import mastersunny.unitedclub.models.RoomBookingDTO;
 import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.models.SliderDTO;
 import mastersunny.unitedclub.models.StoreDTO;
@@ -17,9 +18,11 @@ import mastersunny.unitedclub.models.UserDTO;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -127,6 +130,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<UserDTO> login(@Field("access_token") String accessToken);
 
+    @POST(ApiClient.APP_NAME + "api/signup")
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    Call<UserDTO> signup(@Query("access_token") String accessToken, @Body UserDTO userDTO);
+
     @GET(ApiClient.APP_NAME + "api/v1/places")
     Call<List<PlaceDTO>> getPlaces(@Query("page") int page,
                                    @Query("size") int size,
@@ -145,5 +152,13 @@ public interface ApiInterface {
                                  @Query("longitude") double longitude,
                                  @Query("guest") int guest);
 
+
+    @POST(ApiClient.APP_NAME + "api/bookroom")
+    @FormUrlEncoded
+    Call<RoomBookingDTO> bookRoom(@Field("start_date") String startDate,
+                                  @Field("end_date") String endDate,
+                                  @Field("room_id") Long roomId,
+                                  @Field("room_cost") double roomCost,
+                                  @Field("guest_count") int guestCount);
 
 }

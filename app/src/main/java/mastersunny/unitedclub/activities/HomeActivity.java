@@ -100,19 +100,19 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Constants.debugLog(TAG, "" + Constants.accessToken + " token " + FirebaseInstanceId.getInstance().getToken());
-        apiInterface.sendRegistrationToServer(Constants.accessToken, FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<AccessModel>() {
-            @Override
-            public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    Constants.debugLog(TAG, response.body().getMessage());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AccessModel> call, Throwable t) {
-
-            }
-        });
+//        apiInterface.sendRegistrationToServer(Constants.accessToken, FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<AccessModel>() {
+//            @Override
+//            public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
+//                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+//                    Constants.debugLog(TAG, response.body().getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AccessModel> call, Throwable t) {
+//
+//            }
+//        });
 
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
