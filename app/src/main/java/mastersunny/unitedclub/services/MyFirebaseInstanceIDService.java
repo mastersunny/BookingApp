@@ -15,7 +15,7 @@ import mastersunny.unitedclub.utils.Constants;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
-    private static final String TAG = MyFirebaseInstanceIDService.class.getSimpleName();
+    private static final String TAG = "MyFirebaseInstanceIDService";
 
     @Override
     public void onTokenRefresh() {
