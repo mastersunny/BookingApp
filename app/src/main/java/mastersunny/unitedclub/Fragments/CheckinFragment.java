@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -66,8 +68,8 @@ public class CheckinFragment extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 month += 1;
-                dateSelectionListener.startDate(Constants.calculateDate(year, month + 1, dayOfMonth));
-                Constants.startDate = String.format("%02d", dayOfMonth) + "-" + String.format("%02d", month) + "-" + year;
+                dateSelectionListener.startDate(Constants.calculateDate(year, month, dayOfMonth));
+                Constants.startDate = year + "-" + String.format("%02d", month, Locale.ENGLISH) + "-" + String.format("%02d", dayOfMonth, Locale.ENGLISH);
             }
         });
     }

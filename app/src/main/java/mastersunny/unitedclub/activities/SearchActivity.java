@@ -249,9 +249,9 @@ public class SearchActivity extends AppCompatActivity {
         }
         if (requestCode == Constants.ROOM_DATE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Constants.debugLog(TAG, Constants.startDate + " " + Constants.endDate + " " + Constants.totalGuest);
+                start_date.setText(Constants.calculateDate(Constants.startDate));
+                end_date.setText(Constants.calculateDate(Constants.endDate));
             }
-
         }
     }
 
