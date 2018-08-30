@@ -2,6 +2,7 @@ package mastersunny.unitedclub.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -88,6 +89,9 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_book_room)
     Button btn_book_room;
+
+    @BindView(R.id.map_layout)
+    ImageView map_layout;
 
     double amount, guestCount = 1;
 
@@ -184,9 +188,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
         total_cost.setText(df2.format(amount));
     }
 
-    @OnClick({R.id.guest_count1, R.id.guest_count2, R.id.guest_count3, R.id.btn_book_room})
+    @OnClick({R.id.guest_count1, R.id.guest_count2, R.id.guest_count3, R.id.btn_book_room, R.id.map_layout})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.map_layout:
+                startGoogleMap();
+                break;
             case R.id.guest_count1:
                 deselectAll();
                 guest_count1.setSelected(true);
@@ -221,6 +228,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private void startGoogleMap() {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?" + "daddr=" + roomDTO.getLatitude() + "," + roomDTO.getLongitude()));
+        startActivity(intent);
     }
 
     private void bookRoom() {
