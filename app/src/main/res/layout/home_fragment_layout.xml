@@ -31,6 +31,6 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/fab_margin"
         android:visibility="visible"
-        app:srcCompat="@drawable/ic__briefcase" />
+        app:srcCompat="@drawable/ic_briefcase" />
 
 </android.support.design.widget.CoordinatorLayout>

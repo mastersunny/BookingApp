@@ -80,7 +80,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_booking" />
+                app:srcCompat="@drawable/ic_briefcase" />
 
             <TextView
                 android:id="@+id/booking_text"
