@@ -98,7 +98,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".services.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -109,7 +108,8 @@
             android:name=".activities.RoomDetailsActivity"
             android:label="@string/title_activity_scrolling2"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activities.DateRoomSelectActivity"></activity>
+        <activity android:name=".activities.DateRoomSelectActivity" />
+        <activity android:name=".activities.BookingActivity"></activity>
     </application>
 
 </manifest>

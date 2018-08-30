@@ -233,7 +233,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
-        
+
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
@@ -320,6 +320,14 @@ public class HomeActivity extends AppCompatActivity {
     private void notifyPlaceAdapter() {
         if (examAdapter != null) {
             examAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @OnClick({R.id.fab})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fab:
+                break;
         }
     }
 
