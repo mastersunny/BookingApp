@@ -67,7 +67,7 @@ public class CheckinFragment extends Fragment {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 month += 1;
                 dateSelectionListener.startDate(Constants.calculateDate(year, month + 1, dayOfMonth));
-                Constants.startDate = year + "-" + month + "-" + dayOfMonth;
+                Constants.startDate = String.format("%02d", dayOfMonth) + "-" + String.format("%02d", month) + "-" + year;
             }
         });
     }

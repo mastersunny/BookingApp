@@ -258,7 +258,6 @@ public class Constants {
     public static String calculateDate(String dateInString) {
         try {
             Date date = Constants.sdf2.parse(dateInString);
-            Constants.debugLog(TAG, date.toString());
             String[] strings = date.toString().split(" ");
             return (strings[0] + ", " + strings[1] + " " + strings[2]);
         } catch (Exception e) {
