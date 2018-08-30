@@ -1,15 +1,186 @@
 package mastersunny.unitedclub.activities;
 
-import android.support.v7.app.AppCompatActivity;
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Pair;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.adapters.RoomAdapter;
+import mastersunny.unitedclub.models.ExamDTO;
+import mastersunny.unitedclub.models.RoomDTO;
+import mastersunny.unitedclub.rest.ApiClient;
+import mastersunny.unitedclub.rest.ApiInterface;
+import mastersunny.unitedclub.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BookingActivity extends AppCompatActivity {
+
+    private static String TAG = "BookingActivity";
+    private SearchView searchView;
+    private int searchType;
+    private ApiInterface apiInterface;
+
+    @BindView(R.id.toolbar_title)
+    TextView toolbar_title;
+
+    @BindView(R.id.back_button)
+    LinearLayout back_button;
+
+    @BindView(R.id.start_date_layout)
+    LinearLayout start_date_layout;
+
+    @BindView(R.id.end_date_layout)
+    LinearLayout end_date_layout;
+
+    @BindView(R.id.room_person_layout)
+    LinearLayout room_person_layout;
+
+    @BindView(R.id.startDate)
+    TextView start_date;
+
+    @BindView(R.id.endDate)
+    TextView end_date;
+
+    @BindView(R.id.room_count)
+    TextView room_count;
+
+    @BindView(R.id.person_count)
+    TextView person_count;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recycler_view;
+
+    RoomAdapter roomAdapter;
+
+    private ExamDTO examDTO;
+
+    private List<RoomDTO> roomDTOS;
+
+    private FusedLocationProviderClient mFusedLocationClient;
+
+    private double latitude, longitude;
+
+    public static void start(Context context) {
+        Intent intent = new Intent(context, SearchActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
+        ButterKnife.bind(this);
+        apiInterface = ApiClient.createService(this, ApiInterface.class);
+        roomDTOS = new ArrayList<>();
+        initLayout();
+    }
+
+    private void initLayout() {
+        recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        roomAdapter = new RoomAdapter(this, roomDTOS);
+        recycler_view.setAdapter(roomAdapter);
+//        examAdapter.setListener(new ExamSelectionListener() {
+//            @Override
+//            public void selectedExam(ExamDTO examDTO) {
+//                try {
+//                    Date currentDate = Constants.sdf2.parse(examDTO.getDate());
+//                    Pair<String, String> pair = Constants.getStartEndDate(currentDate);
+//                    start_date.setText(pair.first);
+//                    end_date.setText(pair.second);
+//                } catch (Exception e) {
+//                    Constants.debugLog(TAG, e.getMessage());
+//                }
+//
+//
+//            }
+//        });
+
+        toolbar_title.setText("Rooms in " + examDTO.getUniversity().getPlace().getName());
+        room_count.setText("1 Room");
+        person_count.setText("1 Adult");
+        try {
+            Date currentDate = Constants.sdf2.parse(examDTO.getDate());
+            Pair<String, String> pair = Constants.getStartEndDate(currentDate);
+            start_date.setText(pair.first);
+            end_date.setText(pair.second);
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
+    }
+
+    @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title, R.id.start_date_layout,
+            R.id.end_date_layout, R.id.room_person_layout})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back_button:
+                finish();
+                break;
+            case R.id.search_icon:
+            case R.id.toolbar_title:
+                break;
+            case R.id.start_date_layout:
+                break;
+            case R.id.end_date_layout:
+                break;
+            case R.id.room_person_layout:
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+    private void notifyPlaceAdapter() {
+        if (roomAdapter != null) {
+            roomAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void loadData() {
+        apiInterface.getBookings(0, 100, "start_date,desc").enqueue(new Callback<List<RoomDTO>>() {
+            @Override
+            public void onResponse(Call<List<RoomDTO>> call, Response<List<RoomDTO>> response) {
+
+                Constants.debugLog(TAG, response + "");
+
+                if (response.isSuccessful()) {
+                    Constants.debugLog(TAG, response.body() + "");
+                    roomDTOS.clear();
+                    roomDTOS.addAll(response.body());
+                    notifyPlaceAdapter();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RoomDTO>> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+            }
+        });
     }
 }

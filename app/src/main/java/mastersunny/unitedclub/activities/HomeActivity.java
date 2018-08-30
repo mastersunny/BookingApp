@@ -296,7 +296,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        apiInterface.getExams(0, 10, "exam_date,asc").enqueue(new Callback<List<ExamDTO>>() {
+        apiInterface.getExams(0, 100, "exam_date,asc").enqueue(new Callback<List<ExamDTO>>() {
             @Override
             public void onResponse(Call<List<ExamDTO>> call, Response<List<ExamDTO>> response) {
 
@@ -327,6 +327,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab:
+                BookingActivity.start(v.getContext());
                 break;
         }
     }

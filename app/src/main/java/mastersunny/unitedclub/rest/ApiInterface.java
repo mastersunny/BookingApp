@@ -161,4 +161,9 @@ public interface ApiInterface {
                                   @Field("room_cost") double roomCost,
                                   @Field("guest_count") int guestCount);
 
+    @GET(ApiClient.APP_NAME + "api/bookings")
+    Call<List<RoomDTO>> getBookings(@Query("page") int page,
+                                    @Query("size") int size,
+                                    @Query("sort") String sort);
+
 }
