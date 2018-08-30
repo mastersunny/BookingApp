@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/margin_5"
-            android:weightSum="3">
+            android:weightSum="2">
 
             <LinearLayout
                 android:id="@+id/start_date_layout"
@@ -110,7 +110,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/room_count"
