@@ -74,8 +74,6 @@ public class BookingActivity extends AppCompatActivity {
 
     RoomAdapter roomAdapter;
 
-    private ExamDTO examDTO;
-
     private List<RoomDTO> roomDTOS;
 
     private FusedLocationProviderClient mFusedLocationClient;
@@ -83,7 +81,7 @@ public class BookingActivity extends AppCompatActivity {
     private double latitude, longitude;
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, SearchActivity.class);
+        Intent intent = new Intent(context, BookingActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(intent);
     }
@@ -102,33 +100,6 @@ public class BookingActivity extends AppCompatActivity {
         recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         roomAdapter = new RoomAdapter(this, roomDTOS);
         recycler_view.setAdapter(roomAdapter);
-//        examAdapter.setListener(new ExamSelectionListener() {
-//            @Override
-//            public void selectedExam(ExamDTO examDTO) {
-//                try {
-//                    Date currentDate = Constants.sdf2.parse(examDTO.getDate());
-//                    Pair<String, String> pair = Constants.getStartEndDate(currentDate);
-//                    start_date.setText(pair.first);
-//                    end_date.setText(pair.second);
-//                } catch (Exception e) {
-//                    Constants.debugLog(TAG, e.getMessage());
-//                }
-//
-//
-//            }
-//        });
-
-        toolbar_title.setText("Rooms in " + examDTO.getUniversity().getPlace().getName());
-        room_count.setText("1 Room");
-        person_count.setText("1 Adult");
-        try {
-            Date currentDate = Constants.sdf2.parse(examDTO.getDate());
-            Pair<String, String> pair = Constants.getStartEndDate(currentDate);
-            start_date.setText(pair.first);
-            end_date.setText(pair.second);
-        } catch (Exception e) {
-            Constants.debugLog(TAG, e.getMessage());
-        }
     }
 
     @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title, R.id.start_date_layout,
@@ -163,7 +134,7 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        apiInterface.getBookings(0, 100, "start_date,desc").enqueue(new Callback<List<RoomDTO>>() {
+        apiInterface.getBookings(0, 100, "startDate,desc").enqueue(new Callback<List<RoomDTO>>() {
             @Override
             public void onResponse(Call<List<RoomDTO>> call, Response<List<RoomDTO>> response) {
 

@@ -46,8 +46,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mainHolder.address.setText(roomDTO.getAddress());
         mainHolder.room_cost.setText(roomDTO.getRoomCost() + "");
 
-        Constants.loadImage(mActivity, ApiClient.BASE_URL + ApiClient.APP_NAME + roomDTO.getImages().get(0).getImageUrl(),
-                mainHolder.room_image);
+        if (roomDTO.getImages() != null && roomDTO.getImages().size() > 0) {
+            Constants.loadImage(mActivity, ApiClient.BASE_URL + ApiClient.APP_NAME + roomDTO.getImages().get(0).getImageUrl(),
+                    mainHolder.room_image);
+        }
 
         if (roomDTO.isFemaleFriendly()) {
             mainHolder.female_friendly_layout.setVisibility(View.VISIBLE);
