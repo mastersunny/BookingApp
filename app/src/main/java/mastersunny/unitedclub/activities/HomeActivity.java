@@ -96,6 +96,7 @@ public class HomeActivity extends AppCompatActivity {
             searchView = (SearchView) searchItem.getActionView();
         }
         if (searchView != null) {
+            searchView.setQueryHint("Search Admission");
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
