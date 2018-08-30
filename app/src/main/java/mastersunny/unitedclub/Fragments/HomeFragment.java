@@ -61,20 +61,11 @@ public class HomeFragment extends Fragment {
     public String TAG = "HomeFragment";
     private Activity mActivity;
     private View view;
-    private Toolbar toolbar;
-    private AppBarLayout appBarLayout;
     private ApiInterface apiInterface;
     private Unbinder unbinder;
 
-//    @BindView(R.id.recommended_rv)
-//    RecyclerView recommended_rv;
-//    private List<RoomDTO> roomDTOList;
-//    private RecommendedAdapter recommendedAdapter;
-//
-//    @BindView(R.id.offer_rv)
-//    RecyclerView offer_rv;
-//    private List<OfferDTO> offerDTOS;
-//    private OfferAdapter offerAdapter;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.nearby_rv)
     RecyclerView nearby_rv;
@@ -95,10 +86,7 @@ public class HomeFragment extends Fragment {
             unbinder = ButterKnife.bind(this, view);
             apiInterface = ApiClient.createService(getActivity(), ApiInterface.class);
 
-//            roomDTOList = new ArrayList<>();
-//            offerDTOS = new ArrayList<>();
             examDTOS = new ArrayList<>();
-
             initLayout();
         }
 
@@ -112,58 +100,13 @@ public class HomeFragment extends Fragment {
     }
 
     private void initLayout() {
-        Typeface face = Typeface.createFromAsset(mActivity.getAssets(), "avenirltstd_regular.otf");
-
-        toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        appBarLayout = view.findViewById(R.id.appBarLayout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-            }
-        });
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("All Admission Test");
+
 
         nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         examAdapter = new ExamAdapter(mActivity, examDTOS);
         nearby_rv.setAdapter(examAdapter);
-//        examAdapter.setListener(new ExamSelectionListener() {
-//            @Override
-//            public void selectedExam(ExamDTO examDTO) {
-//                try {
-//                    Date currentDate = Constants.sdf2.parse(examDTO.getDate());
-//                    Pair<String, String> pair = Constants.getStartEndDate(currentDate);
-////                    start_date.setText(pair.first);
-////                    end_date.setText(pair.second);
-//                } catch (Exception e) {
-//                    Constants.debugLog(TAG, e.getMessage());
-//                }
-//
-//
-//            }
-//        });
-
-       /* for (int i = 0; i < 10; i++) {
-            RoomDTO roomDTO = new RoomDTO();
-            roomDTO.setId(i);
-            roomDTO.setName("name");
-            roomDTOList.add(roomDTO);
-        }
-        recommended_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayout.HORIZONTAL, false));
-        recommended_rv.setNestedScrollingEnabled(false);
-        recommendedAdapter = new RecommendedAdapter(mActivity, roomDTOList);
-        recommended_rv.setAdapter(recommendedAdapter);
-
-        for (int i = 0; i < 4; i++) {
-            OfferDTO roomDTO = new OfferDTO();
-            roomDTO.setId(i);
-            offerDTOS.add(roomDTO);
-        }
-        offer_rv.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        offer_rv.setNestedScrollingEnabled(false);
-        offerAdapter = new OfferAdapter(mActivity, offerDTOS);
-        offer_rv.setAdapter(offerAdapter);*/
-
-
     }
 
     private void requestPermission(final Context context) {
