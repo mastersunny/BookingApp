@@ -3,16 +3,14 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_3"
+    android:layout_height="110dp"
     android:foreground="?selectableItemBackground"
-    card_view:cardCornerRadius="@dimen/margin_2"
-    card_view:cardElevation="@dimen/margin_0"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardElevation="@dimen/margin_0">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:padding="@dimen/margin_16">
 
         <mastersunny.unitedclub.utils.CircleImageView
@@ -24,55 +22,52 @@
             android:scaleType="centerCrop"
             android:src="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/university_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_16"
-            android:layout_toRightOf="@+id/university_image"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/exam_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/university_name"
-            android:layout_marginLeft="@dimen/margin_16"
-            android:layout_marginTop="@dimen/margin_2"
-            android:layout_toRightOf="@+id/university_image"
-            android:ellipsize="end"
-            android:gravity="bottom"
-            android:maxLines="1"
-            android:text=""
-            android:textSize="@dimen/text_size_12" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/exam_name"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_16"
-            android:layout_marginTop="@dimen/margin_2"
             android:layout_toRightOf="@+id/university_image"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/university_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="name"
+                android:textColor="@color/toolbar_text_color"
+                android:textSize="@dimen/text_size_18" />
+
+            <TextView
+                android:id="@+id/exam_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_2"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="exam"
+                android:textColor="#4a4a4a"
+                android:textSize="@dimen/text_size_12" />
 
             <TextView
                 android:id="@+id/exam_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
-
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textAllCaps="false"
-                android:textColor="#00b84a"
-                android:visibility="gone" />
+                android:layout_marginTop="@dimen/margin_2"
+                android:text="date"
+                android:textColor="#4a4a4a" />
 
         </LinearLayout>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/margin_1"
+        android:background="@color/grey_lite" />
+
 </android.support.v7.widget.CardView>
