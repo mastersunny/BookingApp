@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Pair;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -97,6 +98,8 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
+        toolbar_title.setText("Booking List");
+
         recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         roomAdapter = new RoomAdapter(this, roomDTOS);
         recycler_view.setAdapter(roomAdapter);
