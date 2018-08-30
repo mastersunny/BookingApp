@@ -1,22 +1,35 @@
 package mastersunny.unitedclub.activities;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +40,8 @@ import mastersunny.unitedclub.Fragments.HomeFragment;
 import mastersunny.unitedclub.Fragments.SavedFragment;
 import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.adapters.ExamAdapter;
+import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.adapters.PagerAdapter;
@@ -40,42 +55,17 @@ import retrofit2.Response;
 public class HomeActivity extends AppCompatActivity {
 
     public String TAG = HomeActivity.class.getSimpleName();
-    private PagerAdapter pagerAdapter;
-    private MenuItem prevMenuItem;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    static final String NEW_USER = "new_user";
     private ApiInterface apiInterface;
-    private Handler mHandler;
-
     private Unbinder unbinder;
 
-    @BindView(R.id.home_layout)
-    LinearLayout home_layout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
-    @BindView(R.id.saved_layout)
-    LinearLayout saved_layout;
-
-    @BindView(R.id.booking_layout)
-    LinearLayout booking_layout;
-
-    @BindView(R.id.profile_layout)
-    LinearLayout profile_layout;
-
-    private String HOME_FRAGMENT = "home_fragment";
-    private String SAVED_FRAGMENT = "saved_fragment";
-    private String BOOKING_FRAGMENT = "booking_fragment";
-    private String PROFILE_FRAGMENT = "profile_fragment";
-    private String CURRENT_FRAGMENT = HOME_FRAGMENT;
-
-    Fragment fragment;
-
-
-    public static void start(Context context, boolean isNewUser) {
-        Intent intent = new Intent(context, HomeActivity.class);
-        intent.putExtra(NEW_USER, isNewUser);
-        context.startActivity(intent);
-    }
-
+    @BindView(R.id.nearby_rv)
+    RecyclerView nearby_rv;
+    private List<ExamDTO> examDTOS;
+    ExamAdapter examAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +77,18 @@ public class HomeActivity extends AppCompatActivity {
         setUpNavigationView();
         initBroadcastReceiver();
 
-        mHandler = new Handler();
+        examDTOS = new ArrayList<>();
+        initLayout();
+    }
 
-        if (savedInstanceState == null) {
-            fragment = new HomeFragment();
-            CURRENT_FRAGMENT = HOME_FRAGMENT;
-            loadHomeFragment(fragment);
-        }
+    private void initLayout() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("All Admission Test");
+
+
+        nearby_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        examAdapter = new ExamAdapter(this, examDTOS);
+        nearby_rv.setAdapter(examAdapter);
     }
 
     @Override
@@ -125,6 +120,13 @@ public class HomeActivity extends AppCompatActivity {
 
         // clear the notification area when the app is opened
         NotificationUtils.clearNotifications(getApplicationContext());
+
+        loadData();
+        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+//                    SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
+        } else {
+            requestPermission(this);
+        }
     }
 
     @Override
@@ -159,15 +161,6 @@ public class HomeActivity extends AppCompatActivity {
         Constants.debugLog(TAG, "Firebase reg id: " + regId);
     }
 
-    private Fragment getFragment(int position, Bundle savedInstanceState) {
-        return savedInstanceState == null ? pagerAdapter.getItem(position) : getSupportFragmentManager().findFragmentByTag(getFragmentTag(position));
-    }
-
-    private String getFragmentTag(int position) {
-        String tag = "android:switcher:" + R.id.viewPager + ":" + position;
-        return tag;
-    }
-
     private void setUpNavigationView() {
 
     }
@@ -181,54 +174,67 @@ public class HomeActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        mHandler.removeCallbacksAndMessages(null);
     }
 
-    @OnClick({R.id.home_layout, R.id.saved_layout, R.id.booking_layout, R.id.profile_layout})
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.home_layout:
-                fragment = new HomeFragment();
-                CURRENT_FRAGMENT = HOME_FRAGMENT;
-                loadHomeFragment(fragment);
-                break;
-            case R.id.saved_layout:
-                fragment = new SavedFragment();
-                CURRENT_FRAGMENT = SAVED_FRAGMENT;
-                loadHomeFragment(fragment);
-                break;
-            case R.id.booking_layout:
-                fragment = new BookingFragment();
-                CURRENT_FRAGMENT = BOOKING_FRAGMENT;
-                loadHomeFragment(fragment);
-                break;
-            case R.id.profile_layout:
-                fragment = new ProfileFragment();
-                CURRENT_FRAGMENT = PROFILE_FRAGMENT;
-                loadHomeFragment(fragment);
-                break;
-        }
+    private void requestPermission(final Context context) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            new AlertDialog.Builder(context)
+                    .setMessage(context.getResources().getString(R.string.permission_location))
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    Constants.PERMISSION_LOCATION);
+                        }
+                    })
+                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
 
+        } else {
+            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    Constants.PERMISSION_LOCATION);
+        }
     }
 
-    private void loadHomeFragment(final Fragment fragment) {
-        if (getSupportFragmentManager().findFragmentByTag(CURRENT_FRAGMENT) != null) {
-            return;
-        }
-
-        Runnable mPendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.content, fragment, CURRENT_FRAGMENT);
-                fragmentTransaction.commitAllowingStateLoss();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == Constants.PERMISSION_LOCATION) {
+            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
             }
-        };
-
-        // If mPendingRunnable is not null, then add to the message queue
-        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
         }
     }
+
+    private void loadData() {
+        apiInterface.getExams(0, 10, "exam_date,asc").enqueue(new Callback<List<ExamDTO>>() {
+            @Override
+            public void onResponse(Call<List<ExamDTO>> call, Response<List<ExamDTO>> response) {
+
+                Constants.debugLog(TAG, response + "");
+
+                if (response.isSuccessful()) {
+                    Constants.debugLog(TAG, response.body() + "");
+                    examDTOS.clear();
+                    examDTOS.addAll(response.body());
+                    notifyPlaceAdapter();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ExamDTO>> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+            }
+        });
+    }
+
+    private void notifyPlaceAdapter() {
+        if (examAdapter != null) {
+            examAdapter.notifyDataSetChanged();
+        }
+    }
+
 }
