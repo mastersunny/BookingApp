@@ -38,7 +38,7 @@ public class MerchantMainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new HomeFragment(), getResources().getString(R.string.nav_home));
+            pagerAdapter.addFragment(new HomeFragment(), getResources().getString(R.string.nav_notification));
             pagerAdapter.addFragment(new ProfileFragment(), getResources().getString(R.string.profile));
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");

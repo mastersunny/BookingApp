@@ -13,10 +13,14 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,6 +66,8 @@ public class HomeActivity extends AppCompatActivity {
     private ApiInterface apiInterface;
     private Unbinder unbinder;
 
+    View navHeader;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -72,18 +78,26 @@ public class HomeActivity extends AppCompatActivity {
 
     SearchView searchView;
 
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
         unbinder = ButterKnife.bind(this);
-
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        setUpNavigationView();
         initBroadcastReceiver();
 
         examDTOS = new ArrayList<>();
         initLayout();
+        setUpNavigationView();
     }
 
     @Override
@@ -116,6 +130,8 @@ public class HomeActivity extends AppCompatActivity {
     private void initLayout() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("All Admission Test");
+
+        navHeader = navigationView.getHeaderView(0);
 
 
         nearby_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -194,7 +210,45 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setUpNavigationView() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
 
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_notification:
+                        break;
+                    case R.id.nav_settings:
+                        break;
+                    case R.id.nav_help:
+                        break;
+                    case R.id.nav_about:
+                        break;
+                }
+
+                if (menuItem.isChecked()) {
+                    menuItem.setChecked(false);
+                } else {
+                    menuItem.setChecked(true);
+                }
+                return true;
+            }
+        });
+        
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        drawer.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
     }
 
     @Override

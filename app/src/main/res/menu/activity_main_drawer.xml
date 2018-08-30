@@ -1,63 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home"
-            android:title="@string/nav_home" />
-        <item
-            android:id="@+id/nav_grab"
-            android:icon="@drawable/ic_thumb_up_black_24dp"
-            android:title="@string/nav_grab"
-            android:visible="false" />
-        <item
-            android:id="@+id/nav_coupon_finder"
-            android:icon="@mipmap/ic_launcher"
-            android:title="@string/nav_coupon" />
-
-        <item
-            android:id="@+id/nav_brands"
-            android:icon="@mipmap/ic_launcher"
-            android:title="@string/nav_brands"
-            android:visible="false" />
-
-        <item
-            android:id="@+id/nav_bank"
-            android:icon="@mipmap/ic_launcher"
-            android:title="@string/nav_bank"
-            android:visible="false" />
-
+    <group
+        android:id="@+id/nav_group"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_notification"
-            android:icon="@drawable/nav_notification"
-            android:title="@string/nav_notification"
-            android:visible="false" />
+            android:icon="@drawable/ic_home"
+            android:title="@string/nav_notification" />
+
+    </group>
+
+    <group
+        android:id="@+id/settings_group"
+        android:checkableBehavior="none">
 
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/nav_settings" />
+    </group>
 
-        <item
-            android:id="@+id/nav_share"
-            android:icon="@drawable/ic_share_black_24dp"
-            android:title="@string/nav_share" />
 
-        <item
-            android:id="@+id/nav_feedback"
-            android:icon="@mipmap/ic_launcher"
-            android:title="@string/nav_feedback"
-            android:visible="false" />
+    <group
+        android:id="@+id/help_group"
+        android:checkableBehavior="none">
 
         <item
             android:id="@+id/nav_help"
             android:icon="@mipmap/ic_launcher"
             android:title="@string/nav_help" />
 
-        <item
-            android:id="@+id/nav_sign"
-            android:icon="@mipmap/ic_launcher"
-            android:title="@string/nav_signin" />
     </group>
+
+    <group
+        android:id="@+id/about_group"
+        android:checkableBehavior="none">
+        
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/nav_about" />
+    </group>
+
 </menu>
