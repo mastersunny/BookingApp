@@ -6,105 +6,88 @@ import java.time.LocalDate;
 
 public class RoomBookingDTO implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private RoomBookingIdDTO pk;
-	
-	private LocalDate startDate;
+    private RoomBookingIdDTO pk;
 
-	private LocalDate endDate;
+    private String startDate;
 
-	private double roomCost;
+    private String endDate;
 
-	private String currentStatus;
-	
-	private int noOfAccommodation;
+    private double roomCost;
 
-	private String createdAt;
+    private String currentStatus;
 
-	private String createdBy;
+    private int noOfAccommodation;
 
-	private String updatedAt;
+    private String createdAt;
 
-	private String updatedBy;
+    public RoomBookingIdDTO getPk() {
+        return pk;
+    }
 
-	public RoomBookingIdDTO getPk() {
-		return pk;
-	}
+    public void setPk(RoomBookingIdDTO pk) {
+        this.pk = pk;
+    }
 
-	public void setPk(RoomBookingIdDTO pk) {
-		this.pk = pk;
-	}
+    public String getStartDate() {
+        return startDate;
+    }
 
-	public LocalDate getStartDate() {
-		return startDate;
-	}
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
+    public String getEndDate() {
+        return endDate;
+    }
 
-	public LocalDate getEndDate() {
-		return endDate;
-	}
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
-	}
+    public double getRoomCost() {
+        return roomCost;
+    }
 
-	public double getRoomCost() {
-		return roomCost;
-	}
+    public void setRoomCost(double roomCost) {
+        this.roomCost = roomCost;
+    }
 
-	public void setRoomCost(double roomCost) {
-		this.roomCost = roomCost;
-	}
+    public String getCurrentStatus() {
+        return currentStatus;
+    }
 
-	public String getCurrentStatus() {
-		return currentStatus;
-	}
+    public void setCurrentStatus(String currentStatus) {
+        this.currentStatus = currentStatus;
+    }
 
-	public void setCurrentStatus(String currentStatus) {
-		this.currentStatus = currentStatus;
-	}
+    public int getNoOfAccommodation() {
+        return noOfAccommodation;
+    }
 
-	public int getNoOfAccommodation() {
-		return noOfAccommodation;
-	}
+    public void setNoOfAccommodation(int noOfAccommodation) {
+        this.noOfAccommodation = noOfAccommodation;
+    }
 
-	public void setNoOfAccommodation(int noOfAccommodation) {
-		this.noOfAccommodation = noOfAccommodation;
-	}
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
-	public String getCreatedAt() {
-		return createdAt;
-	}
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
 
-	public void setCreatedAt(String createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public String getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(String updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
+    @Override
+    public String toString() {
+        return "RoomBookingDTO{" +
+                "pk=" + pk +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", roomCost=" + roomCost +
+                ", currentStatus='" + currentStatus + '\'' +
+                ", noOfAccommodation=" + noOfAccommodation +
+                ", createdAt='" + createdAt + '\'' +
+                '}';
+    }
 }
