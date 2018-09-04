@@ -8,13 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.activities.SearchActivity;
+import mastersunny.unitedclub.activities.RoomListActivity;
 import mastersunny.unitedclub.listeners.ExamSelectionListener;
 import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.rest.ApiClient;
@@ -64,7 +63,7 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchActivity.start(v.getContext(), examDTO);
+                RoomListActivity.start(v.getContext(), examDTO);
 
 //                if (selectedIndex == position) {
 //                    selectedIndex = -1;

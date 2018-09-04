@@ -16,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Pair;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -46,9 +45,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchActivity extends AppCompatActivity {
+public class RoomListActivity extends AppCompatActivity {
 
-    private static String TAG = "SearchActivity";
+    private static String TAG = "RoomListActivity";
     private SearchView searchView;
     private int searchType;
     private ApiInterface apiInterface;
@@ -94,7 +93,7 @@ public class SearchActivity extends AppCompatActivity {
     private double latitude, longitude;
 
     public static void start(Context context, ExamDTO examDTO) {
-        Intent intent = new Intent(context, SearchActivity.class);
+        Intent intent = new Intent(context, RoomListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra(Constants.EXAM_DTO, examDTO);
         context.startActivity(intent);
@@ -186,7 +185,7 @@ public class SearchActivity extends AppCompatActivity {
                 break;
             case R.id.search_icon:
             case R.id.toolbar_title:
-                if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(SearchActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(RoomListActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                     startPlaceAutoComplete();
                 } else {
 //                    requestPermission(mActivity);
@@ -232,7 +231,7 @@ public class SearchActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                Place place = PlaceAutocomplete.getPlace(SearchActivity.this, data);
+                Place place = PlaceAutocomplete.getPlace(RoomListActivity.this, data);
 
                 toolbar_title.setText(place.getName());
                 latitude = place.getLatLng().latitude;
@@ -241,7 +240,7 @@ public class SearchActivity extends AppCompatActivity {
                 Constants.debugLog(TAG, "lat " + latitude + " lon " + longitude);
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Status status = PlaceAutocomplete.getStatus(SearchActivity.this, data);
+                Status status = PlaceAutocomplete.getStatus(RoomListActivity.this, data);
                 Constants.debugLog(TAG, status.getStatusMessage());
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Constants.debugLog(TAG, "RESULT_CANCELED");

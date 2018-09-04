@@ -4,48 +4,32 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import mastersunny.unitedclub.adapters.ExamAdapter;
-import mastersunny.unitedclub.adapters.PlaceAdapter;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.listeners.ExamSelectionListener;
 import mastersunny.unitedclub.models.ExamDTO;
-import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
-import mastersunny.unitedclub.activities.SearchActivity;
-import mastersunny.unitedclub.activities.StoresActivity;
-import mastersunny.unitedclub.adapters.OfferAdapter;
-import mastersunny.unitedclub.adapters.RecommendedAdapter;
-import mastersunny.unitedclub.models.OfferDTO;
-import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -137,7 +121,7 @@ public class HomeFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constants.PERMISSION_LOCATION) {
             if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
+//                RoomListActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
             }
         }
     }
@@ -176,7 +160,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         loadData();
         if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
-//                    SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
+//                    RoomListActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
         } else {
             requestPermission(mActivity);
         }

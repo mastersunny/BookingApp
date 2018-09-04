@@ -8,21 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.listeners.ClickListener;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.models.PlaceDTO;
 import mastersunny.unitedclub.rest.ApiClient;
-import mastersunny.unitedclub.activities.StoresDetailsActivity;
-import mastersunny.unitedclub.models.StoreDTO;
 import mastersunny.unitedclub.utils.Constants;
-import mastersunny.unitedclub.utils.SearchType;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
@@ -76,7 +70,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        SearchActivity.start(v.getContext(), dto.getName(), (ArrayList<ExamDTO>) dto.getExams(), SearchType.TYPE_PLACE.getStatus());
+//                        RoomListActivity.start(v.getContext(), dto.getName(), (ArrayList<ExamDTO>) dto.getExams(), SearchType.TYPE_PLACE.getStatus());
                     }
                 });
                 break;

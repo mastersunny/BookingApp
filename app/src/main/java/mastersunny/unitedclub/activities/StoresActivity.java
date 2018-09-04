@@ -104,7 +104,7 @@ public class StoresActivity extends AppCompatActivity implements View.OnClickLis
                 StoresActivity.this.finish();
                 break;
             case R.id.search_button:
-                startActivity(new Intent(StoresActivity.this, SearchActivity.class));
+                startActivity(new Intent(StoresActivity.this, RoomListActivity.class));
                 break;
         }
     }

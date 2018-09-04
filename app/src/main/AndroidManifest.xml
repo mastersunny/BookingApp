@@ -73,7 +73,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activities.SearchActivity"
+            android:name=".activities.RoomListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
@@ -109,7 +109,8 @@
             android:label="@string/title_activity_scrolling2"
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.DateRoomSelectActivity" />
-        <activity android:name=".activities.BookingActivity"></activity>
+        <activity android:name=".activities.BookingActivity" />
+        <activity android:name=".activities.BookingConfirmationActivity"></activity>
     </application>
 
 </manifest>

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.Locale;
@@ -237,27 +238,24 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void bookRoom() {
-        try {
-            apiInterface.bookRoom(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
-                @Override
-                public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
+        apiInterface.bookRoom(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
+            @Override
+            public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
 
-                    Constants.debugLog(TAG, response + " ");
+                Constants.debugLog(TAG, response + " ");
 
-                    if (response.isSuccessful()) {
-                        Constants.debugLog(TAG, response.body().toString());
-
-                    }
-
+                if (response.isSuccessful() && response.body() != null) {
+                    Constants.debugLog(TAG, response.body().toString());
+                    BookingConfirmationActivity.start(RoomDetailsActivity.this, response.body());
                 }
+            }
 
-                @Override
-                public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
+            @Override
+            public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+                Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-                }
-            });
-        } catch (Exception e) {
-            Constants.debugLog(TAG, e.getMessage());
-        }
     }
 }

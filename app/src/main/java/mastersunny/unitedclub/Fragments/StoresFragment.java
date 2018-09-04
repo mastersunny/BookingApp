@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import mastersunny.unitedclub.activities.SearchActivity;
 import mastersunny.unitedclub.adapters.PagerAdapter;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
@@ -112,7 +111,7 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_button:
-//                SearchActivity.start(v.getContext(), Constants.store_search);
+//                RoomListActivity.start(v.getContext(), Constants.store_search);
                 break;
         }
     }
