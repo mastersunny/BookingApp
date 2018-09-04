@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <LinearLayout
                 android:id="@+id/back_button"

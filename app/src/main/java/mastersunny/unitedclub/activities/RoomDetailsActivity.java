@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +41,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.title)
+    TextView title;
+
+    @BindView(R.id.address)
+    TextView address;
 
     @BindView(R.id.female_friendly_layout)
     TextView female_friendly_layout;
@@ -125,6 +130,10 @@ public class RoomDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Room Details");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        title.setText(roomDTO.getNoOfAccommodation() > 1 ? roomDTO.getNoOfAccommodation()
+                + " Seats Room" : roomDTO.getNoOfAccommodation() + " Seat Room");
+        address.setText(roomDTO.getAddress());
+
         if (roomDTO.isFemaleFriendly()) {
             female_friendly_layout.setVisibility(View.VISIBLE);
         }
@@ -186,7 +195,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
         }
         amount += (roomDTO.getRoomCost() * guestCount);
 
-        total_cost.setText(df2.format(amount));
+        total_cost.setText("BDT " + df2.format(amount));
     }
 
     @OnClick({R.id.guest_count1, R.id.guest_count2, R.id.guest_count3, R.id.btn_book_room, R.id.map_layout})
