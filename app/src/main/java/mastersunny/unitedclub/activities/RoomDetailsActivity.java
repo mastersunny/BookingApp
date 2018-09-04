@@ -21,6 +21,7 @@ import java.text.DecimalFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mastersunny.unitedclub.Fragments.ProgressDialogFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.models.RoomBookingDTO;
 import mastersunny.unitedclub.models.RoomDTO;
@@ -36,6 +37,8 @@ public class RoomDetailsActivity extends AppCompatActivity {
     private String TAG = "RoomDetailsActivity";
 
     private ApiInterface apiInterface;
+
+    private static ProgressDialogFragment progressDialogFragment;
 
     RoomDTO roomDTO;
 
@@ -247,24 +250,43 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void bookRoom() {
+        showProgressDialog("Booking...");
         apiInterface.bookRoom(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
             @Override
             public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
 
                 Constants.debugLog(TAG, response + " ");
+                dismissDialog();
 
                 if (response.isSuccessful() && response.body() != null) {
                     Constants.debugLog(TAG, response.body().toString());
                     BookingConfirmationActivity.start(RoomDetailsActivity.this, response.body());
+                    RoomDetailsActivity.this.finish();
+                } else {
+                    Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
+                dismissDialog();
                 Constants.debugLog(TAG, t.getMessage());
                 Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+    protected synchronized void showProgressDialog(String message) {
+        if (progressDialogFragment != null && progressDialogFragment.isVisible()) {
+            progressDialogFragment.dismissAllowingStateLoss();
+        }
+        progressDialogFragment = null;
+        progressDialogFragment = new ProgressDialogFragment(message);
+        progressDialogFragment.show(getSupportFragmentManager(), ProgressDialogFragment.class.toString());
+    }
+
+    protected synchronized void dismissDialog() {
+        progressDialogFragment.dismissAllowingStateLoss();
     }
 }
