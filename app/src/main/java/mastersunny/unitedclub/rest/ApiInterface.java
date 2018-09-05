@@ -19,6 +19,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -155,15 +156,18 @@ public interface ApiInterface {
 
     @POST(ApiClient.APP_NAME + "api/bookings")
     @FormUrlEncoded
-    Call<RoomBookingDTO> bookRoom(@Field("start_date") String startDate,
-                                  @Field("end_date") String endDate,
-                                  @Field("room_id") Long roomId,
-                                  @Field("room_cost") double roomCost,
-                                  @Field("guest_count") int guestCount);
+    Call<RoomBookingDTO> createBooking(@Field("start_date") String startDate,
+                                       @Field("end_date") String endDate,
+                                       @Field("room_id") Long roomId,
+                                       @Field("room_cost") double roomCost,
+                                       @Field("guest_count") int guestCount);
 
     @GET(ApiClient.APP_NAME + "api/bookings")
     Call<List<RoomDTO>> getBookings(@Query("page") int page,
                                     @Query("size") int size,
                                     @Query("sort") String sort);
+
+    @DELETE(ApiClient.APP_NAME + "api/bookings/{id}")
+    Call<RoomBookingDTO> deleteBooking(@Path("id") Long bookingId);
 
 }

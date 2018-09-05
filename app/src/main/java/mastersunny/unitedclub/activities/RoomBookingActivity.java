@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,9 +19,14 @@ import mastersunny.unitedclub.models.RoomBookingDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RoomBookingActivity extends AppCompatActivity {
 
+
+    private String TAG = "RoomBookingActivity";
 
     private ApiInterface apiInterface;
     RoomBookingDTO roomBookingDTO;
@@ -62,16 +68,33 @@ public class RoomBookingActivity extends AppCompatActivity {
                 makeCall(roomBookingDTO.getRoom().getUser().getPhoneNumber());
                 break;
             case R.id.cancel_booking_1:
-                break;
             case R.id.cancel_booking_2:
+                deleteBooking();
                 break;
         }
+    }
+
+    private void deleteBooking() {
+        apiInterface.deleteBooking(roomBookingDTO.getId()).enqueue(new Callback<RoomBookingDTO>() {
+            @Override
+            public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
+                Constants.debugLog(TAG, response + "");
+                if (response.isSuccessful()) {
+                    Toast.makeText(RoomBookingActivity.this, "deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+                Toast.makeText(RoomBookingActivity.this, "Cannot be deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void makeCall(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + phoneNumber));
         startActivity(intent);
-
     }
 }

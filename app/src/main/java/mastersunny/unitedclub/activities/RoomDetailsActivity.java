@@ -251,7 +251,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     private void bookRoom() {
         showProgressDialog("Booking...");
-        apiInterface.bookRoom(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
+        apiInterface.createBooking(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
             @Override
             public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
 

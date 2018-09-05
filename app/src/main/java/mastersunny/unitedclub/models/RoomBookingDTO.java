@@ -8,6 +8,8 @@ public class RoomBookingDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+
     private UserDTO user;
 
     private RoomDTO room;
@@ -23,6 +25,14 @@ public class RoomBookingDTO implements Serializable {
     private int noOfAccommodation;
 
     private String createdAt;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public UserDTO getUser() {
         return user;
@@ -91,7 +101,8 @@ public class RoomBookingDTO implements Serializable {
     @Override
     public String toString() {
         return "RoomBookingDTO{" +
-                "user=" + user +
+                "id=" + id +
+                ", user=" + user +
                 ", room=" + room +
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
