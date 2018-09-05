@@ -20,7 +20,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.adapters.BookingAdapter;
 import mastersunny.unitedclub.adapters.RoomAdapter;
+import mastersunny.unitedclub.models.RoomBookingDTO;
 import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
@@ -32,8 +34,6 @@ import retrofit2.Response;
 public class BookingListActivity extends AppCompatActivity {
 
     private static String TAG = "BookingListActivity";
-    private SearchView searchView;
-    private int searchType;
     private ApiInterface apiInterface;
 
     @BindView(R.id.toolbar_title)
@@ -66,9 +66,9 @@ public class BookingListActivity extends AppCompatActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recycler_view;
 
-    RoomAdapter roomAdapter;
+    BookingAdapter bookingAdapter;
 
-    private List<RoomDTO> roomDTOS;
+    private List<RoomBookingDTO> roomBookingDTOS;
 
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -83,10 +83,10 @@ public class BookingListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_booking);
+        setContentView(R.layout.activity_booking_list);
         ButterKnife.bind(this);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
-        roomDTOS = new ArrayList<>();
+        roomBookingDTOS = new ArrayList<>();
         initLayout();
     }
 
@@ -94,8 +94,8 @@ public class BookingListActivity extends AppCompatActivity {
         toolbar_title.setText("Booking List");
 
         recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        roomAdapter = new RoomAdapter(this, roomDTOS);
-        recycler_view.setAdapter(roomAdapter);
+        bookingAdapter = new BookingAdapter(this, roomBookingDTOS);
+        recycler_view.setAdapter(bookingAdapter);
     }
 
     @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title, R.id.start_date_layout,
@@ -124,28 +124,28 @@ public class BookingListActivity extends AppCompatActivity {
     }
 
     private void notifyPlaceAdapter() {
-        if (roomAdapter != null) {
-            roomAdapter.notifyDataSetChanged();
+        if (bookingAdapter != null) {
+            bookingAdapter.notifyDataSetChanged();
         }
     }
 
     private void loadData() {
-        apiInterface.getBookings(0, 100, "startDate,desc").enqueue(new Callback<List<RoomDTO>>() {
+        apiInterface.getBookings(0, 100, "startDate,desc").enqueue(new Callback<List<RoomBookingDTO>>() {
             @Override
-            public void onResponse(Call<List<RoomDTO>> call, Response<List<RoomDTO>> response) {
+            public void onResponse(Call<List<RoomBookingDTO>> call, Response<List<RoomBookingDTO>> response) {
 
                 Constants.debugLog(TAG, response + "");
 
                 if (response.isSuccessful()) {
                     Constants.debugLog(TAG, response.body() + "");
-                    roomDTOS.clear();
-                    roomDTOS.addAll(response.body());
+                    roomBookingDTOS.clear();
+                    roomBookingDTOS.addAll(response.body());
                     notifyPlaceAdapter();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<RoomDTO>> call, Throwable t) {
+            public void onFailure(Call<List<RoomBookingDTO>> call, Throwable t) {
                 Constants.debugLog(TAG, t.getMessage());
             }
         });

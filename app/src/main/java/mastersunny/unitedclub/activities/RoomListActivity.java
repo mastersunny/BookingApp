@@ -102,7 +102,7 @@ public class RoomListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_room_list);
         ButterKnife.bind(this);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
         roomDTOS = new ArrayList<>();

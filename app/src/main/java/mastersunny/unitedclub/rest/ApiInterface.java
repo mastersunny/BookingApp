@@ -163,9 +163,9 @@ public interface ApiInterface {
                                        @Field("guest_count") int guestCount);
 
     @GET(ApiClient.APP_NAME + "api/bookings")
-    Call<List<RoomDTO>> getBookings(@Query("page") int page,
-                                    @Query("size") int size,
-                                    @Query("sort") String sort);
+    Call<List<RoomBookingDTO>> getBookings(@Query("page") int page,
+                                           @Query("size") int size,
+                                           @Query("sort") String sort);
 
     @DELETE(ApiClient.APP_NAME + "api/bookings/{id}")
     Call<RoomBookingDTO> deleteBooking(@Path("id") Long bookingId);
