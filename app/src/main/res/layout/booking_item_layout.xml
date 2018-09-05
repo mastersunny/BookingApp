@@ -56,7 +56,7 @@
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="1 Seat Room"
+                android:text="1 Guest"
                 android:textColor="#242529"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price: "
+                android:text="Price: BDT "
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
 
@@ -103,7 +103,7 @@
                 android:id="@+id/room_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BDT 100"
+                android:text="100"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />

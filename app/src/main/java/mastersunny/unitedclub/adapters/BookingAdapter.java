@@ -43,7 +43,7 @@ public class BookingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         final RoomBookingDTO roomBookingDTO = roomBookingDTOS.get(position);
         MainHolder mainHolder = (MainHolder) holder;
         mainHolder.title.setText(roomBookingDTO.getNoOfAccommodation() > 1 ? roomBookingDTO.getNoOfAccommodation()
-                + " Seats Room" : roomBookingDTO.getNoOfAccommodation() + " Seat Room");
+                + " Guests" : roomBookingDTO.getNoOfAccommodation() + " Guest");
         mainHolder.address.setText(roomBookingDTO.getRoom().getAddress());
         mainHolder.room_cost.setText(roomBookingDTO.getRoomCost() + "");
         mainHolder.booking_status.setText(roomBookingDTO.getCurrentStatus());
