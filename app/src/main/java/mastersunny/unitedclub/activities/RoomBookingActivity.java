@@ -80,7 +80,8 @@ public class RoomBookingActivity extends AppCompatActivity {
             public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
                 Constants.debugLog(TAG, response + "");
                 if (response.isSuccessful()) {
-                    Toast.makeText(RoomBookingActivity.this, "deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RoomBookingActivity.this, "Booking deleted", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 
