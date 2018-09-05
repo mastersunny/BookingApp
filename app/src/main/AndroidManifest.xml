@@ -109,7 +109,7 @@
             android:label="@string/title_activity_scrolling2"
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.DateRoomSelectActivity" />
-        <activity android:name=".activities.BookingActivity" />
+        <activity android:name=".activities.BookingListActivity" />
         <activity android:name=".activities.RoomBookingActivity"></activity>
     </application>
 

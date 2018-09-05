@@ -11,13 +11,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,8 +27,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -42,17 +37,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import mastersunny.unitedclub.Fragments.BookingFragment;
-import mastersunny.unitedclub.Fragments.HomeFragment;
-import mastersunny.unitedclub.Fragments.SavedFragment;
-import mastersunny.unitedclub.Fragments.ProfileFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.adapters.ExamAdapter;
 import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
-import mastersunny.unitedclub.adapters.PagerAdapter;
-import mastersunny.unitedclub.models.AccessModel;
 import mastersunny.unitedclub.utils.Constants;
 import mastersunny.unitedclub.utils.NotificationUtils;
 import retrofit2.Call;
@@ -327,7 +316,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab:
-                BookingActivity.start(v.getContext());
+                BookingListActivity.start(v.getContext());
                 break;
         }
     }
