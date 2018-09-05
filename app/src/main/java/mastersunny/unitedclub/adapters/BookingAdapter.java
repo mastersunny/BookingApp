@@ -46,6 +46,7 @@ public class BookingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 + " Seats Room" : roomBookingDTO.getNoOfAccommodation() + " Seat Room");
         mainHolder.address.setText(roomBookingDTO.getRoom().getAddress());
         mainHolder.room_cost.setText(roomBookingDTO.getRoomCost() + "");
+        mainHolder.booking_status.setText(roomBookingDTO.getCurrentStatus());
 
         if (roomBookingDTO.getRoom().getImages() != null && roomBookingDTO.getRoom().getImages().size() > 0) {
             Constants.loadImage(mActivity, ApiClient.BASE_URL + ApiClient.APP_NAME + roomBookingDTO.getRoom().getImages().get(0).getImageUrl(),
@@ -86,6 +87,10 @@ public class BookingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @BindView(R.id.booking_date)
         TextView booking_date;
+
+
+        @BindView(R.id.booking_status)
+        TextView booking_status;
 
         @BindView(R.id.female_friendly_layout)
         TextView female_friendly_layout;
