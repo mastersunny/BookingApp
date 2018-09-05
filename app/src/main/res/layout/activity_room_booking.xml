@@ -4,6 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/cancel_booking_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:padding="@dimen/margin_10"
+        app:srcCompat="@drawable/ic_cancel_black_24dp" />
+
     <LinearLayout
         android:id="@+id/login_layout"
         android:layout_width="match_parent"
@@ -88,7 +97,7 @@
                     android:text="Do you want to cancel your order?" />
 
                 <TextView
-                    android:id="@+id/cancel_booking"
+                    android:id="@+id/cancel_booking_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_5"

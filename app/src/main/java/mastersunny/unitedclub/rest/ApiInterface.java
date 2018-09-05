@@ -153,7 +153,7 @@ public interface ApiInterface {
                                  @Query("guest") int guest);
 
 
-    @POST(ApiClient.APP_NAME + "api/bookroom")
+    @POST(ApiClient.APP_NAME + "api/bookings")
     @FormUrlEncoded
     Call<RoomBookingDTO> bookRoom(@Field("start_date") String startDate,
                                   @Field("end_date") String endDate,

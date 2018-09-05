@@ -7,19 +7,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mastersunny.unitedclub.R;
-import mastersunny.unitedclub.models.ExamDTO;
 import mastersunny.unitedclub.models.RoomBookingDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
 
-public class BookingConfirmationActivity extends AppCompatActivity {
+public class RoomBookingActivity extends AppCompatActivity {
 
 
     private ApiInterface apiInterface;
@@ -28,12 +28,15 @@ public class BookingConfirmationActivity extends AppCompatActivity {
     @BindView(R.id.btn_make_call)
     Button btn_make_call;
 
-    @BindView(R.id.cancel_booking)
-    TextView cancel_booking;
+    @BindView(R.id.cancel_booking_1)
+    ImageView cancel_booking_1;
+
+    @BindView(R.id.cancel_booking_2)
+    TextView cancel_booking_2;
 
 
     public static void start(Context context, RoomBookingDTO roomBookingDTO) {
-        Intent intent = new Intent(context, BookingConfirmationActivity.class);
+        Intent intent = new Intent(context, RoomBookingActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra(Constants.ROOM_BOOKING_DTO, roomBookingDTO);
         context.startActivity(intent);
@@ -42,7 +45,7 @@ public class BookingConfirmationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_booking_confirmation);
+        setContentView(R.layout.activity_room_booking);
         ButterKnife.bind(this);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
         getIntentData();
@@ -52,13 +55,15 @@ public class BookingConfirmationActivity extends AppCompatActivity {
         roomBookingDTO = (RoomBookingDTO) getIntent().getSerializableExtra(Constants.ROOM_BOOKING_DTO);
     }
 
-    @OnClick({R.id.btn_make_call, R.id.cancel_booking})
+    @OnClick({R.id.btn_make_call, R.id.cancel_booking_1, R.id.cancel_booking_2})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_make_call:
-                makeCall(roomBookingDTO.getPk().getRoom().getUser().getPhoneNumber());
+                makeCall(roomBookingDTO.getRoom().getUser().getPhoneNumber());
                 break;
-            case R.id.cancel_booking:
+            case R.id.cancel_booking_1:
+                break;
+            case R.id.cancel_booking_2:
                 break;
         }
     }

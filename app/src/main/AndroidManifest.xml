@@ -110,7 +110,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.DateRoomSelectActivity" />
         <activity android:name=".activities.BookingActivity" />
-        <activity android:name=".activities.BookingConfirmationActivity"></activity>
+        <activity android:name=".activities.RoomBookingActivity"></activity>
     </application>
 
 </manifest>

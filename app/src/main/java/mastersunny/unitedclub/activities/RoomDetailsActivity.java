@@ -260,7 +260,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
                 if (response.isSuccessful() && response.body() != null) {
                     Constants.debugLog(TAG, response.body().toString());
-                    BookingConfirmationActivity.start(RoomDetailsActivity.this, response.body());
+                    RoomBookingActivity.start(RoomDetailsActivity.this, response.body());
                     RoomDetailsActivity.this.finish();
                 } else {
                     Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
