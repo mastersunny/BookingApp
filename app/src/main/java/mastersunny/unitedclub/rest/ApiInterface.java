@@ -135,7 +135,7 @@ public interface ApiInterface {
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     Call<UserDTO> signup(@Query("access_token") String accessToken, @Body UserDTO userDTO);
 
-    @POST("api/fcmtoken")
+    @POST(ApiClient.APP_NAME + "api/fcmtoken")
     @FormUrlEncoded
     Call<String> sendRegistrationToServer(@Field("fcm_token") String fcmToken);
 
