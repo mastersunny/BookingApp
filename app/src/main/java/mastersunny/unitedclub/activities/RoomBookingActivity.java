@@ -34,17 +34,23 @@ public class RoomBookingActivity extends AppCompatActivity {
     @BindView(R.id.btn_make_call)
     Button btn_make_call;
 
-    @BindView(R.id.cancel_booking_1)
-    ImageView cancel_booking_1;
+    @BindView(R.id.back_button)
+    ImageView back_button;
 
-    @BindView(R.id.cancel_booking_2)
-    TextView cancel_booking_2;
+    @BindView(R.id.cancel_booking)
+    TextView cancel_booking;
+
+    @BindView(R.id.congratulation_message)
+    TextView congratulation_message;
+
+    private boolean isPending;
 
 
-    public static void start(Context context, RoomBookingDTO roomBookingDTO) {
+    public static void start(Context context, RoomBookingDTO roomBookingDTO, boolean isPending) {
         Intent intent = new Intent(context, RoomBookingActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra(Constants.ROOM_BOOKING_DTO, roomBookingDTO);
+        intent.putExtra(Constants.BOOKING_PENDING, isPending);
         context.startActivity(intent);
     }
 
@@ -55,20 +61,32 @@ public class RoomBookingActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
         getIntentData();
+        initLayout();
+    }
+
+    private void initLayout() {
+        if (isPending) {
+            congratulation_message.setText("Please confirm pending booking!");
+        } else {
+            congratulation_message.setText("Congratulations");
+        }
     }
 
     private void getIntentData() {
         roomBookingDTO = (RoomBookingDTO) getIntent().getSerializableExtra(Constants.ROOM_BOOKING_DTO);
+        isPending = getIntent().getBooleanExtra(Constants.BOOKING_PENDING, false);
     }
 
-    @OnClick({R.id.btn_make_call, R.id.cancel_booking_1, R.id.cancel_booking_2})
+    @OnClick({R.id.btn_make_call, R.id.back_button, R.id.cancel_booking})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_make_call:
                 makeCall(roomBookingDTO.getRoom().getUser().getPhoneNumber());
                 break;
-            case R.id.cancel_booking_1:
-            case R.id.cancel_booking_2:
+            case R.id.back_button:
+                finish();
+                break;
+            case R.id.cancel_booking:
                 deleteBooking();
                 break;
         }

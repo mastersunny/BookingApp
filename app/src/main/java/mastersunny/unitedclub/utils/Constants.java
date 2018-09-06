@@ -74,6 +74,7 @@ public class Constants {
     public static final String EXAM_DTO = "exam_dto";
     public static final String ROOM_BOOKING_DTO = "room_booking_dto";
     public static final String ROOM_DTO = "room_dto";
+    public static final String BOOKING_PENDING = "booking_pending";
 
     public static final String PREF_COOKIES = "pref_cookies";
 

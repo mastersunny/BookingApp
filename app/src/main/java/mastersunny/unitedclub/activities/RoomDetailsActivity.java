@@ -260,10 +260,13 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
                 if (response.isSuccessful() && response.body() != null) {
                     Constants.debugLog(TAG, response.body().toString());
-                    RoomBookingActivity.start(RoomDetailsActivity.this, response.body());
-                    RoomDetailsActivity.this.finish();
-                } else {
-                    Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
+                    if (response.headers().get("status").equals("exists")) {
+                        RoomBookingActivity.start(RoomDetailsActivity.this, response.body(), true);
+                        RoomDetailsActivity.this.finish();
+                    } else {
+                        RoomBookingActivity.start(RoomDetailsActivity.this, response.body(), false);
+                        RoomDetailsActivity.this.finish();
+                    }
                 }
             }
 
