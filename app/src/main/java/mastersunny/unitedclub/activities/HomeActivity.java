@@ -214,14 +214,14 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_help:
                         break;
                     case R.id.nav_about:
+                        Intent intent = new Intent(HomeActivity.this, AbousUsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        drawer.closeDrawers();
                         break;
                 }
 
-                if (menuItem.isChecked()) {
-                    menuItem.setChecked(false);
-                } else {
-                    menuItem.setChecked(true);
-                }
+                menuItem.setChecked(false);
                 return true;
             }
         });

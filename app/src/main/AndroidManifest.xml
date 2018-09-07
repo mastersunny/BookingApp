@@ -111,7 +111,8 @@
         <activity android:name=".activities.DateRoomSelectActivity" />
         <activity android:name=".activities.BookingListActivity" />
         <activity android:name=".activities.RoomBookingActivity" />
-        <activity android:name=".activities.BookingDetailsActivity"></activity>
+        <activity android:name=".activities.BookingDetailsActivity" />
+        <activity android:name=".activities.AbousUsActivity"></activity>
     </application>
 
 </manifest>

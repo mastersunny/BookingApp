@@ -13,6 +13,7 @@
         <item>About</item>
     </string-array>
 
+    <string name="company_name">Inflack Limited</string>
     <string name="user_name_text">Anonymous</string>
     <string name="congratulation_text">Congratulations!</string>
     <string name="nav_about">About</string>
