@@ -61,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.nearby_rv)
     RecyclerView nearby_rv;
     private List<ExamDTO> examDTOS;
+    private List<ExamDTO> copyExamDTOS;
     ExamAdapter examAdapter;
 
     SearchView searchView;
@@ -83,6 +84,7 @@ public class HomeActivity extends AppCompatActivity {
 //        initBroadcastReceiver();
 
         examDTOS = new ArrayList<>();
+        copyExamDTOS = new ArrayList<>();
         initLayout();
         setUpNavigationView();
     }
@@ -102,16 +104,28 @@ public class HomeActivity extends AppCompatActivity {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    return false;
+                    loadDataByUniversity(query);
+                    return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    return false;
+                    loadDataByUniversity(newText);
+                    return true;
                 }
             });
         }
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void loadDataByUniversity(String query) {
+        examDTOS.clear();
+        for (ExamDTO examDTO : copyExamDTOS) {
+            if (examDTO.getUniversity().getName().toLowerCase().contains(query.toLowerCase())) {
+                examDTOS.add(examDTO);
+            }
+        }
+        notifyExamAdapter();
     }
 
     private void initLayout() {
@@ -272,8 +286,10 @@ public class HomeActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     Constants.debugLog(TAG, response.body() + "");
+                    copyExamDTOS.clear();
                     examDTOS.clear();
                     examDTOS.addAll(response.body());
+                    copyExamDTOS.addAll(examDTOS);
                     notifyExamAdapter();
                 }
             }
