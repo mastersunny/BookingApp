@@ -28,8 +28,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -276,7 +274,7 @@ public class HomeActivity extends AppCompatActivity {
                     Constants.debugLog(TAG, response.body() + "");
                     examDTOS.clear();
                     examDTOS.addAll(response.body());
-                    notifyPlaceAdapter();
+                    notifyExamAdapter();
                 }
             }
 
@@ -287,7 +285,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void notifyPlaceAdapter() {
+    private void notifyExamAdapter() {
         if (examAdapter != null) {
             examAdapter.notifyDataSetChanged();
         }
