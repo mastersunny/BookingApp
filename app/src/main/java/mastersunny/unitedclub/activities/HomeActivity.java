@@ -278,7 +278,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        apiInterface.getExams(0, 100, "date,asc").enqueue(new Callback<List<ExamDTO>>() {
+        apiInterface.getExams(0, 1000, "date,asc").enqueue(new Callback<List<ExamDTO>>() {
             @Override
             public void onResponse(Call<List<ExamDTO>> call, Response<List<ExamDTO>> response) {
 
