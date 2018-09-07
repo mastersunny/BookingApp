@@ -131,31 +131,12 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Constants.debugLog(TAG, "" + Constants.accessToken + " token " + FirebaseInstanceId.getInstance().getToken());
-//        apiInterface.sendRegistrationToServer(Constants.accessToken, FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<AccessModel>() {
-//            @Override
-//            public void onResponse(Call<AccessModel> call, Response<AccessModel> response) {
-//                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-//                    Constants.debugLog(TAG, response.body().getMessage());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<AccessModel> call, Throwable t) {
-//
-//            }
-//        });
 
-        // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Constants.REGISTRATION_COMPLETE));
 
-        // register new push message receiver
-        // by doing this, the activity will be notified each time a new message arrives
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Constants.PUSH_NOTIFICATION));
-
-        // clear the notification area when the app is opened
         NotificationUtils.clearNotifications(getApplicationContext());
 
         loadData();
