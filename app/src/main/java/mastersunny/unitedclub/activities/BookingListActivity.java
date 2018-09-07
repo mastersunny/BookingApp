@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,9 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.adapters.BookingAdapter;
-import mastersunny.unitedclub.adapters.RoomAdapter;
 import mastersunny.unitedclub.models.RoomBookingDTO;
-import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
@@ -123,14 +120,14 @@ public class BookingListActivity extends AppCompatActivity {
         loadData();
     }
 
-    private void notifyPlaceAdapter() {
+    private void notifyBookingAdapter() {
         if (bookingAdapter != null) {
             bookingAdapter.notifyDataSetChanged();
         }
     }
 
     private void loadData() {
-        apiInterface.getBookings(0, 100, "startDate,desc").enqueue(new Callback<List<RoomBookingDTO>>() {
+        apiInterface.getBookings(0, 100, "createdAt,desc").enqueue(new Callback<List<RoomBookingDTO>>() {
             @Override
             public void onResponse(Call<List<RoomBookingDTO>> call, Response<List<RoomBookingDTO>> response) {
 
@@ -140,7 +137,7 @@ public class BookingListActivity extends AppCompatActivity {
                     Constants.debugLog(TAG, response.body() + "");
                     roomBookingDTOS.clear();
                     roomBookingDTOS.addAll(response.body());
-                    notifyPlaceAdapter();
+                    notifyBookingAdapter();
                 }
             }
 

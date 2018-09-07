@@ -14,6 +14,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.unitedclub.R;
+import mastersunny.unitedclub.activities.BookingDetailsActivity;
 import mastersunny.unitedclub.activities.RoomDetailsActivity;
 import mastersunny.unitedclub.models.RoomBookingDTO;
 import mastersunny.unitedclub.models.RoomDTO;
@@ -63,7 +64,7 @@ public class BookingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                RoomDetailsActivity.start(v.getContext(), roomDTO);
+                BookingDetailsActivity.start(v.getContext(), roomBookingDTO);
             }
         });
     }
