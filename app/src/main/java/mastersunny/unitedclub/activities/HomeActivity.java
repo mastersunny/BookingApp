@@ -82,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.home_activity);
         unbinder = ButterKnife.bind(this);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        initBroadcastReceiver();
+//        initBroadcastReceiver();
 
         examDTOS = new ArrayList<>();
         initLayout();
