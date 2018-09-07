@@ -58,6 +58,7 @@
             android:orientation="horizontal"
             android:paddingBottom="@dimen/margin_10"
             android:paddingTop="@dimen/margin_10"
+            android:visibility="gone"
             android:weightSum="2">
 
             <LinearLayout
