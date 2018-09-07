@@ -50,9 +50,9 @@ public class ExamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //            holder.itemView.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
 //        }
         mainHolder.university_name.setText(examDTO.getUniversity().getName());
-        mainHolder.exam_name.setText(examDTO.getName());
+        mainHolder.exam_name.setText(examDTO.getUnitName());
         try {
-            mainHolder.exam_date.setText(Constants.calculateDate(examDTO.getDate()));
+            mainHolder.exam_date.setText(Constants.calculateDate(examDTO.getExamDate()));
         } catch (Exception e) {
             Constants.debugLog(TAG, e.getMessage());
         }

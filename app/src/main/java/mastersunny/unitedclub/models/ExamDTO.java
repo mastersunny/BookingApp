@@ -8,9 +8,9 @@ public class ExamDTO implements Serializable {
 
     private UniversityDTO university;
 
-    private String name;
+    private String unitName;
 
-    private String date;
+    private String examDate;
 
     public Long getId() {
         return id;
@@ -28,20 +28,20 @@ public class ExamDTO implements Serializable {
         this.university = university;
     }
 
-    public String getName() {
-        return name;
+    public String getUnitName() {
+        return unitName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
     }
 
-    public String getDate() {
-        return date;
+    public String getExamDate() {
+        return examDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setExamDate(String examDate) {
+        this.examDate = examDate;
     }
 
     @Override
@@ -49,8 +49,8 @@ public class ExamDTO implements Serializable {
         return "ExamDTO{" +
                 "id=" + id +
                 ", university=" + university +
-                ", name='" + name + '\'' +
-                ", date='" + date + '\'' +
+                ", unitName='" + unitName + '\'' +
+                ", examDate='" + examDate + '\'' +
                 '}';
     }
 }

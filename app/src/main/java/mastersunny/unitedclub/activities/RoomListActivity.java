@@ -167,7 +167,7 @@ public class RoomListActivity extends AppCompatActivity {
         room_count.setText("1 Room");
         person_count.setText("1 Adult");
         try {
-            Date currentDate = Constants.sdf2.parse(examDTO.getDate());
+            Date currentDate = Constants.sdf2.parse(examDTO.getExamDate());
             Pair<String, String> pair = Constants.getStartEndDate(currentDate);
             start_date.setText(pair.first);
             end_date.setText(pair.second);
