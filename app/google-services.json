@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "491683508056",
-    "firebase_url": "https://rooms-8e1ea.firebaseio.com",
-    "project_id": "rooms-8e1ea",
-    "storage_bucket": "rooms-8e1ea.appspot.com"
+    "project_number": "1087456504870",
+    "firebase_url": "https://unitel-3d1ce.firebaseio.com",
+    "project_id": "unitel-3d1ce",
+    "storage_bucket": "unitel-3d1ce.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:491683508056:android:58262853178fc098",
+        "mobilesdk_app_id": "1:1087456504870:android:200f776feff9b847",
         "android_client_info": {
           "package_name": "com.inflack.unitel"
         }
       },
       "oauth_client": [
         {
-          "client_id": "491683508056-hmmu5l8phcemerki9t5n0j48saa1ar9j.apps.googleusercontent.com",
+          "client_id": "1087456504870-kvoc4e6tmj4dt3ulijsrqj2r2st7bom8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDM3COh3qs2Ul1892Bptff01HDJ7YgjY-A"
+          "current_key": "AIzaSyDku3n9Br9dSNMw7XzjXqy0HIhcy_z2bSA"
         }
       ],
       "services": {
