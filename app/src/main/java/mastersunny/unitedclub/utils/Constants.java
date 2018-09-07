@@ -68,6 +68,10 @@ public class Constants {
     public static final String LAST_NAME = "last_name";
     public static final String EMAIL = "email";
     public static final String PHONE_NUMBER = "phone_number";
+    public static final String NID = "nid";
+    public static final String SSC_REG_NO = "ssc_reg_no";
+    public static final String HSC_REG_NO = "hsc_reg_no";
+    public static final String PROFILE_IMAGE = "profile_image";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String COVER_IMAGE_URL = "cover_image_url";
     public static String accessToken = "abcd";
@@ -94,6 +98,7 @@ public class Constants {
     public static final String STORE_DTO = "store_dto";
     public static final String STORE_OFFER_DTO = "store_offer_dto";
     public static final String USER_DTO = "user_dto";
+    public static final String USER_NAME = "user_name";
     public static final String CATEGORY_DTO = "category_dto";
     public static final String SEARCH_TYPE = "search_type";
     public static final String SELECTED_POSITION = "selected_position";

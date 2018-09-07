@@ -2,6 +2,7 @@ package mastersunny.unitedclub.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -58,6 +59,8 @@ public class SignUpFragment extends Fragment {
 
     String message = "Cannot be empty";
 
+    SharedPreferences pref;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -75,6 +78,7 @@ public class SignUpFragment extends Fragment {
             view = inflater.inflate(R.layout.signup_fragment_layout, container, false);
             unbinder = ButterKnife.bind(this, view);
             apiInterface = ApiClient.createService(getActivity(), ApiInterface.class);
+            pref = mActivity.getSharedPreferences(Constants.prefs, 0);
         }
         return view;
     }
@@ -117,7 +121,19 @@ public class SignUpFragment extends Fragment {
                 public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                     Constants.debugLog(TAG, response + "");
                     if (response.isSuccessful()) {
-                        Constants.debugLog(TAG, response.body().toString());
+                        UserDTO userDTO = response.body();
+                        Constants.debugLog(TAG, "response " + userDTO);
+
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString(Constants.USER_NAME, userDTO.getName());
+                        editor.putString(Constants.PHONE_NUMBER, userDTO.getPhoneNumber());
+                        editor.putString(Constants.EMAIL, userDTO.getEmail());
+                        editor.putString(Constants.NID, userDTO.getNid());
+                        editor.putString(Constants.SSC_REG_NO, userDTO.getSscRegNo());
+                        editor.putString(Constants.HSC_REG_NO, userDTO.getHscRegNo());
+                        editor.putString(Constants.PROFILE_IMAGE, userDTO.getProfileImage());
+                        editor.commit();
+
                         loginListener.loginCompleted();
                     }
                 }

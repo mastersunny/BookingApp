@@ -14,31 +14,32 @@
         android:padding="@dimen/nav_header_vertical_spacing">
 
         <mastersunny.unitedclub.utils.CircleImageView
-            android:id="@+id/img_profile"
+            android:id="@+id/profile_image"
             android:layout_width="@dimen/profile_width"
             android:layout_height="@dimen/profile_height"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/profile_image" />
+            app:srcCompat="@color/colorPrimary" />
 
         <TextView
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_10"
             android:gravity="center"
             android:maxLines="2"
-            android:text="Redwan Nakif Rehan"
+            android:text="@string/user_name_text"
             android:textColor="@color/toolbar_text_color"
             android:textSize="@dimen/text_size_18" />
 
         <TextView
+            android:id="@+id/phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="01629421789"
+            android:text=""
             android:textColor="@color/toolbar_text_color" />
 
     </LinearLayout>
-
 </RelativeLayout>

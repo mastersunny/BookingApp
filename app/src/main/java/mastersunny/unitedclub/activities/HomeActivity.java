@@ -27,6 +27,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private ApiInterface apiInterface;
     private Unbinder unbinder;
+    SharedPreferences pref;
 
     View navHeader;
 
@@ -75,12 +77,17 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
+    TextView user_name;
+    TextView phone_number;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
         unbinder = ButterKnife.bind(this);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        pref = getApplicationContext().getSharedPreferences(Constants.prefs, 0);
 //        initBroadcastReceiver();
 
         examDTOS = new ArrayList<>();
@@ -133,7 +140,8 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("All Admission Test");
 
         navHeader = navigationView.getHeaderView(0);
-
+        user_name = navHeader.findViewById(R.id.user_name);
+        phone_number = navHeader.findViewById(R.id.phone_number);
 
         nearby_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         examAdapter = new ExamAdapter(this, examDTOS);
@@ -143,6 +151,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        user_name.setText(pref.getString(Constants.USER_NAME, getResources().getString(R.string.user_name_text)));
+        phone_number.setText(pref.getString(Constants.PHONE_NUMBER, ""));
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Constants.REGISTRATION_COMPLETE));
@@ -185,7 +196,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void displayFirebaseRegId() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.prefs, 0);
         String regId = pref.getString("regId", null);
 
         Constants.debugLog(TAG, "Firebase reg id: " + regId);

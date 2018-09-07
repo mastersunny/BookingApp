@@ -3,6 +3,7 @@ package mastersunny.unitedclub.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private LinearLayout login_layout;
     MediaPlayer mediaPlayer = null;
     private int audioClip;
+    SharedPreferences pref;
 
     @Override
     public void onAttach(Context context) {
@@ -65,6 +67,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if (view == null) {
             view = inflater.inflate(R.layout.login_fragment_layout, container, false);
             apiInterface = ApiClient.createService(getActivity(), ApiInterface.class);
+            pref = mActivity.getSharedPreferences(Constants.prefs, 0);
             initLayout();
         }
         return view;
@@ -129,8 +132,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                             progressBar.setVisibility(View.GONE);
                             if (response.isSuccessful()) {
-                                Constants.debugLog(TAG, "response " + response.body().toString());
-                                if (response.body().getId() != null && response.body().getPhoneNumber() != null) {
+                                UserDTO userDTO = response.body();
+                                Constants.debugLog(TAG, "response " + userDTO);
+
+                                if (userDTO.getId() != null && userDTO.getPhoneNumber() != null) {
+
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString(Constants.USER_NAME, userDTO.getName());
+                                    editor.putString(Constants.PHONE_NUMBER, userDTO.getPhoneNumber());
+                                    editor.putString(Constants.EMAIL, userDTO.getEmail());
+                                    editor.putString(Constants.NID, userDTO.getNid());
+                                    editor.putString(Constants.SSC_REG_NO, userDTO.getSscRegNo());
+                                    editor.putString(Constants.HSC_REG_NO, userDTO.getHscRegNo());
+                                    editor.putString(Constants.PROFILE_IMAGE, userDTO.getProfileImage());
+                                    editor.commit();
+
                                     loginListener.loginCompleted();
                                 } else {
                                     loginListener.signUp();
