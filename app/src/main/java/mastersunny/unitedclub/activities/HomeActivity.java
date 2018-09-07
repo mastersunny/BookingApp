@@ -220,8 +220,6 @@ public class HomeActivity extends AppCompatActivity {
                         drawer.closeDrawers();
                         break;
                 }
-
-                menuItem.setChecked(false);
                 return true;
             }
         });
