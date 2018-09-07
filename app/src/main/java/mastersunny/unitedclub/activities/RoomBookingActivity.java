@@ -1,8 +1,11 @@
 package mastersunny.unitedclub.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +24,7 @@ import mastersunny.unitedclub.models.RoomBookingDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
+import mastersunny.unitedclub.utils.NotificationUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,6 +33,8 @@ public class RoomBookingActivity extends AppCompatActivity {
 
 
     private String TAG = "RoomBookingActivity";
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     private ApiInterface apiInterface;
     RoomBookingDTO roomBookingDTO;
@@ -62,6 +70,34 @@ public class RoomBookingActivity extends AppCompatActivity {
         apiInterface = ApiClient.createService(this, ApiInterface.class);
         getIntentData();
         initLayout();
+
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                if (intent.getAction().equals(Constants.PUSH_NOTIFICATION)) {
+                    String message = intent.getStringExtra("message");
+                    if (!isFinishing()) {
+                        Constants.showNotificationDialog(RoomBookingActivity.this, message);
+                    }
+                }
+            }
+        };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Constants.PUSH_NOTIFICATION));
+        NotificationUtils.clearNotifications(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
     }
 
     private void initLayout() {

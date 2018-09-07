@@ -1,7 +1,9 @@
 package mastersunny.unitedclub.utils;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
@@ -200,21 +202,22 @@ public class Constants {
     }
 
     public static void showNotificationDialog(Context context, String message) {
-        final Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.notification_dialog_layout);
+        final AlertDialog alertDialog = new AlertDialog.Builder(
+                context).create();
+        alertDialog.setTitle("Confirmation");
+        alertDialog.setMessage(message);
 
-        TextView text = dialog.findViewById(R.id.total_amount);
-        text.setText(message);
+        // Setting Icon to Dialog
+//        alertDialog.setIcon(R.drawable.);
 
-        TextView ok_button = dialog.findViewById(R.id.accept);
-        ok_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to execute after dialog closed
+                alertDialog.dismiss();
             }
         });
-        dialog.show();
+        alertDialog.show();
     }
 
     public static Pair<String, String> getStartEndDate(Date date) {

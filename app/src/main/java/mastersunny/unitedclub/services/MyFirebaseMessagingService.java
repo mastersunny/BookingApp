@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import mastersunny.unitedclub.activities.BookingListActivity;
 import mastersunny.unitedclub.activities.TransactionDetailsActivity;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.utils.Constants;
@@ -32,69 +33,68 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Constants.debugLog(TAG, remoteMessage.getNotification().getBody());
+        Constants.debugLog(TAG, "From: " + remoteMessage.getFrom());
+
+        if (remoteMessage == null)
+            return;
+
+        if (remoteMessage.getData().size() > 0) {
+            Constants.debugLog(TAG, "Data Payload: " + remoteMessage.getData().toString());
+
+            try {
+                JSONObject json = new JSONObject(remoteMessage.getData().toString());
+                handleDataMessage(json);
+            } catch (Exception e) {
+                Constants.debugLog(TAG, "Exception: " + e.getMessage());
+            }
+        }
 
     }
 
-//    private void handleDataMessage(JSONObject jsonObject) {
-//        try {
-//            int transactionId = jsonObject.getInt(Constants.TRANSACTION_ID);
-//            String title = jsonObject.getString(Constants.TITLE);
-//            String message = jsonObject.getString(Constants.MESSAGE);
-//            String imgUrl = jsonObject.getString(Constants.IMG_URL);
-//            String transactionDate = jsonObject.getString(Constants.TRANSACTION_DATE);
-//
-//            Constants.debugLog(TAG, "title " + title + " tansactionId " + transactionId
-//                    + " message " + message);
-//
-//            if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
-//
-//                Intent pushNotification = new Intent(Constants.PUSH_NOTIFICATION);
-//                pushNotification.putExtra(Constants.TRANSACTION_ID, transactionId);
-//                pushNotification.putExtra(Constants.TITLE, title);
-//                pushNotification.putExtra(Constants.MESSAGE, message);
-//                pushNotification.putExtra(Constants.IMG_URL, imgUrl);
-//                pushNotification.putExtra(Constants.TRANSACTION_DATE, transactionDate);
-//
-//                LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
-//                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-//                notificationUtils.playNotificationSound();
-//
-//
-//            } else {
-//                Intent resultIntent = new Intent(getApplicationContext(), TransactionDetailsActivity.class);
-//                resultIntent.putExtra(Constants.TRANSACTION_ID, transactionId);
-//                resultIntent.putExtra(Constants.TITLE, title);
-//                resultIntent.putExtra(Constants.MESSAGE, message);
-//                resultIntent.putExtra(Constants.IMG_URL, imgUrl);
-//                resultIntent.putExtra(Constants.TRANSACTION_DATE, transactionDate);
-//                resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//
-//                PendingIntent pendingIntent = PendingIntent
-//                        .getActivity(this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-//
-//                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-//                        .setSmallIcon(R.mipmap.united_icon)
-//                        .setContentTitle(title)
-//                        .setContentText(message)
-//                        .setWhen(getTimeMilliSec(transactionDate))
-//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//                        .setContentIntent(pendingIntent)
-//                        .setAutoCancel(true);
-//
-//                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-//                notificationManager.notify(0, mBuilder.build());
-//
-//                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-//                notificationUtils.playNotificationSound();
-//            }
-//
-//        } catch (Exception e) {
-//            Constants.debugLog(TAG, e.getMessage());
-//        }
-//
-//
-//    }
+    private void handleDataMessage(JSONObject json) {
+        Constants.debugLog(TAG, "push json: " + json.toString());
+        try {
+            String title = json.getString("title");
+            JSONObject payload = json.getJSONObject("payload");
+
+            if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
+                Intent pushNotification = new Intent(Constants.PUSH_NOTIFICATION);
+                pushNotification.putExtra("message", title);
+
+                LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
+                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+                notificationUtils.playNotificationSound();
+
+
+            } else {
+                Intent resultIntent = new Intent(getApplicationContext(), BookingListActivity.class);
+                resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                PendingIntent pendingIntent = PendingIntent
+                        .getActivity(this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.united_icon)
+                        .setContentTitle(title)
+                        .setContentText(title)
+                        .setWhen(getTimeMilliSec(payload.getString("createdAt")))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                notificationManager.notify(0, mBuilder.build());
+
+                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+                notificationUtils.playNotificationSound();
+            }
+
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
+
+
+    }
 
     public static long getTimeMilliSec(String timeStamp) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
