@@ -127,6 +127,7 @@ public class BookingListActivity extends AppCompatActivity {
         if (bookingAdapter != null) {
             bookingAdapter.notifyDataSetChanged();
         }
+        checkNoData();
     }
 
     private void checkNoData() {
