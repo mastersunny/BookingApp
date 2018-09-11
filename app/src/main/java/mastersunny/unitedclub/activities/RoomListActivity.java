@@ -52,6 +52,9 @@ public class RoomListActivity extends AppCompatActivity {
     private int searchType;
     private ApiInterface apiInterface;
 
+    @BindView(R.id.no_data_found)
+    TextView no_data_found;
+
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
 
@@ -258,6 +261,15 @@ public class RoomListActivity extends AppCompatActivity {
         if (roomAdapter != null) {
             roomAdapter.notifyDataSetChanged();
         }
+        checkNoData();
+    }
+
+    private void checkNoData() {
+        if (roomDTOS.size() == 0) {
+            no_data_found.setVisibility(View.VISIBLE);
+        } else {
+            no_data_found.setVisibility(View.GONE);
+        }
     }
 
     private void loadData() {
@@ -279,6 +291,7 @@ public class RoomListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<RoomDTO>> call, Throwable t) {
                 Constants.debugLog(TAG, t.getMessage());
+                checkNoData();
             }
         });
     }
