@@ -188,6 +188,21 @@ public class BookingDetailsActivity extends AppCompatActivity {
             Constants.loadImage(this, roomBookingDTO.getRoom().getImages().get(0).getImageUrl(),
                     room_image);
         }
+
+        switch (roomBookingDTO.getNoOfAccommodation()) {
+            case 1:
+                deselectAll();
+                guest_count1.setSelected(true);
+                break;
+            case 2:
+                deselectAll();
+                guest_count2.setSelected(true);
+                break;
+            case 3:
+                deselectAll();
+                guest_count3.setSelected(true);
+                break;
+        }
     }
 
     private void updateTotalCost() {
