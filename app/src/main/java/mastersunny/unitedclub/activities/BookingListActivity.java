@@ -60,6 +60,9 @@ public class BookingListActivity extends AppCompatActivity {
     @BindView(R.id.person_count)
     TextView person_count;
 
+    @BindView(R.id.no_data_found)
+    TextView no_data_found;
+
     @BindView(R.id.recycler_view)
     RecyclerView recycler_view;
 
@@ -126,6 +129,14 @@ public class BookingListActivity extends AppCompatActivity {
         }
     }
 
+    private void checkNoData() {
+        if (roomBookingDTOS.size() == 0) {
+            no_data_found.setVisibility(View.VISIBLE);
+        } else {
+            no_data_found.setVisibility(View.GONE);
+        }
+    }
+
     private void loadData() {
         apiInterface.getBookings(0, 100, "createdAt,desc").enqueue(new Callback<List<RoomBookingDTO>>() {
             @Override
@@ -144,6 +155,7 @@ public class BookingListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<RoomBookingDTO>> call, Throwable t) {
                 Constants.debugLog(TAG, t.getMessage());
+                checkNoData();
             }
         });
     }

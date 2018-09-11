@@ -148,4 +148,14 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/no_data_found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="You don't have any booking!"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
 </android.support.design.widget.CoordinatorLayout>
