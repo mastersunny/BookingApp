@@ -26,7 +26,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
-                    android:padding="@dimen/margin_10"
+                    android:paddingBottom="@dimen/margin_10"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5"
+                    android:paddingTop="@dimen/margin_10"
                     app:srcCompat="@drawable/ic_back_icon" />
             </LinearLayout>
 
@@ -157,5 +160,7 @@
         android:textColor="@color/red"
         android:textSize="18sp"
         android:visibility="gone" />
+
+    <include layout="@layout/progress_layout"></include>
 
 </android.support.design.widget.CoordinatorLayout>

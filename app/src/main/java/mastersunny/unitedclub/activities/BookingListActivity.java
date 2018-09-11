@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,6 +33,9 @@ public class BookingListActivity extends AppCompatActivity {
 
     private static String TAG = "BookingListActivity";
     private ApiInterface apiInterface;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
@@ -131,6 +135,7 @@ public class BookingListActivity extends AppCompatActivity {
     }
 
     private void checkNoData() {
+        progressBar.setVisibility(View.GONE);
         if (roomBookingDTOS.size() == 0) {
             no_data_found.setVisibility(View.VISIBLE);
         } else {
@@ -139,6 +144,7 @@ public class BookingListActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+        progressBar.setVisibility(View.VISIBLE);
         apiInterface.getBookings(0, 100, "createdAt,desc").enqueue(new Callback<List<RoomBookingDTO>>() {
             @Override
             public void onResponse(Call<List<RoomBookingDTO>> call, Response<List<RoomBookingDTO>> response) {
