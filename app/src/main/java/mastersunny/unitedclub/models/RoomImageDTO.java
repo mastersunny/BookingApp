@@ -6,7 +6,17 @@ public class RoomImageDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+
     private String imageUrl;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -19,7 +29,8 @@ public class RoomImageDTO implements Serializable {
     @Override
     public String toString() {
         return "RoomImageDTO{" +
-                "imageUrl='" + imageUrl + '\'' +
+                "id=" + id +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
 }
