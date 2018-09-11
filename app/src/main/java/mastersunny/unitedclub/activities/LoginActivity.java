@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
     @Override
     public void loginCompleted() {
+        Constants.loginSucccessful = true;
         if (FirebaseInstanceId.getInstance().getToken() != null) {
             progressBar.setVisibility(View.VISIBLE);
             apiInterface.sendRegistrationToServer(FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<String>() {

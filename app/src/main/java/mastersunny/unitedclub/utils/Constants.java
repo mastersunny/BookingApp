@@ -61,7 +61,7 @@ public class Constants {
     public static String TRANSACTION_DUE = "unpaid";
     public static String TRANSACTION_PENDING = "pending";
 
-
+    public static boolean loginSucccessful = false;
     public static final String prefs = "prefs";
     public static final String STORE_ID = "store_id";
     public static final String FIRST_NAME = "first_name";

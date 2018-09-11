@@ -261,6 +261,15 @@ public class RoomDetailsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Constants.loginSucccessful) {
+            Constants.loginSucccessful = false;
+            bookRoom();
+        }
+    }
+
     private void bookRoom() {
         showProgressDialog("Booking...");
         apiInterface.createBooking(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
