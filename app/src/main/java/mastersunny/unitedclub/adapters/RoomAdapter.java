@@ -47,7 +47,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mainHolder.room_cost.setText(roomDTO.getRoomCost() + "");
 
         if (roomDTO.getImages() != null && roomDTO.getImages().size() > 0) {
-            Constants.loadImage(mActivity, ApiClient.BASE_URL + ApiClient.APP_NAME + roomDTO.getImages().get(0).getImageUrl(),
+            Constants.loadImage(mActivity, roomDTO.getImages().get(0).getImageUrl(),
                     mainHolder.room_image);
         }
 
