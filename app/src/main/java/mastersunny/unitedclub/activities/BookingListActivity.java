@@ -115,7 +115,9 @@ public class BookingListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadData();
+        if (roomBookingDTOS.size() == 0) {
+            loadData();
+        }
     }
 
     private void notifyBookingAdapter() {
