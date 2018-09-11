@@ -80,9 +80,6 @@ public class HomeActivity extends AppCompatActivity {
     TextView user_name;
     TextView phone_number;
 
-    @BindView(R.id.toolbar_title)
-    TextView toolbar_title;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +136,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
-        toolbar_title.setText("All Admission Test");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("All Admission Test");
 
         navHeader = navigationView.getHeaderView(0);
         user_name = navHeader.findViewById(R.id.user_name);

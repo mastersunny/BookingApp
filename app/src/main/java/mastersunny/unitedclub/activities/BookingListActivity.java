@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -37,8 +38,8 @@ public class BookingListActivity extends AppCompatActivity {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    @BindView(R.id.toolbar_title)
-    TextView toolbar_title;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.back_button)
     LinearLayout back_button;
@@ -95,7 +96,9 @@ public class BookingListActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
-        toolbar_title.setText("Booking List");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Booking List");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         bookingAdapter = new BookingAdapter(this, roomBookingDTOS);

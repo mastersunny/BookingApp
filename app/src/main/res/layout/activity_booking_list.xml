@@ -14,43 +14,20 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/white">
 
-            <LinearLayout
+            <ImageView
                 android:id="@+id/back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left|center_vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:paddingBottom="@dimen/margin_10"
-                    android:paddingLeft="@dimen/margin_5"
-                    android:paddingRight="@dimen/margin_5"
-                    android:paddingTop="@dimen/margin_10"
-                    app:srcCompat="@drawable/ic_back_icon" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_18" />
-
-            <ImageView
-                android:id="@+id/search_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="@dimen/margin_20"
                 android:background="?selectableItemBackground"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_search_normal" />
+                android:paddingBottom="@dimen/margin_10"
+                android:paddingLeft="@dimen/margin_5"
+                android:paddingRight="@dimen/margin_5"
+                android:paddingTop="@dimen/margin_10"
+                app:srcCompat="@drawable/ic_back_icon" />
+
 
         </android.support.v7.widget.Toolbar>
 
