@@ -42,9 +42,6 @@ public class BookingListActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.back_button)
-    ImageView back_button;
-
     @BindView(R.id.start_date_layout)
     LinearLayout start_date_layout;
 
@@ -106,24 +103,14 @@ public class BookingListActivity extends AppCompatActivity {
         recycler_view.setAdapter(bookingAdapter);
     }
 
-    @OnClick({R.id.back_button, R.id.search_icon, R.id.toolbar_title, R.id.start_date_layout,
-            R.id.end_date_layout, R.id.room_person_layout})
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.back_button:
-                finish();
-                break;
-            case R.id.search_icon:
-            case R.id.toolbar_title:
-                break;
-            case R.id.start_date_layout:
-                break;
-            case R.id.end_date_layout:
-                break;
-            case R.id.room_person_layout:
-                break;
-        }
-    }
+//    @OnClick({R.id.back_button})
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.back_button:
+//                finish();
+//                break;
+//        }
+//    }
 
     @Override
     protected void onResume() {
@@ -169,5 +156,11 @@ public class BookingListActivity extends AppCompatActivity {
                 checkNoData();
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

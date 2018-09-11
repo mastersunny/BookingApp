@@ -17,17 +17,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:titleTextColor="@color/white">
 
-            <ImageView
-                android:id="@+id/back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
-                android:paddingBottom="@dimen/margin_10"
-                android:paddingLeft="@dimen/margin_5"
-                android:paddingRight="@dimen/margin_5"
-                android:paddingTop="@dimen/margin_10"
-                app:srcCompat="@drawable/ic_back_icon" />
-
 
         </android.support.v7.widget.Toolbar>
 
