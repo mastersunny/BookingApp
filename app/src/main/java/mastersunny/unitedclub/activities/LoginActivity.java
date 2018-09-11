@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import butterknife.BindView;
 import mastersunny.unitedclub.Fragments.LoginFragment;
 import mastersunny.unitedclub.Fragments.SignUpFragment;
 import mastersunny.unitedclub.R;
@@ -25,6 +28,9 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     private ApiInterface apiInterface;
     SharedPreferences pref;
 
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     }
 
     private void initLayout() {
+        progressBar = findViewById(R.id.progressBar);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,9 +58,11 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     @Override
     public void loginCompleted() {
         if (FirebaseInstanceId.getInstance().getToken() != null) {
+            progressBar.setVisibility(View.VISIBLE);
             apiInterface.sendRegistrationToServer(FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
+                    progressBar.setVisibility(View.GONE);
                     Constants.debugLog(TAG, response + "");
                     if (response.isSuccessful()) {
                         Constants.debugLog(TAG, response.body());
@@ -63,6 +72,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
                     Constants.debugLog(TAG, t.getMessage());
                     finish();
                 }
