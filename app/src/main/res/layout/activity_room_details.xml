@@ -41,7 +41,7 @@
                     android:layout_height="210dp"
                     android:layout_marginLeft="@dimen/margin_3"
                     android:layout_marginRight="@dimen/margin_3"
-                    android:background="@drawable/sylhet"
+                    android:background="@color/colorPrimaryDark"
                     android:scaleType="centerCrop" />
 
                 <TextView

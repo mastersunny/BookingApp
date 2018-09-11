@@ -185,7 +185,7 @@ public class BookingDetailsActivity extends AppCompatActivity {
         });
 
         if (roomBookingDTO.getRoom().getImages() != null && roomBookingDTO.getRoom().getImages().size() > 0) {
-            Constants.loadImage(this, ApiClient.BASE_URL + ApiClient.APP_NAME + roomBookingDTO.getRoom().getImages().get(0).getImageUrl(),
+            Constants.loadImage(this, roomBookingDTO.getRoom().getImages().get(0).getImageUrl(),
                     room_image);
         }
     }

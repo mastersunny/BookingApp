@@ -184,8 +184,10 @@ public class RoomDetailsActivity extends AppCompatActivity {
             }
         });
 
-        Constants.loadImage(this, ApiClient.BASE_URL + ApiClient.APP_NAME + roomDTO.getImages().get(0).getImageUrl(),
-                room_image);
+        if (roomDTO.getImages() != null && roomDTO.getImages().size() > 0) {
+            Constants.loadImage(this, roomDTO.getImages().get(0).getImageUrl(),
+                    room_image);
+        }
     }
 
     private void updateTotalCost() {
