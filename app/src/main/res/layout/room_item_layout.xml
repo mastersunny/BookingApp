@@ -50,7 +50,9 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="1 Seat Room"
-            android:textSize="@dimen/text_size_18" />
+            android:textColor="#242529"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/address"

@@ -27,6 +27,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,6 +57,9 @@ public class HomeActivity extends AppCompatActivity {
     SharedPreferences pref;
 
     View navHeader;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -286,11 +290,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+        progressBar.setVisibility(View.VISIBLE);
         apiInterface.getExams(0, 1000, "date,asc").enqueue(new Callback<List<ExamDTO>>() {
             @Override
             public void onResponse(Call<List<ExamDTO>> call, Response<List<ExamDTO>> response) {
 
                 Constants.debugLog(TAG, response + "");
+                progressBar.setVisibility(View.GONE);
 
                 if (response.isSuccessful()) {
                     Constants.debugLog(TAG, response.body() + "");
@@ -304,6 +310,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ExamDTO>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Constants.debugLog(TAG, t.getMessage());
             }
         });

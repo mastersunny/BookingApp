@@ -19,11 +19,12 @@
             app:titleTextColor="@color/white">
 
 
-
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_home_fragment" />
+
+    <include layout="@layout/progress_layout" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
