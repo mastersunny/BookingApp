@@ -168,6 +168,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
         amount = roomDTO.getRoomCost();
         guest_count1.setSelected(true);
+        guestCount = 1;
         updateTotalCost();
 
         lunch_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
