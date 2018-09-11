@@ -17,6 +17,7 @@ import android.support.v7.widget.SearchView;
 import android.util.Pair;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -51,6 +52,9 @@ public class RoomListActivity extends AppCompatActivity {
     private SearchView searchView;
     private int searchType;
     private ApiInterface apiInterface;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     @BindView(R.id.no_data_found)
     TextView no_data_found;
@@ -265,6 +269,7 @@ public class RoomListActivity extends AppCompatActivity {
     }
 
     private void checkNoData() {
+        progressBar.setVisibility(View.GONE);
         if (roomDTOS.size() == 0) {
             no_data_found.setVisibility(View.VISIBLE);
         } else {
@@ -273,6 +278,7 @@ public class RoomListActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+        progressBar.setVisibility(View.VISIBLE);
         apiInterface.getRooms(Constants.startDate, Constants.endDate, examDTO.getUniversity().getPlace().getLatitude(),
                 examDTO.getUniversity().getPlace().getLongitude(), 2).enqueue(new Callback<List<RoomDTO>>() {
             @Override
