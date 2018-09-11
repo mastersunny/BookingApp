@@ -52,7 +52,7 @@ public class BookingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 + Constants.calculateDate(roomBookingDTO.getEndDate()));
 
         if (roomBookingDTO.getRoom().getImages() != null && roomBookingDTO.getRoom().getImages().size() > 0) {
-            Constants.loadImage(mActivity, ApiClient.BASE_URL + ApiClient.APP_NAME + roomBookingDTO.getRoom().getImages().get(0).getImageUrl(),
+            Constants.loadImage(mActivity, roomBookingDTO.getRoom().getImages().get(0).getImageUrl(),
                     mainHolder.room_image);
         }
 
