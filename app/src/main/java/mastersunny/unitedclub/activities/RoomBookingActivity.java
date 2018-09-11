@@ -82,7 +82,7 @@ public class RoomBookingActivity extends AppCompatActivity {
                 if (intent.getAction().equals(Constants.PUSH_NOTIFICATION)) {
                     String message = intent.getStringExtra("message");
                     if (!isFinishing()) {
-                        Constants.showNotificationDialog(RoomBookingActivity.this, message);
+                        Constants.showNotificationDialog(RoomBookingActivity.this, "Confirmation", message);
                     }
                 }
             }

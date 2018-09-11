@@ -61,7 +61,6 @@ public class Constants {
     public static String TRANSACTION_DUE = "unpaid";
     public static String TRANSACTION_PENDING = "pending";
 
-    public static boolean loginSucccessful = false;
     public static final String prefs = "prefs";
     public static final String STORE_ID = "store_id";
     public static final String FIRST_NAME = "first_name";
@@ -206,10 +205,10 @@ public class Constants {
         }
     }
 
-    public static void showNotificationDialog(Context context, String message) {
+    public static void showNotificationDialog(Context context, String title, String message) {
         final AlertDialog alertDialog = new AlertDialog.Builder(
                 context).create();
-        alertDialog.setTitle("Confirmation");
+        alertDialog.setTitle(title);
         alertDialog.setMessage(message);
 
         // Setting Icon to Dialog

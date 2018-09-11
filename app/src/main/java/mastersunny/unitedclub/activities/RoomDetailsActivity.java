@@ -264,10 +264,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Constants.loginSucccessful) {
-            Constants.loginSucccessful = false;
-            bookRoom();
-        }
     }
 
     private void bookRoom() {
@@ -287,6 +283,10 @@ public class RoomDetailsActivity extends AppCompatActivity {
                     } else {
                         RoomBookingActivity.start(RoomDetailsActivity.this, response.body(), false);
                         RoomDetailsActivity.this.finish();
+                    }
+                } else {
+                    if (!isFinishing()) {
+                        Constants.showNotificationDialog(RoomDetailsActivity.this, "Booking", response.message());
                     }
                 }
             }
