@@ -120,4 +120,5 @@
     <string name="popular_text">Popular places to stay!</string>
     <string name="offer_text">Offers for you</string>
     <string name="upcoming_exam_text">Upcoming exams</string>
+    <string name="booking_canceled">Booking Canceled</string>
 </resources>

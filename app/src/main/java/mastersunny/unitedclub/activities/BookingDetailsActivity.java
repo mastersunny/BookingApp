@@ -281,18 +281,22 @@ public class BookingDetailsActivity extends AppCompatActivity {
     }
 
     private void deleteBooking() {
+        showProgressDialog("Canceling...");
         apiInterface.deleteBooking(roomBookingDTO.getId()).enqueue(new Callback<RoomBookingDTO>() {
             @Override
             public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
                 Constants.debugLog(TAG, response + "");
+                dismissDialog();
+
                 if (response.isSuccessful()) {
-                    Toast.makeText(BookingDetailsActivity.this, "Booking deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BookingDetailsActivity.this, getResources().getString(R.string.booking_canceled), Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
 
             @Override
             public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
+                dismissDialog();
                 Constants.debugLog(TAG, t.getMessage());
                 Toast.makeText(BookingDetailsActivity.this, "Cannot be deleted", Toast.LENGTH_SHORT).show();
             }

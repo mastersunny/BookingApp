@@ -19,6 +19,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mastersunny.unitedclub.Fragments.ProgressDialogFragment;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.models.RoomBookingDTO;
 import mastersunny.unitedclub.rest.ApiClient;
@@ -52,6 +53,8 @@ public class RoomBookingActivity extends AppCompatActivity {
     TextView congratulation_message;
 
     private boolean isPending;
+
+    private static ProgressDialogFragment progressDialogFragment;
 
 
     public static void start(Context context, RoomBookingDTO roomBookingDTO, boolean isPending) {
@@ -129,18 +132,22 @@ public class RoomBookingActivity extends AppCompatActivity {
     }
 
     private void deleteBooking() {
+        showProgressDialog("Canceling...");
         apiInterface.deleteBooking(roomBookingDTO.getId()).enqueue(new Callback<RoomBookingDTO>() {
             @Override
             public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
                 Constants.debugLog(TAG, response + "");
+                dismissDialog();
+
                 if (response.isSuccessful()) {
-                    Toast.makeText(RoomBookingActivity.this, "Booking deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RoomBookingActivity.this, getResources().getString(R.string.booking_canceled), Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
 
             @Override
             public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
+                dismissDialog();
                 Constants.debugLog(TAG, t.getMessage());
                 Toast.makeText(RoomBookingActivity.this, "Cannot be deleted", Toast.LENGTH_SHORT).show();
             }
@@ -151,5 +158,18 @@ public class RoomBookingActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + phoneNumber));
         startActivity(intent);
+    }
+
+    protected synchronized void showProgressDialog(String message) {
+        if (progressDialogFragment != null && progressDialogFragment.isVisible()) {
+            progressDialogFragment.dismissAllowingStateLoss();
+        }
+        progressDialogFragment = null;
+        progressDialogFragment = new ProgressDialogFragment(message);
+        progressDialogFragment.show(getSupportFragmentManager(), ProgressDialogFragment.class.toString());
+    }
+
+    protected synchronized void dismissDialog() {
+        progressDialogFragment.dismissAllowingStateLoss();
     }
 }
