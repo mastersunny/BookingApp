@@ -10,7 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_16"
         android:layout_marginTop="@dimen/margin_16"
-        android:padding="@dimen/margin_10"
+        android:paddingBottom="@dimen/margin_10"
+        android:paddingLeft="@dimen/margin_5"
+        android:paddingRight="@dimen/margin_5"
+        android:paddingTop="@dimen/margin_10"
         app:srcCompat="@drawable/ic_back_icon" />
 
     <LinearLayout

@@ -188,6 +188,16 @@ public class RoomDetailsActivity extends AppCompatActivity {
             Constants.loadImage(this, roomDTO.getImages().get(0).getImageUrl(),
                     room_image);
         }
+
+        switch (roomDTO.getNoOfAccommodation()) {
+            case 1:
+                guest_count2.setVisibility(View.GONE);
+                guest_count3.setVisibility(View.GONE);
+                break;
+            case 2:
+                guest_count3.setVisibility(View.GONE);
+                break;
+        }
     }
 
     private void updateTotalCost() {
