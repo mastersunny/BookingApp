@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class BookingListActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     @BindView(R.id.back_button)
-    LinearLayout back_button;
+    ImageView back_button;
 
     @BindView(R.id.start_date_layout)
     LinearLayout start_date_layout;
