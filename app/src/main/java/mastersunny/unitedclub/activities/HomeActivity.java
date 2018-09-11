@@ -84,6 +84,8 @@ public class HomeActivity extends AppCompatActivity {
     TextView user_name;
     TextView phone_number;
 
+    private boolean makeRequest = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,11 +168,18 @@ public class HomeActivity extends AppCompatActivity {
                 new IntentFilter(Constants.PUSH_NOTIFICATION));
         NotificationUtils.clearNotifications(getApplicationContext());
 
-        loadData();
+        makeInitialRequest();
         if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
 //                    SearchActivity.start(mActivity, SearchType.TYPE_NEARBY.getStatus());
         } else {
             requestPermission(this);
+        }
+    }
+
+    private void makeInitialRequest() {
+        if (makeRequest) {
+            makeRequest = false;
+            loadData();
         }
     }
 
