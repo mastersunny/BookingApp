@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
@@ -21,32 +22,32 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:scaleType="centerCrop"
-            android:src="@color/colorPrimary" />
+            android:src="@drawable/dummy_image" />
 
         <TextView
             android:id="@+id/female_friendly_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/room_image"
-            android:layout_marginBottom="10dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginBottom="10dp"
             android:background="#ff1744"
-            android:paddingBottom="3dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:paddingBottom="3dp"
             android:text="Female Friendly"
             android:textColor="#ffffff"
             android:textSize="12sp"
             android:visibility="visible" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/room_image"
-            android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -56,46 +57,76 @@
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="1 Guest"
+                android:text="Two Seat Bedroom"
                 android:textColor="#242529"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/address"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Bashundhara R/A, Dhaka"
-                android:textSize="12sp" />
+                android:orientation="horizontal"
+                android:padding="2dp">
 
-            <TextView
-                android:id="@+id/booking_date"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_place_localizer" />
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Bashundhara R/A, Dhaka"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="January 27, 2018 to January 18, 2018"
-                android:textSize="12sp" />
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_calendar" />
+
+                <TextView
+                    android:id="@+id/booking_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="January 27, 2018 to January 18, 2018"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price: BDT "
+                android:text="Price: "
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
 
@@ -103,16 +134,9 @@
                 android:id="@+id/room_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
+                android:text="BDT 100"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/Person"
-                android:textAllCaps="false"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -121,10 +145,10 @@
             android:id="@+id/status_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/margin_16"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
             <TextView

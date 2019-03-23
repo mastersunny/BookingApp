@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import mastersunny.unitedclub.R;
 import mastersunny.unitedclub.adapters.BookingAdapter;
 import mastersunny.unitedclub.models.RoomBookingDTO;
+import mastersunny.unitedclub.models.RoomDTO;
 import mastersunny.unitedclub.rest.ApiClient;
 import mastersunny.unitedclub.rest.ApiInterface;
 import mastersunny.unitedclub.utils.Constants;
@@ -135,27 +136,33 @@ public class BookingListActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        progressBar.setVisibility(View.VISIBLE);
-        apiInterface.getBookings(0, 100, "createdAt,desc").enqueue(new Callback<List<RoomBookingDTO>>() {
-            @Override
-            public void onResponse(Call<List<RoomBookingDTO>> call, Response<List<RoomBookingDTO>> response) {
+        for (int i=0;i< 20;i++){
+            RoomBookingDTO roomBookingDTO = new RoomBookingDTO();
+            roomBookingDTOS.add(roomBookingDTO);
+        }
+        notifyBookingAdapter();
 
-                Constants.debugLog(TAG, response + "");
-
-                if (response.isSuccessful()) {
-                    Constants.debugLog(TAG, response.body() + "");
-                    roomBookingDTOS.clear();
-                    roomBookingDTOS.addAll(response.body());
-                    notifyBookingAdapter();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<RoomBookingDTO>> call, Throwable t) {
-                Constants.debugLog(TAG, t.getMessage());
-                checkNoData();
-            }
-        });
+//        progressBar.setVisibility(View.VISIBLE);
+//        apiInterface.getBookings(0, 100, "createdAt,desc").enqueue(new Callback<List<RoomBookingDTO>>() {
+//            @Override
+//            public void onResponse(Call<List<RoomBookingDTO>> call, Response<List<RoomBookingDTO>> response) {
+//
+//                Constants.debugLog(TAG, response + "");
+//
+//                if (response.isSuccessful()) {
+//                    Constants.debugLog(TAG, response.body() + "");
+//                    roomBookingDTOS.clear();
+//                    roomBookingDTOS.addAll(response.body());
+//                    notifyBookingAdapter();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<RoomBookingDTO>> call, Throwable t) {
+//                Constants.debugLog(TAG, t.getMessage());
+//                checkNoData();
+//            }
+//        });
     }
 
     @Override

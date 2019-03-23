@@ -41,32 +41,32 @@ public class BookingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final RoomBookingDTO roomBookingDTO = roomBookingDTOS.get(position);
-        MainHolder mainHolder = (MainHolder) holder;
-        mainHolder.title.setText(roomBookingDTO.getNoOfAccommodation() > 1 ? roomBookingDTO.getNoOfAccommodation()
-                + " Guests" : roomBookingDTO.getNoOfAccommodation() + " Guest");
-        mainHolder.address.setText(roomBookingDTO.getRoom().getAddress());
-        mainHolder.room_cost.setText(roomBookingDTO.getRoomCost() + "");
-        mainHolder.booking_status.setText(roomBookingDTO.getCurrentStatus());
-        mainHolder.booking_date.setText(Constants.calculateDate(roomBookingDTO.getStartDate()) + " to "
-                + Constants.calculateDate(roomBookingDTO.getEndDate()));
-
-        if (roomBookingDTO.getRoom().getImages() != null && roomBookingDTO.getRoom().getImages().size() > 0) {
-            Constants.loadImage(mActivity, roomBookingDTO.getRoom().getImages().get(0).getImageUrl(),
-                    mainHolder.room_image);
-        }
-
-        if (roomBookingDTO.getRoom().isFemaleFriendly()) {
-            mainHolder.female_friendly_layout.setVisibility(View.VISIBLE);
-        } else {
-            mainHolder.female_friendly_layout.setVisibility(View.GONE);
-        }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BookingDetailsActivity.start(v.getContext(), roomBookingDTO);
-            }
-        });
+//        final RoomBookingDTO roomBookingDTO = roomBookingDTOS.get(position);
+//        MainHolder mainHolder = (MainHolder) holder;
+//        mainHolder.title.setText(roomBookingDTO.getNoOfAccommodation() > 1 ? roomBookingDTO.getNoOfAccommodation()
+//                + " Guests" : roomBookingDTO.getNoOfAccommodation() + " Guest");
+//        mainHolder.address.setText(roomBookingDTO.getRoom().getAddress());
+//        mainHolder.room_cost.setText(roomBookingDTO.getRoomCost() + "");
+//        mainHolder.booking_status.setText(roomBookingDTO.getCurrentStatus());
+//        mainHolder.booking_date.setText(Constants.calculateDate(roomBookingDTO.getStartDate()) + " to "
+//                + Constants.calculateDate(roomBookingDTO.getEndDate()));
+//
+//        if (roomBookingDTO.getRoom().getImages() != null && roomBookingDTO.getRoom().getImages().size() > 0) {
+//            Constants.loadImage(mActivity, roomBookingDTO.getRoom().getImages().get(0).getImageUrl(),
+//                    mainHolder.room_image);
+//        }
+//
+//        if (roomBookingDTO.getRoom().isFemaleFriendly()) {
+//            mainHolder.female_friendly_layout.setVisibility(View.VISIBLE);
+//        } else {
+//            mainHolder.female_friendly_layout.setVisibility(View.GONE);
+//        }
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                BookingDetailsActivity.start(v.getContext(), roomBookingDTO);
+//            }
+//        });
     }
 
     @Override
