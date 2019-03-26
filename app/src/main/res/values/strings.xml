@@ -121,4 +121,8 @@
     <string name="offer_text">Offers for you</string>
     <string name="upcoming_exam_text">Upcoming exams</string>
     <string name="booking_canceled">Booking Canceled</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

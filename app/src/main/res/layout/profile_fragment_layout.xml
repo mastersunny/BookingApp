@@ -15,7 +15,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/profile_background" />
 
-        <mastersunny.unitedclub.utils.CircleImageView
+        <mastersunny.rooms.utils.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="100dp"
             android:layout_height="100dp"

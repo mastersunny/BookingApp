@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="mastersunny.unitedclub">
+    package="mastersunny.rooms">
 
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
@@ -22,6 +22,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activities.FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_fullscreen"
+            android:theme="@style/FullscreenTheme"></activity>
+
         <meta-data
             android:name="com.facebook.accountkit.ApplicationName"
             android:value="@string/app_name" />
@@ -90,9 +96,7 @@
         <activity android:name=".activities.MobileLoginActivity" />
         <activity android:name=".activities.RegistrationActivity" />
         <activity android:name=".activities.TransactionDetailsActivity" />
-        <activity android:name=".activities.LoginActivity" />
-
-        <!-- Firebase Notifications -->
+        <activity android:name=".activities.LoginActivity" /> <!-- Firebase Notifications -->
         <service android:name=".services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -102,8 +106,7 @@
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
-        </service>
-        <!-- ./Firebase Notifications -->
+        </service> <!-- ./Firebase Notifications -->
         <activity
             android:name=".activities.RoomDetailsActivity"
             android:label="@string/title_activity_scrolling2"
@@ -112,7 +115,7 @@
         <activity android:name=".activities.BookingListActivity" />
         <activity android:name=".activities.RoomBookingActivity" />
         <activity android:name=".activities.BookingDetailsActivity" />
-        <activity android:name=".activities.AbousUsActivity"></activity>
+        <activity android:name=".activities.AbousUsActivity" />
     </application>
 
 </manifest>
