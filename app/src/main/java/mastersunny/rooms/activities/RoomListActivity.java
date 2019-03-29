@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Pair;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,6 +36,8 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mastersunny.rooms.Fragments.RoomListFragment;
+import mastersunny.rooms.Fragments.RoomMapFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.RoomAdapter;
 import mastersunny.rooms.models.ExamDTO;
@@ -50,12 +53,8 @@ public class RoomListActivity extends AppCompatActivity {
 
     private static String TAG = "RoomListActivity";
 
-    @BindView(R.id.rv_rooms)
-    RecyclerView rv_rooms;
-
-    RoomAdapter roomAdapter;
-
-    private List<RoomDTO> roomDTOS;
+    @BindView(R.id.content)
+    FrameLayout content;
 
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -66,7 +65,7 @@ public class RoomListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_list);
         ButterKnife.bind(this);
-        roomDTOS = new ArrayList<>();
+
         getIntentData();
         initLayout();
 
@@ -92,9 +91,12 @@ public class RoomListActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
-        rv_rooms.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        roomAdapter = new RoomAdapter(this, roomDTOS);
-        rv_rooms.setAdapter(roomAdapter);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.content, new RoomListFragment(), RoomListFragment.FRAGMENT_TAG)
+                .addToBackStack(RoomListFragment.FRAGMENT_TAG)
+                .commit();
+
 
 //        try {
 //            Date currentDate = Constants.sdf2.parse(examDTO.getExamDate());
@@ -112,24 +114,26 @@ public class RoomListActivity extends AppCompatActivity {
         loadData();
     }
 
-    private void notifyPlaceAdapter() {
-        if (roomAdapter != null) {
-            roomAdapter.notifyDataSetChanged();
-        }
-//        checkNoData();
-    }
 
     private void checkNoData() {
 
     }
 
     private void loadData() {
-        roomDTOS.add(new RoomDTO("THE WAY DHAKA", 23.7968, 90.4115, 12484));
-        roomDTOS.add(new RoomDTO("Four Points By Sheraton DHaka, Gulshan", 23.7944, 90.4137, 15436));
-        roomDTOS.add(new RoomDTO("Century Residence Park", 23.7856724, 90.4186784, 6748));
-        roomDTOS.add(new RoomDTO("Asia Hotel & Resorts", 23.7306626, 90.4067831, 5061));
 
-        notifyPlaceAdapter();
+    }
+
+    @OnClick({R.id.img_map})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_map:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.content, new RoomMapFragment(), RoomMapFragment.FRAGMENT_TAG)
+                        .disallowAddToBackStack()
+                        .commit();
+                break;
+        }
     }
 
 }

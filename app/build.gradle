@@ -71,5 +71,7 @@ dependencies {
 //    implementation 'com.github.yongbeam:AirCalendar:1.0.0'
     implementation 'com.github.psinetron:slycalendarview:0.0.9'
 
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
+
 }
 apply plugin: 'com.google.gms.google-services'
