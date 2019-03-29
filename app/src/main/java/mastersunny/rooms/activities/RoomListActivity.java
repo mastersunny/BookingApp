@@ -116,15 +116,18 @@ public class RoomListActivity extends AppCompatActivity {
         if (roomAdapter != null) {
             roomAdapter.notifyDataSetChanged();
         }
-        checkNoData();
+//        checkNoData();
     }
 
     private void checkNoData() {
-        
+
     }
 
     private void loadData() {
-
+        for (int i = 0; i < 20; i++) {
+            roomDTOS.add(new RoomDTO());
+        }
+        notifyPlaceAdapter();
     }
 
 }

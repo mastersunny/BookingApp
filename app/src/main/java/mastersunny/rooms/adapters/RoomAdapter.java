@@ -38,29 +38,29 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final RoomDTO roomDTO = roomDTOS.get(position);
-        MainHolder mainHolder = (MainHolder) holder;
-        mainHolder.title.setText(roomDTO.getNoOfAccommodation() > 1 ? roomDTO.getNoOfAccommodation()
-                + " Seats Room" : roomDTO.getNoOfAccommodation() + " Seat Room");
-        mainHolder.address.setText(roomDTO.getAddress());
-        mainHolder.room_cost.setText(roomDTO.getRoomCost() + "");
-
-        if (roomDTO.getImages() != null && roomDTO.getImages().size() > 0) {
-            Constants.loadImage(mActivity, roomDTO.getImages().get(0).getImageUrl(),
-                    mainHolder.room_image);
-        }
-
-        if (roomDTO.isFemaleFriendly()) {
-            mainHolder.female_friendly_layout.setVisibility(View.VISIBLE);
-        } else {
-            mainHolder.female_friendly_layout.setVisibility(View.GONE);
-        }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RoomDetailsActivity.start(v.getContext(), roomDTO);
-            }
-        });
+//        final RoomDTO roomDTO = roomDTOS.get(position);
+//        MainHolder mainHolder = (MainHolder) holder;
+//        mainHolder.title.setText(roomDTO.getNoOfAccommodation() > 1 ? roomDTO.getNoOfAccommodation()
+//                + " Seats Room" : roomDTO.getNoOfAccommodation() + " Seat Room");
+//        mainHolder.address.setText(roomDTO.getAddress());
+//        mainHolder.room_cost.setText(roomDTO.getRoomCost() + "");
+//
+//        if (roomDTO.getImages() != null && roomDTO.getImages().size() > 0) {
+//            Constants.loadImage(mActivity, roomDTO.getImages().get(0).getImageUrl(),
+//                    mainHolder.room_image);
+//        }
+//
+//        if (roomDTO.isFemaleFriendly()) {
+//            mainHolder.female_friendly_layout.setVisibility(View.VISIBLE);
+//        } else {
+//            mainHolder.female_friendly_layout.setVisibility(View.GONE);
+//        }
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                RoomDetailsActivity.start(v.getContext(), roomDTO);
+//            }
+//        });
     }
 
     @Override
@@ -70,24 +70,24 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static class MainHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.room_image)
-        ImageView room_image;
-
-        @BindView(R.id.title)
-        TextView title;
-
-        @BindView(R.id.address)
-        TextView address;
-
-        @BindView(R.id.room_cost)
-        TextView room_cost;
-
-        @BindView(R.id.female_friendly_layout)
-        TextView female_friendly_layout;
+//        @BindView(R.id.room_image)
+//        ImageView room_image;
+//
+//        @BindView(R.id.title)
+//        TextView title;
+//
+//        @BindView(R.id.address)
+//        TextView address;
+//
+//        @BindView(R.id.room_cost)
+//        TextView room_cost;
+//
+//        @BindView(R.id.female_friendly_layout)
+//        TextView female_friendly_layout;
 
         public MainHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+//            ButterKnife.bind(this, itemView);
         }
     }
 }
