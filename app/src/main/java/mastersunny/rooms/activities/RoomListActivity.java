@@ -124,9 +124,11 @@ public class RoomListActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        for (int i = 0; i < 20; i++) {
-            roomDTOS.add(new RoomDTO());
-        }
+        roomDTOS.add(new RoomDTO("THE WAY DHAKA", 23.7968, 90.4115, 12484));
+        roomDTOS.add(new RoomDTO("Four Points By Sheraton DHaka, Gulshan", 23.7944, 90.4137, 15436));
+        roomDTOS.add(new RoomDTO("Century Residence Park", 23.7856724, 90.4186784, 6748));
+        roomDTOS.add(new RoomDTO("Asia Hotel & Resorts", 23.7306626, 90.4067831, 5061));
+
         notifyPlaceAdapter();
     }
 

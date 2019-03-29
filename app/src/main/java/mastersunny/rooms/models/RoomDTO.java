@@ -47,6 +47,16 @@ public class RoomDTO implements Serializable {
 
     private List<RoomImageDTO> images;
 
+    public RoomDTO() {
+    }
+
+    public RoomDTO(String address, double latitude, double longitude, double roomCost) {
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.roomCost = roomCost;
+    }
+
     public Long getId() {
         return id;
     }

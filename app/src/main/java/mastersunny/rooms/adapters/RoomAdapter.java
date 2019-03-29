@@ -38,8 +38,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-//        final RoomDTO roomDTO = roomDTOS.get(position);
-//        MainHolder mainHolder = (MainHolder) holder;
+        final RoomDTO roomDTO = roomDTOS.get(position);
+        MainHolder mainHolder = (MainHolder) holder;
+        mainHolder.name.setText(roomDTO.getAddress());
 //        mainHolder.title.setText(roomDTO.getNoOfAccommodation() > 1 ? roomDTO.getNoOfAccommodation()
 //                + " Seats Room" : roomDTO.getNoOfAccommodation() + " Seat Room");
 //        mainHolder.address.setText(roomDTO.getAddress());
@@ -70,11 +71,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static class MainHolder extends RecyclerView.ViewHolder {
 
-//        @BindView(R.id.room_image)
+        //        @BindView(R.id.room_image)
 //        ImageView room_image;
 //
-//        @BindView(R.id.title)
-//        TextView title;
+        @BindView(R.id.name)
+        TextView name;
 //
 //        @BindView(R.id.address)
 //        TextView address;
@@ -87,7 +88,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public MainHolder(View itemView) {
             super(itemView);
-//            ButterKnife.bind(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
