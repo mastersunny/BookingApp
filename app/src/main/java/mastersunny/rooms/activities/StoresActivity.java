@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import mastersunny.rooms.adapters.PagerAdapter;
 import mastersunny.rooms.Fragments.BookingFragment;
-import mastersunny.rooms.Fragments.SavedFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.utils.Constants;
 
@@ -41,7 +40,6 @@ public class StoresActivity extends AppCompatActivity implements View.OnClickLis
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new SavedFragment(), "Popular");
             pagerAdapter.addFragment(new BookingFragment(), "All");
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");

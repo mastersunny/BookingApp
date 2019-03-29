@@ -181,7 +181,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_layout:
-                Intent intent = new Intent(HomeActivity.this, DateRoomSelectActivity.class);
+                Intent intent = new Intent(HomeActivity.this, RoomSearchActivity.class);
                 startActivity(intent);
         }
     }

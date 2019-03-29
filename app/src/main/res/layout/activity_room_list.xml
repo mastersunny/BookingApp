@@ -7,8 +7,11 @@
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -16,120 +19,138 @@
             android:layout_height="?android:attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <LinearLayout
-                android:id="@+id/back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|center_vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/img_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_back" />
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_toLeftOf="@+id/img_save"
+                    android:layout_toRightOf="@+id/img_back"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Dhaka"
+                    android:textColor="@color/black_overlay" />
+
+                <ImageView
+                    android:id="@+id/img_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_toLeftOf="@+id/img_map"
+                    app:srcCompat="@drawable/ic_like" />
+
+                <ImageView
+                    android:id="@+id/img_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginEnd="16dp"
                     android:background="?selectableItemBackground"
-                    android:paddingBottom="@dimen/margin_10"
-                    android:paddingLeft="@dimen/margin_5"
-                    android:paddingRight="@dimen/margin_5"
-                    android:paddingTop="@dimen/margin_10"
-                    app:srcCompat="@drawable/ic_back_icon" />
-            </LinearLayout>
+                    app:srcCompat="@drawable/ic_map" />
 
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_18" />
-
-            <ImageView
-                android:id="@+id/search_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="@dimen/margin_20"
-                android:background="?selectableItemBackground"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_search_normal" />
+            </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/margin_10"
-            android:paddingTop="@dimen/margin_10"
-            android:weightSum="2">
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/start_date_layout"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/check_in_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start Date" />
+                    android:text="Start Date"
+                    android:textColor="@android:color/holo_red_dark" />
 
                 <TextView
-                    android:id="@+id/startDate"
+                    android:id="@+id/tv_start_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1 September"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/black_overlay" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/black" />
 
             <LinearLayout
                 android:id="@+id/end_date_layout"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/check_out_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="End Date" />
+                    android:text="End Date"
+                    android:textColor="@android:color/holo_red_dark" />
 
                 <TextView
-                    android:id="@+id/endDate"
+                    android:id="@+id/tv_end_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2 September"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="5 September"
+                    android:textColor="@color/black_overlay" />
 
             </LinearLayout>
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/black" />
+
             <LinearLayout
-                android:id="@+id/room_person_layout"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/room_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1 Room" />
+                    android:text="1 Room"
+                    android:textColor="@android:color/holo_red_dark" />
 
                 <TextView
-                    android:id="@+id/person_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/check_in_person_count"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="1 Adult"
+                    android:textColor="@color/black_overlay" />
 
             </LinearLayout>
 
@@ -144,7 +165,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/rv_rooms"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

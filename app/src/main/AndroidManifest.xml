@@ -22,11 +22,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.RoomSearchActivity"></activity>
         <activity
             android:name=".activities.FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
 
         <meta-data
             android:name="com.facebook.accountkit.ApplicationName"
@@ -78,6 +79,7 @@
             android:label="@string/title_activity_scrolling"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <activity android:name=".activities.SplashActivity2" />
         <activity
             android:name=".activities.RoomListActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -116,6 +118,10 @@
         <activity android:name=".activities.RoomBookingActivity" />
         <activity android:name=".activities.BookingDetailsActivity" />
         <activity android:name=".activities.AbousUsActivity" />
+
+        <!--<activity android:name="com.yongbeom.aircalendar.AirCalendarDatePickerActivity"-->
+            <!--android:theme="@style/Theme.AppCompat.NoActionBar" />-->
+
     </application>
 
 </manifest>

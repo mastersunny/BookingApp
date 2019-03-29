@@ -28,7 +28,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MainHo
 
     @Override
     public MainHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.popular_item_verical, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_item_verical, parent, false);
         return new MainHolder(view);
     }
 

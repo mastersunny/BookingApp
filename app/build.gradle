@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.inflack.unitel"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.1.0"
@@ -68,6 +68,8 @@ dependencies {
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
 //    annotationProcessor 'com.airbnb.android:epoxy-processor:2.14.0'
 //    implementation 'com.airbnb.android:lottie:2.5.5'
+//    implementation 'com.github.yongbeam:AirCalendar:1.0.0'
+    implementation 'com.github.psinetron:slycalendarview:0.0.9'
 
 }
 apply plugin: 'com.google.gms.google-services'

@@ -51,7 +51,6 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
     private void setUpTabLayout(Bundle savedInstanceState) {
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
         if (savedInstanceState == null) {
-            pagerAdapter.addFragment(new SavedFragment(), "Popular");
             pagerAdapter.addFragment(new BookingFragment(), "All");
         } else {
             Integer count = savedInstanceState.getInt("tabsCount");

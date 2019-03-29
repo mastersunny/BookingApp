@@ -20,7 +20,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import mastersunny.rooms.adapters.ExamAdapter;
 import mastersunny.rooms.models.ExamDTO;
 import mastersunny.rooms.R;
 import mastersunny.rooms.rest.ApiClient;
@@ -44,7 +43,6 @@ public class BookingFragment extends Fragment {
     @BindView(R.id.nearby_rv)
     RecyclerView nearby_rv;
     private List<ExamDTO> examDTOS;
-    ExamAdapter examAdapter;
 
 
     @Override
@@ -82,8 +80,6 @@ public class BookingFragment extends Fragment {
         });
 
         nearby_rv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        examAdapter = new ExamAdapter(mActivity, examDTOS);
-        nearby_rv.setAdapter(examAdapter);
     }
 
     @Override
