@@ -32,7 +32,9 @@ import butterknife.OnClick;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.CityAdapter;
 import mastersunny.rooms.adapters.PlaceAdapter;
+import mastersunny.rooms.adapters.RecentSearchAdapter;
 import mastersunny.rooms.models.PlaceDTO;
+import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.utils.Constants;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
@@ -47,6 +49,9 @@ public class RoomSearchActivity extends AppCompatActivity {
     @BindView(R.id.rv_places)
     RecyclerView rv_places;
 
+    @BindView(R.id.rv_recent_places)
+    RecyclerView rv_recent_places;
+
     @BindView(R.id.tv_start_date)
     TextView tv_start_date;
 
@@ -55,6 +60,9 @@ public class RoomSearchActivity extends AppCompatActivity {
 
     CityAdapter cityAdapter;
     private List<PlaceDTO> placeDTOS = new ArrayList<>();
+
+    RecentSearchAdapter recentSearchAdapter;
+    private List<RoomDTO> roomDTOS = new ArrayList<>();
 
     private double latitude, longitude;
 
@@ -80,6 +88,12 @@ public class RoomSearchActivity extends AppCompatActivity {
         cityAdapter = new CityAdapter(this, placeDTOS);
         rv_places.setAdapter(cityAdapter);
 
+        rv_recent_places.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rv_recent_places.setNestedScrollingEnabled(false);
+        rv_recent_places.setHasFixedSize(true);
+        recentSearchAdapter = new RecentSearchAdapter(this, roomDTOS);
+        rv_recent_places.setAdapter(recentSearchAdapter);
+
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +108,9 @@ public class RoomSearchActivity extends AppCompatActivity {
         if (placeDTOS.size() <= 0) {
             loadData();
         }
+        if (roomDTOS.size() <= 0) {
+            loadRecentSearch();
+        }
     }
 
     private void loadData() {
@@ -107,6 +124,15 @@ public class RoomSearchActivity extends AppCompatActivity {
 
         if (cityAdapter != null) {
             cityAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void loadRecentSearch() {
+        for (int i = 0; i < 3; i++) {
+            roomDTOS.add(new RoomDTO());
+        }
+        if (recentSearchAdapter != null) {
+            recentSearchAdapter.notifyDataSetChanged();
         }
     }
 
