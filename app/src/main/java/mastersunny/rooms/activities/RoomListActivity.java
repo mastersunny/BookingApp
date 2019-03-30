@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -14,6 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -27,6 +31,15 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,23 +62,39 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RoomListActivity extends AppCompatActivity {
+import static android.graphics.Typeface.BOLD;
+import static android.graphics.Typeface.ITALIC;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+
+public class RoomListActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private static String TAG = "RoomListActivity";
 
-    @BindView(R.id.content)
-    FrameLayout content;
+    @BindView(R.id.rv_rooms)
+    RecyclerView rv_rooms;
+
+    @BindView(R.id.room_list_layout)
+    FrameLayout room_list_layout;
+
+    RoomAdapter roomAdapter;
+
+    private List<RoomDTO> roomDTOS;
 
     private FusedLocationProviderClient mFusedLocationClient;
 
     private double latitude, longitude;
+
+    @BindView(R.id.mapView)
+    MapView mMapView;
+
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_list);
         ButterKnife.bind(this);
-
+        mMapView.onCreate(savedInstanceState);
         getIntentData();
         initLayout();
 
@@ -91,12 +120,10 @@ public class RoomListActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.content, new RoomListFragment(), RoomListFragment.FRAGMENT_TAG)
-                .addToBackStack(RoomListFragment.FRAGMENT_TAG)
-                .commit();
-
+        roomDTOS = new ArrayList<>();
+        rv_rooms.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        roomAdapter = new RoomAdapter(this, roomDTOS);
+        rv_rooms.setAdapter(roomAdapter);
 
 //        try {
 //            Date currentDate = Constants.sdf2.parse(examDTO.getExamDate());
@@ -106,12 +133,33 @@ public class RoomListActivity extends AppCompatActivity {
 //        } catch (Exception e) {
 //            Constants.debugLog(TAG, e.getMessage());
 //        }
+
+        mMapView.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        if (mMap != null) {
+            return;
+        }
+        mMap = map;
+        loadMapData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadData();
+        mMapView.onResume();
+        if (roomDTOS.size() <= 0) {
+            loadData();
+        }
+    }
+
+    private void notifyPlaceAdapter() {
+        if (roomAdapter != null) {
+            roomAdapter.notifyDataSetChanged();
+        }
+//        checkNoData();
     }
 
 
@@ -120,20 +168,99 @@ public class RoomListActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+        roomDTOS.add(new RoomDTO("THE WAY DHAKA", 23.7968, 90.4115, 12484));
+        roomDTOS.add(new RoomDTO("Four Points By Sheraton DHaka, Gulshan", 23.7944, 90.4137, 15436));
+        roomDTOS.add(new RoomDTO("Century Residence Park", 23.7856724, 90.4186784, 6748));
+        roomDTOS.add(new RoomDTO("Asia Hotel & Resorts", 23.7306626, 90.4067831, 5061));
 
+        notifyPlaceAdapter();
     }
 
     @OnClick({R.id.img_map})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_map:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.content, new RoomMapFragment(), RoomMapFragment.FRAGMENT_TAG)
-                        .disallowAddToBackStack()
-                        .commit();
+                room_list_layout.setVisibility(View.GONE);
+                mMapView.setVisibility(View.VISIBLE);
                 break;
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    private void loadMapData() {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(roomDTOS.get(0).getLatitude(), roomDTOS.get(0).getLongitude()), 10));
+        for (int i = 0; i < roomDTOS.size(); i++) {
+            RoomDTO roomDTO = roomDTOS.get(i);
+            IconGenerator iconFactory = new IconGenerator(this);
+            iconFactory.setTextAppearance(R.style.mapText);
+            iconFactory.setContentPadding(0, 0, 0, 0);
+            addIcon(iconFactory, "BDT " + roomDTO.getRoomCost(), new LatLng(roomDTO.getLatitude(), roomDTO.getLongitude()));
+        }
+
+//        IconGenerator iconFactory = new IconGenerator(this);
+//        addIcon(iconFactory, "Default", new LatLng(-33.8696, 151.2094));
+
+//        iconFactory.setColor(Color.CYAN);
+//        addIcon(iconFactory, "Custom color", new LatLng(-33.9360, 151.2070));
+//
+//        iconFactory.setRotation(90);
+//        iconFactory.setStyle(IconGenerator.STYLE_RED);
+//        addIcon(iconFactory, "Rotated 90 degrees", new LatLng(-33.8858, 151.096));
+//
+//        iconFactory.setContentRotation(-90);
+//        iconFactory.setStyle(IconGenerator.STYLE_PURPLE);
+//        addIcon(iconFactory, "Rotate=90, ContentRotate=-90", new LatLng(-33.9992, 151.098));
+//
+//        iconFactory.setRotation(0);
+//        iconFactory.setContentRotation(90);
+//        iconFactory.setStyle(IconGenerator.STYLE_GREEN);
+//        addIcon(iconFactory, "ContentRotate=90", new LatLng(-33.7677, 151.244));
+//
+//        iconFactory.setRotation(0);
+//        iconFactory.setContentRotation(0);
+//        iconFactory.setStyle(IconGenerator.STYLE_ORANGE);
+//        addIcon(iconFactory, makeCharSequence(), new LatLng(-33.77720, 151.12412));
+    }
+
+    private void addIcon(IconGenerator iconFactory, CharSequence text, LatLng position) {
+        MarkerOptions markerOptions = new MarkerOptions().
+                icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(text))).
+                position(position).
+                anchor(iconFactory.getAnchorU(), iconFactory.getAnchorV());
+
+        mMap.addMarker(markerOptions);
+    }
+
+    private CharSequence makeCharSequence() {
+        String prefix = "Mixing ";
+        String suffix = "different fonts";
+        String sequence = prefix + suffix;
+        SpannableStringBuilder ssb = new SpannableStringBuilder(sequence);
+        ssb.setSpan(new StyleSpan(ITALIC), 0, prefix.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        ssb.setSpan(new StyleSpan(BOLD), prefix.length(), sequence.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        return ssb;
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Log.d(TAG, marker.getId());
+        return false;
+    }
 }
