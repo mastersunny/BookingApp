@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -43,8 +44,10 @@ import com.google.maps.android.ui.IconGenerator;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,13 +79,26 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     @BindView(R.id.room_list_layout)
     FrameLayout room_list_layout;
 
+    @BindView(R.id.room_item_layout)
+    RelativeLayout room_item_layout;
+
+    @BindView(R.id.tv_name)
+    TextView tv_name;
+
+    @BindView(R.id.tv_address)
+    TextView tv_address;
+
     RoomAdapter roomAdapter;
 
     private List<RoomDTO> roomDTOS;
 
+    private Map<Marker, RoomDTO> roomDTOMap = new HashMap<>();
+
     private FusedLocationProviderClient mFusedLocationClient;
 
     private double latitude, longitude;
+
+    IconGenerator iconFactory;
 
     @BindView(R.id.mapView)
     MapView mMapView;
@@ -208,44 +224,22 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(roomDTOS.get(0).getLatitude(), roomDTOS.get(0).getLongitude()), 10));
         for (int i = 0; i < roomDTOS.size(); i++) {
             RoomDTO roomDTO = roomDTOS.get(i);
-            IconGenerator iconFactory = new IconGenerator(this);
+            iconFactory = new IconGenerator(this);
             iconFactory.setTextAppearance(R.style.mapText);
             iconFactory.setContentPadding(0, 0, 0, 0);
-            addIcon(iconFactory, "BDT " + roomDTO.getRoomCost(), new LatLng(roomDTO.getLatitude(), roomDTO.getLongitude()));
+            addIcon(iconFactory, "BDT " + roomDTO.getRoomCost(), new LatLng(roomDTO.getLatitude(), roomDTO.getLongitude()), roomDTO);
         }
-
-//        IconGenerator iconFactory = new IconGenerator(this);
-//        addIcon(iconFactory, "Default", new LatLng(-33.8696, 151.2094));
-
-//        iconFactory.setColor(Color.CYAN);
-//        addIcon(iconFactory, "Custom color", new LatLng(-33.9360, 151.2070));
-//
-//        iconFactory.setRotation(90);
-//        iconFactory.setStyle(IconGenerator.STYLE_RED);
-//        addIcon(iconFactory, "Rotated 90 degrees", new LatLng(-33.8858, 151.096));
-//
-//        iconFactory.setContentRotation(-90);
-//        iconFactory.setStyle(IconGenerator.STYLE_PURPLE);
-//        addIcon(iconFactory, "Rotate=90, ContentRotate=-90", new LatLng(-33.9992, 151.098));
-//
-//        iconFactory.setRotation(0);
-//        iconFactory.setContentRotation(90);
-//        iconFactory.setStyle(IconGenerator.STYLE_GREEN);
-//        addIcon(iconFactory, "ContentRotate=90", new LatLng(-33.7677, 151.244));
-//
-//        iconFactory.setRotation(0);
-//        iconFactory.setContentRotation(0);
-//        iconFactory.setStyle(IconGenerator.STYLE_ORANGE);
-//        addIcon(iconFactory, makeCharSequence(), new LatLng(-33.77720, 151.12412));
     }
 
-    private void addIcon(IconGenerator iconFactory, CharSequence text, LatLng position) {
+    private void addIcon(IconGenerator iconFactory, CharSequence text, LatLng position, RoomDTO roomDTO) {
         MarkerOptions markerOptions = new MarkerOptions().
                 icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(text))).
                 position(position).
                 anchor(iconFactory.getAnchorU(), iconFactory.getAnchorV());
+        mMap.setOnMarkerClickListener(this);
+        Marker marker = mMap.addMarker(markerOptions);
 
-        mMap.addMarker(markerOptions);
+        roomDTOMap.put(marker, roomDTO);
     }
 
     private CharSequence makeCharSequence() {
@@ -260,7 +254,25 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Log.d(TAG, marker.getId());
+        Log.d(TAG, roomDTOMap.get(marker).toString() + "");
+        RoomDTO roomDTO = new RoomDTO();
+        if (roomDTOMap.containsKey(marker)) {
+            roomDTO = roomDTOMap.get(marker);
+        }
+        iconFactory.setStyle(IconGenerator.STYLE_RED);
+        marker.setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon("BDT " + roomDTO.getRoomCost())));
+
+        for (Map.Entry<Marker, RoomDTO> entry : roomDTOMap.entrySet()) {
+            if (!entry.getKey().equals(marker)) {
+                iconFactory = new IconGenerator(this);
+                iconFactory.setTextAppearance(R.style.mapText);
+                iconFactory.setContentPadding(0, 0, 0, 0);
+                entry.getKey().setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon("BDT " + roomDTO.getRoomCost())));
+            }
+        }
+        room_item_layout.setVisibility(View.VISIBLE);
+        tv_name.setText(roomDTO.getAddress());
+
         return false;
     }
 }
