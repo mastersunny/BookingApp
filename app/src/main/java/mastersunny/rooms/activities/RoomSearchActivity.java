@@ -29,6 +29,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mastersunny.rooms.Fragments.GuestSelectFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.CityAdapter;
 import mastersunny.rooms.adapters.PlaceAdapter;
@@ -38,7 +39,7 @@ import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.utils.Constants;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
-public class RoomSearchActivity extends AppCompatActivity {
+public class RoomSearchActivity extends AppCompatActivity implements GuestSelectFragment.GuestSelectListener {
 
 
     public String TAG = "RoomSearchActivity";
@@ -57,6 +58,12 @@ public class RoomSearchActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_end_date)
     TextView tv_end_date;
+
+    @BindView(R.id.tv_room_qty)
+    TextView tv_room_qty;
+
+    @BindView(R.id.tv_adult_qty)
+    TextView tv_adult_qty;
 
     CityAdapter cityAdapter;
     private List<PlaceDTO> placeDTOS = new ArrayList<>();
@@ -181,7 +188,8 @@ public class RoomSearchActivity extends AppCompatActivity {
 
     int REQUEST_CODE = 1;
 
-    @OnClick({R.id.img_search, R.id.img_back, R.id.start_date_layout, R.id.end_date_layout})
+    @OnClick({R.id.img_search, R.id.img_back, R.id.start_date_layout,
+            R.id.end_date_layout, R.id.room_guest_layout})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_search:
@@ -204,6 +212,10 @@ public class RoomSearchActivity extends AppCompatActivity {
 //                intent.setEndDate(2019 , 03 , 30); // int
 //                intent.isMonthLabels(false);
 //                startActivityForResult(intent, REQUEST_CODE);
+                break;
+            case R.id.room_guest_layout:
+                GuestSelectFragment guestSelectFragment = new GuestSelectFragment();
+                guestSelectFragment.show(getSupportFragmentManager(), "guestSelectFragment");
                 break;
         }
     }
@@ -238,4 +250,14 @@ public class RoomSearchActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void selectedGuestAndRoom(int roomQty, int adultQty, int childQty) {
+        tv_room_qty.setText(roomQty + " Rooms");
+        if (childQty > 0) {
+            tv_adult_qty.setText(adultQty + " Adults, " + (childQty > 1 ? (childQty + " Children") : (childQty + " Child")));
+        } else {
+            tv_adult_qty.setText(adultQty + " Adults");
+        }
+
+    }
 }
