@@ -31,8 +31,8 @@ public class SplashActivity2 extends AppCompatActivity {
 
     @OnClick({R.id.btn_login})
     public void onClick(View v) {
-//        phoneLogin();
-        goToMyLoggedInActivity();
+        phoneLogin();
+
     }
 
     public static int APP_REQUEST_CODE = 99;
