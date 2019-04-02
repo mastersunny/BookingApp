@@ -10,24 +10,36 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import mastersunny.rooms.R;
+import mastersunny.rooms.models.ItemType;
+import mastersunny.rooms.models.PlaceRoomItem;
 import mastersunny.rooms.models.RoomDTO;
 
 public class RecentSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<RoomDTO> roomDTOS;
-    private Activity mActivity;
     private String TAG = "RecentSearchAdapter";
+    private List<PlaceRoomItem> placeRoomItems;
+    private Activity mActivity;
 
-    public RecentSearchAdapter(Activity mActivity, List<RoomDTO> roomDTOS) {
+    public RecentSearchAdapter(Activity mActivity, List<PlaceRoomItem> placeRoomItems) {
         this.mActivity = mActivity;
-        this.roomDTOS = roomDTOS;
+        this.placeRoomItems = placeRoomItems;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recent_search_item_layout, parent, false);
-        return new MainHolder(view);
+        View view;
+        if (viewType == ItemType.ITEM_TYPE_LOCATION.getValue()) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_item_layout, parent, false);
+            return new HeaderViewHolder(view);
+        } else if (viewType == ItemType.ITEM_TYPE_ROOM.getValue()) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recent_search_item_layout, parent, false);
+            return new RecentViewHolder(view);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_item_verical, parent, false);
+            return new MainHolder(view);
+        }
+
     }
 
     @Override
@@ -58,8 +70,29 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return ItemType.ITEM_TYPE_LOCATION.getValue();
+        } else {
+            return placeRoomItems.get(position - 1).getItemType();
+        }
+    }
+
+    @Override
     public int getItemCount() {
-        return roomDTOS == null ? 0 : roomDTOS.size();
+        return placeRoomItems == null ? 0 : placeRoomItems.size() + 1;
+    }
+
+    public class HeaderViewHolder extends RecyclerView.ViewHolder {
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    public class RecentViewHolder extends RecyclerView.ViewHolder {
+        public RecentViewHolder(View itemView) {
+            super(itemView);
+        }
     }
 
     static class MainHolder extends RecyclerView.ViewHolder {

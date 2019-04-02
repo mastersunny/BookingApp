@@ -3,7 +3,7 @@ package mastersunny.rooms.models;
 import java.io.Serializable;
 import java.util.List;
 
-public class RoomDTO implements Serializable {
+public class RoomDTO implements Serializable, PlaceRoomItem {
 
     private static final long serialVersionUID = 1L;
 
@@ -215,5 +215,10 @@ public class RoomDTO implements Serializable {
 
     public void setImages(List<RoomImageDTO> images) {
         this.images = images;
+    }
+
+    @Override
+    public int getItemType() {
+        return ItemType.ITEM_TYPE_ROOM.getValue();
     }
 }
