@@ -19,8 +19,10 @@ import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -87,6 +89,9 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
 
     @BindView(R.id.tv_address)
     TextView tv_address;
+
+    @BindView(R.id.img_back)
+    ImageView img_back;
 
     RoomAdapter roomAdapter;
 
@@ -192,12 +197,15 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         notifyPlaceAdapter();
     }
 
-    @OnClick({R.id.img_map})
+    @OnClick({R.id.img_map, R.id.img_back})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_map:
                 room_list_layout.setVisibility(View.GONE);
                 mMapView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.img_back:
+                onBackPressed();
                 break;
         }
     }
@@ -274,5 +282,29 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         tv_name.setText(roomDTO.getAddress());
 
         return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mMapView.getVisibility() == View.VISIBLE) {
+            mMapView.setVisibility(View.GONE);
+            room_list_layout.setVisibility(View.VISIBLE);
+            if (room_item_layout.getVisibility() == View.VISIBLE) {
+                room_item_layout.setVisibility(View.GONE);
+            }
+        } else {
+            finish();
+        }
     }
 }
