@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.listeners.ClickListener;
+import mastersunny.rooms.models.ItemType;
 import mastersunny.rooms.models.PlaceDTO;
 
 /**
@@ -43,7 +44,7 @@ public class CityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MainHolder mainHolder = (MainHolder) holder;
         final PlaceDTO dto = placeDTOS.get(position);
-        mainHolder.place_name.setText(dto.getName());
+        mainHolder.name.setText(dto.getName());
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,8 +60,8 @@ public class CityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static class MainHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.place_name)
-        TextView place_name;
+        @BindView(R.id.name)
+        TextView name;
 
         public MainHolder(View itemView) {
             super(itemView);

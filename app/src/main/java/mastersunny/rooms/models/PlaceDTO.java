@@ -2,7 +2,7 @@ package mastersunny.rooms.models;
 
 import java.io.Serializable;
 
-public class PlaceDTO implements Serializable, PlaceRoomItem {
+public class PlaceDTO implements Serializable{
 
     private Long id;
 
@@ -87,9 +87,5 @@ public class PlaceDTO implements Serializable, PlaceRoomItem {
                 '}';
     }
 
-    @Override
-    public int getItemType() {
-        return ItemType.ITEM_TYPE_PLACE.getValue();
-    }
 }
 

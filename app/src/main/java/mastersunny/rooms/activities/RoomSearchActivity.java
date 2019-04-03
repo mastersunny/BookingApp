@@ -4,15 +4,15 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -21,26 +21,23 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mastersunny.rooms.Fragments.GuestSelectFragment;
+import mastersunny.rooms.Fragments.RoomSearchFragment1;
+import mastersunny.rooms.Fragments.RoomSearchFragment2;
 import mastersunny.rooms.R;
-import mastersunny.rooms.adapters.CityAdapter;
-import mastersunny.rooms.adapters.PlaceAdapter;
 import mastersunny.rooms.adapters.RecentSearchAdapter;
+import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.PlaceDTO;
-import mastersunny.rooms.models.PlaceRoomItem;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.utils.Constants;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
-public class RoomSearchActivity extends AppCompatActivity implements GuestSelectFragment.GuestSelectListener {
+public class RoomSearchActivity extends AppCompatActivity implements GuestSelectFragment.GuestSelectListener, RoomSearchListener {
 
 
     public String TAG = "RoomSearchActivity";
@@ -61,13 +58,17 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     @BindView(R.id.tv_adult_qty)
     TextView tv_adult_qty;
 
-    @BindView(R.id.rv_places)
-    RecyclerView rv_places;
-    private List<PlaceRoomItem> placeRoomItems = new ArrayList<>();
-    RecentSearchAdapter recentSearchAdapter;
-
     private double latitude, longitude;
 
+    FragmentManager fragmentManager = getSupportFragmentManager();
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,53 +77,30 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
         ButterKnife.bind(this);
 
+        switchFragmentA();
+
         initLayout();
+    }
+
+    private void switchFragmentA() {
+        if (fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG) != null) {
+            fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG)).commit();
+        } else {
+            fragmentManager.beginTransaction().add(R.id.content, new RoomSearchFragment1(), RoomSearchFragment1.FRAGMENT_TAG).commit();
+        }
+    }
+
+    private void switchFragmentB() {
+        if (fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG) != null) {
+            fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG)).commit();
+        } else {
+            fragmentManager.beginTransaction().add(R.id.content, new RoomSearchFragment2(), RoomSearchFragment2.FRAGMENT_TAG).commit();
+        }
     }
 
     private void initLayout() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Search for Hotel, City, Or Location");
-
-        rv_places.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recentSearchAdapter = new RecentSearchAdapter(this, placeRoomItems);
-        rv_places.setAdapter(recentSearchAdapter);
-
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (placeRoomItems.size() <= 0) {
-            loadData();
-        }
-    }
-
-    private void loadData() {
-        placeRoomItems.add(new RoomDTO());
-        placeRoomItems.add(new RoomDTO());
-        placeRoomItems.add(new RoomDTO());
-
-        placeRoomItems.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
-        placeRoomItems.add(new PlaceDTO("Sylhet", "সিলেট", "dhaka"));
-        placeRoomItems.add(new PlaceDTO("Rajshahi", "রাজশাহী", "dhaka"));
-        placeRoomItems.add(new PlaceDTO("Bogura", "বগুড়া", "dhaka"));
-        placeRoomItems.add(new PlaceDTO("Khulna", "খুলনা", "dhaka"));
-        placeRoomItems.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
-        placeRoomItems.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
-
-        loadRecentSearch();
-    }
-
-    private void loadRecentSearch() {
-        if (recentSearchAdapter != null) {
-            recentSearchAdapter.notifyDataSetChanged();
-        }
     }
 
     private void searchPlace() {
@@ -240,5 +218,33 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
             tv_adult_qty.setText(adultQty + " Adults");
         }
 
+    }
+
+    @Override
+    public void onRecentSearch(RoomDTO roomDTO) {
+
+    }
+
+    @Override
+    public void onPlaceSearch(PlaceDTO placeDTO) {
+        Log.d(TAG, placeDTO.toString());
+        switchFragmentB();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("CDA", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        switchFragmentA();
     }
 }

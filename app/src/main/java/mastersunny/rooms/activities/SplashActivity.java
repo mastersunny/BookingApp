@@ -44,13 +44,13 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 animation = ObjectAnimator.ofFloat(child_view, "translationX", (parent_view.getWidth() + child_view.getWidth()));
-                animation.setDuration(1250);
+                animation.setDuration(50);
                 animation.setRepeatCount(Animation.INFINITE);
                 animation.start();
             }
         });
 
-        handler.postDelayed(splashRunnable, 2500);
+        handler.postDelayed(splashRunnable, 100);
 
     }
 
