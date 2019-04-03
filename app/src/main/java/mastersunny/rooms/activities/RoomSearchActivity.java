@@ -30,7 +30,6 @@ import mastersunny.rooms.Fragments.GuestSelectFragment;
 import mastersunny.rooms.Fragments.RoomSearchFragment1;
 import mastersunny.rooms.Fragments.RoomSearchFragment2;
 import mastersunny.rooms.R;
-import mastersunny.rooms.adapters.RecentSearchAdapter;
 import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
@@ -45,6 +44,8 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.toolbar_title)
+    TextView toolbar_title;
 
     @BindView(R.id.tv_start_date)
     TextView tv_start_date;
@@ -83,18 +84,23 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     }
 
     private void switchFragmentA() {
+        shouldShowA = false;
         if (fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG) != null) {
+            fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG)).commit();
             fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG)).commit();
         } else {
             fragmentManager.beginTransaction().add(R.id.content, new RoomSearchFragment1(), RoomSearchFragment1.FRAGMENT_TAG).commit();
         }
     }
 
-    private void switchFragmentB() {
+    private void switchFragmentB(PlaceDTO placeDTO) {
+        shouldShowA = true;
+        fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG)).commit();
         if (fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG) != null) {
             fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG)).commit();
         } else {
-            fragmentManager.beginTransaction().add(R.id.content, new RoomSearchFragment2(), RoomSearchFragment2.FRAGMENT_TAG).commit();
+            RoomSearchFragment2 fragment2 = new RoomSearchFragment2();
+            fragmentManager.beginTransaction().add(R.id.content, fragment2, RoomSearchFragment2.FRAGMENT_TAG).commit();
         }
     }
 
@@ -155,7 +161,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
                 searchPlace();
                 break;
             case R.id.img_back:
-                finish();
+                onBackPressed();
                 break;
             case R.id.start_date_layout:
             case R.id.end_date_layout:
@@ -163,14 +169,6 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
                         .setSingle(false)
                         .setCallback(callback)
                         .show(getSupportFragmentManager(), "TAG_SLYCALENDAR");
-//                AirCalendarIntent intent = new AirCalendarIntent(this);
-//                intent.isBooking(false);
-//                intent.isSelect(false);
-////                intent.setBookingDateArray('Array Dates(format: yyyy-MM-dd');
-//                intent.setStartDate(2019 , 03 , 29); // int
-//                intent.setEndDate(2019 , 03 , 30); // int
-//                intent.isMonthLabels(false);
-//                startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.room_guest_layout:
                 GuestSelectFragment guestSelectFragment = new GuestSelectFragment();
@@ -227,8 +225,8 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
     @Override
     public void onPlaceSearch(PlaceDTO placeDTO) {
-        Log.d(TAG, placeDTO.toString());
-        switchFragmentB();
+        switchFragmentB(placeDTO);
+        toolbar_title.setText("Where in " + placeDTO.getName() + "?");
     }
 
     @Override
@@ -236,15 +234,21 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
                 && keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
-            Log.d("CDA", "onKeyDown Called");
             onBackPressed();
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
+    private boolean shouldShowA = false;
+
     @Override
     public void onBackPressed() {
-        switchFragmentA();
+        if (shouldShowA) {
+            toolbar_title.setText("Search for hotel, city, location");
+            switchFragmentA();
+        } else {
+            finish();
+        }
     }
 }

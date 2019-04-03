@@ -7,9 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,10 @@ public class RoomSearchFragment2 extends Fragment {
     @BindView(R.id.rv_places)
     RecyclerView rv_places;
 
-    private PlaceDTO placeDTO;
+    @BindView(R.id.tv_city_name)
+    TextView tv_city_name;
+
+    public static PlaceDTO placeDTO;
     private List<PlaceDTO> placeDTOS = new ArrayList<>();
     private Unbinder unbinder;
     private CityAdapter cityAdapter;
