@@ -9,7 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="210dp"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -18,9 +18,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:toolbarId="@+id/toolbar">
+
+            <ImageView
+                android:id="@+id/room_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_3"
+                android:layout_marginRight="@dimen/margin_3"
+                android:scaleType="centerCrop"
+                android:src="@drawable/room2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:text="14 Photos"
+                android:textColor="@android:color/white" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -28,15 +44,6 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-            <ImageView
-                android:id="@+id/room_image"
-                android:layout_width="match_parent"
-                android:layout_height="210dp"
-                android:layout_marginLeft="@dimen/margin_3"
-                android:layout_marginRight="@dimen/margin_3"
-                android:scaleType="centerCrop"
-                android:src="@drawable/room2" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -53,13 +60,6 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -68,12 +68,6 @@
                 android:paddingRight="@dimen/margin_16"
                 android:paddingBottom="@dimen/margin_16">
 
-                <ImageView
-                    android:id="@+id/map_layout"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    app:srcCompat="@drawable/ic_google" />
-
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
@@ -81,15 +75,24 @@
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:text="OYO 18832 Sateja Tourist Home Saver"
+                    android:text="Aar 18832 Tourist Home Saver"
                     android:textColor="#242529" />
+
+                <ImageView
+                    android:id="@+id/map_layout"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_below="@+id/name"
+                    android:layout_alignParentStart="true"
+                    app:srcCompat="@drawable/ic_google" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/room_image"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_toRightOf="@+id/map_layout"
                     android:orientation="vertical">
 
 
@@ -129,11 +132,18 @@
                             android:textColor="@android:color/black"
                             android:textSize="12sp" />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="121 Ratings >"
+                            android:textSize="12sp" />
+
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/advantage_layout"
@@ -273,6 +283,145 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/description_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_16"
+                android:paddingTop="@dimen/margin_10"
+                android:paddingRight="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_16"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#a4a4a4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="The Hotel Hesperia is the right choice for visitors who are searching for a combination of charm, peace and quiet, and a convenient position from which to explore Venice. It is a small, comfortable hotel, situated on the Canale di Cannaregio. The Derai family and their staff offer an attentive, personalized service and are always available to offer any help to guests."
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_16"
+                android:paddingTop="@dimen/margin_16"
+                android:paddingRight="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_16">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/check_in"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Check-in"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_check_in_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="23"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/check_in" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_check_in_date"
+                        app:layout_constraintStart_toEndOf="@+id/tv_check_in_date"
+                        app:layout_constraintTop_toTopOf="@+id/tv_check_in_date">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Monday" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="December 2019" />
+
+                    </LinearLayout>
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/check_out"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Check-out"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_check_out_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="23"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/check_out" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_check_out_date"
+                        app:layout_constraintStart_toEndOf="@+id/tv_check_out_date"
+                        app:layout_constraintTop_toTopOf="@+id/tv_check_out_date">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wednesday" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="December 2019" />
+
+                    </LinearLayout>
+
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/lunch_layout"
                 android:layout_width="match_parent"
@@ -289,7 +438,7 @@
                     android:id="@+id/lunch_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorPrimary"
+
                     android:padding="@dimen/margin_6"
                     app:srcCompat="@drawable/ic_lunch" />
 
@@ -327,9 +476,8 @@
                     android:id="@+id/transport_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorPrimary"
                     android:padding="@dimen/margin_5"
-                    app:srcCompat="@drawable/ic_bike" />
+                    app:srcCompat="@drawable/ic_motorbike" />
 
                 <TextView
                     android:id="@+id/transport_cost"
@@ -358,7 +506,8 @@
                 android:paddingLeft="@dimen/margin_16"
                 android:paddingTop="@dimen/margin_16"
                 android:paddingRight="@dimen/margin_16"
-                android:paddingBottom="@dimen/margin_16">
+                android:paddingBottom="@dimen/margin_16"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/guest_text"

@@ -112,6 +112,15 @@ public class RoomSearchFragment2 extends Fragment {
                 }
             }
         });
+
+        view.findViewById(R.id.all_locality_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if (roomSearchListener != null) {
+//                    roomSearchListener.onLocalitySearch(localityDTO);
+//                }
+            }
+        });
     }
 
     private void notifyPlaceAdapter() {

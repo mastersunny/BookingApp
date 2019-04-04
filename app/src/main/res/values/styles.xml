@@ -46,7 +46,7 @@
 
     <style name="mapText" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/black_overlay</item>
         <item name="android:typeface">sans</item>
     </style>
 

@@ -27,39 +27,101 @@
                     android:id="@+id/img_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     app:srcCompat="@drawable/ic_back" />
 
                 <TextView
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_toLeftOf="@+id/img_save"
-                    android:layout_toRightOf="@+id/img_back"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/saved_layout"
+                    android:layout_toEndOf="@+id/img_back"
                     android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Dhaka"
+                    android:maxLines="2"
+                    android:text="Dhaka, Gulshan"
                     android:textColor="@color/black_overlay" />
 
-                <ImageView
-                    android:id="@+id/img_save"
+                <LinearLayout
+                    android:id="@+id/saved_layout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="16dp"
-                    android:layout_toLeftOf="@+id/img_map"
-                    app:srcCompat="@drawable/ic_like" />
+                    android:layout_toLeftOf="@+id/map_layout"
+                    android:background="?selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-                <ImageView
-                    android:id="@+id/img_map"
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@drawable/ic_like" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Saved"
+                        android:textColor="@color/black_overlay"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/map_layout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:layout_gravity="right|center_vertical"
                     android:layout_marginEnd="16dp"
                     android:background="?selectableItemBackground"
-                    app:srcCompat="@drawable/ic_map" />
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_toLeftOf="@+id/img_map"
+                        app:srcCompat="@drawable/ic_map" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Map"
+                        android:textColor="@color/black_overlay"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/list_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp"
+                    android:background="?selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_toLeftOf="@+id/img_map"
+                        app:srcCompat="@drawable/ic_list" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="List"
+                        android:textColor="@color/black_overlay"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 

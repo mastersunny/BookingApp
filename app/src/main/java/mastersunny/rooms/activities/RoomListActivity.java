@@ -1,41 +1,23 @@
 package mastersunny.rooms.activities;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -49,10 +31,8 @@ import com.google.maps.android.ui.IconGenerator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -60,19 +40,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import mastersunny.rooms.Fragments.GuestSelectFragment;
-import mastersunny.rooms.Fragments.RoomListFragment;
-import mastersunny.rooms.Fragments.RoomMapFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.RoomAdapter;
-import mastersunny.rooms.models.ExamDTO;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.models.RoomImageDTO;
-import mastersunny.rooms.rest.ApiClient;
-import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
 import static android.graphics.Typeface.BOLD;
@@ -115,6 +87,12 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
 
     @BindView(R.id.tv_adult_qty)
     TextView tv_adult_qty;
+
+    @BindView(R.id.map_layout)
+    LinearLayout map_layout;
+
+    @BindView(R.id.list_layout)
+    LinearLayout list_layout;
 
     @BindView(R.id.room_image)
     ImageView room_image;
@@ -252,15 +230,20 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
-    @OnClick({R.id.img_map, R.id.img_back, R.id.start_date_layout,
-            R.id.end_date_layout, R.id.room_guest_layout})
+    @OnClick({R.id.map_layout, R.id.img_back, R.id.start_date_layout,
+            R.id.end_date_layout, R.id.room_guest_layout, R.id.list_layout})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.img_map:
+            case R.id.map_layout:
+                list_layout.setVisibility(View.VISIBLE);
                 room_list_layout.setVisibility(View.GONE);
                 mMapView.setVisibility(View.VISIBLE);
+                map_layout.setVisibility(View.INVISIBLE);
                 break;
             case R.id.img_back:
+                onBackPressed();
+                break;
+            case R.id.list_layout:
                 onBackPressed();
                 break;
             case R.id.start_date_layout:
@@ -382,11 +365,11 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onBackPressed() {
         if (mMapView.getVisibility() == View.VISIBLE) {
+            list_layout.setVisibility(View.INVISIBLE);
             mMapView.setVisibility(View.GONE);
+            map_layout.setVisibility(View.VISIBLE);
             room_list_layout.setVisibility(View.VISIBLE);
-            if (room_item_layout.getVisibility() == View.VISIBLE) {
-                room_item_layout.setVisibility(View.GONE);
-            }
+            room_item_layout.setVisibility(View.GONE);
         } else {
             finish();
         }
