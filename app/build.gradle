@@ -75,6 +75,7 @@ dependencies {
 
     implementation 'com.ornach.nobobutton:nobobutton:1.6'
     implementation 'com.ornach.magicicon:magic-icon:1.6'
+    implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

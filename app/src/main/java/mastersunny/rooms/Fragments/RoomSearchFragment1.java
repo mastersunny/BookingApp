@@ -26,6 +26,7 @@ import mastersunny.rooms.adapters.RecentSearchAdapter;
 import mastersunny.rooms.adapters.RoomAdapter;
 import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.ItemType;
+import mastersunny.rooms.models.LocalityDTO;
 import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
 
@@ -90,8 +91,9 @@ public class RoomSearchFragment1 extends Fragment {
         recentSearchAdapter.setItemSelectListener(new RoomSearchListener() {
             @Override
             public void onRecentSearch(RoomDTO roomDTO) {
-                Intent intent = new Intent(mActivity, RoomListActivity.class);
-                startActivity(intent);
+                if (roomSearchListener != null) {
+                    roomSearchListener.onRecentSearch(roomDTO);
+                }
             }
 
             @Override
@@ -99,6 +101,11 @@ public class RoomSearchFragment1 extends Fragment {
                 if (roomSearchListener != null) {
                     roomSearchListener.onPlaceSearch(placeDTO);
                 }
+
+            }
+
+            @Override
+            public void onLocalitySearch(LocalityDTO localityDTO) {
 
             }
         });

@@ -21,6 +21,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
@@ -56,6 +58,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import mastersunny.rooms.Fragments.GuestSelectFragment;
 import mastersunny.rooms.Fragments.RoomListFragment;
 import mastersunny.rooms.Fragments.RoomMapFragment;
@@ -63,6 +66,7 @@ import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.RoomAdapter;
 import mastersunny.rooms.models.ExamDTO;
 import mastersunny.rooms.models.RoomDTO;
+import mastersunny.rooms.models.RoomImageDTO;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
@@ -112,7 +116,10 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     @BindView(R.id.tv_adult_qty)
     TextView tv_adult_qty;
 
-    RoomAdapter roomAdapter;
+    @BindView(R.id.room_image)
+    ImageView room_image;
+
+    private RoomAdapter roomAdapter;
 
     private List<RoomDTO> roomDTOS;
 
@@ -164,7 +171,8 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     private void initLayout() {
         roomDTOS = new ArrayList<>();
         rv_rooms.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        roomAdapter = new RoomAdapter(this, roomDTOS);
+        rv_rooms.setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(5f)));
+        roomAdapter = new RoomAdapter(this);
         rv_rooms.setAdapter(roomAdapter);
 
         mMapView.getMapAsync(this);
@@ -223,12 +231,25 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void loadData() {
-        roomDTOS.add(new RoomDTO("THE WAY DHAKA", 23.7968, 90.4115, 12484));
-        roomDTOS.add(new RoomDTO("Four Points By Sheraton DHaka, Gulshan", 23.7944, 90.4137, 15436));
-        roomDTOS.add(new RoomDTO("Century Residence Park", 23.7856724, 90.4186784, 6748));
-        roomDTOS.add(new RoomDTO("Asia Hotel & Resorts", 23.7306626, 90.4067831, 5061));
 
-        notifyPlaceAdapter();
+        RoomDTO roomDTO1 = new RoomDTO("THE WAY DHAKA", 23.7968, 90.4115, 12484);
+        RoomDTO roomDTO2 = new RoomDTO("Four Points By Sheraton DHaka, Gulshan", 23.7944, 90.4137, 15436);
+        RoomDTO roomDTO3 = new RoomDTO("Century Residence Park", 23.7856724, 90.4186784, 6748);
+        RoomDTO roomDTO4 = new RoomDTO("Asia Hotel & Resorts", 23.7306626, 90.4067831, 5061);
+
+        roomDTO1.getImages().add(new RoomImageDTO("room1"));
+        roomDTO2.getImages().add(new RoomImageDTO("room2"));
+        roomDTO3.getImages().add(new RoomImageDTO("room3"));
+        roomDTO4.getImages().add(new RoomImageDTO("room4"));
+
+        roomDTOS.add(roomDTO1);
+        roomDTOS.add(roomDTO2);
+        roomDTOS.add(roomDTO3);
+        roomDTOS.add(roomDTO4);
+
+        for (int i = 0; i < roomDTOS.size(); i++) {
+            roomAdapter.add(roomDTOS.get(i), i);
+        }
     }
 
     @OnClick({R.id.img_map, R.id.img_back, R.id.start_date_layout,
@@ -340,6 +361,9 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         }
         room_item_layout.setVisibility(View.VISIBLE);
         tv_name.setText(roomDTO.getAddress());
+        int res = getResources().getIdentifier(getPackageName()
+                + ":drawable/" + roomDTO.getImages().get(0).getImageUrl(), null, null);
+        Glide.with(this).load(res).into(room_image);
 
         return false;
     }

@@ -32,6 +32,7 @@ import mastersunny.rooms.Fragments.RoomSearchFragment1;
 import mastersunny.rooms.Fragments.RoomSearchFragment2;
 import mastersunny.rooms.R;
 import mastersunny.rooms.listeners.RoomSearchListener;
+import mastersunny.rooms.models.LocalityDTO;
 import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.utils.Constants;
@@ -216,6 +217,8 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     private void startRoomListActivity() {
         Intent intent = new Intent(this, RoomListActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(R.anim.animation_enter,
+                R.anim.animation_leave);
     }
 
     @Override
@@ -231,13 +234,18 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
     @Override
     public void onRecentSearch(RoomDTO roomDTO) {
-
+        startRoomListActivity();
     }
 
     @Override
     public void onPlaceSearch(PlaceDTO placeDTO) {
         switchFragmentB(placeDTO);
         toolbar_title.setText("Where in " + placeDTO.getName() + "?");
+    }
+
+    @Override
+    public void onLocalitySearch(LocalityDTO localityDTO) {
+        startRoomListActivity();
     }
 
     @Override

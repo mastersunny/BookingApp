@@ -80,7 +80,7 @@ public class RoomListFragment extends Fragment {
     private void initLayout() {
         roomDTOS = new ArrayList<>();
         rv_rooms.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        roomAdapter = new RoomAdapter(mActivity, roomDTOS);
+        roomAdapter = new RoomAdapter(mActivity);
         rv_rooms.setAdapter(roomAdapter);
     }
 

@@ -3,30 +3,31 @@ package mastersunny.rooms.adapters;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
-import mastersunny.rooms.activities.RoomDetailsActivity;
 import mastersunny.rooms.models.RoomDTO;
-import mastersunny.rooms.utils.Constants;
 
 public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<RoomDTO> roomDTOS;
+    private List<RoomDTO> roomDTOS = new ArrayList<>();
     private Activity mActivity;
     private String TAG = "RoomAdapter";
 
-    public RoomAdapter(Activity mActivity, List<RoomDTO> roomDTOS) {
+    public RoomAdapter(Activity mActivity) {
         this.mActivity = mActivity;
-        this.roomDTOS = roomDTOS;
     }
 
     @NonNull
@@ -46,10 +47,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        mainHolder.address.setText(roomDTO.getAddress());
 //        mainHolder.room_cost.setText(roomDTO.getRoomCost() + "");
 //
-//        if (roomDTO.getImages() != null && roomDTO.getImages().size() > 0) {
-//            Constants.loadImage(mActivity, roomDTO.getImages().get(0).getImageUrl(),
-//                    mainHolder.room_image);
-//        }
+        if (roomDTO.getImages() != null && roomDTO.getImages().size() > 0) {
+            int res = mActivity.getResources().getIdentifier(mActivity.getPackageName()
+                    + ":drawable/" + roomDTO.getImages().get(0).getImageUrl(), null, null);
+            Glide.with(mActivity).load(res).into(mainHolder.room_image);
+//            mainHolder.room_image.setImageResource(res);
+        }
 //
 //        if (roomDTO.isFemaleFriendly()) {
 //            mainHolder.female_friendly_layout.setVisibility(View.VISIBLE);
@@ -71,9 +74,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static class MainHolder extends RecyclerView.ViewHolder {
 
-        //        @BindView(R.id.room_image)
-//        ImageView room_image;
-//
+        @BindView(R.id.room_image)
+        ImageView room_image;
+
         @BindView(R.id.name)
         TextView name;
 //
@@ -90,5 +93,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public void add(RoomDTO roomDTO, int position) {
+        roomDTOS.add(roomDTO);
+        notifyItemInserted(position);
+    }
+
+    public void remove(int position) {
+        roomDTOS.remove(position);
+        notifyItemRemoved(position);
     }
 }

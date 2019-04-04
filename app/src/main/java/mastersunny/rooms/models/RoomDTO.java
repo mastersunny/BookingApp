@@ -1,9 +1,10 @@
 package mastersunny.rooms.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDTO implements Serializable{
+public class RoomDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,7 +46,7 @@ public class RoomDTO implements Serializable{
 
     private String endDate;
 
-    private List<RoomImageDTO> images;
+    private List<RoomImageDTO> images = new ArrayList<>();
 
     public RoomDTO() {
     }

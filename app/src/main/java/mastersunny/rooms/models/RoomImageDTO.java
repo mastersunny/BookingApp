@@ -10,6 +10,13 @@ public class RoomImageDTO implements Serializable {
 
     private String imageUrl;
 
+    public RoomImageDTO() {
+    }
+
+    public RoomImageDTO(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public Long getId() {
         return id;
     }

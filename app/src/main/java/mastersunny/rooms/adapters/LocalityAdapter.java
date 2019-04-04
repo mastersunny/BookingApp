@@ -13,42 +13,42 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.listeners.RoomSearchListener;
-import mastersunny.rooms.models.PlaceDTO;
+import mastersunny.rooms.models.LocalityDTO;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
  */
 
-public class CityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class LocalityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private String TAG = "CityAdapter";
+    private String TAG = "LocalityAdapter";
 
-    private List<PlaceDTO> placeDTOS;
+    private List<LocalityDTO> localityDTOS;
     private Activity mActivity;
 
     private RoomSearchListener roomSearchListener;
 
-    public CityAdapter(Activity mActivity, List<PlaceDTO> placeDTOS) {
+    public LocalityAdapter(Activity mActivity, List<LocalityDTO> localityDTOS) {
         this.mActivity = mActivity;
-        this.placeDTOS = placeDTOS;
+        this.localityDTOS = localityDTOS;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.locality_item_layout, parent, false);
         return new MainHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MainHolder mainHolder = (MainHolder) holder;
-        final PlaceDTO dto = placeDTOS.get(position);
-        mainHolder.name.setText(dto.getName());
+        final LocalityDTO localityDTO = localityDTOS.get(position);
+        mainHolder.name.setText(localityDTO.getName());
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (roomSearchListener != null) {
-                    roomSearchListener.onPlaceSearch(dto);
+                    roomSearchListener.onLocalitySearch(localityDTO);
                 }
             }
         });
@@ -56,7 +56,7 @@ public class CityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return placeDTOS == null ? 0 : placeDTOS.size();
+        return localityDTOS == null ? 0 : localityDTOS.size();
     }
 
     static class MainHolder extends RecyclerView.ViewHolder {

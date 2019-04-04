@@ -2,10 +2,9 @@ package mastersunny.rooms.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class PlaceDTO implements Serializable {
+public class LocalityDTO implements Serializable {
 
     private Long id;
 
@@ -19,12 +18,10 @@ public class PlaceDTO implements Serializable {
 
     private double longitude;
 
-    private List<LocalityDTO> localityDTOS = Collections.EMPTY_LIST;
-
-    public PlaceDTO() {
+    public LocalityDTO() {
     }
 
-    public PlaceDTO(String name, String bnName, String imageUrl) {
+    public LocalityDTO(String name, String bnName, String imageUrl) {
         this.name = name;
         this.bnName = bnName;
         this.imageUrl = imageUrl;
@@ -76,14 +73,6 @@ public class PlaceDTO implements Serializable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public List<LocalityDTO> getLocalityDTOS() {
-        return localityDTOS;
-    }
-
-    public void setLocalityDTOS(List<LocalityDTO> localityDTOS) {
-        this.localityDTOS = localityDTOS;
     }
 
     @Override

@@ -23,10 +23,13 @@ import butterknife.Unbinder;
 import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.R;
 import mastersunny.rooms.activities.RoomListActivity;
+import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.adapters.CityAdapter;
+import mastersunny.rooms.adapters.LocalityAdapter;
 import mastersunny.rooms.adapters.RecentSearchAdapter;
 import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.ItemType;
+import mastersunny.rooms.models.LocalityDTO;
 import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
 
@@ -51,20 +54,26 @@ public class RoomSearchFragment2 extends Fragment {
     TextView tv_city_name;
 
     public static PlaceDTO placeDTO;
-    private List<PlaceDTO> placeDTOS = new ArrayList<>();
+    private List<LocalityDTO> localityDTOS = new ArrayList<>();
     private Unbinder unbinder;
-    private CityAdapter cityAdapter;
+    private LocalityAdapter localityAdapter;
+    private RoomSearchListener roomSearchListener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = getActivity();
+
+        if (!(context instanceof RoomSearchActivity)) {
+            return;
+        }
+        roomSearchListener = (RoomSearchActivity) context;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (placeDTOS.size() <= 0) {
+        if (localityDTOS.size() <= 0) {
             loadData();
         }
     }
@@ -83,9 +92,9 @@ public class RoomSearchFragment2 extends Fragment {
 
     private void initLayout() {
         rv_places.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        cityAdapter = new CityAdapter(mActivity, placeDTOS);
-        rv_places.setAdapter(cityAdapter);
-        cityAdapter.setItemSelectListener(new RoomSearchListener() {
+        localityAdapter = new LocalityAdapter(mActivity, localityDTOS);
+        rv_places.setAdapter(localityAdapter);
+        localityAdapter.setItemSelectListener(new RoomSearchListener() {
             @Override
             public void onRecentSearch(RoomDTO roomDTO) {
 
@@ -93,27 +102,32 @@ public class RoomSearchFragment2 extends Fragment {
 
             @Override
             public void onPlaceSearch(PlaceDTO placeDTO) {
-                Intent intent = new Intent(mActivity, RoomListActivity.class);
-                startActivity(intent);
+
+            }
+
+            @Override
+            public void onLocalitySearch(LocalityDTO localityDTO) {
+                if (roomSearchListener != null) {
+                    roomSearchListener.onLocalitySearch(localityDTO);
+                }
             }
         });
     }
 
     private void notifyPlaceAdapter() {
-        if (cityAdapter != null) {
-            cityAdapter.notifyDataSetChanged();
+        if (localityAdapter != null) {
+            localityAdapter.notifyDataSetChanged();
         }
     }
 
 
     private void loadData() {
-        placeDTOS.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Sylhet", "সিলেট", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Rajshahi", "রাজশাহী", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Bogura", "বগুড়া", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Khulna", "খুলনা", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
+        localityDTOS.add(new LocalityDTO("Dhamrai", "ঢাকা", "dhaka"));
+        localityDTOS.add(new LocalityDTO("Dohar", "সিলেট", "dhaka"));
+        localityDTOS.add(new LocalityDTO("Keraniganj ", "রাজশাহী", "dhaka"));
+        localityDTOS.add(new LocalityDTO("Nawabganj", "বগুড়া", "dhaka"));
+        localityDTOS.add(new LocalityDTO("Savar", "খুলনা", "dhaka"));
+        localityDTOS.add(new LocalityDTO("Tejgaon", "চট্টগ্রাম", "dhaka"));
 
         notifyPlaceAdapter();
     }

@@ -50,7 +50,7 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_city_header, parent, false);
             return new CityHeaderViewHolder(view);
         } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_item_verical, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_item_layout, parent, false);
             return new CityViewHolder(view);
         }
 
