@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         placeAdapter = new PlaceAdapter(this, placeDTOS);
         rv_cities.setAdapter(placeAdapter);
 
-        rv_popular.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rv_popular.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rv_popular.setHasFixedSize(true);
         rv_popular.setNestedScrollingEnabled(false);
         popularAdapter = new PopularAdapter(this, popularPlaces);
