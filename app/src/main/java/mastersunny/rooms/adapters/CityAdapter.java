@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.listeners.ClickListener;
+import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.ItemType;
 import mastersunny.rooms.models.PlaceDTO;
 
@@ -23,11 +24,12 @@ import mastersunny.rooms.models.PlaceDTO;
 
 public class CityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private String TAG = "PopularAdapter";
+    private String TAG = "CityAdapter";
 
     private List<PlaceDTO> placeDTOS;
     private Activity mActivity;
-    private ClickListener clickListener;
+
+    private RoomSearchListener roomSearchListener;
 
     public CityAdapter(Activity mActivity, List<PlaceDTO> placeDTOS) {
         this.mActivity = mActivity;
@@ -48,7 +50,9 @@ public class CityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                        RoomListActivity.start(v.getContext(), dto.getName(), (ArrayList<ExamDTO>) dto.getExams(), SearchType.TYPE_PLACE.getStatus());
+                if (roomSearchListener != null) {
+                    roomSearchListener.onPlaceSearch(dto);
+                }
             }
         });
     }
@@ -69,13 +73,8 @@ public class CityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    static class HeaderHolder extends RecyclerView.ViewHolder {
-        public HeaderHolder(View itemView) {
-            super(itemView);
-        }
+    public void setItemSelectListener(RoomSearchListener roomSearchListener) {
+        this.roomSearchListener = roomSearchListener;
     }
 
-    public void setClickListener(ClickListener clickListener) {
-        this.clickListener = clickListener;
-    }
 }

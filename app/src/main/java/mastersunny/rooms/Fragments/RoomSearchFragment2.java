@@ -2,6 +2,7 @@ package mastersunny.rooms.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,8 +22,10 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.R;
+import mastersunny.rooms.activities.RoomListActivity;
 import mastersunny.rooms.adapters.CityAdapter;
 import mastersunny.rooms.adapters.RecentSearchAdapter;
+import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.ItemType;
 import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
@@ -82,6 +85,18 @@ public class RoomSearchFragment2 extends Fragment {
         rv_places.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         cityAdapter = new CityAdapter(mActivity, placeDTOS);
         rv_places.setAdapter(cityAdapter);
+        cityAdapter.setItemSelectListener(new RoomSearchListener() {
+            @Override
+            public void onRecentSearch(RoomDTO roomDTO) {
+
+            }
+
+            @Override
+            public void onPlaceSearch(PlaceDTO placeDTO) {
+                Intent intent = new Intent(mActivity, RoomListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void notifyPlaceAdapter() {

@@ -77,7 +77,20 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
                 }
             });
+        } else if (holder instanceof RecentViewHolder) {
+            position = position - 2;
+            RecentViewHolder recentViewHolder = (RecentViewHolder) holder;
+            final RoomDTO roomDTO = roomDTOS.get(position);
+            recentViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (roomSearchListener != null) {
+                        roomSearchListener.onRecentSearch(roomDTO);
+                    }
+                }
+            });
         }
+
 //        final RoomDTO roomDTO = roomDTOS.get(position);
 //        MainHolder mainHolder = (MainHolder) holder;
 //        mainHolder.title.setText(roomDTO.getNoOfAccommodation() > 1 ? roomDTO.getNoOfAccommodation()

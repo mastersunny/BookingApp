@@ -2,6 +2,7 @@ package mastersunny.rooms.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.R;
+import mastersunny.rooms.activities.RoomListActivity;
 import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.adapters.RecentSearchAdapter;
 import mastersunny.rooms.adapters.RoomAdapter;
@@ -88,7 +90,8 @@ public class RoomSearchFragment1 extends Fragment {
         recentSearchAdapter.setItemSelectListener(new RoomSearchListener() {
             @Override
             public void onRecentSearch(RoomDTO roomDTO) {
-
+                Intent intent = new Intent(mActivity, RoomListActivity.class);
+                startActivity(intent);
             }
 
             @Override
