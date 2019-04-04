@@ -9,16 +9,36 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextColor="@color/white" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/toolbar">
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+            <ImageView
+                android:id="@+id/room_image"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:layout_marginLeft="@dimen/margin_3"
+                android:layout_marginRight="@dimen/margin_3"
+                android:scaleType="centerCrop"
+                android:src="@drawable/room2" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -35,49 +55,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/room_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="210dp"
-                    android:layout_marginLeft="@dimen/margin_3"
-                    android:layout_marginRight="@dimen/margin_3"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/dummy_image2" />
-
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_16"
-                    android:layout_marginTop="@dimen/margin_16"
-                    android:layout_marginRight="@dimen/margin_16"
-                    android:ellipsize="end"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="1 Seat Room"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_18" />
-
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/title"
-                    android:layout_marginLeft="@dimen/margin_16"
-                    android:layout_marginTop="@dimen/margin_2"
-                    android:layout_marginRight="@dimen/margin_16"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="address"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_12" />
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/margin_16"
                 android:paddingTop="@dimen/margin_16"
                 android:paddingRight="@dimen/margin_16"
@@ -85,20 +70,70 @@
 
                 <ImageView
                     android:id="@+id/map_layout"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     app:srcCompat="@drawable/ic_google" />
 
                 <TextView
-                    android:id="@+id/room_details"
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_16"
-                    android:layout_toRightOf="@id/map_layout"
-                    android:maxLines="4"
-                    android:text="" />
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="OYO 18832 Sateja Tourist Home Saver"
+                    android:textColor="#242529" />
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/room_image"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/title"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Gulshan, Dhaka"
+                        android:textSize="@dimen/text_size_12" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/holo_green_dark"
+                            android:paddingStart="3dp"
+                            android:paddingEnd="3dp"
+                            android:text="4.5"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/darker_gray"
+                            android:paddingStart="3dp"
+                            android:paddingEnd="3dp"
+                            android:text="Excellent"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/advantage_layout"
@@ -132,9 +167,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/margin_1"
+                        android:layout_marginTop="5dp"
                         android:text="Wifi"
-                        android:textSize="@dimen/text_size_13" />
+                        android:textSize="@dimen/text_size_12" />
 
                 </LinearLayout>
 
@@ -157,9 +192,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/margin_1"
+                        android:layout_marginTop="5dp"
                         android:text="TV"
-                        android:textSize="@dimen/text_size_13" />
+                        android:textSize="@dimen/text_size_12" />
 
                 </LinearLayout>
 
@@ -181,9 +216,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/margin_1"
+                        android:layout_marginTop="5dp"
                         android:text="AC"
-                        android:textSize="@dimen/text_size_13" />
+                        android:textSize="@dimen/text_size_12" />
 
                 </LinearLayout>
 
@@ -205,9 +240,34 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/margin_1"
-                        android:text="AC"
-                        android:textSize="@dimen/text_size_13" />
+                        android:layout_marginTop="5dp"
+                        android:text="Parking"
+                        android:textSize="@dimen/text_size_12" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/camera_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_10"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_cctv" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="CCTV"
+                        android:textSize="@dimen/text_size_12" />
 
                 </LinearLayout>
 

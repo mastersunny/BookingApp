@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
+import mastersunny.rooms.activities.RoomDetailsActivity;
 import mastersunny.rooms.models.RoomDTO;
 
 public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -59,12 +60,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        } else {
 //            mainHolder.female_friendly_layout.setVisibility(View.GONE);
 //        }
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                RoomDetailsActivity.start(v.getContext(), roomDTO);
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RoomDetailsActivity.start(v.getContext(), roomDTO);
+            }
+        });
     }
 
     @Override

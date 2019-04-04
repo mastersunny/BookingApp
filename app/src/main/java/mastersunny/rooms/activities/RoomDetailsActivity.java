@@ -51,9 +51,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
     @BindView(R.id.address)
     TextView address;
 
-    @BindView(R.id.female_friendly_layout)
-    TextView female_friendly_layout;
-
     @BindView(R.id.wifi_layout)
     LinearLayout wifi_layout;
 
@@ -136,10 +133,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
         title.setText(roomDTO.getNoOfAccommodation() > 1 ? roomDTO.getNoOfAccommodation()
                 + " Seats Room" : roomDTO.getNoOfAccommodation() + " Seat Room");
         address.setText(roomDTO.getAddress());
-
-        if (roomDTO.isFemaleFriendly()) {
-            female_friendly_layout.setVisibility(View.VISIBLE);
-        }
 
         room_details.setText(roomDTO.getDetails());
 
