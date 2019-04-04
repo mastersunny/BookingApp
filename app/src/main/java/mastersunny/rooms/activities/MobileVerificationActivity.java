@@ -47,7 +47,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
     public static void start(Context context, String phoneNumber) {
         Intent intent = new Intent(context, MobileVerificationActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(Constants.PHONE_NUMBER, phoneNumber);
+//        intent.putExtra(Constants.PHONE_NUMBER, phoneNumber);
         context.startActivity(intent);
     }
 
@@ -59,7 +59,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         editor = getSharedPreferences(Constants.prefs, MODE_PRIVATE).edit();
-        phoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);
+//        phoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);
 
         handler = new Handler();
         initLayout();
@@ -223,11 +223,11 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                         if (response.body().getMetaData().isData()) {
                             UserDTO userDTO = response.body().getUserDTO();
                             Constants.debugLog(TAG, userDTO.toString());
-                            editor.putString(Constants.ACCESS_TOKEN, userDTO.getEmail());
+//                            editor.putString(Constants.ACCESS_TOKEN, userDTO.getEmail());
                             editor.apply();
                             startActivity(new Intent(MobileVerificationActivity.this, HomeActivity.class));
                         } else {
-                            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
+//                            editor.putString(Constants.PHONE_NUMBER, phoneNumber);
                             editor.apply();
                             startActivity(new Intent(MobileVerificationActivity.this, RegistrationActivity.class));
                         }

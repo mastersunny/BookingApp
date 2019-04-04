@@ -76,14 +76,14 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             firstName = first_name.getText().toString().trim();
             lastName = last_name.getText().toString().trim();
             emailAddress = email.getText().toString().trim();
-            phoneNumber = preferences.getString(Constants.PHONE_NUMBER, "");
+//            phoneNumber = preferences.getString(Constants.PHONE_NUMBER, "");
             Constants.debugLog(TAG,
                     "firstName " + firstName
                             + " lastName " + lastName
                             + " email " + emailAddress
                             + " phoneNumber " + phoneNumber);
             apiInterface
-                    .signUp(firstName, lastName, emailAddress, preferences.getString(Constants.PHONE_NUMBER, ""))
+                    .signUp(firstName, lastName, emailAddress, preferences.getString("SDSD", ""))
                     .enqueue(this);
         } catch (Exception e) {
             Constants.showDialog(RegistrationActivity.this, "Cannot register at this moment");
@@ -98,13 +98,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             if (response.body().getMetaData().isData()) {
                 UserDTO userDTO = response.body().getUserDTO();
                 Constants.debugLog(TAG, userDTO.toString());
-                editor.putInt(Constants.STORE_ID, 1);
-                editor.putString(Constants.FIRST_NAME, userDTO.getEmail());
-                editor.putString(Constants.LAST_NAME, userDTO.getName());
-                editor.putString(Constants.EMAIL, userDTO.getEmail());
-                editor.putString(Constants.PHONE_NUMBER, phoneNumber);
-                editor.putString(Constants.COVER_IMAGE_URL, userDTO.getProfileImage());
-                editor.putString(Constants.ACCESS_TOKEN, userDTO.getEmail());
+//                editor.putInt(Constants.STORE_ID, 1);
+//                editor.putString(Constants.FIRST_NAME, userDTO.getEmail());
+//                editor.putString(Constants.LAST_NAME, userDTO.getName());
+//                editor.putString(Constants.EMAIL, userDTO.getEmail());
+//                editor.putString(Constants.PHONE_NUMBER, phoneNumber);
+//                editor.putString(Constants.COVER_IMAGE_URL, userDTO.getProfileImage());
+//                editor.putString(Constants.ACCESS_TOKEN, userDTO.getEmail());
                 editor.apply();
                 startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
                 finish();

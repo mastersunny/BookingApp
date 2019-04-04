@@ -57,13 +57,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.offer_details.setText(dto.getOfferDTO().getOffer());
             holder.offer_date.setText(dto.getTransactionDate());
             holder.total_amount.setText(dto.getAmount() + "");
-            if (dto.getPaidStatus() == Constants.STATUS_PAID) {
-                holder.paid_status.setText("Paid");
-                holder.paid_status.setTextColor(colorGreen);
-            } else {
-                holder.paid_status.setText("Due");
-                holder.paid_status.setTextColor(colorRed);
-            }
+//            if (dto.getPaidStatus() == Constants.STATUS_PAID) {
+//                holder.paid_status.setText("Paid");
+//                holder.paid_status.setTextColor(colorGreen);
+//            } else {
+//                holder.paid_status.setText("Due");
+//                holder.paid_status.setTextColor(colorRed);
+//            }
             holder.paid_status.setTypeface(face);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

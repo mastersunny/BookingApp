@@ -78,12 +78,12 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
     public static void start(Context context, int transactionId) {
         Intent intent = new Intent(context, TransactionDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.TRANSACTION_ID, transactionId);
+//        intent.putExtra(Constants.TRANSACTION_ID, transactionId);
         context.startActivity(intent);
     }
 
     public void getIntentData() {
-        transactionId = getIntent().getIntExtra(Constants.TRANSACTION_ID, 0);
+//        transactionId = getIntent().getIntExtra(Constants.TRANSACTION_ID, 0);
     }
 
     public void initLayout() {

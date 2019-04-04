@@ -44,39 +44,17 @@ public class Constants {
     public static final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
     public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static String MESSAGE = "message";
-    public static String TRANSACTION_ID = "transaction_id";
-    public static String TRANSACTION_DATE = "created_at";
 
-    public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String PUSH_NOTIFICATION = "pushNotification";
     public static final String FIREBASE_REFRESH_TOKEN = "firebase_refresh_token";
     public static final int NOTIFICATION_ID = 100;
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
     public static final int REQUEST_TIMEOUT = 10000;
 
-    public static final int STATUS_PAID = 1;
-
-    public static String TRANSACTION_PAID = "paid";
-    public static String TRANSACTION_DUE = "unpaid";
-    public static String TRANSACTION_PENDING = "pending";
-
     public static final String prefs = "prefs";
-    public static final String STORE_ID = "store_id";
-    public static final String FIRST_NAME = "first_name";
-    public static final String LAST_NAME = "last_name";
-    public static final String EMAIL = "email";
-    public static final String PHONE_NUMBER = "phone_number";
-    public static final String NID = "nid";
-    public static final String SSC_REG_NO = "ssc_reg_no";
-    public static final String HSC_REG_NO = "hsc_reg_no";
-    public static final String PROFILE_IMAGE = "profile_image";
-    public static final String ACCESS_TOKEN = "access_token";
+    static final String ACCESS_TOKEN = "access_token";
     public static final String COVER_IMAGE_URL = "cover_image_url";
     public static String accessToken = "abcd";
-    public static final String EXAM_DTO_LIST = "exam_dto_list";
-    public static final String PLACE_NAME = "place_name";
-    public static final String EXAM_DTO = "exam_dto";
     public static final String ROOM_BOOKING_DTO = "room_booking_dto";
     public static final String ROOM_DTO = "room_dto";
     public static final String BOOKING_PENDING = "booking_pending";
@@ -99,8 +77,7 @@ public class Constants {
     public static final String USER_DTO = "user_dto";
     public static final String USER_NAME = "user_name";
     public static final String CATEGORY_DTO = "category_dto";
-    public static final String SEARCH_TYPE = "search_type";
-    public static final String SELECTED_POSITION = "selected_position";
+
 
     public static void loadImage(Context context, String imageUrl, final ImageView imageView) {
         ViewTarget viewTarget = new ViewTarget<ImageView, GlideDrawable>(imageView) {
@@ -211,62 +188,25 @@ public class Constants {
         alertDialog.setTitle(title);
         alertDialog.setMessage(message);
 
-        // Setting Icon to Dialog
-//        alertDialog.setIcon(R.drawable.);
-
-        // Setting OK Button
         alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to execute after dialog closed
                 alertDialog.dismiss();
             }
         });
         alertDialog.show();
     }
 
-    public static Pair<String, String> getStartEndDate(Date date) {
-        Pair pair = null;
-        try {
-            Calendar now = Calendar.getInstance();
-            now.setTime(date);
-
-            int year = now.get(Calendar.YEAR);
-            int month = now.get(Calendar.MONTH) + 1;
-            int day = now.get(Calendar.DAY_OF_MONTH);
-
-            now.add(Calendar.DAY_OF_MONTH, 1);
-
-            int nextYear = now.get(Calendar.YEAR);
-            int nextMonth = now.get(Calendar.MONTH) + 1;
-            int nextDay = now.get(Calendar.DAY_OF_MONTH);
-
-            startDate = year + "-" + String.format("%02d", month, Locale.ENGLISH) + "-" + String.format("%02d", day, Locale.ENGLISH);
-            endDate = nextYear + "-" + String.format("%02d", nextMonth, Locale.ENGLISH) + "-" + String.format("%02d", nextDay, Locale.ENGLISH);
-
-            pair = new Pair<>(Constants.calculateDate(year, month, day), Constants.calculateDate(nextYear, nextMonth, nextDay));
-            return pair;
-
-        } catch (Exception e) {
-            Constants.debugLog(TAG, e.getMessage());
-        }
-        return pair;
+    public static Calendar addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days);
+        return cal;
     }
 
     public static String calculateDate(int year, int month, int day) {
         try {
             String dateInString = String.format("%02d", day) + "-" + String.format("%02d", month) + "-" + year;
             Date date = Constants.sdf.parse(dateInString);
-            String[] strings = date.toString().split(" ");
-            return (strings[0] + ", " + strings[1] + " " + strings[2]);
-        } catch (Exception e) {
-            Constants.debugLog(TAG, e.getMessage());
-        }
-        return "";
-    }
-
-    public static String calculateDate(String dateInString) {
-        try {
-            Date date = Constants.sdf2.parse(dateInString);
             String[] strings = date.toString().split(" ");
             return (strings[0] + ", " + strings[1] + " " + strings[2]);
         } catch (Exception e) {

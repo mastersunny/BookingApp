@@ -90,28 +90,28 @@ public class DueFragment extends FragmentBase implements View.OnClickListener {
     }
 
     private void loaData() {
-        try {
-            apiInterface.getTransactions(Constants.accessToken, Constants.TRANSACTION_DUE).enqueue(new Callback<List<TransactionDTO>>() {
-                @Override
-                public void onResponse(Call<List<TransactionDTO>> call, Response<List<TransactionDTO>> response) {
-                    progressBar.setVisibility(View.GONE);
-                    Constants.debugLog(TAG, response + "");
-                    if (response != null && response.isSuccessful() && response.body() != null) {
-                        transactionDTOS.clear();
-                        transactionDTOS.addAll(response.body());
-                        if (transactionAdapter != null) {
-                            transactionAdapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<TransactionDTO>> call, Throwable t) {
-                    Constants.debugLog(TAG, "Error in load data " + t.getMessage());
-                }
-            });
-        } catch (Exception e) {
-            Constants.debugLog(TAG, "Error in load data " + e.getMessage());
-        }
+//        try {
+//            apiInterface.getTransactions(Constants.accessToken, Constants.TRANSACTION_DUE).enqueue(new Callback<List<TransactionDTO>>() {
+//                @Override
+//                public void onResponse(Call<List<TransactionDTO>> call, Response<List<TransactionDTO>> response) {
+//                    progressBar.setVisibility(View.GONE);
+//                    Constants.debugLog(TAG, response + "");
+//                    if (response != null && response.isSuccessful() && response.body() != null) {
+//                        transactionDTOS.clear();
+//                        transactionDTOS.addAll(response.body());
+//                        if (transactionAdapter != null) {
+//                            transactionAdapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<List<TransactionDTO>> call, Throwable t) {
+//                    Constants.debugLog(TAG, "Error in load data " + t.getMessage());
+//                }
+//            });
+//        } catch (Exception e) {
+//            Constants.debugLog(TAG, "Error in load data " + e.getMessage());
+//        }
     }
 }

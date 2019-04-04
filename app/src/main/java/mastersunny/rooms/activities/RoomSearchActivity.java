@@ -22,6 +22,7 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +61,8 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     TextView tv_adult_qty;
 
     private double latitude, longitude;
+
+    Date date = new Date();
 
     FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -107,6 +110,11 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     private void initLayout() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Search for Hotel, City, Or Location");
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        showFormattedDate(cal, Constants.addDays(date, 1));
+
     }
 
     private void searchPlace() {
@@ -168,7 +176,9 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
                 new SlyCalendarDialog()
                         .setSingle(false)
                         .setCallback(callback)
-                        .show(getSupportFragmentManager(), "TAG_SLYCALENDAR");
+                        .setStartDate(date)
+                        .setEndDate(Constants.addDays(date, 1).getTime())
+                        .show(getSupportFragmentManager(), "tag_slycalendar");
                 break;
             case R.id.room_guest_layout:
                 GuestSelectFragment guestSelectFragment = new GuestSelectFragment();
@@ -177,7 +187,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         }
     }
 
-    SimpleDateFormat f = new SimpleDateFormat("MMM");
+    SimpleDateFormat sdf = new SimpleDateFormat("MMM");
 
     SlyCalendarDialog.Callback callback = new SlyCalendarDialog.Callback() {
         @Override
@@ -187,20 +197,20 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
         @Override
         public void onDataSelected(Calendar firstDate, Calendar secondDate, int hours, int minutes) {
-            String firstMonth = f.format(firstDate.getTime());
-            int firstDay = firstDate.get(Calendar.DAY_OF_MONTH);
-
-            tv_start_date.setText(firstMonth + " " + firstDay);
-
-
-            String secondMonth = f.format(secondDate.getTime());
-            int secondDay = secondDate.get(Calendar.DAY_OF_MONTH);
-
-            tv_end_date.setText(secondMonth + " " + secondDay);
-
-
+            showFormattedDate(firstDate, secondDate);
         }
     };
+
+    private void showFormattedDate(Calendar firstDate, Calendar secondDate) {
+        String firstMonth = sdf.format(firstDate.getTime());
+        int firstDay = firstDate.get(Calendar.DAY_OF_MONTH);
+        tv_start_date.setText(firstMonth + " " + firstDay);
+
+
+        String secondMonth = sdf.format(secondDate.getTime());
+        int secondDay = secondDate.get(Calendar.DAY_OF_MONTH);
+        tv_end_date.setText(secondMonth + " " + secondDay);
+    }
 
     private void startRoomListActivity() {
         Intent intent = new Intent(this, RoomListActivity.class);

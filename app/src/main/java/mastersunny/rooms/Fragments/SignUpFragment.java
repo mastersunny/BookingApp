@@ -126,12 +126,12 @@ public class SignUpFragment extends Fragment {
 
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString(Constants.USER_NAME, userDTO.getName());
-                        editor.putString(Constants.PHONE_NUMBER, userDTO.getPhoneNumber());
-                        editor.putString(Constants.EMAIL, userDTO.getEmail());
-                        editor.putString(Constants.NID, userDTO.getNid());
-                        editor.putString(Constants.SSC_REG_NO, userDTO.getSscRegNo());
-                        editor.putString(Constants.HSC_REG_NO, userDTO.getHscRegNo());
-                        editor.putString(Constants.PROFILE_IMAGE, userDTO.getProfileImage());
+//                        editor.putString(Constants.PHONE_NUMBER, userDTO.getPhoneNumber());
+//                        editor.putString(Constants.EMAIL, userDTO.getEmail());
+//                        editor.putString(Constants.NID, userDTO.getNid());
+//                        editor.putString(Constants.SSC_REG_NO, userDTO.getSscRegNo());
+//                        editor.putString(Constants.HSC_REG_NO, userDTO.getHscRegNo());
+//                        editor.putString(Constants.PROFILE_IMAGE, userDTO.getProfileImage());
                         editor.commit();
 
                         loginListener.loginCompleted();
