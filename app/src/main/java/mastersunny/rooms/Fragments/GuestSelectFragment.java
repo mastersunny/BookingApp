@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import mastersunny.rooms.R;
+import mastersunny.rooms.activities.RoomListActivity;
 import mastersunny.rooms.activities.RoomSearchActivity;
 
 public class GuestSelectFragment extends DialogFragment {
@@ -51,10 +52,15 @@ public class GuestSelectFragment extends DialogFragment {
         super.onAttach(context);
         mActivity = getActivity();
 
-        if (!(context instanceof RoomSearchActivity)) {
+        if (context instanceof RoomSearchActivity) {
+            guestSelectListener = (RoomSearchActivity) context;
             return;
         }
-        guestSelectListener = (RoomSearchActivity) context;
+        if (context instanceof RoomListActivity) {
+            guestSelectListener = (RoomListActivity) context;
+            return;
+        }
+
     }
 
     @Nullable

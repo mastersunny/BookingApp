@@ -134,6 +134,7 @@
                 android:background="@android:color/black" />
 
             <LinearLayout
+                android:id="@+id/room_guest_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -141,12 +142,14 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_room_qty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1 Room"
                     android:textColor="@android:color/holo_red_dark" />
 
                 <TextView
+                    android:id="@+id/tv_adult_qty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1 Adult"

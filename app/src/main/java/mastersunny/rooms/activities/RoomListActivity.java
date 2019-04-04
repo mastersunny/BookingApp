@@ -44,7 +44,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +56,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mastersunny.rooms.Fragments.GuestSelectFragment;
 import mastersunny.rooms.Fragments.RoomListFragment;
 import mastersunny.rooms.Fragments.RoomMapFragment;
 import mastersunny.rooms.R;
@@ -66,12 +69,13 @@ import mastersunny.rooms.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
 import static android.graphics.Typeface.BOLD;
 import static android.graphics.Typeface.ITALIC;
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
-public class RoomListActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class RoomListActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GuestSelectFragment.GuestSelectListener {
 
     private static String TAG = "RoomListActivity";
 
@@ -93,6 +97,21 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @BindView(R.id.toolbar_title)
+    TextView toolbar_title;
+
+    @BindView(R.id.tv_start_date)
+    TextView tv_start_date;
+
+    @BindView(R.id.tv_end_date)
+    TextView tv_end_date;
+
+    @BindView(R.id.tv_room_qty)
+    TextView tv_room_qty;
+
+    @BindView(R.id.tv_adult_qty)
+    TextView tv_adult_qty;
+
     RoomAdapter roomAdapter;
 
     private List<RoomDTO> roomDTOS;
@@ -109,6 +128,8 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     MapView mMapView;
 
     private GoogleMap mMap;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("MMM");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,16 +167,29 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         roomAdapter = new RoomAdapter(this, roomDTOS);
         rv_rooms.setAdapter(roomAdapter);
 
-//        try {
-//            Date currentDate = Constants.sdf2.parse(examDTO.getExamDate());
-//            Pair<String, String> pair = Constants.getStartEndDate(currentDate);
-//            start_date.setText(pair.first);
-//            end_date.setText(pair.second);
-//        } catch (Exception e) {
-//            Constants.debugLog(TAG, e.getMessage());
-//        }
-
         mMapView.getMapAsync(this);
+
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(Constants.startDate);
+
+        Calendar endDate = Calendar.getInstance();
+        endDate.setTime(Constants.endDate);
+
+        showFormattedDate(startDate, endDate);
+    }
+
+    private void showFormattedDate(Calendar startDate, Calendar endDate) {
+        String firstMonth = sdf.format(startDate.getTime());
+        int firstDay = startDate.get(Calendar.DAY_OF_MONTH);
+        tv_start_date.setText(firstMonth + " " + firstDay);
+
+
+        String secondMonth = sdf.format(endDate.getTime());
+        int secondDay = endDate.get(Calendar.DAY_OF_MONTH);
+        tv_end_date.setText(secondMonth + " " + secondDay);
+
+        Constants.startDate = startDate.getTime();
+        Constants.endDate = endDate.getTime();
     }
 
     @Override
@@ -197,7 +231,8 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         notifyPlaceAdapter();
     }
 
-    @OnClick({R.id.img_map, R.id.img_back})
+    @OnClick({R.id.img_map, R.id.img_back, R.id.start_date_layout,
+            R.id.end_date_layout, R.id.room_guest_layout})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_map:
@@ -207,8 +242,33 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
             case R.id.img_back:
                 onBackPressed();
                 break;
+            case R.id.start_date_layout:
+            case R.id.end_date_layout:
+                new SlyCalendarDialog()
+                        .setSingle(false)
+                        .setCallback(callback)
+                        .setStartDate(Constants.startDate)
+                        .setEndDate(Constants.addDays(Constants.startDate, 1).getTime())
+                        .show(getSupportFragmentManager(), "tag_slycalendar");
+                break;
+            case R.id.room_guest_layout:
+                GuestSelectFragment guestSelectFragment = new GuestSelectFragment();
+                guestSelectFragment.show(getSupportFragmentManager(), "guestSelectFragment");
+                break;
         }
     }
+
+    SlyCalendarDialog.Callback callback = new SlyCalendarDialog.Callback() {
+        @Override
+        public void onCancelled() {
+
+        }
+
+        @Override
+        public void onDataSelected(Calendar firstDate, Calendar secondDate, int hours, int minutes) {
+            showFormattedDate(firstDate, secondDate);
+        }
+    };
 
     @Override
     public void onPause() {
@@ -305,6 +365,16 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
             }
         } else {
             finish();
+        }
+    }
+
+    @Override
+    public void selectedGuestAndRoom(int roomQty, int adultQty, int childQty) {
+        tv_room_qty.setText(roomQty + " Rooms");
+        if (childQty > 0) {
+            tv_adult_qty.setText(adultQty + " Adults, " + (childQty > 1 ? (childQty + " Children") : (childQty + " Child")));
+        } else {
+            tv_adult_qty.setText(adultQty + " Adults");
         }
     }
 }

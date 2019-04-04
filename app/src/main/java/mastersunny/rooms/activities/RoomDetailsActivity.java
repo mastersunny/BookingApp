@@ -269,36 +269,36 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     private void bookRoom() {
         showProgressDialog("Booking...");
-        apiInterface.createBooking(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
-            @Override
-            public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
-
-                Constants.debugLog(TAG, response + " ");
-                dismissDialog();
-
-                if (response.isSuccessful() && response.body() != null) {
-                    Constants.debugLog(TAG, response.body().toString());
-                    if (response.headers().get("status").equals("exists")) {
-                        RoomBookingActivity.start(RoomDetailsActivity.this, response.body(), true);
-                        RoomDetailsActivity.this.finish();
-                    } else {
-                        RoomBookingActivity.start(RoomDetailsActivity.this, response.body(), false);
-                        RoomDetailsActivity.this.finish();
-                    }
-                } else {
-                    if (!isFinishing()) {
-                        Constants.showNotificationDialog(RoomDetailsActivity.this, "Booking", response.message());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
-                dismissDialog();
-                Constants.debugLog(TAG, t.getMessage());
-                Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        apiInterface.createBooking(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
+//            @Override
+//            public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
+//
+//                Constants.debugLog(TAG, response + " ");
+//                dismissDialog();
+//
+//                if (response.isSuccessful() && response.body() != null) {
+//                    Constants.debugLog(TAG, response.body().toString());
+//                    if (response.headers().get("status").equals("exists")) {
+//                        RoomBookingActivity.start(RoomDetailsActivity.this, response.body(), true);
+//                        RoomDetailsActivity.this.finish();
+//                    } else {
+//                        RoomBookingActivity.start(RoomDetailsActivity.this, response.body(), false);
+//                        RoomDetailsActivity.this.finish();
+//                    }
+//                } else {
+//                    if (!isFinishing()) {
+//                        Constants.showNotificationDialog(RoomDetailsActivity.this, "Booking", response.message());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
+//                dismissDialog();
+//                Constants.debugLog(TAG, t.getMessage());
+//                Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 

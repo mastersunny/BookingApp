@@ -78,6 +78,9 @@ public class Constants {
     public static final String USER_NAME = "user_name";
     public static final String CATEGORY_DTO = "category_dto";
 
+    public static Date startDate = new Date();
+    public static Date endDate = new Date();
+
 
     public static void loadImage(Context context, String imageUrl, final ImageView imageView) {
         ViewTarget viewTarget = new ViewTarget<ImageView, GlideDrawable>(imageView) {
@@ -221,7 +224,5 @@ public class Constants {
     public static final int ROOM_DATE_REQUEST_CODE = 444;
 
     public static int REQUEST_FACEBOOK_LOGIN_CODE = 199;
-    public static String startDate = "";
-    public static String endDate = "";
     public static int totalGuest = 0;
 }

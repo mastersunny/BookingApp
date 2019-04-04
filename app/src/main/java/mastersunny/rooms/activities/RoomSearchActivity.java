@@ -62,8 +62,6 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
     private double latitude, longitude;
 
-    Date date = new Date();
-
     FragmentManager fragmentManager = getSupportFragmentManager();
 
 
@@ -112,8 +110,8 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         getSupportActionBar().setTitle("Search for Hotel, City, Or Location");
 
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        showFormattedDate(cal, Constants.addDays(date, 1));
+        cal.setTime(Constants.startDate);
+        showFormattedDate(cal, Constants.addDays(Constants.startDate, 1));
 
     }
 
@@ -176,8 +174,8 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
                 new SlyCalendarDialog()
                         .setSingle(false)
                         .setCallback(callback)
-                        .setStartDate(date)
-                        .setEndDate(Constants.addDays(date, 1).getTime())
+                        .setStartDate(Constants.startDate)
+                        .setEndDate(Constants.endDate)
                         .show(getSupportFragmentManager(), "tag_slycalendar");
                 break;
             case R.id.room_guest_layout:
@@ -201,15 +199,18 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         }
     };
 
-    private void showFormattedDate(Calendar firstDate, Calendar secondDate) {
-        String firstMonth = sdf.format(firstDate.getTime());
-        int firstDay = firstDate.get(Calendar.DAY_OF_MONTH);
+    private void showFormattedDate(Calendar startDate, Calendar endDate) {
+        String firstMonth = sdf.format(startDate.getTime());
+        int firstDay = startDate.get(Calendar.DAY_OF_MONTH);
         tv_start_date.setText(firstMonth + " " + firstDay);
 
 
-        String secondMonth = sdf.format(secondDate.getTime());
-        int secondDay = secondDate.get(Calendar.DAY_OF_MONTH);
+        String secondMonth = sdf.format(endDate.getTime());
+        int secondDay = endDate.get(Calendar.DAY_OF_MONTH);
         tv_end_date.setText(secondMonth + " " + secondDay);
+
+        Constants.startDate = startDate.getTime();
+        Constants.endDate = endDate.getTime();
     }
 
     private void startRoomListActivity() {

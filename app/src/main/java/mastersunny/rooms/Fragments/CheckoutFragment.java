@@ -70,7 +70,7 @@ public class CheckoutFragment extends Fragment {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 month += 1;
                 dateSelectionListener.startDate(Constants.calculateDate(year, month, dayOfMonth));
-                Constants.endDate = year + "-" + String.format("%02d", month, Locale.ENGLISH) + "-" + String.format("%02d", dayOfMonth, Locale.ENGLISH);
+//                Constants.endDate = year + "-" + String.format("%02d", month, Locale.ENGLISH) + "-" + String.format("%02d", dayOfMonth, Locale.ENGLISH);
 
             }
         });
