@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.listeners.ClickListener;
 import mastersunny.rooms.models.PlaceDTO;
@@ -20,7 +19,7 @@ import mastersunny.rooms.models.PlaceDTO;
  * Created by sunnychowdhury on 1/19/18.
  */
 
-public class PopularAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private String TAG = "PopularAdapter";
 
@@ -28,7 +27,7 @@ public class PopularAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Activity mActivity;
     private ClickListener clickListener;
 
-    public PopularAdapter(Activity mActivity, List<PlaceDTO> placeDTOS) {
+    public DealAdapter(Activity mActivity, List<PlaceDTO> placeDTOS) {
         this.mActivity = mActivity;
         this.placeDTOS = placeDTOS;
     }

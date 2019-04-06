@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,8 +25,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mastersunny.rooms.R;
+import mastersunny.rooms.adapters.DealAdapter;
 import mastersunny.rooms.adapters.PlaceAdapter;
 import mastersunny.rooms.adapters.PopularAdapter;
+import mastersunny.rooms.adapters.SpacesItemDecoration;
 import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.utils.Constants;
 
@@ -42,6 +45,9 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.rv_popular)
     RecyclerView rv_popular;
 
+    @BindView(R.id.rv_deals)
+    RecyclerView rv_deals;
+
     @BindView(R.id.search_layout)
     RelativeLayout search_layout;
 
@@ -50,6 +56,9 @@ public class HomeActivity extends AppCompatActivity {
 
     PopularAdapter popularAdapter;
     private List<PlaceDTO> popularPlaces = new ArrayList<>();
+
+    DealAdapter dealAdapter;
+    private List<PlaceDTO> deals = new ArrayList<>();
 
 
     @Override
@@ -78,11 +87,18 @@ public class HomeActivity extends AppCompatActivity {
         placeAdapter = new PlaceAdapter(this, placeDTOS);
         rv_cities.setAdapter(placeAdapter);
 
-        rv_popular.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rv_popular.setHasFixedSize(true);
+        rv_popular.setLayoutManager(new GridLayoutManager(this, 2));
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+        rv_popular.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         rv_popular.setNestedScrollingEnabled(false);
         popularAdapter = new PopularAdapter(this, popularPlaces);
         rv_popular.setAdapter(popularAdapter);
+
+        rv_deals.setLayoutManager(new GridLayoutManager(this, 2));
+        rv_deals.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        rv_deals.setNestedScrollingEnabled(false);
+        dealAdapter = new DealAdapter(this, deals);
+        rv_deals.setAdapter(dealAdapter);
     }
 
     @Override
@@ -145,8 +161,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void loadData() {
         placeDTOS.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Sylhet", "সিলেট", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Rajshahi", "রাজশাহী", "dhaka"));
+        placeDTOS.add(new PlaceDTO("Sylhet", "সিলেট", "sylhet"));
+        placeDTOS.add(new PlaceDTO("Rajshahi", "রাজশাহী", "rajshahi"));
         placeDTOS.add(new PlaceDTO("Bogura", "বগুড়া", "dhaka"));
         placeDTOS.add(new PlaceDTO("Khulna", "খুলনা", "dhaka"));
         placeDTOS.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
@@ -164,6 +180,15 @@ public class HomeActivity extends AppCompatActivity {
 
         notifyPopularAdapter();
 
+        deals.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
+        deals.add(new PlaceDTO("Sylhet", "সিলেট", "dhaka"));
+        deals.add(new PlaceDTO("Rajshahi", "রাজশাহী", "dhaka"));
+        deals.add(new PlaceDTO("Bogura", "বগুড়া", "dhaka"));
+        deals.add(new PlaceDTO("Khulna", "খুলনা", "dhaka"));
+        deals.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
+        deals.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
+
+        notifyDealAdapter();
     }
 
     private void notifyPlaceAdapter() {
@@ -175,6 +200,12 @@ public class HomeActivity extends AppCompatActivity {
     private void notifyPopularAdapter() {
         if (popularAdapter != null) {
             popularAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void notifyDealAdapter() {
+        if (dealAdapter != null) {
+            dealAdapter.notifyDataSetChanged();
         }
     }
 

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -61,8 +63,11 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 break;
             case MAIN_ITEM:
                 MainHolder mainHolder = (MainHolder) holder;
-                final PlaceDTO dto = placeDTOS.get(position-1);
+                final PlaceDTO dto = placeDTOS.get(position - 1);
                 mainHolder.place_name.setText(dto.getName());
+                int res = mActivity.getResources().getIdentifier(mActivity.getPackageName()
+                        + ":drawable/" + dto.getImageUrl(), null, null);
+                Glide.with(mActivity).load(res).into(mainHolder.place_image);
                 mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
