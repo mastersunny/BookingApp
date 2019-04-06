@@ -97,6 +97,8 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     @BindView(R.id.room_image)
     ImageView room_image;
 
+    private RoomDTO roomDTO;
+
     private RoomAdapter roomAdapter;
 
     private List<RoomDTO> roomDTOS;
@@ -231,7 +233,8 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @OnClick({R.id.map_layout, R.id.img_back, R.id.start_date_layout,
-            R.id.end_date_layout, R.id.room_guest_layout, R.id.list_layout})
+            R.id.end_date_layout, R.id.room_guest_layout, R.id.list_layout,
+            R.id.room_item_layout})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.map_layout:
@@ -258,6 +261,9 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
             case R.id.room_guest_layout:
                 GuestSelectFragment guestSelectFragment = new GuestSelectFragment();
                 guestSelectFragment.show(getSupportFragmentManager(), "guestSelectFragment");
+                break;
+            case R.id.room_item_layout:
+                RoomDetailsActivity.start(v.getContext(), roomDTO);
                 break;
         }
     }
@@ -327,7 +333,7 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public boolean onMarkerClick(Marker marker) {
         Log.d(TAG, roomDTOMap.get(marker).toString() + "");
-        RoomDTO roomDTO = new RoomDTO();
+        roomDTO = new RoomDTO();
         if (roomDTOMap.containsKey(marker)) {
             roomDTO = roomDTOMap.get(marker);
         }

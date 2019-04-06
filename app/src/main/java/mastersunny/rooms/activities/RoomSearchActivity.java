@@ -87,17 +87,23 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
     private void switchFragmentA() {
         shouldShowA = false;
+        hideFragment(RoomSearchFragment2.FRAGMENT_TAG);
         if (fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG) != null) {
-            fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG)).commit();
             fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG)).commit();
         } else {
             fragmentManager.beginTransaction().add(R.id.content, new RoomSearchFragment1(), RoomSearchFragment1.FRAGMENT_TAG).commit();
         }
     }
 
+    private void hideFragment(String fragmentTag) {
+        if (fragmentManager.findFragmentByTag(fragmentTag) != null) {
+            fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(fragmentTag)).commit();
+        }
+    }
+
     private void switchFragmentB(PlaceDTO placeDTO) {
         shouldShowA = true;
-        fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG)).commit();
+        hideFragment(RoomSearchFragment1.FRAGMENT_TAG);
         if (fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG) != null) {
             fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG)).commit();
         } else {
