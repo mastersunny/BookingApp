@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/nav_bottom_home"
+        android:enabled="true"
         android:icon="@drawable/ic_home"
-        android:title="@string/nav_notification" />
+        android:title="@string/nav_home"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/nav_bottom_saved"
-        android:icon="@drawable/ic_shop_normal"
-        android:title="@string/nav_saved" />
+        android:enabled="true"
+        android:icon="@drawable/ic_saved"
+        android:title="@string/nav_saved"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/nav_bottom_booking"
-        android:icon="@drawable/ic_shop_normal"
-        android:title="@string/nav_booking" />
+        android:enabled="true"
+        android:icon="@drawable/ic_briefcase"
+        android:title="@string/nav_booking"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/nav_bottom_profile"
+        android:enabled="true"
         android:icon="@drawable/ic_avatar"
-        android:title="@string/profile" />
+        android:title="@string/profile"
+        app:showAsAction="ifRoom" />
 
 </menu>

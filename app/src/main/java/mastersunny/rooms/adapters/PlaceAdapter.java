@@ -1,6 +1,7 @@
 package mastersunny.rooms.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.listeners.ClickListener;
 import mastersunny.rooms.R;
 import mastersunny.rooms.models.PlaceDTO;
@@ -71,7 +73,9 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        RoomListActivity.start(v.getContext(), dto.getName(), (ArrayList<ExamDTO>) dto.getExams(), SearchType.TYPE_PLACE.getStatus());
+//                        Intent intent = new Intent(mActivity, RoomSearchActivity.class);
+//                        intent.putExtra("PLACE_DTO", dto);
+//                        mActivity.startActivity(intent);
                     }
                 });
                 break;

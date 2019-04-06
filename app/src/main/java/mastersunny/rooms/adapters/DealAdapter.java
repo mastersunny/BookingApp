@@ -34,7 +34,7 @@ public class DealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.poplar_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.deal_item_layout, parent, false);
         return new MainHolder(view);
     }
 
