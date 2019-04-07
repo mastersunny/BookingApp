@@ -32,14 +32,15 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 app:srcCompat="@drawable/ic_home" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/nav_home" />
+                android:text="@string/nav_home"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -53,14 +54,15 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 app:srcCompat="@drawable/ic_saved" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/nav_saved" />
+                android:text="@string/nav_saved"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -74,14 +76,15 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 app:srcCompat="@drawable/ic_briefcase" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/nav_booking" />
+                android:text="@string/nav_booking"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -95,14 +98,15 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 app:srcCompat="@drawable/ic_avatar" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/profile" />
+                android:text="@string/profile"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
