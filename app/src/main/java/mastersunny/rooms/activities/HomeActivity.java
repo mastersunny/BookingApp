@@ -4,35 +4,26 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mastersunny.rooms.Fragments.HomeFragment;
+import mastersunny.rooms.Fragments.ProfileFragment;
+import mastersunny.rooms.Fragments.RoomSearchFragment1;
 import mastersunny.rooms.R;
-import mastersunny.rooms.adapters.DealAdapter;
-import mastersunny.rooms.adapters.PlaceAdapter;
-import mastersunny.rooms.adapters.PopularAdapter;
-import mastersunny.rooms.adapters.SpacesItemDecoration;
-import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.utils.Constants;
 
 public class HomeActivity extends AppCompatActivity {
@@ -41,6 +32,8 @@ public class HomeActivity extends AppCompatActivity {
 
     @BindView(R.id.nav_bottom_home)
     LinearLayout nav_bottom_home;
+
+    FragmentManager fragmentManager = getSupportFragmentManager();
 
 
     @Override
@@ -54,10 +47,27 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void initLayout() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, new HomeFragment());
-        transaction.addToBackStack(null);
-        transaction.commit();
+        loadFragment(new HomeFragment(), HomeFragment.FRAGMENT_TAG);
+    }
+
+    private void loadFragment(Fragment fragment, String fragmentTAG) {
+        if (fragmentManager.findFragmentByTag(fragmentTAG) != null) {
+            fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag(fragmentTAG)).commit();
+        } else {
+            Log.d(TAG, fragmentTAG);
+            fragmentManager.beginTransaction().add(R.id.content, fragment, fragmentTAG).commit();
+        }
+
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.content, fragment);
+//        transaction.addToBackStack(TAG);
+//        transaction.commit();
+    }
+
+    private void hideFragment(String fragmentTag) {
+        if (fragmentManager.findFragmentByTag(fragmentTag) != null) {
+            fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(fragmentTag)).commit();
+        }
     }
 
     @Override
@@ -114,10 +124,15 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.nav_bottom_home})
+    @OnClick({R.id.nav_bottom_home, R.id.nav_bottom_profile})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nav_bottom_home:
+                hideFragment(ProfileFragment.FRAGMENT_TAG);
+                loadFragment(new HomeFragment(), HomeFragment.FRAGMENT_TAG);
+                break;
+            case R.id.nav_bottom_profile:
+                loadFragment(new ProfileFragment(), ProfileFragment.FRAGMENT_TAG);
                 break;
         }
     }

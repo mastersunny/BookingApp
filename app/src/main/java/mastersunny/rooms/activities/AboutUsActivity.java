@@ -8,7 +8,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 
-public class AbousUsActivity extends AppCompatActivity {
+public class AboutUsActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -16,7 +16,7 @@ public class AbousUsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_abous_us);
+        setContentView(R.layout.activity_edit_profile);
         ButterKnife.bind(this);
 
         initLayout();
@@ -24,8 +24,10 @@ public class AbousUsActivity extends AppCompatActivity {
 
     private void initLayout() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("About Us");
+        getSupportActionBar().setTitle("Profile");
+        toolbar.setNavigationIcon(R.drawable.ic_back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override

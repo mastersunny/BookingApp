@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.R;
 import mastersunny.rooms.activities.HomeActivity;
 import mastersunny.rooms.activities.RoomSearchActivity;
@@ -47,6 +48,9 @@ import mastersunny.rooms.utils.Constants;
 public class HomeFragment extends Fragment {
 
     public String TAG = "HomeFragment";
+    public static final String FRAGMENT_TAG =
+            BuildConfig.APPLICATION_ID + ".homefragment";
+
     private Activity mActivity;
     private View view;
     private ApiInterface apiInterface;
