@@ -5,7 +5,7 @@
     <item
         android:width="18dp"
         android:height="18dp"
-        android:drawable="@drawable/ic_envelope"
+        android:drawable="@drawable/ic_id_card"
         android:gravity="center_vertical|start"
         android:right="20dp" />
 
