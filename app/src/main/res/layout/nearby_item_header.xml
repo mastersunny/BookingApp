@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/round_item_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -8,12 +9,16 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
-    <mastersunny.rooms.utils.CircleImageView
-        android:id="@+id/place_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:src="@color/colorAccent" />
+    <pl.bclogic.pulsator4droid.library.PulsatorLayout
+        android:id="@+id/pulsator"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:pulse_color="@color/colorAccent"
+        app:pulse_count="4"
+        app:pulse_duration="7000"
+        app:pulse_interpolator="Linear"
+        app:pulse_repeat="0"
+        app:pulse_startFromScratch="false"></pl.bclogic.pulsator4droid.library.PulsatorLayout>
 
     <TextView
         android:id="@+id/place_name"

@@ -77,6 +77,7 @@ dependencies {
     implementation 'com.ornach.magicicon:magic-icon:1.6'
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
     implementation 'com.ornach.richtext:richtext:1.0'
+    implementation 'pl.bclogic:pulsator4droid:1.0.3'
 
 }
 apply plugin: 'com.google.gms.google-services'
