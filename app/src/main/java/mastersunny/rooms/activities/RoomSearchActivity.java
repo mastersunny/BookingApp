@@ -2,16 +2,31 @@ package mastersunny.rooms.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -19,10 +34,13 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.gson.JsonObject;
+import com.ornach.richtext.RichEditText;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,11 +49,20 @@ import mastersunny.rooms.Fragments.GuestSelectFragment;
 import mastersunny.rooms.Fragments.RoomSearchFragment1;
 import mastersunny.rooms.Fragments.RoomSearchFragment2;
 import mastersunny.rooms.R;
+import mastersunny.rooms.adapters.MapAdapter;
+import mastersunny.rooms.adapters.RecentSearchAdapter;
+import mastersunny.rooms.gmap.GooglePlaceDTO;
+import mastersunny.rooms.gmap.Prediction;
 import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.LocalityDTO;
 import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
+import mastersunny.rooms.rest.ApiClient;
+import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
 public class RoomSearchActivity extends AppCompatActivity implements GuestSelectFragment.GuestSelectListener, RoomSearchListener {
@@ -45,9 +72,6 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-    @BindView(R.id.toolbar_title)
-    TextView toolbar_title;
 
     @BindView(R.id.tv_start_date)
     TextView tv_start_date;
@@ -61,10 +85,22 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     @BindView(R.id.tv_adult_qty)
     TextView tv_adult_qty;
 
+    @BindView(R.id.place_rv)
+    RecyclerView place_rv;
+
+    @BindView(R.id.edt_place_search)
+    RichEditText edt_place_search;
+
+    @BindView(R.id.img_cross)
+    ImageView img_cross;
+
     private double latitude, longitude;
+    private ApiInterface apiInterface;
 
     FragmentManager fragmentManager = getSupportFragmentManager();
 
+    private MapAdapter mapAdapter;
+    private List<Prediction> predictions = new ArrayList<>();
 
     @Override
     protected void onResume() {
@@ -79,6 +115,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         setContentView(R.layout.activity_room_search);
 
         ButterKnife.bind(this);
+        apiInterface = ApiClient.createService(this, ApiInterface.class);
 
         switchFragmentA();
 
@@ -114,64 +151,193 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
     private void initLayout() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Search for Hotel, City, Or Location");
+//        toolbar.setNavigationIcon(R.drawable.ic_back);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setIcon(R.drawable.ic_cake);
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(Constants.startDate);
         showFormattedDate(cal, Constants.addDays(Constants.startDate, 1));
 
+        place_rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mapAdapter = new MapAdapter(this, predictions);
+        place_rv.setAdapter(mapAdapter);
+
+        edt_place_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0) {
+                    searchPlace(charSequence.toString());
+                    img_cross.setVisibility(View.VISIBLE);
+                } else {
+                    img_cross.setVisibility(View.GONE);
+                    clearSearchPlace();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.length() == 0) {
+                    clearSearchPlace();
+                }
+            }
+        });
+
     }
 
-    private void searchPlace() {
-        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)) {
-            startPlaceAutoComplete();
-        } else {
-        }
+    private void searchPlace(String query) {
+        apiInterface.getPlaceFromGoogle(query, getResources().getString(R.string.GOOGLE_PLACE_API_KEY)).enqueue(new Callback<GooglePlaceDTO>() {
+            @Override
+            public void onResponse(Call<GooglePlaceDTO> call, Response<GooglePlaceDTO> response) {
+                Constants.debugLog(TAG, response.body().getPredictions() + "");
+                if (response.isSuccessful()) {
+                    GooglePlaceDTO googlePlaceDTO = response.body();
+                    if (googlePlaceDTO.getStatus().equalsIgnoreCase("OK")) {
+                        if (place_rv.getVisibility() == View.GONE) {
+                            place_rv.setVisibility(View.VISIBLE);
+                        }
+                        predictions.clear();
+                        predictions.addAll(googlePlaceDTO.getPredictions());
+                        mapAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GooglePlaceDTO> call, Throwable t) {
+
+            }
+        });
     }
 
-    private void startPlaceAutoComplete() {
-        try {
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
-            startActivityForResult(intent, Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException e) {
-
-        } catch (GooglePlayServicesNotAvailableException e) {
-
-        }
+    private void clearSearchPlace() {
+        place_rv.setVisibility(View.GONE);
+        predictions.clear();
+        mapAdapter.notifyDataSetChanged();
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu, menu);
+//
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView = null;
+//        if (searchItem != null) {
+//            searchView = (SearchView) searchItem.getActionView();
+//        }
+////        if (searchView != null) {
+////            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+////        }
+//
+//        AutoCompleteTextView search_text = searchView.findViewById(searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null));
+//        search_text.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.text_size_14));
+//        searchView.setIconifiedByDefault(true);
+//        searchView.setQueryHint(getResources().getString(R.string.search_text));
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                apiInterface.getPlaceFromGoogle(query, getResources().getString(R.string.GOOGLE_PLACE_API_KEY)).enqueue(new Callback<GooglePlaceDTO>() {
+//                    @Override
+//                    public void onResponse(Call<GooglePlaceDTO> call, Response<GooglePlaceDTO> response) {
+//                        Constants.debugLog(TAG, response.body().getPredictions() + "");
+//                        if (response.isSuccessful()) {
+//                            GooglePlaceDTO googlePlaceDTO = response.body();
+//                            if (googlePlaceDTO.getStatus().equalsIgnoreCase("OK")) {
+//                                if (place_rv.getVisibility() == View.GONE) {
+//                                    place_rv.setVisibility(View.VISIBLE);
+//                                }
+//                                predictions.clear();
+//                                predictions.addAll(googlePlaceDTO.getPredictions());
+//                                mapAdapter.notifyDataSetChanged();
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<GooglePlaceDTO> call, Throwable t) {
+//
+//                    }
+//                });
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
+//
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
+//    private void searchPlace() {
+//        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this,
+//                Manifest.permission.ACCESS_FINE_LOCATION)) {
+//            startPlaceAutoComplete();
+//        } else {
+//        }
+//    }
+
+//    private void startPlaceAutoComplete() {
+//        try {
+//            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+//            startActivityForResult(intent, Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE);
+//        } catch (GooglePlayServicesRepairableException e) {
+//
+//        } catch (GooglePlayServicesNotAvailableException e) {
+//
+//        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Place place = PlaceAutocomplete.getPlace(RoomSearchActivity.this, data);
-
-//                toolbar_title.setText(place.getName());
-                latitude = place.getLatLng().latitude;
-                longitude = place.getLatLng().longitude;
-
-                Constants.debugLog(TAG, "lat " + latitude + " lon " + longitude);
-
-                startRoomListActivity();
-
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Status status = PlaceAutocomplete.getStatus(RoomSearchActivity.this, data);
-                Constants.debugLog(TAG, status.getStatusMessage());
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Constants.debugLog(TAG, "RESULT_CANCELED");
-            }
-        }
+//        if (requestCode == Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                Place place = PlaceAutocomplete.getPlace(RoomSearchActivity.this, data);
+//
+////                toolbar_title.setText(place.getName());
+//                latitude = place.getLatLng().latitude;
+//                longitude = place.getLatLng().longitude;
+//
+//                Constants.debugLog(TAG, "lat " + latitude + " lon " + longitude);
+//
+//                startRoomListActivity();
+//
+//            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+//                Status status = PlaceAutocomplete.getStatus(RoomSearchActivity.this, data);
+//                Constants.debugLog(TAG, status.getStatusMessage());
+//            } else if (resultCode == Activity.RESULT_CANCELED) {
+//                Constants.debugLog(TAG, "RESULT_CANCELED");
+//            }
+//        }
     }
 
     int REQUEST_CODE = 1;
 
-    @OnClick({R.id.img_search, R.id.img_back, R.id.start_date_layout,
-            R.id.end_date_layout, R.id.room_guest_layout})
+    @OnClick({R.id.start_date_layout,
+            R.id.end_date_layout,
+            R.id.room_guest_layout,
+            R.id.img_back,
+            R.id.img_cross})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.img_search:
-                searchPlace();
+//            case R.id.img_search:
+//                searchPlace();
+//                break;
+            case R.id.img_cross:
+                clearSearchPlace();
+                hideKeyboard(RoomSearchActivity.this);
                 break;
             case R.id.img_back:
                 onBackPressed();
@@ -190,6 +356,17 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
                 guestSelectFragment.show(getSupportFragmentManager(), "guestSelectFragment");
                 break;
         }
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     SimpleDateFormat sdf = new SimpleDateFormat("MMM");
@@ -246,7 +423,6 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     @Override
     public void onPlaceSearch(PlaceDTO placeDTO) {
         switchFragmentB(placeDTO);
-        toolbar_title.setText("Where in " + placeDTO.getName() + "?");
     }
 
     @Override
@@ -268,9 +444,14 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     private boolean shouldShowA = false;
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     public void onBackPressed() {
         if (shouldShowA) {
-            toolbar_title.setText("Search for hotel, city, location");
             switchFragmentA();
         } else {
             finish();

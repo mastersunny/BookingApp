@@ -3,51 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:focusableInTouchMode="true">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:layout_height="?android:attr/actionBarSize">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/img_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
                     app:srcCompat="@drawable/ic_back" />
 
-                <TextView
-                    android:id="@+id/toolbar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Search for hotel, city, location"
-                    android:textColor="@color/black_overlay" />
+                <com.ornach.richtext.RichEditText
+                    android:id="@+id/edt_place_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/img_cross"
+                    android:layout_toEndOf="@+id/img_back"
+                    android:background="@null"
+                    android:hint="@string/search_text"
+                    android:maxLines="1"
+                    android:textSize="12sp" />
 
                 <ImageView
-                    android:id="@+id/img_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/img_cross"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_marginEnd="16dp"
-                    android:background="?selectableItemBackground"
-                    app:srcCompat="@drawable/ic_search_normal" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_cross_out" />
 
             </RelativeLayout>
 
@@ -149,7 +149,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#E4E4E4"
@@ -185,8 +185,17 @@
         <FrameLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
-    </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/place_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:background="@color/grey_lite"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

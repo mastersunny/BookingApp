@@ -1,7 +1,10 @@
 package mastersunny.rooms.rest;
 
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
+import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.models.AccessModel;
 import mastersunny.rooms.models.CategoryDTO;
 import mastersunny.rooms.models.ExamDTO;
@@ -173,5 +176,9 @@ public interface ApiInterface {
 
     @DELETE(ApiClient.APP_NAME + "api/bookings/{id}")
     Call<RoomBookingDTO> deleteBooking(@Path("id") Long bookingId);
+
+
+    @GET("https://maps.googleapis.com/maps/api/place/autocomplete/json")
+    Call<GooglePlaceDTO> getPlaceFromGoogle(@Query("input") String input, @Query("key") String apiKey);
 
 }
