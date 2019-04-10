@@ -1,13 +1,8 @@
 package mastersunny.rooms.activities;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,26 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-import com.google.gson.JsonObject;
 import com.ornach.richtext.RichEditText;
 
 import java.text.SimpleDateFormat;
@@ -50,7 +31,6 @@ import mastersunny.rooms.Fragments.RoomSearchFragment1;
 import mastersunny.rooms.Fragments.RoomSearchFragment2;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.MapAdapter;
-import mastersunny.rooms.adapters.RecentSearchAdapter;
 import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.gmap.Prediction;
 import mastersunny.rooms.listeners.RoomSearchListener;

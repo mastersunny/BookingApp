@@ -2,7 +2,6 @@ package mastersunny.rooms.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,12 +19,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.R;
-import mastersunny.rooms.activities.RoomListActivity;
 import mastersunny.rooms.activities.RoomSearchActivity;
-import mastersunny.rooms.adapters.RecentSearchAdapter;
-import mastersunny.rooms.adapters.RoomAdapter;
+import mastersunny.rooms.adapters.SearchAdapter;
 import mastersunny.rooms.listeners.RoomSearchListener;
-import mastersunny.rooms.models.ItemType;
 import mastersunny.rooms.models.LocalityDTO;
 import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
@@ -50,7 +46,7 @@ public class RoomSearchFragment1 extends Fragment {
     private List<RoomDTO> roomDTOS = new ArrayList<>();
     private List<PlaceDTO> placeDTOS = new ArrayList<>();
     private Unbinder unbinder;
-    private RecentSearchAdapter recentSearchAdapter;
+    private SearchAdapter searchAdapter;
     private RoomSearchListener roomSearchListener;
 
     @Override
@@ -86,9 +82,9 @@ public class RoomSearchFragment1 extends Fragment {
 
     private void initLayout() {
         rv_places.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        recentSearchAdapter = new RecentSearchAdapter(mActivity, roomDTOS, placeDTOS);
-        rv_places.setAdapter(recentSearchAdapter);
-        recentSearchAdapter.setItemSelectListener(new RoomSearchListener() {
+        searchAdapter = new SearchAdapter(mActivity, roomDTOS, placeDTOS);
+        rv_places.setAdapter(searchAdapter);
+        searchAdapter.setItemSelectListener(new RoomSearchListener() {
             @Override
             public void onRecentSearch(RoomDTO roomDTO) {
                 if (roomSearchListener != null) {
@@ -112,8 +108,8 @@ public class RoomSearchFragment1 extends Fragment {
     }
 
     private void notifyPlaceAdapter() {
-        if (recentSearchAdapter != null) {
-            recentSearchAdapter.notifyDataSetChanged();
+        if (searchAdapter != null) {
+            searchAdapter.notifyDataSetChanged();
         }
     }
 

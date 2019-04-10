@@ -18,16 +18,16 @@ import mastersunny.rooms.models.ItemType;
 import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
 
-public class RecentSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private String TAG = "RecentSearchAdapter";
+    private String TAG = "SearchAdapter";
     private List<RoomDTO> roomDTOS;
     private List<PlaceDTO> placeDTOS;
     private Activity mActivity;
 
     private RoomSearchListener roomSearchListener;
 
-    public RecentSearchAdapter(Activity mActivity, List<RoomDTO> roomDTOS, List<PlaceDTO> placeDTOS) {
+    public SearchAdapter(Activity mActivity, List<RoomDTO> roomDTOS, List<PlaceDTO> placeDTOS) {
         this.mActivity = mActivity;
         this.roomDTOS = roomDTOS;
         this.placeDTOS = placeDTOS;

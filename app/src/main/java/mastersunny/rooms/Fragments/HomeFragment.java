@@ -32,6 +32,7 @@ import mastersunny.rooms.R;
 import mastersunny.rooms.activities.HomeActivity;
 import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.adapters.DealAdapter;
+import mastersunny.rooms.adapters.HomeAdapter;
 import mastersunny.rooms.adapters.PlaceAdapter;
 import mastersunny.rooms.adapters.PopularAdapter;
 import mastersunny.rooms.adapters.SpacesItemDecoration;
@@ -56,28 +57,13 @@ public class HomeFragment extends Fragment {
     private ApiInterface apiInterface;
     private Unbinder unbinder;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.rv_home)
+    RecyclerView rv_home;
 
-    @BindView(R.id.rv_cities)
-    RecyclerView rv_cities;
+    HomeAdapter homeAdapter;
 
-    @BindView(R.id.rv_popular)
-    RecyclerView rv_popular;
-
-    @BindView(R.id.rv_deals)
-    RecyclerView rv_deals;
-
-    @BindView(R.id.search_layout)
-    RelativeLayout search_layout;
-
-    PlaceAdapter placeAdapter;
     private List<PlaceDTO> placeDTOS = new ArrayList<>();
-
-    PopularAdapter popularAdapter;
     private List<PlaceDTO> popularPlaces = new ArrayList<>();
-
-    DealAdapter dealAdapter;
     private List<PlaceDTO> deals = new ArrayList<>();
 
 
@@ -108,24 +94,22 @@ public class HomeFragment extends Fragment {
     }
 
     private void initLayout() {
-        rv_cities.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
-        rv_cities.setHasFixedSize(true);
-        rv_cities.setNestedScrollingEnabled(false);
-        placeAdapter = new PlaceAdapter(mActivity, placeDTOS);
-        rv_cities.setAdapter(placeAdapter);
+        rv_home.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
+        homeAdapter = new HomeAdapter(mActivity);
+        rv_home.setAdapter(homeAdapter);
 
-        rv_popular.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-        rv_popular.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-        rv_popular.setNestedScrollingEnabled(false);
-        popularAdapter = new PopularAdapter(mActivity, popularPlaces);
-        rv_popular.setAdapter(popularAdapter);
-
-        rv_deals.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        rv_deals.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-        rv_deals.setNestedScrollingEnabled(false);
-        dealAdapter = new DealAdapter(mActivity, deals);
-        rv_deals.setAdapter(dealAdapter);
+//        rv_popular.setLayoutManager(new GridLayoutManager(mActivity, 2));
+//        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+//        rv_popular.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+//        rv_popular.setNestedScrollingEnabled(false);
+//        popularAdapter = new PopularAdapter(mActivity, popularPlaces);
+//        rv_popular.setAdapter(popularAdapter);
+//
+//        rv_deals.setLayoutManager(new GridLayoutManager(mActivity, 2));
+//        rv_deals.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+//        rv_deals.setNestedScrollingEnabled(false);
+//        dealAdapter = new DealAdapter(mActivity, deals);
+//        rv_deals.setAdapter(dealAdapter);
 
     }
 
@@ -134,12 +118,18 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (placeDTOS.size() <= 0) {
-            loadData();
+            loadCityData();
         }
+        if (popularPlaces.size() <= 0) {
+            loadPopularData();
+        }
+        if (deals.size() <= 0) {
+            loadDealData();
+        }
+        homeAdapter.notifyDataSetChanged();
     }
 
-
-    private void loadData() {
+    private void loadCityData() {
         placeDTOS.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
         placeDTOS.add(new PlaceDTO("Sylhet", "সিলেট", "sylhet"));
         placeDTOS.add(new PlaceDTO("Rajshahi", "রাজশাহী", "rajshahi"));
@@ -148,8 +138,10 @@ public class HomeFragment extends Fragment {
         placeDTOS.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
         placeDTOS.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
 
-        notifyPlaceAdapter();
+        homeAdapter.setCities(placeDTOS);
+    }
 
+    private void loadPopularData() {
         popularPlaces.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
         popularPlaces.add(new PlaceDTO("Sylhet", "সিলেট", "dhaka"));
         popularPlaces.add(new PlaceDTO("Rajshahi", "রাজশাহী", "dhaka"));
@@ -158,8 +150,13 @@ public class HomeFragment extends Fragment {
         popularPlaces.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
         popularPlaces.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
 
-        notifyPopularAdapter();
+        homeAdapter.setPopularPlaces(popularPlaces);
+    }
 
+
+
+
+    private void loadDealData() {
         deals.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
         deals.add(new PlaceDTO("Sylhet", "সিলেট", "dhaka"));
         deals.add(new PlaceDTO("Rajshahi", "রাজশাহী", "dhaka"));
@@ -168,35 +165,17 @@ public class HomeFragment extends Fragment {
         deals.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
         deals.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
 
-        notifyDealAdapter();
+        homeAdapter.setDeals(deals);
     }
 
-    private void notifyPlaceAdapter() {
-        if (placeAdapter != null) {
-            placeAdapter.notifyDataSetChanged();
-        }
-    }
-
-    private void notifyPopularAdapter() {
-        if (popularAdapter != null) {
-            popularAdapter.notifyDataSetChanged();
-        }
-    }
-
-    private void notifyDealAdapter() {
-        if (dealAdapter != null) {
-            dealAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @OnClick({R.id.search_layout})
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.search_layout:
-                Intent intent = new Intent(mActivity, RoomSearchActivity.class);
-                startActivity(intent);
-        }
-    }
+//    @OnClick({R.id.search_layout})
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.search_layout:
+//                Intent intent = new Intent(mActivity, RoomSearchActivity.class);
+//                startActivity(intent);
+//        }
+//    }
 
     @Override
     public void onPause() {
