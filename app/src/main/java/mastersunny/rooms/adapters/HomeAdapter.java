@@ -1,6 +1,7 @@
 package mastersunny.rooms.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
+import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.ItemType;
 import mastersunny.rooms.models.PlaceDTO;
@@ -87,7 +90,16 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         Constants.debugLog(TAG, "position " + position);
-        if (holder instanceof CityViewHolder) {
+        if (holder instanceof HeaderViewHolder) {
+            HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+            headerViewHolder.search_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mActivity, RoomSearchActivity.class);
+                    mActivity.startActivity(intent);
+                }
+            });
+        } else if (holder instanceof CityViewHolder) {
             CityViewHolder cityViewHolder = (CityViewHolder) holder;
             cityViewHolder.rv_cities.setRecycledViewPool(viewPool);
             placeAdapter.notifyDataSetChanged();
@@ -160,8 +172,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.search_layout)
+        RelativeLayout search_layout;
+
         public HeaderViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

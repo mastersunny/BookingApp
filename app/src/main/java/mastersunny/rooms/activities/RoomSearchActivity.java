@@ -431,6 +431,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
     @Override
     public void onBackPressed() {
+        hideKeyboard(this);
         if (shouldShowA) {
             switchFragmentA();
         } else {
