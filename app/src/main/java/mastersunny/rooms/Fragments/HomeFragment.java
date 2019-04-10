@@ -154,8 +154,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
     private void loadDealData() {
         deals.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
         deals.add(new PlaceDTO("Sylhet", "সিলেট", "dhaka"));
