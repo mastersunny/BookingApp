@@ -75,13 +75,19 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return new HeaderViewHolder(view);
         } else if (viewType == TYPE_CITY) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_city_item_layout, parent, false);
-            return new CityViewHolder(view);
+            CityViewHolder holder = new CityViewHolder(view);
+            holder.rv_cities.setRecycledViewPool(viewPool);
+            return holder;
         } else if (viewType == TYPE_POPULAR) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_popular_item_layout, parent, false);
-            return new PopularViewHolder(view);
+            PopularViewHolder holder = new PopularViewHolder(view);
+            holder.rv_popular.setRecycledViewPool(viewPool);
+            return holder;
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_deal_item_layout, parent, false);
-            return new DealViewHolder(view);
+            DealViewHolder holder = new DealViewHolder(view);
+            holder.rv_deals.setRecycledViewPool(viewPool);
+            return holder;
         }
 
     }
@@ -101,41 +107,14 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
         } else if (holder instanceof CityViewHolder) {
             CityViewHolder cityViewHolder = (CityViewHolder) holder;
-            cityViewHolder.rv_cities.setRecycledViewPool(viewPool);
             placeAdapter.notifyDataSetChanged();
         } else if (holder instanceof PopularViewHolder) {
             PopularViewHolder popularViewHolder = (PopularViewHolder) holder;
-            popularViewHolder.rv_popular.setRecycledViewPool(viewPool);
             popularAdapter.notifyDataSetChanged();
         } else if (holder instanceof DealViewHolder) {
             DealViewHolder dealViewHolder = (DealViewHolder) holder;
-            dealViewHolder.rv_deals.setRecycledViewPool(viewPool);
             dealAdapter.notifyDataSetChanged();
         }
-
-//        final RoomDTO roomDTO = roomDTOS.get(position);
-//        MainHolder mainHolder = (MainHolder) holder;
-//        mainHolder.title.setText(roomDTO.getNoOfAccommodation() > 1 ? roomDTO.getNoOfAccommodation()
-//                + " Seats Room" : roomDTO.getNoOfAccommodation() + " Seat Room");
-//        mainHolder.address.setText(roomDTO.getAddress());
-//        mainHolder.room_cost.setText(roomDTO.getRoomCost() + "");
-//
-//        if (roomDTO.getImages() != null && roomDTO.getImages().size() > 0) {
-//            Constants.loadImage(mActivity, roomDTO.getImages().get(0).getImageUrl(),
-//                    mainHolder.room_image);
-//        }
-//
-//        if (roomDTO.isFemaleFriendly()) {
-//            mainHolder.female_friendly_layout.setVisibility(View.VISIBLE);
-//        } else {
-//            mainHolder.female_friendly_layout.setVisibility(View.GONE);
-//        }
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                RoomDetailsActivity.start(v.getContext(), roomDTO);
-//            }
-//        });
     }
 
     @Override
