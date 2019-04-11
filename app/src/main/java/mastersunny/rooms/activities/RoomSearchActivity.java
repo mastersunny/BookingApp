@@ -7,16 +7,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.ornach.richtext.RichEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,11 +67,8 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     @BindView(R.id.place_rv)
     RecyclerView place_rv;
 
-    @BindView(R.id.edt_place_search)
-    RichEditText edt_place_search;
-
-    @BindView(R.id.img_cross)
-    ImageView img_cross;
+    @BindView(R.id.search_view)
+    SearchView searchView;
 
     private double latitude, longitude;
     private ApiInterface apiInterface;
@@ -145,28 +141,33 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         mapAdapter = new MapAdapter(this, predictions);
         place_rv.setAdapter(mapAdapter);
 
-        edt_place_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//        AutoCompleteTextView search_text = searchView.findViewById(searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null));
+//        search_text.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.text_size_14));
+        searchView.setIconifiedByDefault(false);
+        searchView.setQueryHint(getResources().getString(R.string.search_text));
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchPlace(query);
+                return false;
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 0) {
-                    searchPlace(charSequence.toString());
-                    img_cross.setVisibility(View.VISIBLE);
-                } else {
-                    img_cross.setVisibility(View.GONE);
-                    clearSearchPlace();
-                }
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
+        });
+        ImageView closeButton = searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        closeButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.length() == 0) {
-                    clearSearchPlace();
-                }
+            public void onClick(View v) {
+                hideKeyboard(RoomSearchActivity.this);
+                searchView.setQuery("", false);
+                predictions.clear();
+                mapAdapter.notifyDataSetChanged();
+                place_rv.setVisibility(View.GONE);
             }
         });
 
@@ -196,78 +197,6 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
             }
         });
     }
-
-    private void clearSearchPlace() {
-        place_rv.setVisibility(View.GONE);
-        predictions.clear();
-        mapAdapter.notifyDataSetChanged();
-    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu, menu);
-//
-//        MenuItem searchItem = menu.findItem(R.id.action_search);
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView = null;
-//        if (searchItem != null) {
-//            searchView = (SearchView) searchItem.getActionView();
-//        }
-////        if (searchView != null) {
-////            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-////        }
-//
-//        AutoCompleteTextView search_text = searchView.findViewById(searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null));
-//        search_text.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.text_size_14));
-//        searchView.setIconifiedByDefault(true);
-//        searchView.setQueryHint(getResources().getString(R.string.search_text));
-//
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                apiInterface.getPlaceFromGoogle(query, getResources().getString(R.string.GOOGLE_PLACE_API_KEY)).enqueue(new Callback<GooglePlaceDTO>() {
-//                    @Override
-//                    public void onResponse(Call<GooglePlaceDTO> call, Response<GooglePlaceDTO> response) {
-//                        Constants.debugLog(TAG, response.body().getPredictions() + "");
-//                        if (response.isSuccessful()) {
-//                            GooglePlaceDTO googlePlaceDTO = response.body();
-//                            if (googlePlaceDTO.getStatus().equalsIgnoreCase("OK")) {
-//                                if (place_rv.getVisibility() == View.GONE) {
-//                                    place_rv.setVisibility(View.VISIBLE);
-//                                }
-//                                predictions.clear();
-//                                predictions.addAll(googlePlaceDTO.getPredictions());
-//                                mapAdapter.notifyDataSetChanged();
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<GooglePlaceDTO> call, Throwable t) {
-//
-//                    }
-//                });
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
-//
-//
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
-//    private void searchPlace() {
-//        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this,
-//                Manifest.permission.ACCESS_FINE_LOCATION)) {
-//            startPlaceAutoComplete();
-//        } else {
-//        }
-//    }
 
 //    private void startPlaceAutoComplete() {
 //        try {
@@ -309,16 +238,12 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
             R.id.end_date_layout,
             R.id.room_guest_layout,
             R.id.img_back,
-            R.id.img_cross})
+    })
     public void onClick(View v) {
         switch (v.getId()) {
 //            case R.id.img_search:
 //                searchPlace();
 //                break;
-            case R.id.img_cross:
-                clearSearchPlace();
-                hideKeyboard(RoomSearchActivity.this);
-                break;
             case R.id.img_back:
                 onBackPressed();
                 break;
@@ -422,12 +347,6 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     }
 
     private boolean shouldShowA = false;
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
 
     @Override
     public void onBackPressed() {
