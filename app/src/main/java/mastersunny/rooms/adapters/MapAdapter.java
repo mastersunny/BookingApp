@@ -1,6 +1,7 @@
 package mastersunny.rooms.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
+import mastersunny.rooms.activities.RoomListActivity;
 import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.gmap.Prediction;
 import mastersunny.rooms.listeners.RoomSearchListener;
@@ -48,7 +50,9 @@ public class MapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(mActivity, RoomListActivity.class);
+                intent.putExtra("PLACE_ID", dto.getPlaceId());
+                mActivity.startActivity(intent);
             }
         });
     }

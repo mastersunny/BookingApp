@@ -189,6 +189,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
                 Constants.debugLog(TAG, response.body().getPredictions() + "");
                 if (response.isSuccessful()) {
                     GooglePlaceDTO googlePlaceDTO = response.body();
+                    Constants.debugLog(TAG, googlePlaceDTO.toString());
                     if (googlePlaceDTO.getStatus().equalsIgnoreCase("OK")) {
                         predictions.clear();
                         predictions.addAll(googlePlaceDTO.getPredictions());

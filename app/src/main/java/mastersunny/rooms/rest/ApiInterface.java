@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import java.util.List;
 
 import mastersunny.rooms.gmap.GooglePlaceDTO;
+import mastersunny.rooms.gmap.GooglePlaceDetails;
 import mastersunny.rooms.models.AccessModel;
 import mastersunny.rooms.models.CategoryDTO;
 import mastersunny.rooms.models.ExamDTO;
@@ -179,6 +180,12 @@ public interface ApiInterface {
 
 
     @GET("https://maps.googleapis.com/maps/api/place/autocomplete/json")
-    Call<GooglePlaceDTO> getPlaceFromGoogle(@Query("input") String input, @Query("key") String apiKey);
+    Call<GooglePlaceDTO> getPlaceFromGoogle(@Query("input") String input,
+                                            @Query("key") String apiKey);
+
+    @GET("https://maps.googleapis.com/maps/api/place/details/json")
+    Call<GooglePlaceDetails> getPlaceDetailsFromGoogle(@Query("placeid") String placeId,
+                                                       @Query("fields") String fields,
+                                                       @Query("key") String apiKey);
 
 }

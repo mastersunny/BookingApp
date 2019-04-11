@@ -1,10 +1,12 @@
 package mastersunny.rooms.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -42,9 +45,15 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import mastersunny.rooms.Fragments.GuestSelectFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.RoomAdapter;
+import mastersunny.rooms.gmap.GooglePlaceDetails;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.models.RoomImageDTO;
+import mastersunny.rooms.rest.ApiClient;
+import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
 import static android.graphics.Typeface.BOLD;
@@ -108,6 +117,7 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     private FusedLocationProviderClient mFusedLocationClient;
 
     private double latitude, longitude;
+    private ApiInterface apiInterface;
 
     IconGenerator iconFactory;
 
@@ -115,6 +125,7 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     MapView mMapView;
 
     private GoogleMap mMap;
+    private String placeId = "";
 
     SimpleDateFormat sdf = new SimpleDateFormat("MMM");
 
@@ -123,6 +134,7 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_list);
         ButterKnife.bind(this);
+        apiInterface = ApiClient.createService(this, ApiInterface.class);
         mMapView.onCreate(savedInstanceState);
         getIntentData();
         initLayout();
@@ -145,6 +157,10 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void getIntentData() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("PLACE_ID")) {
+            placeId = intent.getStringExtra("PLACE_ID");
+        }
 
     }
 
@@ -165,6 +181,7 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
 
         showFormattedDate(startDate, endDate);
     }
+
 
     private void showFormattedDate(Calendar startDate, Calendar endDate) {
         String firstMonth = sdf.format(startDate.getTime());
@@ -196,6 +213,34 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         if (roomDTOS.size() <= 0) {
             loadData();
         }
+        if (!TextUtils.isEmpty(placeId)) {
+            loadPlaceDetails();
+        }
+    }
+
+    private void loadPlaceDetails() {
+        apiInterface.getPlaceDetailsFromGoogle(placeId, "geometry(location)",
+                getResources().getString(R.string.GOOGLE_PLACE_API_KEY)).enqueue(new Callback<GooglePlaceDetails>() {
+            @Override
+            public void onResponse(Call<GooglePlaceDetails> call, Response<GooglePlaceDetails> response) {
+                if (response.isSuccessful()) {
+                    GooglePlaceDetails googlePlaceDetails = response.body();
+                    Constants.debugLog(TAG, googlePlaceDetails.toString());
+                    if (googlePlaceDetails.getStatus().equalsIgnoreCase("OK")) {
+                        latitude = googlePlaceDetails.getResult().getGeometry().getLocation().getLat();
+                        longitude = googlePlaceDetails.getResult().getGeometry().getLocation().getLng();
+
+                        Constants.debugLog(TAG, "latitude " + latitude + " longitude " + longitude);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GooglePlaceDetails> call, Throwable t) {
+                Toast.makeText(RoomListActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void notifyPlaceAdapter() {
