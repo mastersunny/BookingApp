@@ -13,6 +13,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
+import mastersunny.rooms.listeners.GpsListener;
 import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.ItemType;
 import mastersunny.rooms.models.PlaceDTO;
@@ -26,6 +27,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Activity mActivity;
 
     private RoomSearchListener roomSearchListener;
+    private GpsListener gpsListener;
 
     public SearchAdapter(Activity mActivity, List<RoomDTO> roomDTOS, List<PlaceDTO> placeDTOS) {
         this.mActivity = mActivity;
@@ -86,6 +88,16 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 public void onClick(View view) {
                     if (roomSearchListener != null) {
                         roomSearchListener.onRecentSearch(roomDTO);
+                    }
+                }
+            });
+        } else if (holder instanceof LocationViewHolder) {
+            LocationViewHolder locationViewHolder = (LocationViewHolder) holder;
+            locationViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (gpsListener != null) {
+                        gpsListener.turnOnGps();
                     }
                 }
             });
@@ -218,4 +230,9 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void setItemSelectListener(RoomSearchListener roomSearchListener) {
         this.roomSearchListener = roomSearchListener;
     }
+
+    public void setGpsListener(GpsListener gpsListener) {
+        this.gpsListener = gpsListener;
+    }
+
 }
