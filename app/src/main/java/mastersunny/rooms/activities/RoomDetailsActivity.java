@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +19,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mastersunny.rooms.Fragments.ProgressDialogFragment;
 import mastersunny.rooms.R;
+import mastersunny.rooms.adapters.ImageAdapter;
+import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomBookingDTO;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.rest.ApiClient;
@@ -44,6 +50,13 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.room_images)
+    RecyclerView room_images;
+
+    private List<PlaceDTO> placeDTOS = new ArrayList<>();
+
+    ImageAdapter imageAdapter;
 //
 //    @BindView(R.id.title)
 //    TextView title;
@@ -131,6 +144,18 @@ public class RoomDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_back);
+
+        placeDTOS.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
+        placeDTOS.add(new PlaceDTO("Sylhet", "সিলেট", "sylhet"));
+        placeDTOS.add(new PlaceDTO("Rajshahi", "রাজশাহী", "rajshahi"));
+        placeDTOS.add(new PlaceDTO("Bogura", "বগুড়া", "dhaka"));
+        placeDTOS.add(new PlaceDTO("Khulna", "খুলনা", "dhaka"));
+        placeDTOS.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
+        placeDTOS.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
+
+        room_images.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        imageAdapter = new ImageAdapter(this, placeDTOS);
+        room_images.setAdapter(imageAdapter);
 
 //        title.setText(roomDTO.getNoOfAccommodation() > 1 ? roomDTO.getNoOfAccommodation()
 //                + " Seats Room" : roomDTO.getNoOfAccommodation() + " Seat Room");
