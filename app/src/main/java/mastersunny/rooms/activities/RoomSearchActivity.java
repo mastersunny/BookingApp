@@ -152,17 +152,21 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (TextUtils.isEmpty(query)) {
-                    return false;
-                }
-                searchPlace(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)) {
+                    clearSearch();
+                    return false;
+                }
                 place_rv.setVisibility(View.VISIBLE);
                 room_search_header.setVisibility(View.GONE);
+                if (newText.length() > 1) {
+                    searchPlace(newText);
+                    return true;
+                }
                 return true;
             }
         });
@@ -173,13 +177,17 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
             public void onClick(View v) {
                 hideKeyboard(RoomSearchActivity.this);
                 searchView.setQuery("", false);
-                predictions.clear();
-                mapAdapter.notifyDataSetChanged();
-                place_rv.setVisibility(View.GONE);
-                room_search_header.setVisibility(View.VISIBLE);
+                clearSearch();
             }
         });
 
+    }
+
+    private void clearSearch() {
+        predictions.clear();
+        mapAdapter.notifyDataSetChanged();
+        place_rv.setVisibility(View.GONE);
+        room_search_header.setVisibility(View.VISIBLE);
     }
 
     private void searchPlace(String query) {
