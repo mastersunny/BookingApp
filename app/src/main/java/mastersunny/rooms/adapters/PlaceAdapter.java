@@ -19,6 +19,7 @@ import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.listeners.ClickListener;
 import mastersunny.rooms.R;
 import mastersunny.rooms.models.PlaceDTO;
+import mastersunny.rooms.utils.Constants;
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 /**
@@ -53,6 +54,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Constants.debugLog(TAG, "position " + position);
         switch (getItemViewType(position)) {
             case HEADER_ITEM:
                 HeaderHolder headerHolder = (HeaderHolder) holder;

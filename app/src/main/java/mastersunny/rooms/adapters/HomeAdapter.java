@@ -94,7 +94,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
         Constants.debugLog(TAG, "position " + position);
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
@@ -107,13 +106,34 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
         } else if (holder instanceof CityViewHolder) {
             CityViewHolder cityViewHolder = (CityViewHolder) holder;
-            placeAdapter.notifyDataSetChanged();
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false);
+            layoutManager.setInitialPrefetchItemCount(4);
+            cityViewHolder.rv_cities.setLayoutManager(layoutManager);
+            placeAdapter = new PlaceAdapter(mActivity, placeDTOS);
+            cityViewHolder.rv_cities.setAdapter(placeAdapter);
+            cityViewHolder.rv_cities.setRecycledViewPool(viewPool);
+
         } else if (holder instanceof PopularViewHolder) {
             PopularViewHolder popularViewHolder = (PopularViewHolder) holder;
-            popularAdapter.notifyDataSetChanged();
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false);
+            layoutManager.setInitialPrefetchItemCount(4);
+            popularViewHolder.rv_popular.setLayoutManager(layoutManager);
+            popularAdapter = new PopularAdapter(mActivity, popularPlaces);
+            popularViewHolder.rv_popular.setAdapter(popularAdapter);
+            popularViewHolder.rv_popular.setRecycledViewPool(viewPool);
+
         } else if (holder instanceof DealViewHolder) {
             DealViewHolder dealViewHolder = (DealViewHolder) holder;
-            dealAdapter.notifyDataSetChanged();
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false);
+            layoutManager.setInitialPrefetchItemCount(4);
+            dealViewHolder.rv_deals.setLayoutManager(layoutManager);
+            dealAdapter = new DealAdapter(mActivity, deals);
+            dealViewHolder.rv_deals.setAdapter(dealAdapter);
+            dealViewHolder.rv_deals.setRecycledViewPool(viewPool);
+
         }
     }
 
@@ -169,9 +189,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            rv_cities.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
-            placeAdapter = new PlaceAdapter(mActivity, popularPlaces);
-            rv_cities.setAdapter(placeAdapter);
+//            rv_cities.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
+//            placeAdapter = new PlaceAdapter(mActivity, popularPlaces);
+//            rv_cities.setAdapter(placeAdapter);
         }
     }
 
@@ -184,11 +204,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            rv_popular.setLayoutManager(new GridLayoutManager(mActivity, 2));
-            int spacingInPixels = mActivity.getResources().getDimensionPixelSize(R.dimen.spacing);
-            rv_popular.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-            popularAdapter = new PopularAdapter(mActivity, popularPlaces);
-            rv_popular.setAdapter(popularAdapter);
+//            rv_popular.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
+////            int spacingInPixels = mActivity.getResources().getDimensionPixelSize(R.dimen.spacing);
+////            rv_popular.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+//            popularAdapter = new PopularAdapter(mActivity, popularPlaces);
+//            rv_popular.setAdapter(popularAdapter);
         }
     }
 
@@ -200,12 +220,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            rv_deals.setLayoutManager(new GridLayoutManager(mActivity, 2));
-            int spacingInPixels = mActivity.getResources().getDimensionPixelSize(R.dimen.spacing);
-            rv_deals.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-            rv_deals.setNestedScrollingEnabled(false);
-            dealAdapter = new DealAdapter(mActivity, deals);
-            rv_deals.setAdapter(dealAdapter);
+//            rv_deals.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
+////            int spacingInPixels = mActivity.getResources().getDimensionPixelSize(R.dimen.spacing);
+////            rv_deals.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+//            dealAdapter = new DealAdapter(mActivity, deals);
+//            rv_deals.setAdapter(dealAdapter);
         }
     }
 
