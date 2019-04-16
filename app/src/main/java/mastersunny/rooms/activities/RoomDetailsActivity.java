@@ -4,10 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -57,6 +62,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
     private List<PlaceDTO> placeDTOS = new ArrayList<>();
 
     ImageAdapter imageAdapter;
+
+    @BindView(R.id.bottom_sheet)
+    NestedScrollView bottom_sheet;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 //
 //    @BindView(R.id.title)
 //    TextView title;
@@ -219,6 +230,31 @@ public class RoomDetailsActivity extends AppCompatActivity {
 //                guest_count3.setVisibility(View.GONE);
 //                break;
 //        }
+
+        bottom_sheet.setSmoothScrollingEnabled(true);
+        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet);
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                Constants.debugLog(TAG, "newState " + newState);
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    fab.setVisibility(View.VISIBLE);
+                } else {
+                    fab.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
     }
 
     private void updateTotalCost() {
@@ -334,4 +370,13 @@ public class RoomDetailsActivity extends AppCompatActivity {
     protected synchronized void dismissDialog() {
         progressDialogFragment.dismissAllowingStateLoss();
     }
+
+//    @OnClick({R.id.img_back})
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.img_back:
+//                finish();
+//                break;
+//        }
+//    }
 }
