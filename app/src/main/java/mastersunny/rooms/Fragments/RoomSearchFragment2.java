@@ -47,7 +47,7 @@ public class RoomSearchFragment2 extends Fragment {
     @BindView(R.id.tv_city_name)
     TextView tv_city_name;
 
-    public static PlaceDTO placeDTO;
+    public PlaceDTO placeDTO;
     private List<LocalityDTO> localityDTOS = new ArrayList<>();
     private Unbinder unbinder;
     private LocalityAdapter localityAdapter;
