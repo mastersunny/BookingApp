@@ -121,14 +121,17 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     private void switchFragmentB(PlaceDTO placeDTO) {
         shouldShowA = true;
         searchView.setQueryHint("Where in " + placeDTO.getName() + "?");
+        searchView.setFocusable(false);
         hideFragment(RoomSearchFragment1.FRAGMENT_TAG);
-        if (fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG) != null) {
-            fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG)).commit();
+        RoomSearchFragment2 fragment2 = (RoomSearchFragment2) fragmentManager.findFragmentByTag(RoomSearchFragment2.FRAGMENT_TAG);
+        if (fragment2 != null) {
+            fragmentManager.beginTransaction().show(fragment2).commit();
         } else {
-            RoomSearchFragment2 fragment2 = new RoomSearchFragment2();
-            fragment2.placeDTO = placeDTO;
+            fragment2 = new RoomSearchFragment2();
             fragmentManager.beginTransaction().add(R.id.content, fragment2, RoomSearchFragment2.FRAGMENT_TAG).commit();
         }
+        fragment2.placeDTO = placeDTO;
+        fragment2.setUserVisibleHint(true);
     }
 
     private void initLayout() {
@@ -359,7 +362,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
                 && keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
             onBackPressed();
-            return true;
+            return false;
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -368,10 +371,11 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
     @Override
     public void onBackPressed() {
-        hideKeyboard(this);
+        Constants.debugLog(TAG, "ONBACK PRESSED");
         if (shouldShowA) {
             switchFragmentA();
         } else {
+            hideKeyboard(this);
             finish();
         }
     }

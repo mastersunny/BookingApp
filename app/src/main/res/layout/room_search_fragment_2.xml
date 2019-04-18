@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="All of Dhaka" />
+            android:text="" />
 
         <ImageView
             android:layout_width="wrap_content"
