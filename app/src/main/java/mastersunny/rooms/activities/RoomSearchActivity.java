@@ -96,9 +96,18 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         ButterKnife.bind(this);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
 
-        switchFragmentA();
-
+        getIntentData();
         initLayout();
+    }
+
+    private void getIntentData() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("PLACE_DTO")) {
+            PlaceDTO placeDTO = (PlaceDTO) intent.getSerializableExtra("PLACE_DTO");
+            switchFragmentB(placeDTO);
+        } else {
+            switchFragmentA();
+        }
     }
 
     private void switchFragmentA() {
@@ -119,7 +128,6 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     }
 
     private void switchFragmentB(PlaceDTO placeDTO) {
-        shouldShowA = true;
         searchView.setQueryHint("Where in " + placeDTO.getName() + "?");
         searchView.setFocusable(false);
         hideFragment(RoomSearchFragment1.FRAGMENT_TAG);
@@ -348,6 +356,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
     @Override
     public void onPlaceSearch(PlaceDTO placeDTO) {
+        shouldShowA = true;
         switchFragmentB(placeDTO);
     }
 

@@ -70,7 +70,7 @@ public class RoomSearchFragment2 extends Fragment {
 
     @Override
     public void onResume() {
-        tv_city_name.setText("All in " + placeDTO.getName());
+        tv_city_name.setText("All of " + placeDTO.getName());
         super.onResume();
         if (localityDTOS.size() <= 0) {
             loadData();
