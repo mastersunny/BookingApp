@@ -231,7 +231,9 @@ public class RoomDetailsActivity extends AppCompatActivity {
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                     fab.setVisibility(View.VISIBLE);
                     btn_book_room.setVisibility(View.GONE);
+                    toolbar.setVisibility(View.GONE);
                 } else {
+                    toolbar.setVisibility(View.VISIBLE);
                     fab.setVisibility(View.GONE);
                     btn_book_room.setVisibility(View.VISIBLE);
                 }

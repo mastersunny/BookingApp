@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 
+import butterknife.BindView;
 import mastersunny.rooms.models.RestModel;
 import mastersunny.rooms.models.UserDTO;
 import mastersunny.rooms.R;
@@ -45,14 +47,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity2 extends AppCompatActivity {
+
+    public String TAG = "EditProfileActivity2";
+
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
 //    private TextView first_name, last_name, email;
 //    private ImageView change_profile_image;
 //    private CircleImageView profile_image;
 //    public static final int REQUEST_IMAGE_CAPTURE = 1;
 //    public static final int PICK_IMAGE = 2;
-//    private String TAG = "EditProfileActivity";
+//    private String TAG = "EditProfileActivity2";
 //    private UserDTO userDTO;
 //    private Button save_change;
 //    private ApiInterface apiInterface;
@@ -64,7 +72,7 @@ public class EditProfileActivity extends AppCompatActivity {
 //    private ProgressBar progressBar;
 //
 //    public static void start(Context context, UserDTO userDTO) {
-//        Intent intent = new Intent(context, EditProfileActivity.class);
+//        Intent intent = new Intent(context, EditProfileActivity2.class);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //        intent.putExtra(Constants.USER_DTO, userDTO);
 //        context.startActivity(intent);
@@ -73,16 +81,23 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_edit_profile);
 //        apiInterface = ApiClient.getClient().create(ApiInterface.class);
 //        getIntentData();
-//        initLayout();
+        initLayout();
 //        if (userDTO != null) {
 //            updateInfo();
 //        } else {
 //            loadData();
 //        }
+    }
+
+    private void initLayout() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
     }
 }
 
@@ -114,7 +129,7 @@ public class EditProfileActivity extends AppCompatActivity {
 //        email.setText(userDTO.getEmail());
 //        if (!TextUtils.isEmpty(userDTO.getProfileImage())) {
 //            String imgUrl = ApiClient.BASE_URL + "" + userDTO.getProfileImage();
-//            Constants.loadImage(EditProfileActivity.this, imgUrl, profile_image);
+//            Constants.loadImage(EditProfileActivity2.this, imgUrl, profile_image);
 //        }
 //    }
 //
@@ -157,10 +172,10 @@ public class EditProfileActivity extends AppCompatActivity {
 //    public void onClick(View v) {
 //        switch (v.getId()) {
 //            case R.id.back_button:
-//                EditProfileActivity.this.finish();
+//                EditProfileActivity2.this.finish();
 //                break;
 //            case R.id.change_phone_number:
-//                startActivity(new Intent(EditProfileActivity.this, ChangePhoneActivity.class));
+//                startActivity(new Intent(EditProfileActivity2.this, ChangePhoneActivity.class));
 //                break;
 //            case R.id.change_profile_image:
 //                if (!hasPermissions(this, PERMISSIONS)) {
@@ -181,7 +196,7 @@ public class EditProfileActivity extends AppCompatActivity {
 //        String emailAddress = email.getText().toString().trim();
 //
 //        if (checkString(firstName) || checkString(lastName) || checkString(emailAddress)) {
-//            Toast.makeText(EditProfileActivity.this,
+//            Toast.makeText(EditProfileActivity2.this,
 //                    " Firstname, Lastname and Email cannot be empty", Toast.LENGTH_SHORT).show();
 //            return;
 //        }
@@ -196,7 +211,7 @@ public class EditProfileActivity extends AppCompatActivity {
 //                    if (response != null && response.isSuccessful() && response.body().getMetaData().isData()) {
 //                        userDTO = response.body().getUserDTO();
 //                        updateInfo();
-//                        Toast.makeText(EditProfileActivity.this, "Profile has been updated", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(EditProfileActivity2.this, "Profile has been updated", Toast.LENGTH_SHORT).show();
 //                    }
 //                }
 //
@@ -317,7 +332,7 @@ public class EditProfileActivity extends AppCompatActivity {
 //                    if (response != null && response.isSuccessful() && response.body() != null &&
 //                            response.body().getMetaData().isSuccess()) {
 //                        Constants.debugLog(TAG, response.body().getMetaData().toString());
-//                        Constants.loadImage(EditProfileActivity.this, ApiClient.BASE_URL + response.body().getUserDTO().getProfileImage(),
+//                        Constants.loadImage(EditProfileActivity2.this, ApiClient.BASE_URL + response.body().getUserDTO().getProfileImage(),
 //                                profile_image);
 //                    }
 //                }
