@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,9 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
+
+    @BindView(R.id.btn_book_room)
+    Button btn_book_room;
 //
 //    @BindView(R.id.title)
 //    TextView title;
@@ -226,8 +230,10 @@ public class RoomDetailsActivity extends AppCompatActivity {
                 Constants.debugLog(TAG, "newState " + newState);
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                     fab.setVisibility(View.VISIBLE);
+                    btn_book_room.setVisibility(View.GONE);
                 } else {
                     fab.setVisibility(View.GONE);
+                    btn_book_room.setVisibility(View.VISIBLE);
                 }
             }
 

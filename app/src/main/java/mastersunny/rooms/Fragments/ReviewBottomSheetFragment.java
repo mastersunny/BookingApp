@@ -58,6 +58,7 @@ public class ReviewBottomSheetFragment extends BottomSheetDialogFragment {
             case R.id.tv_all_review:
                 Intent intent = new Intent(mActivity, ReviewActivity.class);
                 mActivity.startActivity(intent);
+                dismissAllowingStateLoss();
                 break;
         }
     }
