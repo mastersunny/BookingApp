@@ -23,6 +23,7 @@ import butterknife.OnClick;
 import mastersunny.rooms.Fragments.HomeFragment;
 import mastersunny.rooms.Fragments.ProfileFragment;
 import mastersunny.rooms.Fragments.RoomSearchFragment1;
+import mastersunny.rooms.Fragments.SavedFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.utils.Constants;
 
@@ -51,10 +52,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadFragment(Fragment fragment, String fragmentTAG) {
+        Log.d(TAG, fragmentTAG);
         if (fragmentManager.findFragmentByTag(fragmentTAG) != null) {
             fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag(fragmentTAG)).commit();
         } else {
-            Log.d(TAG, fragmentTAG);
             fragmentManager.beginTransaction().add(R.id.content, fragment, fragmentTAG).commit();
         }
 
@@ -64,9 +65,15 @@ public class HomeActivity extends AppCompatActivity {
 //        transaction.commit();
     }
 
-    private void hideFragment(String fragmentTag) {
-        if (fragmentManager.findFragmentByTag(fragmentTag) != null) {
-            fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(fragmentTag)).commit();
+    private void hideAllFragments() {
+        if (fragmentManager.findFragmentByTag(HomeFragment.FRAGMENT_TAG) != null) {
+            fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(HomeFragment.FRAGMENT_TAG)).commit();
+        }
+        if (fragmentManager.findFragmentByTag(SavedFragment.FRAGMENT_TAG) != null) {
+            fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(SavedFragment.FRAGMENT_TAG)).commit();
+        }
+        if (fragmentManager.findFragmentByTag(ProfileFragment.FRAGMENT_TAG) != null) {
+            fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(ProfileFragment.FRAGMENT_TAG)).commit();
         }
     }
 
@@ -124,15 +131,20 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.nav_bottom_home, R.id.nav_bottom_profile})
+    @OnClick({R.id.nav_bottom_home, R.id.nav_bottom_profile, R.id.nav_bottom_saved})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nav_bottom_home:
-                hideFragment(ProfileFragment.FRAGMENT_TAG);
+                hideAllFragments();
                 loadFragment(new HomeFragment(), HomeFragment.FRAGMENT_TAG);
                 break;
             case R.id.nav_bottom_profile:
+                hideAllFragments();
                 loadFragment(new ProfileFragment(), ProfileFragment.FRAGMENT_TAG);
+                break;
+            case R.id.nav_bottom_saved:
+                hideAllFragments();
+                loadFragment(new SavedFragment(), SavedFragment.FRAGMENT_TAG);
                 break;
         }
     }

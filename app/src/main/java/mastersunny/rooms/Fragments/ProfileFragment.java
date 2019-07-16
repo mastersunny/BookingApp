@@ -4,23 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,20 +17,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.activities.AboutUsActivity;
-import mastersunny.rooms.activities.EditProfileActivity;
-import mastersunny.rooms.activities.TransactionActivity;
-import mastersunny.rooms.adapters.PendingTransactionAdapter;
-import mastersunny.rooms.models.RestModel;
-import mastersunny.rooms.models.TransactionDTO;
-import mastersunny.rooms.models.UserDTO;
 import mastersunny.rooms.R;
-import mastersunny.rooms.rest.ApiClient;
-import mastersunny.rooms.rest.ApiInterface;
-import mastersunny.rooms.utils.CircleImageView;
-import mastersunny.rooms.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**

@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.RoomSearchActivity"></activity>
+        <activity android:name=".activities.RoomSearchActivity" />
         <activity
             android:name=".activities.FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -93,7 +93,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.ChangePhoneActivity" />
-        <activity android:name=".activities.EditProfileActivity" />
+        <activity android:name=".activities.EditProfileActivity2" />
         <activity android:name=".activities.MobileVerificationActivity" />
         <activity android:name=".activities.MobileLoginActivity" />
         <activity android:name=".activities.RegistrationActivity" />
@@ -119,9 +119,10 @@
         <activity android:name=".activities.BookingDetailsActivity" />
         <activity android:name=".activities.AboutUsActivity" />
 
-        <!--<activity android:name="com.yongbeom.aircalendar.AirCalendarDatePickerActivity"-->
-            <!--android:theme="@style/Theme.AppCompat.NoActionBar" />-->
+        <!-- <activity android:name="com.yongbeom.aircalendar.AirCalendarDatePickerActivity" -->
+        <!-- android:theme="@style/Theme.AppCompat.NoActionBar" /> -->
 
+        <activity android:name=".activities.ReviewActivity"></activity>
     </application>
 
 </manifest>

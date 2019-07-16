@@ -2,6 +2,7 @@ package mastersunny.rooms.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,15 +18,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.R;
+import mastersunny.rooms.activities.RoomListActivity;
 import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.adapters.LocalityAdapter;
 import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.LocalityDTO;
 import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
+import mastersunny.rooms.utils.Constants;
 
 
 /**
@@ -47,7 +51,7 @@ public class RoomSearchFragment2 extends Fragment {
     @BindView(R.id.tv_city_name)
     TextView tv_city_name;
 
-    public static PlaceDTO placeDTO;
+    public PlaceDTO placeDTO;
     private List<LocalityDTO> localityDTOS = new ArrayList<>();
     private Unbinder unbinder;
     private LocalityAdapter localityAdapter;
@@ -66,9 +70,18 @@ public class RoomSearchFragment2 extends Fragment {
 
     @Override
     public void onResume() {
+        tv_city_name.setText("All of " + placeDTO.getName());
         super.onResume();
         if (localityDTOS.size() <= 0) {
             loadData();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isResumed()) {
+            tv_city_name.setText("All of " + placeDTO.getName());
         }
     }
 
@@ -106,15 +119,6 @@ public class RoomSearchFragment2 extends Fragment {
                 }
             }
         });
-
-        view.findViewById(R.id.all_locality_layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (roomSearchListener != null) {
-//                    roomSearchListener.onLocalitySearch(localityDTO);
-//                }
-            }
-        });
     }
 
     private void notifyPlaceAdapter() {
@@ -140,5 +144,21 @@ public class RoomSearchFragment2 extends Fragment {
         super.onDestroyView();
         if (unbinder != null)
             unbinder.unbind();
+    }
+
+    @OnClick({R.id.all_locality_layout})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.all_locality_layout:
+                startRoomListActivity();
+                break;
+        }
+    }
+
+    private void startRoomListActivity() {
+        Intent intent = new Intent(mActivity, RoomListActivity.class);
+        startActivity(intent);
+        mActivity.overridePendingTransition(R.anim.animation_enter,
+                R.anim.animation_leave);
     }
 }

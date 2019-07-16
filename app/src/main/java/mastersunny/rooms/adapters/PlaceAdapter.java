@@ -77,9 +77,9 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(mActivity, RoomSearchActivity.class);
-//                        intent.putExtra("PLACE_DTO", dto);
-//                        mActivity.startActivity(intent);
+                        Intent intent = new Intent(mActivity, RoomSearchActivity.class);
+                        intent.putExtra("PLACE_DTO", dto);
+                        mActivity.startActivity(intent);
                     }
                 });
                 break;

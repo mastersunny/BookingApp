@@ -12,36 +12,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mastersunny.rooms.Fragments.ReviewBottomSheetFragment;
 import mastersunny.rooms.Fragments.ProgressDialogFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.ImageAdapter;
 import mastersunny.rooms.models.PlaceDTO;
-import mastersunny.rooms.models.RoomBookingDTO;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class RoomDetailsActivity extends AppCompatActivity {
 
@@ -68,6 +56,9 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
+
+    @BindView(R.id.btn_book_room)
+    Button btn_book_room;
 //
 //    @BindView(R.id.title)
 //    TextView title;
@@ -239,8 +230,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
                 Constants.debugLog(TAG, "newState " + newState);
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                     fab.setVisibility(View.VISIBLE);
+                    btn_book_room.setVisibility(View.GONE);
+                    toolbar.setVisibility(View.GONE);
                 } else {
+                    toolbar.setVisibility(View.VISIBLE);
                     fab.setVisibility(View.GONE);
+                    btn_book_room.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -299,6 +294,16 @@ public class RoomDetailsActivity extends AppCompatActivity {
 //                break;
 //        }
 //    }
+
+    @OnClick({R.id.rating_layout})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rating_layout:
+                ReviewBottomSheetFragment reviewBottomSheetFragment = new ReviewBottomSheetFragment();
+                reviewBottomSheetFragment.show(getSupportFragmentManager(), reviewBottomSheetFragment.getTag());
+                break;
+        }
+    }
 
     private void deselectAll() {
 //        guest_count1.setSelected(false);

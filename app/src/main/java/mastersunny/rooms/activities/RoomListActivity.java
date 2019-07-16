@@ -11,6 +11,7 @@ import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -167,7 +168,7 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     private void initLayout() {
         roomDTOS = new ArrayList<>();
         rv_rooms.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rv_rooms.setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(5f)));
+        rv_rooms.setItemAnimator(new SlideInUpAnimator(new LinearInterpolator()));
         roomAdapter = new RoomAdapter(this);
         rv_rooms.setAdapter(roomAdapter);
 
