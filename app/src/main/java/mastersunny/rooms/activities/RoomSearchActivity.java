@@ -36,7 +36,7 @@ import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.gmap.Prediction;
 import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.LocalityDTO;
-import mastersunny.rooms.models.PlaceDTO;
+import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
@@ -103,7 +103,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     private void getIntentData() {
         Intent intent = getIntent();
         if (intent.hasExtra("PLACE_DTO")) {
-            PlaceDTO placeDTO = (PlaceDTO) intent.getSerializableExtra("PLACE_DTO");
+            DivisionResponseDto placeDTO = (DivisionResponseDto) intent.getSerializableExtra("PLACE_DTO");
             switchFragmentB(placeDTO);
         } else {
             switchFragmentA();
@@ -127,7 +127,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         }
     }
 
-    private void switchFragmentB(PlaceDTO placeDTO) {
+    private void switchFragmentB(DivisionResponseDto placeDTO) {
         searchView.setQueryHint("Where in " + placeDTO.getName() + "?");
         searchView.setFocusable(false);
         hideFragment(RoomSearchFragment1.FRAGMENT_TAG);
@@ -355,7 +355,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     }
 
     @Override
-    public void onPlaceSearch(PlaceDTO placeDTO) {
+    public void onPlaceSearch(DivisionResponseDto placeDTO) {
         shouldShowA = true;
         switchFragmentB(placeDTO);
     }

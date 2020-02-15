@@ -14,10 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.activities.RoomListActivity;
-import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.gmap.Prediction;
-import mastersunny.rooms.listeners.RoomSearchListener;
-import mastersunny.rooms.models.PlaceDTO;
 
 /**
  * Created by sunnychowdhury on 1/19/18.

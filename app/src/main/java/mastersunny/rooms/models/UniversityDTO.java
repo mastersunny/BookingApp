@@ -10,7 +10,7 @@ public class UniversityDTO implements Serializable {
 
     private String imageUrl;
 
-    private PlaceDTO place;
+    private DivisionResponseDto place;
 
     public Long getId() {
         return id;
@@ -28,11 +28,11 @@ public class UniversityDTO implements Serializable {
         this.name = name;
     }
 
-    public PlaceDTO getPlace() {
+    public DivisionResponseDto getPlace() {
         return place;
     }
 
-    public void setPlace(PlaceDTO place) {
+    public void setPlace(DivisionResponseDto place) {
         this.place = place;
     }
 

@@ -1,17 +1,16 @@
 package mastersunny.rooms.rest;
 
-import com.google.gson.JsonObject;
-
 import java.util.List;
 
 import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.gmap.GooglePlaceDetails;
 import mastersunny.rooms.models.AccessModel;
+import mastersunny.rooms.models.ApiResponse;
 import mastersunny.rooms.models.CategoryDTO;
 import mastersunny.rooms.models.ExamDTO;
 import mastersunny.rooms.models.MoviesResponse;
 import mastersunny.rooms.models.OfferDTO;
-import mastersunny.rooms.models.PlaceDTO;
+import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.RestModel;
 import mastersunny.rooms.models.RoomBookingDTO;
 import mastersunny.rooms.models.RoomDTO;
@@ -144,9 +143,9 @@ public interface ApiInterface {
     Call<String> sendRegistrationToServer(@Field("fcm_token") String fcmToken);
 
     @GET(ApiClient.APP_NAME + "api/v1/places")
-    Call<List<PlaceDTO>> getPlaces(@Query("page") int page,
-                                   @Query("size") int size,
-                                   @Query("sort") String sort);
+    Call<List<DivisionResponseDto>> getPlaces(@Query("page") int page,
+                                              @Query("size") int size,
+                                              @Query("sort") String sort);
 
     @GET(ApiClient.APP_NAME + "api/v1/exams")
     Call<List<ExamDTO>> getExams(@Query("page") int page,
@@ -187,5 +186,9 @@ public interface ApiInterface {
     Call<GooglePlaceDetails> getPlaceDetailsFromGoogle(@Query("placeid") String placeId,
                                                        @Query("fields") String fields,
                                                        @Query("key") String apiKey);
+
+    @GET("api/divisions")
+    Call<ApiResponse> getDivisions();
+
 
 }

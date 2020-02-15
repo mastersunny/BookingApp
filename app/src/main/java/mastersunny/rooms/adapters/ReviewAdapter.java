@@ -5,15 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.listeners.RoomSearchListener;
-import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
 
 /**
@@ -43,7 +39,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 //        MainHolder mainHolder = (MainHolder) holder;
-//        final PlaceDTO dto = placeDTOS.get(position);
+//        final DivisionResponseDto dto = placeDTOS.get(position);
 //        mainHolder.name.setText(dto.getName());
 //        mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override

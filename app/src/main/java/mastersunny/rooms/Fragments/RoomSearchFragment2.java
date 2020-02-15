@@ -26,10 +26,9 @@ import mastersunny.rooms.activities.RoomListActivity;
 import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.adapters.LocalityAdapter;
 import mastersunny.rooms.listeners.RoomSearchListener;
+import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.LocalityDTO;
-import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
-import mastersunny.rooms.utils.Constants;
 
 
 /**
@@ -51,7 +50,7 @@ public class RoomSearchFragment2 extends Fragment {
     @BindView(R.id.tv_city_name)
     TextView tv_city_name;
 
-    public PlaceDTO placeDTO;
+    public DivisionResponseDto placeDTO;
     private List<LocalityDTO> localityDTOS = new ArrayList<>();
     private Unbinder unbinder;
     private LocalityAdapter localityAdapter;
@@ -108,7 +107,7 @@ public class RoomSearchFragment2 extends Fragment {
             }
 
             @Override
-            public void onPlaceSearch(PlaceDTO placeDTO) {
+            public void onPlaceSearch(DivisionResponseDto placeDTO) {
 
             }
 

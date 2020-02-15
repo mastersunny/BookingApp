@@ -25,7 +25,7 @@ import mastersunny.rooms.Fragments.ReviewBottomSheetFragment;
 import mastersunny.rooms.Fragments.ProgressDialogFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.ImageAdapter;
-import mastersunny.rooms.models.PlaceDTO;
+import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
@@ -47,7 +47,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
     @BindView(R.id.room_images)
     RecyclerView room_images;
 
-    private List<PlaceDTO> placeDTOS = new ArrayList<>();
+    private List<DivisionResponseDto> placeDTOS = new ArrayList<>();
 
     ImageAdapter imageAdapter;
 
@@ -147,13 +147,13 @@ public class RoomDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_back);
 
-        placeDTOS.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Sylhet", "সিলেট", "sylhet"));
-        placeDTOS.add(new PlaceDTO("Rajshahi", "রাজশাহী", "rajshahi"));
-        placeDTOS.add(new PlaceDTO("Bogura", "বগুড়া", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Khulna", "খুলনা", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Sylhet", "সিলেট", "sylhet"));
+        placeDTOS.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "rajshahi"));
+        placeDTOS.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
 
         room_images.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         imageAdapter = new ImageAdapter(this, placeDTOS);

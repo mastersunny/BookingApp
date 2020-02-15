@@ -1,20 +1,13 @@
 package mastersunny.rooms.Fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.IntentSender;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +34,8 @@ import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.adapters.SearchAdapter;
 import mastersunny.rooms.listeners.GpsListener;
 import mastersunny.rooms.listeners.RoomSearchListener;
+import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.LocalityDTO;
-import mastersunny.rooms.models.PlaceDTO;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.utils.Constants;
 
@@ -64,7 +57,7 @@ public class RoomSearchFragment1 extends Fragment {
     RecyclerView rv_places;
 
     private List<RoomDTO> roomDTOS = new ArrayList<>();
-    private List<PlaceDTO> placeDTOS = new ArrayList<>();
+    private List<DivisionResponseDto> placeDTOS = new ArrayList<>();
     private Unbinder unbinder;
     private SearchAdapter searchAdapter;
     private RoomSearchListener roomSearchListener;
@@ -113,7 +106,7 @@ public class RoomSearchFragment1 extends Fragment {
             }
 
             @Override
-            public void onPlaceSearch(PlaceDTO placeDTO) {
+            public void onPlaceSearch(DivisionResponseDto placeDTO) {
                 if (roomSearchListener != null) {
                     roomSearchListener.onPlaceSearch(placeDTO);
                 }
@@ -212,13 +205,13 @@ public class RoomSearchFragment1 extends Fragment {
         roomDTOS.add(new RoomDTO());
         roomDTOS.add(new RoomDTO());
 
-        placeDTOS.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Sylhet", "সিলেট", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Rajshahi", "রাজশাহী", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Bogura", "বগুড়া", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Khulna", "খুলনা", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Sylhet", "সিলেট", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
+        placeDTOS.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
 
         notifyPlaceAdapter();
     }

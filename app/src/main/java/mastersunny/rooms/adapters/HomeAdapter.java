@@ -10,33 +10,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.activities.RoomSearchActivity;
-import mastersunny.rooms.listeners.RoomSearchListener;
-import mastersunny.rooms.models.ItemType;
-import mastersunny.rooms.models.PlaceDTO;
-import mastersunny.rooms.models.RoomDTO;
+import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.utils.Constants;
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private String TAG = "HomeAdapter";
     PlaceAdapter placeAdapter;
-    private List<PlaceDTO> placeDTOS;
+    private List<DivisionResponseDto> divisions;
 
     PopularAdapter popularAdapter;
-    private List<PlaceDTO> popularPlaces;
+    private List<DivisionResponseDto> popularPlaces;
 
     DealAdapter dealAdapter;
-    private List<PlaceDTO> deals;
+    private List<DivisionResponseDto> deals;
 
     private Activity mActivity;
 
@@ -47,16 +41,17 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int TYPE_POPULAR = 3;
     public static final int TYPE_DEAL = 4;
 
-    public void setCities(List<PlaceDTO> placeDTOS) {
-        this.placeDTOS = placeDTOS;
+    public void setDivisions(List<DivisionResponseDto> divisions) {
+        this.divisions = divisions;
+        notifyDataSetChanged();
     }
 
-    public void setPopularPlaces(List<PlaceDTO> popularPlaces) {
+    public void setPopularPlaces(List<DivisionResponseDto> popularPlaces) {
         this.popularPlaces = popularPlaces;
 
     }
 
-    public void setDeals(List<PlaceDTO> deals) {
+    public void setDeals(List<DivisionResponseDto> deals) {
         this.deals = deals;
     }
 
@@ -105,8 +100,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
         } else if (holder instanceof CityViewHolder) {
-            CityViewHolder cityViewHolder = (CityViewHolder) holder;
-            placeAdapter.notifyDataSetChanged();
+            placeAdapter.setDivisions(divisions);
         } else if (holder instanceof PopularViewHolder) {
             PopularViewHolder popularViewHolder = (PopularViewHolder) holder;
             popularAdapter.notifyDataSetChanged();
@@ -138,7 +132,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemCount() {
         int itemSize = 1;
 
-        if (placeDTOS != null && placeDTOS.size() > 0)
+        if (divisions != null && divisions.size() > 0)
             itemSize++;
         if (popularPlaces != null && popularPlaces.size() > 0)
             itemSize++;
@@ -171,7 +165,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false);
             layoutManager.setInitialPrefetchItemCount(4);
             rv_cities.setLayoutManager(layoutManager);
-            placeAdapter = new PlaceAdapter(mActivity, placeDTOS);
+            placeAdapter = new PlaceAdapter(mActivity);
             rv_cities.setAdapter(placeAdapter);
         }
     }

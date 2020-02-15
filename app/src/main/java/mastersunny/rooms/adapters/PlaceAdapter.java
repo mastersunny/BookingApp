@@ -18,7 +18,8 @@ import butterknife.ButterKnife;
 import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.listeners.ClickListener;
 import mastersunny.rooms.R;
-import mastersunny.rooms.models.PlaceDTO;
+import mastersunny.rooms.models.DivisionResponseDto;
+import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.utils.Constants;
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
@@ -30,15 +31,19 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private String TAG = "PlaceAdapter";
 
-    private List<PlaceDTO> placeDTOS;
+    private List<DivisionResponseDto> divisions;
     private Activity mActivity;
     public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
     private ClickListener clickListener;
 
-    public PlaceAdapter(Activity mActivity, List<PlaceDTO> placeDTOS) {
+    public PlaceAdapter(Activity mActivity) {
         this.mActivity = mActivity;
-        this.placeDTOS = placeDTOS;
+    }
+
+    public void setDivisions(List<DivisionResponseDto> divisions) {
+        this.divisions = divisions;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -54,7 +59,6 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Constants.debugLog(TAG, "position " + position);
         switch (getItemViewType(position)) {
             case HEADER_ITEM:
                 HeaderHolder headerHolder = (HeaderHolder) holder;
@@ -69,11 +73,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 break;
             case MAIN_ITEM:
                 MainHolder mainHolder = (MainHolder) holder;
-                final PlaceDTO dto = placeDTOS.get(position - 1);
+                final DivisionResponseDto dto = divisions.get(position - 1);
                 mainHolder.place_name.setText(dto.getName());
-                int res = mActivity.getResources().getIdentifier(mActivity.getPackageName()
-                        + ":drawable/" + dto.getImageUrl(), null, null);
-                Glide.with(mActivity).load(res).into(mainHolder.place_image);
+                if (dto.getImageUrl() != null) {
+                    Glide.with(mActivity).load(ApiClient.BASE_URL + dto.getImageUrl())
+                            .into(mainHolder.place_image);
+                }
                 mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -97,8 +102,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return placeDTOS == null ? 1 : placeDTOS.size() + 1;
-//        return placeDTOS == null ? 0 : placeDTOS.size();
+        return divisions == null ? 1 : divisions.size() + 1;
     }
 
     static class MainHolder extends RecyclerView.ViewHolder {

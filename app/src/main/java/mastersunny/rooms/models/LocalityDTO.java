@@ -77,7 +77,7 @@ public class LocalityDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "PlaceDTO{" +
+        return "DivisionResponseDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", bnName='" + bnName + '\'' +

@@ -1,45 +1,33 @@
 package mastersunny.rooms.Fragments;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.R;
-import mastersunny.rooms.activities.HomeActivity;
-import mastersunny.rooms.activities.RoomSearchActivity;
-import mastersunny.rooms.adapters.DealAdapter;
 import mastersunny.rooms.adapters.HomeAdapter;
-import mastersunny.rooms.adapters.PlaceAdapter;
-import mastersunny.rooms.adapters.PopularAdapter;
-import mastersunny.rooms.adapters.SpacesItemDecoration;
-import mastersunny.rooms.models.PlaceDTO;
+import mastersunny.rooms.models.ApiResponse;
+import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -62,9 +50,9 @@ public class HomeFragment extends Fragment {
 
     HomeAdapter homeAdapter;
 
-    private List<PlaceDTO> placeDTOS = new ArrayList<>();
-    private List<PlaceDTO> popularPlaces = new ArrayList<>();
-    private List<PlaceDTO> deals = new ArrayList<>();
+    private List<DivisionResponseDto> divisions = new ArrayList<>();
+    private List<DivisionResponseDto> popularPlaces = new ArrayList<>();
+    private List<DivisionResponseDto> deals = new ArrayList<>();
 
 
     @Override
@@ -117,7 +105,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (placeDTOS.size() <= 0) {
+        if (divisions.size() <= 0) {
             loadCityData();
         }
         if (popularPlaces.size() <= 0) {
@@ -130,38 +118,59 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadCityData() {
-        placeDTOS.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Sylhet", "সিলেট", "sylhet"));
-        placeDTOS.add(new PlaceDTO("Rajshahi", "রাজশাহী", "rajshahi"));
-        placeDTOS.add(new PlaceDTO("Bogura", "বগুড়া", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Khulna", "খুলনা", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
-        placeDTOS.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Sylhet", "সিলেট", "sylhet"));
+//        placeDTOS.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "rajshahi"));
+//        placeDTOS.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
+        apiInterface.getDivisions().enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                Constants.debugLog(TAG, response + "");
+                if (response.isSuccessful() && response.body() != null) {
+                    Constants.debugLog(TAG, response.body().toString());
+                    updateDivisionData(response.body().getDivisions());
+                }
+            }
 
-        homeAdapter.setCities(placeDTOS);
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+            }
+        });
+
+
+    }
+
+    private void updateDivisionData(List<DivisionResponseDto> divisions) {
+        this.divisions.clear();
+        this.divisions.addAll(divisions);
+        homeAdapter.setDivisions(this.divisions);
     }
 
     private void loadPopularData() {
-        popularPlaces.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
-        popularPlaces.add(new PlaceDTO("Sylhet", "সিলেট", "dhaka"));
-        popularPlaces.add(new PlaceDTO("Rajshahi", "রাজশাহী", "dhaka"));
-        popularPlaces.add(new PlaceDTO("Bogura", "বগুড়া", "dhaka"));
-        popularPlaces.add(new PlaceDTO("Khulna", "খুলনা", "dhaka"));
-        popularPlaces.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
-        popularPlaces.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
+        popularPlaces.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
+        popularPlaces.add(new DivisionResponseDto("Sylhet", "সিলেট", "dhaka"));
+        popularPlaces.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "dhaka"));
+        popularPlaces.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
+        popularPlaces.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
+        popularPlaces.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
+        popularPlaces.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
 
         homeAdapter.setPopularPlaces(popularPlaces);
     }
 
 
     private void loadDealData() {
-        deals.add(new PlaceDTO("Dhaka", "ঢাকা", "dhaka"));
-        deals.add(new PlaceDTO("Sylhet", "সিলেট", "dhaka"));
-        deals.add(new PlaceDTO("Rajshahi", "রাজশাহী", "dhaka"));
-        deals.add(new PlaceDTO("Bogura", "বগুড়া", "dhaka"));
-        deals.add(new PlaceDTO("Khulna", "খুলনা", "dhaka"));
-        deals.add(new PlaceDTO("Chottogram", "চট্টগ্রাম", "dhaka"));
-        deals.add(new PlaceDTO("Barishal", "বরিশাল", "dhaka"));
+        deals.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
+        deals.add(new DivisionResponseDto("Sylhet", "সিলেট", "dhaka"));
+        deals.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "dhaka"));
+        deals.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
+        deals.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
+        deals.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
+        deals.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
 
         homeAdapter.setDeals(deals);
     }

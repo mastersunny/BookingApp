@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Apon Hotel</string>
+    <string name="app_name">HotelReservation</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,7 +13,7 @@
         <item>About</item>
     </string-array>
 
-    <string name="company_name">Inflack Limited</string>
+    <string name="company_name"></string>
     <string name="user_name_text">Anonymous</string>
     <string name="congratulation_text">Congratulations!</string>
     <string name="nav_about">About</string>

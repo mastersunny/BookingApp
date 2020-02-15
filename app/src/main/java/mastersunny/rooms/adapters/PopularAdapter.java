@@ -11,10 +11,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.listeners.ClickListener;
-import mastersunny.rooms.models.PlaceDTO;
+import mastersunny.rooms.models.DivisionResponseDto;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
@@ -24,11 +23,11 @@ public class PopularAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private String TAG = "PopularAdapter";
 
-    private List<PlaceDTO> placeDTOS;
+    private List<DivisionResponseDto> placeDTOS;
     private Activity mActivity;
     private ClickListener clickListener;
 
-    public PopularAdapter(Activity mActivity, List<PlaceDTO> placeDTOS) {
+    public PopularAdapter(Activity mActivity, List<DivisionResponseDto> placeDTOS) {
         this.mActivity = mActivity;
         this.placeDTOS = placeDTOS;
     }
@@ -42,7 +41,7 @@ public class PopularAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MainHolder mainHolder = (MainHolder) holder;
-        final PlaceDTO dto = placeDTOS.get(position);
+        final DivisionResponseDto dto = placeDTOS.get(position);
 //        mainHolder.place_name.setText(dto.getName());
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
