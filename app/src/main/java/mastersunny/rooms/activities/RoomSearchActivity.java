@@ -35,7 +35,7 @@ import mastersunny.rooms.adapters.MapAdapter;
 import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.gmap.Prediction;
 import mastersunny.rooms.listeners.RoomSearchListener;
-import mastersunny.rooms.models.LocalityDTO;
+import mastersunny.rooms.models.DistrictResponseDto;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.rest.ApiClient;
@@ -361,7 +361,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     }
 
     @Override
-    public void onLocalitySearch(LocalityDTO localityDTO) {
+    public void onLocalitySearch(DistrictResponseDto localityDTO) {
         startRoomListActivity();
     }
 

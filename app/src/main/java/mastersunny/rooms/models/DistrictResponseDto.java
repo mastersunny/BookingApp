@@ -1,27 +1,33 @@
 package mastersunny.rooms.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocalityDTO implements Serializable {
+public class DistrictResponseDto implements Serializable {
 
+    @SerializedName("id")
     private Long id;
 
+    @SerializedName("name")
     private String name;
 
+    @SerializedName("bn_name")
     private String bnName;
 
+    @SerializedName("img_url")
     private String imageUrl;
 
     private double latitude;
 
     private double longitude;
 
-    public LocalityDTO() {
+    public DistrictResponseDto() {
     }
 
-    public LocalityDTO(String name, String bnName, String imageUrl) {
+    public DistrictResponseDto(String name, String bnName, String imageUrl) {
         this.name = name;
         this.bnName = bnName;
         this.imageUrl = imageUrl;

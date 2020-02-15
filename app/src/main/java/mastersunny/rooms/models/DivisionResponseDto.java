@@ -3,7 +3,6 @@ package mastersunny.rooms.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class DivisionResponseDto implements Serializable {
 
     private double longitude;
 
-    private List<LocalityDTO> localityDTOS = Collections.EMPTY_LIST;
+    private List<DistrictResponseDto> localityDTOS = Collections.EMPTY_LIST;
 
     public DivisionResponseDto() {
     }
@@ -84,11 +83,11 @@ public class DivisionResponseDto implements Serializable {
         this.longitude = longitude;
     }
 
-    public List<LocalityDTO> getLocalityDTOS() {
+    public List<DistrictResponseDto> getLocalityDTOS() {
         return localityDTOS;
     }
 
-    public void setLocalityDTOS(List<LocalityDTO> localityDTOS) {
+    public void setLocalityDTOS(List<DistrictResponseDto> localityDTOS) {
         this.localityDTOS = localityDTOS;
     }
 

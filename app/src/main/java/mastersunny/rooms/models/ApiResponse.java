@@ -13,6 +13,9 @@ public class ApiResponse implements Serializable {
     @SerializedName("divisions")
     List<DivisionResponseDto> divisions;
 
+    @SerializedName("districts")
+    List<DistrictResponseDto> districts;
+
     public String getMessage() {
         return message;
     }
@@ -29,11 +32,20 @@ public class ApiResponse implements Serializable {
         this.divisions = divisions;
     }
 
+    public List<DistrictResponseDto> getDistricts() {
+        return districts;
+    }
+
+    public void setDistricts(List<DistrictResponseDto> districts) {
+        this.districts = districts;
+    }
+
     @Override
     public String toString() {
         return "ApiResponse{" +
                 "message='" + message + '\'' +
                 ", divisions=" + divisions +
+                ", districts=" + districts +
                 '}';
     }
 }

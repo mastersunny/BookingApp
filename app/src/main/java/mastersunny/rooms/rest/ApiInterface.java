@@ -190,5 +190,8 @@ public interface ApiInterface {
     @GET("api/divisions")
     Call<ApiResponse> getDivisions();
 
+    @GET("api/districts")
+    Call<ApiResponse> getDistricts(@Query("division_id") Long divisionId);
+
 
 }

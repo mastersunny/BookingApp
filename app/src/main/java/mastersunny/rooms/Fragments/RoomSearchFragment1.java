@@ -35,7 +35,7 @@ import mastersunny.rooms.adapters.SearchAdapter;
 import mastersunny.rooms.listeners.GpsListener;
 import mastersunny.rooms.listeners.RoomSearchListener;
 import mastersunny.rooms.models.DivisionResponseDto;
-import mastersunny.rooms.models.LocalityDTO;
+import mastersunny.rooms.models.DistrictResponseDto;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.utils.Constants;
 
@@ -114,7 +114,7 @@ public class RoomSearchFragment1 extends Fragment {
             }
 
             @Override
-            public void onLocalitySearch(LocalityDTO localityDTO) {
+            public void onLocalitySearch(DistrictResponseDto localityDTO) {
 
             }
         });

@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.listeners.RoomSearchListener;
-import mastersunny.rooms.models.LocalityDTO;
+import mastersunny.rooms.models.DistrictResponseDto;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
@@ -23,12 +23,12 @@ public class LocalityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private String TAG = "LocalityAdapter";
 
-    private List<LocalityDTO> localityDTOS;
+    private List<DistrictResponseDto> localityDTOS;
     private Activity mActivity;
 
     private RoomSearchListener roomSearchListener;
 
-    public LocalityAdapter(Activity mActivity, List<LocalityDTO> localityDTOS) {
+    public LocalityAdapter(Activity mActivity, List<DistrictResponseDto> localityDTOS) {
         this.mActivity = mActivity;
         this.localityDTOS = localityDTOS;
     }
@@ -42,7 +42,7 @@ public class LocalityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MainHolder mainHolder = (MainHolder) holder;
-        final LocalityDTO localityDTO = localityDTOS.get(position);
+        final DistrictResponseDto localityDTO = localityDTOS.get(position);
         mainHolder.name.setText(localityDTO.getName());
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

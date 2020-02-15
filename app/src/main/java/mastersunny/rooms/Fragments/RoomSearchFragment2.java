@@ -26,9 +26,16 @@ import mastersunny.rooms.activities.RoomListActivity;
 import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.adapters.LocalityAdapter;
 import mastersunny.rooms.listeners.RoomSearchListener;
+import mastersunny.rooms.models.ApiResponse;
 import mastersunny.rooms.models.DivisionResponseDto;
-import mastersunny.rooms.models.LocalityDTO;
+import mastersunny.rooms.models.DistrictResponseDto;
 import mastersunny.rooms.models.RoomDTO;
+import mastersunny.rooms.rest.ApiClient;
+import mastersunny.rooms.rest.ApiInterface;
+import mastersunny.rooms.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -51,10 +58,11 @@ public class RoomSearchFragment2 extends Fragment {
     TextView tv_city_name;
 
     public DivisionResponseDto placeDTO;
-    private List<LocalityDTO> localityDTOS = new ArrayList<>();
+    private List<DistrictResponseDto> districts = new ArrayList<>();
     private Unbinder unbinder;
     private LocalityAdapter localityAdapter;
     private RoomSearchListener roomSearchListener;
+    private ApiInterface apiInterface;
 
     @Override
     public void onAttach(Context context) {
@@ -71,8 +79,8 @@ public class RoomSearchFragment2 extends Fragment {
     public void onResume() {
         tv_city_name.setText("All of " + placeDTO.getName());
         super.onResume();
-        if (localityDTOS.size() <= 0) {
-            loadData();
+        if (districts.size() <= 0) {
+            loadDistricts();
         }
     }
 
@@ -90,6 +98,7 @@ public class RoomSearchFragment2 extends Fragment {
         if (view == null) {
             view = inflater.inflate(R.layout.room_search_fragment_2, container, false);
             unbinder = ButterKnife.bind(this, view);
+            apiInterface = ApiClient.getClient().create(ApiInterface.class);
             initLayout();
         }
 
@@ -98,7 +107,7 @@ public class RoomSearchFragment2 extends Fragment {
 
     private void initLayout() {
         rv_places.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        localityAdapter = new LocalityAdapter(mActivity, localityDTOS);
+        localityAdapter = new LocalityAdapter(mActivity, districts);
         rv_places.setAdapter(localityAdapter);
         localityAdapter.setItemSelectListener(new RoomSearchListener() {
             @Override
@@ -112,7 +121,7 @@ public class RoomSearchFragment2 extends Fragment {
             }
 
             @Override
-            public void onLocalitySearch(LocalityDTO localityDTO) {
+            public void onLocalitySearch(DistrictResponseDto localityDTO) {
                 if (roomSearchListener != null) {
                     roomSearchListener.onLocalitySearch(localityDTO);
                 }
@@ -127,15 +136,30 @@ public class RoomSearchFragment2 extends Fragment {
     }
 
 
-    private void loadData() {
-        localityDTOS.add(new LocalityDTO("Dhamrai", "ঢাকা", "dhaka"));
-        localityDTOS.add(new LocalityDTO("Dohar", "সিলেট", "dhaka"));
-        localityDTOS.add(new LocalityDTO("Keraniganj ", "রাজশাহী", "dhaka"));
-        localityDTOS.add(new LocalityDTO("Nawabganj", "বগুড়া", "dhaka"));
-        localityDTOS.add(new LocalityDTO("Savar", "খুলনা", "dhaka"));
-        localityDTOS.add(new LocalityDTO("Tejgaon", "চট্টগ্রাম", "dhaka"));
+    private void loadDistricts() {
+        apiInterface.getDistricts(placeDTO.getId()).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                Constants.debugLog(TAG, response + "");
+                if (response.isSuccessful() && response.body() != null) {
+                    Constants.debugLog(TAG, response.body().getDistricts().toString());
+                    updateDistricts(response.body().getDistricts());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+            }
+        });
 
         notifyPlaceAdapter();
+    }
+
+    private void updateDistricts(List<DistrictResponseDto> districts) {
+        this.districts.clear();
+        this.districts.addAll(districts);
+        localityAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -83,6 +83,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mActivity, RoomSearchActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         intent.putExtra("PLACE_DTO", dto);
                         mActivity.startActivity(intent);
                     }

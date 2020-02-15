@@ -1,6 +1,6 @@
 package mastersunny.rooms.listeners;
 
-import mastersunny.rooms.models.LocalityDTO;
+import mastersunny.rooms.models.DistrictResponseDto;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.RoomDTO;
 
@@ -10,5 +10,5 @@ public interface RoomSearchListener {
 
     void onPlaceSearch(DivisionResponseDto placeDTO);
 
-    void onLocalitySearch(LocalityDTO localityDTO);
+    void onLocalitySearch(DistrictResponseDto localityDTO);
 }
