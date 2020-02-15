@@ -105,20 +105,24 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         if (intent.hasExtra("PLACE_DTO")) {
             DivisionResponseDto placeDTO = (DivisionResponseDto) intent.getSerializableExtra("PLACE_DTO");
             switchFragmentB(placeDTO);
-        } else {
-            switchFragmentA();
+        } else if (intent.hasExtra("DIVISION_DTOS")) {
+            switchFragmentA((List<DivisionResponseDto>) intent.getSerializableExtra("DIVISION_DTOS"));
         }
     }
 
-    private void switchFragmentA() {
+    private void switchFragmentA(List<DivisionResponseDto> divisions) {
         shouldShowA = false;
         searchView.setQueryHint(getResources().getString(R.string.search_text));
         hideFragment(RoomSearchFragment2.FRAGMENT_TAG);
-        if (fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG) != null) {
-            fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG)).commit();
+        RoomSearchFragment1 fragment1 = (RoomSearchFragment1) fragmentManager.findFragmentByTag(RoomSearchFragment1.FRAGMENT_TAG);
+        if (fragment1 != null) {
+            fragmentManager.beginTransaction().show(fragment1).commit();
         } else {
-            fragmentManager.beginTransaction().add(R.id.content, new RoomSearchFragment1(), RoomSearchFragment1.FRAGMENT_TAG).commit();
+            fragment1 = new RoomSearchFragment1();
+            fragmentManager.beginTransaction().add(R.id.content, fragment1, RoomSearchFragment1.FRAGMENT_TAG).commit();
         }
+        fragment1.divisions = divisions;
+
     }
 
     private void hideFragment(String fragmentTag) {
@@ -382,7 +386,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     public void onBackPressed() {
         Constants.debugLog(TAG, "ONBACK PRESSED");
         if (shouldShowA) {
-            switchFragmentA();
+            switchFragmentA((List<DivisionResponseDto>) getIntent().getSerializableExtra("DIVISION_DTOS"));
         } else {
             hideKeyboard(this);
             finish();

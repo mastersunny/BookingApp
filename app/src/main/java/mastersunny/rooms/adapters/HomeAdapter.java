@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -96,6 +97,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mActivity, RoomSearchActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("DIVISION_DTOS", (Serializable) divisions);
                     mActivity.startActivity(intent);
                 }
             });

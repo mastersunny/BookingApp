@@ -57,7 +57,7 @@ public class RoomSearchFragment1 extends Fragment {
     RecyclerView rv_places;
 
     private List<RoomDTO> roomDTOS = new ArrayList<>();
-    private List<DivisionResponseDto> placeDTOS = new ArrayList<>();
+    public List<DivisionResponseDto> divisions;
     private Unbinder unbinder;
     private SearchAdapter searchAdapter;
     private RoomSearchListener roomSearchListener;
@@ -95,7 +95,7 @@ public class RoomSearchFragment1 extends Fragment {
 
     private void initLayout() {
         rv_places.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        searchAdapter = new SearchAdapter(mActivity, roomDTOS, placeDTOS);
+        searchAdapter = new SearchAdapter(mActivity, roomDTOS, divisions);
         rv_places.setAdapter(searchAdapter);
         searchAdapter.setItemSelectListener(new RoomSearchListener() {
             @Override
@@ -205,13 +205,13 @@ public class RoomSearchFragment1 extends Fragment {
         roomDTOS.add(new RoomDTO());
         roomDTOS.add(new RoomDTO());
 
-        placeDTOS.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
-        placeDTOS.add(new DivisionResponseDto("Sylhet", "সিলেট", "dhaka"));
-        placeDTOS.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "dhaka"));
-        placeDTOS.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
-        placeDTOS.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
-        placeDTOS.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
-        placeDTOS.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Sylhet", "সিলেট", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
+//        placeDTOS.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
 
         notifyPlaceAdapter();
     }
