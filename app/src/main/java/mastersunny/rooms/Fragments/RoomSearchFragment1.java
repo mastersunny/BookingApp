@@ -1,10 +1,17 @@
 package mastersunny.rooms.Fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,6 +68,10 @@ public class RoomSearchFragment1 extends Fragment {
     private Unbinder unbinder;
     private SearchAdapter searchAdapter;
     private RoomSearchListener roomSearchListener;
+
+    public static final int REQUEST_LOCATION_ON = 1;
+
+    LocationManager mLocationManager;
 
     @Override
     public void onAttach(Context context) {
@@ -126,6 +137,42 @@ public class RoomSearchFragment1 extends Fragment {
         });
     }
 
+    private void getLocation() {
+        mLocationManager = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
+        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(mActivity,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000,
+                    10.0f, mLocationListener);
+        }
+    }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(final Location location) {
+            Constants.debugLog(TAG, location + "");
+            if (location != null) {
+                Constants.debugLog(TAG, location.getLatitude() + " "
+                        + location.getLongitude());
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
+
     private void displayLocationSettingsRequest(Context context) {
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
                 .addApi(LocationServices.API).build();
@@ -147,6 +194,7 @@ public class RoomSearchFragment1 extends Fragment {
                 switch (status.getStatusCode()) {
                     case LocationSettingsStatusCodes.SUCCESS:
                         Constants.debugLog(TAG, "All location settings are satisfied.");
+                        getLocation();
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                         Constants.debugLog(TAG, "Location settings are not satisfied. Show the user a dialog to upgrade location settings ");
@@ -154,7 +202,7 @@ public class RoomSearchFragment1 extends Fragment {
                         try {
                             // Show the dialog by calling startResolutionForResult(), and check the result
                             // in onActivityResult().
-                            status.startResolutionForResult(mActivity, 1);
+                            status.startResolutionForResult(mActivity, REQUEST_LOCATION_ON);
                         } catch (IntentSender.SendIntentException e) {
                             Constants.debugLog(TAG, "PendingIntent unable to execute request.");
                         }
@@ -167,7 +215,18 @@ public class RoomSearchFragment1 extends Fragment {
         });
     }
 
-//    public void statusCheck() {
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        Constants.debugLog(TAG, data.getDataString());
+//       if(resultCode==Activity.RESULT_OK){
+//            if(requestCode==REQUEST_LOCATION_ON){
+//                Constants.debugLog(TAG, data.getDataString());
+//            }
+//       }
+//    }
+
+    //    public void statusCheck() {
 //        final LocationManager manager = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
 //
 //        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
