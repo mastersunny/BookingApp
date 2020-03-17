@@ -2,6 +2,7 @@ package mastersunny.rooms.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,12 +23,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.activities.RoomSearchActivity;
+import mastersunny.rooms.models.BannerResponseDto;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.utils.Constants;
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private String TAG = "HomeAdapter";
+
+    private List<BannerResponseDto> banners;
+
     PlaceAdapter placeAdapter;
     private List<DivisionResponseDto> divisions;
 
@@ -44,6 +53,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void setDivisions(List<DivisionResponseDto> divisions) {
         this.divisions = divisions;
+        notifyDataSetChanged();
+    }
+
+    public void setBanners(List<BannerResponseDto> banners) {
+        this.banners = banners;
         notifyDataSetChanged();
     }
 
@@ -102,6 +116,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     mActivity.startActivity(intent);
                 }
             });
+            headerViewHolder.sliderAdapter.renewItems(banners);
+            headerViewHolder.sliderView.setIndicatorAnimation(IndicatorAnimations.SLIDE); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+            headerViewHolder.sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+            headerViewHolder.sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_RIGHT);
+            headerViewHolder.sliderView.setIndicatorSelectedColor(Color.WHITE);
+            headerViewHolder.sliderView.setIndicatorUnselectedColor(Color.GRAY);
+            headerViewHolder.sliderView.setScrollTimeInSec(4);
+            headerViewHolder.sliderView.startAutoCycle();
+
         } else if (holder instanceof CityViewHolder) {
             placeAdapter.setDivisions(divisions);
         } else if (holder instanceof PopularViewHolder) {
@@ -150,9 +173,18 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @BindView(R.id.search_layout)
         RelativeLayout search_layout;
 
+        @BindView(R.id.slider_view)
+        SliderView sliderView;
+
+        SliderAdapter sliderAdapter;
+
+
         public HeaderViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            sliderAdapter = new SliderAdapter(mActivity);
+            sliderView.setSliderAdapter(sliderAdapter);
         }
     }
 

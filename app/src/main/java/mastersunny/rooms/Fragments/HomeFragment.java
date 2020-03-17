@@ -21,6 +21,7 @@ import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.HomeAdapter;
 import mastersunny.rooms.models.ApiResponse;
+import mastersunny.rooms.models.BannerResponseDto;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
@@ -53,6 +54,7 @@ public class HomeFragment extends Fragment {
     private List<DivisionResponseDto> divisions = new ArrayList<>();
     private List<DivisionResponseDto> popularPlaces = new ArrayList<>();
     private List<DivisionResponseDto> deals = new ArrayList<>();
+    private List<BannerResponseDto> banners = new ArrayList<>();
 
 
     @Override
@@ -114,6 +116,9 @@ public class HomeFragment extends Fragment {
         if (deals.size() <= 0) {
             loadDealData();
         }
+        if (banners.size() <= 0) {
+            loadBannerData();
+        }
         homeAdapter.notifyDataSetChanged();
     }
 
@@ -144,10 +149,35 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void loadBannerData() {
+        apiInterface.getBanners().enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                Constants.debugLog(TAG, response + "");
+                if (response.isSuccessful() && response.body() != null) {
+                    Constants.debugLog(TAG, response.body().toString());
+                    updateBannerData(response.body().getBanners());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+            }
+        });
+
+    }
+
     private void updateDivisionData(List<DivisionResponseDto> divisions) {
         this.divisions.clear();
         this.divisions.addAll(divisions);
         homeAdapter.setDivisions(this.divisions);
+    }
+
+    private void updateBannerData(List<BannerResponseDto> banners) {
+        this.banners.clear();
+        this.banners.addAll(banners);
+        homeAdapter.setBanners(this.banners);
     }
 
     private void loadPopularData() {

@@ -31,14 +31,14 @@ public class AutoScrollAdapter extends LoopingPagerAdapter<SliderDTO> {
 
     @Override
     protected View inflateView(int viewType, int listPosition) {
-        return LayoutInflater.from(context).inflate(R.layout.auto_scroll_layout, null);
+        return LayoutInflater.from(context).inflate(R.layout.home_banner_layout, null);
     }
 
     @Override
     protected void bindView(View holder, int listPosition, int viewType) {
         if (autoScrollList != null) {
             final SliderDTO sliderDTO = autoScrollList.get(listPosition);
-            ImageView imageView = holder.findViewById(R.id.store_image);
+            ImageView imageView = holder.findViewById(R.id.image);
             String imgUrl = ApiClient.BASE_URL + "" + sliderDTO.getImageUrl();
             Constants.loadImage(context, imgUrl, imageView);
 

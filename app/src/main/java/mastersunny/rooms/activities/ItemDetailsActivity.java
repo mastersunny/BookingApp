@@ -71,7 +71,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
         normal_toolbar.setOnClickListener(this);
         hidden_toolbar = findViewById(R.id.hidden_toolbar);
         hidden_toolbar.setOnClickListener(this);
-        store_image = findViewById(R.id.store_image);
+        store_image = findViewById(R.id.image);
         store_name = findViewById(R.id.store_name);
         total_amount = findViewById(R.id.total_amount);
         offer_details = findViewById(R.id.offer_details);

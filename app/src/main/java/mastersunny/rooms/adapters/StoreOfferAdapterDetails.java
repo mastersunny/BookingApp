@@ -142,7 +142,7 @@ public class StoreOfferAdapterDetails extends RecyclerView.Adapter<RecyclerView.
 
         public HeaderHolder(View itemView) {
             super(itemView);
-            store_image = itemView.findViewById(R.id.store_image);
+            store_image = itemView.findViewById(R.id.image);
             total_offer = itemView.findViewById(R.id.total_offer);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             follow_layout = itemView.findViewById(R.id.follow_layout);

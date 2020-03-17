@@ -87,7 +87,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public MainHolder(View itemView) {
             super(itemView);
-            store_image = itemView.findViewById(R.id.store_image);
+            store_image = itemView.findViewById(R.id.image);
             offer_details = itemView.findViewById(R.id.offer_details);
             offer_details.setTypeface(face);
             offer_date = itemView.findViewById(R.id.offer_date);
