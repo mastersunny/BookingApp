@@ -62,7 +62,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         switch (getItemViewType(position)) {
             case HEADER_ITEM:
                 HeaderHolder headerHolder = (HeaderHolder) holder;
-                headerHolder.pulsator.start();
+//                headerHolder.pulsator.start();
                 headerHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -122,8 +122,8 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     static class HeaderHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.pulsator)
-        PulsatorLayout pulsator;
+//        @BindView(R.id.pulsator)
+//        PulsatorLayout pulsator;
 
         public HeaderHolder(View itemView) {
             super(itemView);

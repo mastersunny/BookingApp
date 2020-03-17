@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private Handler handler = new Handler();
 
-    AccessToken accessToken = AccountKit.getCurrentAccessToken();
+//    AccessToken accessToken = AccountKit.getCurrentAccessToken();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +57,14 @@ public class SplashActivity extends AppCompatActivity {
     Runnable splashRunnable = new Runnable() {
         @Override
         public void run() {
-            if (accessToken != null) {
-                goToMyLoggedInActivity();
-            } else {
-                Intent intent = new Intent(SplashActivity.this, SplashActivity2.class);
-                startActivity(intent);
-                finish();
-            }
+//            if (accessToken != null) {
+//                goToMyLoggedInActivity();
+//            } else {
+//                Intent intent = new Intent(SplashActivity.this, SplashActivity2.class);
+//                startActivity(intent);
+//                finish();
+//            }
+            goToMyLoggedInActivity();
 
 
         }
