@@ -1,20 +1,32 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ornach.richtext.RichView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="140dp"
+    android:layout_marginEnd="4dp"
     android:orientation="vertical">
 
 
-    <ImageView
+    <com.ornach.richtext.RichView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.8"
-        android:scaleType="centerCrop"
-        android:src="@drawable/dhaka" />
+        android:orientation="vertical"
+        app:rt_borderColor="@color/grey"
+        app:rt_borderWidth="1dp">
+
+        <ImageView
+            android:id="@+id/place_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_image" />
+
+    </com.ornach.richtext.RichView>
 
     <TextView
+        android:id="@+id/place_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Dhaka"
         android:textColor="@android:color/black"
         android:textStyle="bold" />
@@ -22,7 +34,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bangladesh" />
+        android:text="Bangladesh"
+        android:visibility="gone" />
 
-</LinearLayout>
+</com.ornach.richtext.RichView>
 

@@ -19,6 +19,9 @@ public class ApiResponse implements Serializable {
     @SerializedName("banners")
     List<BannerResponseDto> banners;
 
+    @SerializedName("hotels")
+    List<HotelResponseDto> hotels;
+
     public String getMessage() {
         return message;
     }
@@ -51,6 +54,14 @@ public class ApiResponse implements Serializable {
         this.banners = banners;
     }
 
+    public List<HotelResponseDto> getHotels() {
+        return hotels;
+    }
+
+    public void setHotels(List<HotelResponseDto> hotels) {
+        this.hotels = hotels;
+    }
+
     @Override
     public String toString() {
         return "ApiResponse{" +
@@ -58,6 +69,7 @@ public class ApiResponse implements Serializable {
                 ", divisions=" + divisions +
                 ", districts=" + districts +
                 ", banners=" + banners +
+                ", hotels=" + hotels +
                 '}';
     }
 }

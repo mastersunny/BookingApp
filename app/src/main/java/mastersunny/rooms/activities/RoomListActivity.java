@@ -47,6 +47,7 @@ import mastersunny.rooms.Fragments.GuestSelectFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.RoomAdapter;
 import mastersunny.rooms.gmap.GooglePlaceDetails;
+import mastersunny.rooms.models.ApiResponse;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.models.RoomImageDTO;
 import mastersunny.rooms.rest.ApiClient;
@@ -65,6 +66,9 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
 
     private static String TAG = "RoomListActivity";
 
+    @BindView(R.id.toolbar_title)
+    TextView toolbar_title;
+
     @BindView(R.id.rv_rooms)
     RecyclerView rv_rooms;
 
@@ -82,9 +86,6 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
 
     @BindView(R.id.img_back)
     ImageView img_back;
-
-    @BindView(R.id.toolbar_title)
-    TextView toolbar_title;
 
     @BindView(R.id.tv_start_date)
     TextView tv_start_date;
@@ -139,6 +140,7 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         mMapView.onCreate(savedInstanceState);
         getIntentData();
         initLayout();
+        updateData();
 
 
 //        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -155,6 +157,10 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
 //
 //        }
 
+    }
+
+    private void updateData() {
+        toolbar_title.setText(Constants.placeName);
     }
 
     private void getIntentData() {
@@ -256,7 +262,34 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+    private void searchHotels() {
+        try {
+            apiInterface.getHotels(Constants.sdf2.format(Constants.startDate),
+                    Constants.sdf2.format(Constants.endDate),
+                    Constants.adultQty,
+                    latitude,
+                    longitude).enqueue(new Callback<ApiResponse>() {
+                @Override
+                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    Constants.debugLog(TAG, response + "");
+                    if (response.isSuccessful() && response.body() != null) {
+                        Constants.debugLog(TAG, response.body().toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse> call, Throwable t) {
+                    Constants.debugLog(TAG, t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            Constants.debugLog(TAG, e.getMessage());
+        }
+    }
+
     private void loadData() {
+
+        searchHotels();
 
         RoomDTO roomDTO1 = new RoomDTO("THE WAY DHAKA", 23.7968, 90.4115, 12484);
         RoomDTO roomDTO2 = new RoomDTO("Four Points By Sheraton DHaka, Gulshan", 23.7944, 90.4137, 15436);
@@ -435,5 +468,10 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         } else {
             tv_adult_qty.setText(adultQty + " Adults");
         }
+        Constants.roomQty = roomQty;
+        Constants.adultQty = adultQty;
+        Constants.childQty = childQty;
+
+        searchHotels();
     }
 }

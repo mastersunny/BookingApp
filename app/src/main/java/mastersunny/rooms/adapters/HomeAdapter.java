@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import mastersunny.rooms.R;
 import mastersunny.rooms.activities.RoomSearchActivity;
 import mastersunny.rooms.models.BannerResponseDto;
+import mastersunny.rooms.models.DistrictResponseDto;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.utils.Constants;
 
@@ -37,7 +38,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<DivisionResponseDto> divisions;
 
     PopularAdapter popularAdapter;
-    private List<DivisionResponseDto> popularPlaces;
+    private List<DistrictResponseDto> popularPlaces;
 
     DealAdapter dealAdapter;
     private List<DivisionResponseDto> deals;
@@ -61,9 +62,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void setPopularPlaces(List<DivisionResponseDto> popularPlaces) {
+    public void setPopularPlaces(List<DistrictResponseDto> popularPlaces) {
         this.popularPlaces = popularPlaces;
-
+        notifyDataSetChanged();
     }
 
     public void setDeals(List<DivisionResponseDto> deals) {

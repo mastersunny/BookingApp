@@ -48,7 +48,8 @@ public class LocalityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             @Override
             public void onClick(View v) {
                 if (roomSearchListener != null) {
-                    roomSearchListener.onLocalitySearch(localityDTO);
+                    roomSearchListener.onSearch(localityDTO.getName(), localityDTO.getLatitude(),
+                            localityDTO.getLongitude());
                 }
             }
         });

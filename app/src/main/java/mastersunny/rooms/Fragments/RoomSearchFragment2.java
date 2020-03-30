@@ -116,14 +116,14 @@ public class RoomSearchFragment2 extends Fragment {
             }
 
             @Override
-            public void onPlaceSearch(DivisionResponseDto placeDTO) {
+            public void onDistrictSearch(DivisionResponseDto placeDTO) {
 
             }
 
             @Override
-            public void onLocalitySearch(DistrictResponseDto localityDTO) {
+            public void onSearch(String name, double latitude, double longitude) {
                 if (roomSearchListener != null) {
-                    roomSearchListener.onLocalitySearch(localityDTO);
+                    roomSearchListener.onSearch(name, latitude, longitude);
                 }
             }
         });
@@ -173,15 +173,11 @@ public class RoomSearchFragment2 extends Fragment {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.all_locality_layout:
-                startRoomListActivity();
+                if (roomSearchListener != null) {
+                    roomSearchListener.onSearch(placeDTO.getName(), placeDTO.getLatitude(),
+                            placeDTO.getLongitude());
+                }
                 break;
         }
-    }
-
-    private void startRoomListActivity() {
-        Intent intent = new Intent(mActivity, RoomListActivity.class);
-        startActivity(intent);
-        mActivity.overridePendingTransition(R.anim.animation_enter,
-                R.anim.animation_leave);
     }
 }

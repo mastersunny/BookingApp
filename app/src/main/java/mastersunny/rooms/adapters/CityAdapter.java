@@ -48,7 +48,7 @@ public class CityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             @Override
             public void onClick(View v) {
                 if (roomSearchListener != null) {
-                    roomSearchListener.onPlaceSearch(dto);
+                    roomSearchListener.onDistrictSearch(dto);
                 }
             }
         });

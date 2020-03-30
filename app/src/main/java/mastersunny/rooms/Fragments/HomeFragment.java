@@ -22,6 +22,7 @@ import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.HomeAdapter;
 import mastersunny.rooms.models.ApiResponse;
 import mastersunny.rooms.models.BannerResponseDto;
+import mastersunny.rooms.models.DistrictResponseDto;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
@@ -52,7 +53,7 @@ public class HomeFragment extends Fragment {
     HomeAdapter homeAdapter;
 
     private List<DivisionResponseDto> divisions = new ArrayList<>();
-    private List<DivisionResponseDto> popularPlaces = new ArrayList<>();
+    private List<DistrictResponseDto> popularPlaces = new ArrayList<>();
     private List<DivisionResponseDto> deals = new ArrayList<>();
     private List<BannerResponseDto> banners = new ArrayList<>();
 
@@ -87,20 +88,6 @@ public class HomeFragment extends Fragment {
         rv_home.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         homeAdapter = new HomeAdapter(mActivity);
         rv_home.setAdapter(homeAdapter);
-
-//        rv_popular.setLayoutManager(new GridLayoutManager(mActivity, 2));
-//        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-//        rv_popular.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-//        rv_popular.setNestedScrollingEnabled(false);
-//        popularAdapter = new PopularAdapter(mActivity, popularPlaces);
-//        rv_popular.setAdapter(popularAdapter);
-//
-//        rv_deals.setLayoutManager(new GridLayoutManager(mActivity, 2));
-//        rv_deals.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-//        rv_deals.setNestedScrollingEnabled(false);
-//        dealAdapter = new DealAdapter(mActivity, deals);
-//        rv_deals.setAdapter(dealAdapter);
-
     }
 
 
@@ -113,9 +100,9 @@ public class HomeFragment extends Fragment {
         if (popularPlaces.size() <= 0) {
             loadPopularData();
         }
-        if (deals.size() <= 0) {
-            loadDealData();
-        }
+//        if (deals.size() <= 0) {
+//            loadDealData();
+//        }
         if (banners.size() <= 0) {
             loadBannerData();
         }
@@ -123,13 +110,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadCityData() {
-//        placeDTOS.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
-//        placeDTOS.add(new DivisionResponseDto("Sylhet", "সিলেট", "sylhet"));
-//        placeDTOS.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "rajshahi"));
-//        placeDTOS.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
-//        placeDTOS.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
-//        placeDTOS.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
-//        placeDTOS.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
         apiInterface.getDivisions().enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
@@ -174,6 +154,12 @@ public class HomeFragment extends Fragment {
         homeAdapter.setDivisions(this.divisions);
     }
 
+    private void updatePopularData(List<DistrictResponseDto> districts) {
+        this.popularPlaces.clear();
+        this.popularPlaces.addAll(districts);
+        homeAdapter.setPopularPlaces(this.popularPlaces);
+    }
+
     private void updateBannerData(List<BannerResponseDto> banners) {
         this.banners.clear();
         this.banners.addAll(banners);
@@ -181,15 +167,21 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadPopularData() {
-        popularPlaces.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
-        popularPlaces.add(new DivisionResponseDto("Sylhet", "সিলেট", "dhaka"));
-        popularPlaces.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "dhaka"));
-        popularPlaces.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
-        popularPlaces.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
-        popularPlaces.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
-        popularPlaces.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
+        apiInterface.getPopularDistricts().enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                Constants.debugLog(TAG, response + "");
+                if (response.isSuccessful() && response.body() != null) {
+                    Constants.debugLog(TAG, response.body().toString());
+                    updatePopularData(response.body().getDistricts());
+                }
+            }
 
-        homeAdapter.setPopularPlaces(popularPlaces);
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+            }
+        });
     }
 
 

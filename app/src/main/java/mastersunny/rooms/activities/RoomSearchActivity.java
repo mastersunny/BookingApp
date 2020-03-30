@@ -35,6 +35,7 @@ import mastersunny.rooms.adapters.MapAdapter;
 import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.gmap.Prediction;
 import mastersunny.rooms.listeners.RoomSearchListener;
+import mastersunny.rooms.models.ApiResponse;
 import mastersunny.rooms.models.DistrictResponseDto;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.RoomDTO;
@@ -75,7 +76,6 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     @BindView(R.id.room_search_header)
     LinearLayout room_search_header;
 
-    private double latitude, longitude;
     private ApiInterface apiInterface;
 
     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -351,6 +351,9 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
             tv_adult_qty.setText(adultQty + " Adults");
         }
 
+        Constants.roomQty = roomQty;
+        Constants.adultQty = adultQty;
+        Constants.childQty = childQty;
     }
 
     @Override
@@ -359,15 +362,19 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     }
 
     @Override
-    public void onPlaceSearch(DivisionResponseDto placeDTO) {
+    public void onDistrictSearch(DivisionResponseDto divisionResponseDto) {
         shouldShowA = true;
-        switchFragmentB(placeDTO);
+        switchFragmentB(divisionResponseDto);
     }
 
     @Override
-    public void onLocalitySearch(DistrictResponseDto localityDTO) {
+    public void onSearch(String name, double latitude, double longitude) {
+        Constants.latitude = latitude;
+        Constants.longitude = longitude;
+        Constants.placeName = name;
         startRoomListActivity();
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

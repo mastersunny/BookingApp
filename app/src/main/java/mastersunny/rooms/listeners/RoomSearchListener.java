@@ -8,7 +8,8 @@ public interface RoomSearchListener {
 
     void onRecentSearch(RoomDTO roomDTO);
 
-    void onPlaceSearch(DivisionResponseDto placeDTO);
+    void onDistrictSearch(DivisionResponseDto placeDTO);
 
-    void onLocalitySearch(DistrictResponseDto localityDTO);
+    void onSearch(String name, double latitude, double longitude);
+
 }

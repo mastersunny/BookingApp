@@ -3,7 +3,6 @@ package mastersunny.rooms.Fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -117,15 +116,14 @@ public class RoomSearchFragment1 extends Fragment {
             }
 
             @Override
-            public void onPlaceSearch(DivisionResponseDto placeDTO) {
+            public void onDistrictSearch(DivisionResponseDto placeDTO) {
                 if (roomSearchListener != null) {
-                    roomSearchListener.onPlaceSearch(placeDTO);
+                    roomSearchListener.onDistrictSearch(placeDTO);
                 }
-
             }
 
             @Override
-            public void onLocalitySearch(DistrictResponseDto localityDTO) {
+            public void onSearch(String name, double latitude, double longitude) {
 
             }
         });
@@ -215,43 +213,6 @@ public class RoomSearchFragment1 extends Fragment {
         });
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        Constants.debugLog(TAG, data.getDataString());
-//       if(resultCode==Activity.RESULT_OK){
-//            if(requestCode==REQUEST_LOCATION_ON){
-//                Constants.debugLog(TAG, data.getDataString());
-//            }
-//       }
-//    }
-
-    //    public void statusCheck() {
-//        final LocationManager manager = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
-//
-//        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//            buildAlertMessageNoGps();
-//        }
-//    }
-//
-//    private void buildAlertMessageNoGps() {
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-//        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
-//                .setCancelable(false)
-//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    public void onClick(final DialogInterface dialog, final int id) {
-//                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-//                    }
-//                })
-//                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    public void onClick(final DialogInterface dialog, final int id) {
-//                        dialog.cancel();
-//                    }
-//                });
-//        final AlertDialog alert = builder.create();
-//        alert.show();
-//    }
-
     private void notifyPlaceAdapter() {
         if (searchAdapter != null) {
             searchAdapter.notifyDataSetChanged();
@@ -263,15 +224,6 @@ public class RoomSearchFragment1 extends Fragment {
         roomDTOS.add(new RoomDTO());
         roomDTOS.add(new RoomDTO());
         roomDTOS.add(new RoomDTO());
-
-//        placeDTOS.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
-//        placeDTOS.add(new DivisionResponseDto("Sylhet", "সিলেট", "dhaka"));
-//        placeDTOS.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "dhaka"));
-//        placeDTOS.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
-//        placeDTOS.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
-//        placeDTOS.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
-//        placeDTOS.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
-
         notifyPlaceAdapter();
     }
 

@@ -196,5 +196,15 @@ public interface ApiInterface {
     @GET("api/districts")
     Call<ApiResponse> getDistricts(@Query("division_id") Long divisionId);
 
+    @GET("api/available-room")
+    Call<ApiResponse> getHotels(@Query("start_date") String startDate,
+                                @Query("end_date") String endDate,
+                                @Query("no_of_guest") int noOfGuest,
+                                @Query("latitude") double latitude,
+                                @Query("longitude") double longitude);
+
+
+    @GET("api/popular/districts")
+    Call<ApiResponse> getPopularDistricts();
 
 }

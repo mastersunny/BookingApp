@@ -75,7 +75,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void onClick(View view) {
                     if (roomSearchListener != null) {
-                        roomSearchListener.onPlaceSearch(placeDTO);
+                        roomSearchListener.onDistrictSearch(placeDTO);
                     }
                 }
             });
