@@ -80,12 +80,12 @@ public class Constants {
 
     public static Date startDate = new Date();
     public static Date endDate = new Date();
-    public static int roomQty;
-    public static int adultQty;
+    public static int roomQty = 1;
+    public static int adultQty = 1;
     public static int childQty;
-    public static double latitude;
-    public static double longitude;
-    public static String placeName;
+    public static double latitude = 0;
+    public static double longitude = 0;
+    public static String placeName = "";
 
 
     public static void loadImage(Context context, String imageUrl, final ImageView imageView) {

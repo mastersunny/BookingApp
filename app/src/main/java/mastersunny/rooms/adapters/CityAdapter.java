@@ -61,7 +61,7 @@ public class CityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static class MainHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.name)
+        @BindView(R.id.title)
         TextView name;
 
         public MainHolder(View itemView) {

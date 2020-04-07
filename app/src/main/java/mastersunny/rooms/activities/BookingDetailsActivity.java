@@ -134,34 +134,36 @@ public class BookingDetailsActivity extends AppCompatActivity {
 
         title.setText(roomBookingDTO.getNoOfAccommodation() > 1 ? roomBookingDTO.getNoOfAccommodation()
                 + " Guests" : roomBookingDTO.getNoOfAccommodation() + " Guest");
-        address.setText(roomBookingDTO.getRoom().getAddress());
+//        address.setText(roomBookingDTO.getRoom().getAddress());
 
-        if (roomBookingDTO.getRoom().isFemaleFriendly()) {
+        if (roomBookingDTO.getRoom().getFemaleFriendly() == 1) {
             female_friendly_layout.setVisibility(View.VISIBLE);
         }
 
-        room_details.setText(roomBookingDTO.getRoom().getDetails());
+        room_details.setText(roomBookingDTO.getRoom().getDescription());
 
-        if (roomBookingDTO.getRoom().isWifiAvailable() || roomBookingDTO.getRoom().isTvAvailable() || roomBookingDTO.getRoom().isAcAvailable()) {
+        if (roomBookingDTO.getRoom().getWifiAvailable() == 1
+                || roomBookingDTO.getRoom().getTvAvailable() == 1
+                || roomBookingDTO.getRoom().getAcAvailable() == 1) {
             advantage_layout.setVisibility(View.VISIBLE);
-            if (roomBookingDTO.getRoom().isWifiAvailable()) {
+            if (roomBookingDTO.getRoom().getWifiAvailable() == 1) {
                 wifi_layout.setVisibility(View.VISIBLE);
             }
 
-            if (roomBookingDTO.getRoom().isTvAvailable()) {
+            if (roomBookingDTO.getRoom().getTvAvailable() == 1) {
                 tv_layout.setVisibility(View.VISIBLE);
             }
 
-            if (roomBookingDTO.getRoom().isAcAvailable()) {
+            if (roomBookingDTO.getRoom().getAcAvailable() == 1) {
                 ac_layout.setVisibility(View.VISIBLE);
             }
         }
 
-        if (roomBookingDTO.getRoom().isLunchAvailable()) {
+        if (roomBookingDTO.getRoom().getLunchAvailable() == 1) {
             lunch_layout.setVisibility(View.VISIBLE);
         }
 
-        if (roomBookingDTO.getRoom().isTransportAvailable()) {
+        if (roomBookingDTO.getRoom().getTransportAvailable() == 1) {
             transport_layout.setVisibility(View.VISIBLE);
         }
 

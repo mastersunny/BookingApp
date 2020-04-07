@@ -62,7 +62,7 @@ public class LocalityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     static class MainHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.name)
+        @BindView(R.id.title)
         TextView name;
 
         public MainHolder(View itemView) {

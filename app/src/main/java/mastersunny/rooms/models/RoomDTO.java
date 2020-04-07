@@ -1,61 +1,73 @@
 package mastersunny.rooms.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @SerializedName("id")
     private Long id;
 
+    @SerializedName("hotel_id")
+    private Long hotelId;
+
+    @SerializedName("title")
+    private String title;
+
+    @SerializedName("latitude")
     private double latitude;
 
+    @SerializedName("longitude")
     private double longitude;
 
-    private String address;
+    @SerializedName("description")
+    private String description;
 
-    private String details;
+//    @SerializedName("")
+//    private int noOfAccommodation;
 
-    private int noOfAccommodation;
+    @SerializedName("female_friendly")
+    private int femaleFriendly;
 
-    private boolean femaleFriendly;
+    @SerializedName("is_tv_available")
+    private int tvAvailable;
 
-    private boolean tvAvailable;
+    @SerializedName("is_ac_available")
+    private int acAvailable;
 
-    private boolean acAvailable;
+    @SerializedName("is_wifi_available")
+    private int wifiAvailable;
 
-    private boolean wifiAvailable;
+    @SerializedName("is_lunch_available")
+    private int lunchAvailable;
 
-    private boolean lunchAvailable;
-
+    @SerializedName("lunch_cost")
     private double lunchCost;
 
-    private boolean transportAvailable;
+    @SerializedName("is_transport_available")
+    private int transportAvailable;
 
+    @SerializedName("transport_cost")
     private double transportCost;
 
+    @SerializedName("price")
     private double roomCost;
 
-    private boolean disabled;
-
-    private UserDTO user;
-
-    private String startDate;
-
-    private String endDate;
-
-    private List<RoomImageDTO> images = new ArrayList<>();
+    @SerializedName("images")
+    private List<RoomImageDTO> images;
 
     public RoomDTO() {
     }
 
-    public RoomDTO(String address, double latitude, double longitude, double roomCost) {
-        this.address = address;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.roomCost = roomCost;
+    public RoomDTO(String century_residence_park, double v, double v1, int i) {
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Long getId() {
@@ -64,6 +76,22 @@ public class RoomDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(Long hotelId) {
+        this.hotelId = hotelId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public double getLatitude() {
@@ -82,67 +110,51 @@ public class RoomDTO implements Serializable {
         this.longitude = longitude;
     }
 
-    public String getAddress() {
-        return address;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public int getNoOfAccommodation() {
-        return noOfAccommodation;
-    }
-
-    public void setNoOfAccommodation(int noOfAccommodation) {
-        this.noOfAccommodation = noOfAccommodation;
-    }
-
-    public boolean isFemaleFriendly() {
+    public int getFemaleFriendly() {
         return femaleFriendly;
     }
 
-    public void setFemaleFriendly(boolean femaleFriendly) {
+    public void setFemaleFriendly(int femaleFriendly) {
         this.femaleFriendly = femaleFriendly;
     }
 
-    public boolean isTvAvailable() {
+    public int getTvAvailable() {
         return tvAvailable;
     }
 
-    public void setTvAvailable(boolean tvAvailable) {
+    public void setTvAvailable(int tvAvailable) {
         this.tvAvailable = tvAvailable;
     }
 
-    public boolean isAcAvailable() {
+    public int getAcAvailable() {
         return acAvailable;
     }
 
-    public void setAcAvailable(boolean acAvailable) {
+    public void setAcAvailable(int acAvailable) {
         this.acAvailable = acAvailable;
     }
 
-    public boolean isWifiAvailable() {
+    public int getWifiAvailable() {
         return wifiAvailable;
     }
 
-    public void setWifiAvailable(boolean wifiAvailable) {
+    public void setWifiAvailable(int wifiAvailable) {
         this.wifiAvailable = wifiAvailable;
     }
 
-    public boolean isLunchAvailable() {
+    public int getLunchAvailable() {
         return lunchAvailable;
     }
 
-    public void setLunchAvailable(boolean lunchAvailable) {
+    public void setLunchAvailable(int lunchAvailable) {
         this.lunchAvailable = lunchAvailable;
     }
 
@@ -154,11 +166,11 @@ public class RoomDTO implements Serializable {
         this.lunchCost = lunchCost;
     }
 
-    public boolean isTransportAvailable() {
+    public int getTransportAvailable() {
         return transportAvailable;
     }
 
-    public void setTransportAvailable(boolean transportAvailable) {
+    public void setTransportAvailable(int transportAvailable) {
         this.transportAvailable = transportAvailable;
     }
 
@@ -178,38 +190,6 @@ public class RoomDTO implements Serializable {
         this.roomCost = roomCost;
     }
 
-    public boolean isDisabled() {
-        return disabled;
-    }
-
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
-
     public List<RoomImageDTO> getImages() {
         return images;
     }
@@ -218,4 +198,25 @@ public class RoomDTO implements Serializable {
         this.images = images;
     }
 
+    @Override
+    public String toString() {
+        return "RoomDTO{" +
+                "id=" + id +
+                ", hotelId=" + hotelId +
+                ", title='" + title + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", description='" + description + '\'' +
+                ", femaleFriendly=" + femaleFriendly +
+                ", tvAvailable=" + tvAvailable +
+                ", acAvailable=" + acAvailable +
+                ", wifiAvailable=" + wifiAvailable +
+                ", lunchAvailable=" + lunchAvailable +
+                ", lunchCost=" + lunchCost +
+                ", transportAvailable=" + transportAvailable +
+                ", transportCost=" + transportCost +
+                ", roomCost=" + roomCost +
+                ", images=" + images +
+                '}';
+    }
 }

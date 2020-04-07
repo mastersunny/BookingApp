@@ -163,7 +163,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
 //                + " Seats Room" : roomDTO.getNoOfAccommodation() + " Seat Room");
 //        address.setText(roomDTO.getAddress());
 //
-//        room_details.setText(roomDTO.getDetails());
+//        room_details.setText(roomDTO.getDescription());
 //
 //        if (roomDTO.isWifiAvailable() || roomDTO.isTvAvailable() || roomDTO.isAcAvailable()) {
 //            advantage_layout.setVisibility(View.VISIBLE);

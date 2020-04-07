@@ -197,7 +197,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public class CityViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.name)
+        @BindView(R.id.title)
         TextView name;
 
         public CityViewHolder(View itemView) {

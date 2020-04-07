@@ -118,7 +118,7 @@ public class RoomBookingActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_make_call:
-                makeCall(roomBookingDTO.getRoom().getUser().getPhoneNumber());
+                makeCall(roomBookingDTO.getUser().getPhoneNumber());
                 break;
             case R.id.back_button:
                 finish();

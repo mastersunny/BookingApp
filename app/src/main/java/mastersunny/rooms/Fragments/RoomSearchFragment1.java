@@ -86,9 +86,9 @@ public class RoomSearchFragment1 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (roomDTOS.size() <= 0) {
-            loadData();
-        }
+//        if (roomDTOS.size() <= 0) {
+//            loadData();
+//        }
     }
 
     @Nullable

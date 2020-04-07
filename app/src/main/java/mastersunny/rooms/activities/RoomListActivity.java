@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,8 +46,8 @@ import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.RoomAdapter;
 import mastersunny.rooms.gmap.GooglePlaceDetails;
 import mastersunny.rooms.models.ApiResponse;
+import mastersunny.rooms.models.HotelResponseDto;
 import mastersunny.rooms.models.RoomDTO;
-import mastersunny.rooms.models.RoomImageDTO;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
@@ -108,13 +106,13 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     @BindView(R.id.room_image)
     ImageView room_image;
 
-    private RoomDTO roomDTO;
+    private HotelResponseDto hotelResponseDto;
 
     private RoomAdapter roomAdapter;
 
-    private List<RoomDTO> roomDTOS;
+    private List<HotelResponseDto> hotelResponseDtos;
 
-    private Map<Marker, RoomDTO> roomDTOMap = new HashMap<>();
+    private Map<Marker, HotelResponseDto> roomDTOMap = new HashMap<>();
 
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -141,22 +139,6 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         getIntentData();
         initLayout();
         updateData();
-
-
-//        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-//            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-//            mFusedLocationClient.getLastLocation()
-//                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-//                        @Override
-//                        public void onSuccess(Location location) {
-//                            if (location != null) {
-//                                getCityName(location);
-//                            }
-//                        }
-//                    });
-//
-//        }
-
     }
 
     private void updateData() {
@@ -172,7 +154,7 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void initLayout() {
-        roomDTOS = new ArrayList<>();
+        hotelResponseDtos = new ArrayList<>();
         rv_rooms.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rv_rooms.setItemAnimator(new SlideInUpAnimator(new LinearInterpolator()));
         roomAdapter = new RoomAdapter(this);
@@ -210,14 +192,14 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
             return;
         }
         mMap = map;
-        loadMapData();
+        loadData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
-        if (roomDTOS.size() <= 0) {
+        if (hotelResponseDtos.size() <= 0) {
             loadData();
         }
         if (!TextUtils.isEmpty(placeId)) {
@@ -267,13 +249,15 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
             apiInterface.getHotels(Constants.sdf2.format(Constants.startDate),
                     Constants.sdf2.format(Constants.endDate),
                     Constants.adultQty,
-                    latitude,
-                    longitude).enqueue(new Callback<ApiResponse>() {
+                    22.009,
+                    23.99).enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     Constants.debugLog(TAG, response + "");
                     if (response.isSuccessful() && response.body() != null) {
                         Constants.debugLog(TAG, response.body().toString());
+                        updateAdapter(response.body().getHotels());
+                        loadMapData();
                     }
                 }
 
@@ -287,28 +271,14 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
+    private void updateAdapter(List<HotelResponseDto> hotels) {
+        hotelResponseDtos.clear();
+        hotelResponseDtos.addAll(hotels);
+        roomAdapter.setData(hotelResponseDtos);
+    }
+
     private void loadData() {
-
         searchHotels();
-
-        RoomDTO roomDTO1 = new RoomDTO("THE WAY DHAKA", 23.7968, 90.4115, 12484);
-        RoomDTO roomDTO2 = new RoomDTO("Four Points By Sheraton DHaka, Gulshan", 23.7944, 90.4137, 15436);
-        RoomDTO roomDTO3 = new RoomDTO("Century Residence Park", 23.7856724, 90.4186784, 6748);
-        RoomDTO roomDTO4 = new RoomDTO("Asia Hotel & Resorts", 23.7306626, 90.4067831, 5061);
-
-        roomDTO1.getImages().add(new RoomImageDTO("room1"));
-        roomDTO2.getImages().add(new RoomImageDTO("room2"));
-        roomDTO3.getImages().add(new RoomImageDTO("room3"));
-        roomDTO4.getImages().add(new RoomImageDTO("room4"));
-
-        roomDTOS.add(roomDTO1);
-        roomDTOS.add(roomDTO2);
-        roomDTOS.add(roomDTO3);
-        roomDTOS.add(roomDTO4);
-
-        for (int i = 0; i < roomDTOS.size(); i++) {
-            roomAdapter.add(roomDTOS.get(i), i);
-        }
     }
 
     @OnClick({R.id.map_layout, R.id.img_back, R.id.start_date_layout,
@@ -342,7 +312,7 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
                 guestSelectFragment.show(getSupportFragmentManager(), "guestSelectFragment");
                 break;
             case R.id.room_item_layout:
-                RoomDetailsActivity.start(v.getContext(), roomDTO);
+                RoomDetailsActivity.start(v.getContext(), new RoomDTO());
                 break;
         }
     }
@@ -378,13 +348,14 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void loadMapData() {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(roomDTOS.get(0).getLatitude(), roomDTOS.get(0).getLongitude()), 10));
-        for (int i = 0; i < roomDTOS.size(); i++) {
-            RoomDTO roomDTO = roomDTOS.get(i);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(hotelResponseDtos.get(0).getLatitude(), hotelResponseDtos.get(0).getLongitude()), 10));
+        for (int i = 0; i < hotelResponseDtos.size(); i++) {
+            HotelResponseDto hotelResponseDto = hotelResponseDtos.get(i);
+            RoomDTO roomDTO = hotelResponseDto.getRoomDTOS().get(0);
             iconFactory = new IconGenerator(this);
             iconFactory.setTextAppearance(R.style.mapText);
             iconFactory.setContentPadding(0, 0, 0, 0);
-            addIcon(iconFactory, "BDT " + roomDTO.getRoomCost(), new LatLng(roomDTO.getLatitude(), roomDTO.getLongitude()), roomDTO);
+            addIcon(iconFactory, "BDT " + roomDTO.getRoomCost(), new LatLng(hotelResponseDto.getLatitude(), hotelResponseDto.getLongitude()), roomDTO);
         }
     }
 
@@ -396,7 +367,7 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.setOnMarkerClickListener(this);
         Marker marker = mMap.addMarker(markerOptions);
 
-        roomDTOMap.put(marker, roomDTO);
+        roomDTOMap.put(marker, hotelResponseDto);
     }
 
     private CharSequence makeCharSequence() {
@@ -412,26 +383,33 @@ public class RoomListActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public boolean onMarkerClick(Marker marker) {
         Log.d(TAG, roomDTOMap.get(marker).toString() + "");
-        roomDTO = new RoomDTO();
         if (roomDTOMap.containsKey(marker)) {
-            roomDTO = roomDTOMap.get(marker);
+            hotelResponseDto = roomDTOMap.get(marker);
+        } else {
+            hotelResponseDto = new HotelResponseDto();
         }
         iconFactory.setStyle(IconGenerator.STYLE_RED);
-        marker.setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon("BDT " + roomDTO.getRoomCost())));
+        marker.setIcon(BitmapDescriptorFactory
+                .fromBitmap(iconFactory.makeIcon("BDT " + hotelResponseDto.getRoomDTOS()
+                        .get(0)
+                        .getRoomCost())));
 
-        for (Map.Entry<Marker, RoomDTO> entry : roomDTOMap.entrySet()) {
+        for (Map.Entry<Marker, HotelResponseDto> entry : roomDTOMap.entrySet()) {
             if (!entry.getKey().equals(marker)) {
                 iconFactory = new IconGenerator(this);
                 iconFactory.setTextAppearance(R.style.mapText);
                 iconFactory.setContentPadding(0, 0, 0, 0);
-                entry.getKey().setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon("BDT " + roomDTO.getRoomCost())));
+                entry.getKey().setIcon(BitmapDescriptorFactory
+                        .fromBitmap(iconFactory.makeIcon("BDT " + hotelResponseDto.getRoomDTOS()
+                                .get(0)
+                                .getRoomCost())));
             }
         }
         room_item_layout.setVisibility(View.VISIBLE);
-        tv_name.setText(roomDTO.getAddress());
-        int res = getResources().getIdentifier(getPackageName()
-                + ":drawable/" + roomDTO.getImages().get(0).getImageUrl(), null, null);
-        Glide.with(this).load(res).into(room_image);
+        tv_name.setText(hotelResponseDto.getAddress());
+//        int res = getResources().getIdentifier(getPackageName()
+//                + ":drawable/" + roomDTO.getImages().get(0).getImageUrl(), null, null);
+//        Glide.with(this).load(res).into(room_image);
 
         return false;
     }

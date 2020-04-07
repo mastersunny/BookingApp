@@ -41,7 +41,7 @@ public class SavedRoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final RoomDTO roomDTO = roomDTOS.get(position);
         MainHolder mainHolder = (MainHolder) holder;
-        mainHolder.name.setText(roomDTO.getAddress());
+//        mainHolder.name.setText(roomDTO.getAddress());
 //        mainHolder.title.setText(roomDTO.getNoOfAccommodation() > 1 ? roomDTO.getNoOfAccommodation()
 //                + " Seats Room" : roomDTO.getNoOfAccommodation() + " Seat Room");
 //        mainHolder.address.setText(roomDTO.getAddress());
@@ -77,7 +77,7 @@ public class SavedRoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @BindView(R.id.room_image)
         ImageView room_image;
 
-        @BindView(R.id.name)
+        @BindView(R.id.title)
         TextView name;
 //
 //        @BindView(R.id.address)

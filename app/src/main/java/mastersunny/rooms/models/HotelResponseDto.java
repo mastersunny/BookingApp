@@ -3,6 +3,7 @@ package mastersunny.rooms.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class HotelResponseDto implements Serializable {
 
@@ -41,6 +42,9 @@ public class HotelResponseDto implements Serializable {
 
     @SerializedName("distance")
     private double distance;
+
+    @SerializedName("rooms")
+    private List<RoomDTO> roomDTOS;
 
     public Integer getId() {
         return id;
@@ -138,6 +142,14 @@ public class HotelResponseDto implements Serializable {
         this.distance = distance;
     }
 
+    public List<RoomDTO> getRoomDTOS() {
+        return roomDTOS;
+    }
+
+    public void setRoomDTOS(List<RoomDTO> roomDTOS) {
+        this.roomDTOS = roomDTOS;
+    }
+
     @Override
     public String toString() {
         return "HotelResponseDto{" +
@@ -153,6 +165,7 @@ public class HotelResponseDto implements Serializable {
                 ", quality='" + quality + '\'' +
                 ", isVerified=" + isVerified +
                 ", distance=" + distance +
+                ", roomDTOS=" + roomDTOS +
                 '}';
     }
 }

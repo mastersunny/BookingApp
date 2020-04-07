@@ -333,6 +333,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
         Constants.startDate = startDate.getTime();
         Constants.endDate = endDate.getTime();
+
     }
 
     private void startRoomListActivity() {
@@ -344,12 +345,23 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
 
     @Override
     public void selectedGuestAndRoom(int roomQty, int adultQty, int childQty) {
-        tv_room_qty.setText(roomQty + " Rooms");
-        if (childQty > 0) {
-            tv_adult_qty.setText(adultQty + " Adults, " + (childQty > 1 ? (childQty + " Children") : (childQty + " Child")));
+        if (roomQty > 1) {
+            tv_room_qty.setText(roomQty + " Rooms");
         } else {
-            tv_adult_qty.setText(adultQty + " Adults");
+            tv_room_qty.setText(roomQty + " Room");
         }
+
+        if (adultQty > 1) {
+            tv_adult_qty.setText(adultQty + " Guests");
+        } else {
+            tv_adult_qty.setText(adultQty + " Guest");
+        }
+
+//        if (childQty > 0) {
+//            tv_adult_qty.setText(adultQty + " Adults, " + (childQty > 1 ? (childQty + " Children") : (childQty + " Child")));
+//        } else {
+//            tv_adult_qty.setText(adultQty + " Adults");
+//        }
 
         Constants.roomQty = roomQty;
         Constants.adultQty = adultQty;
