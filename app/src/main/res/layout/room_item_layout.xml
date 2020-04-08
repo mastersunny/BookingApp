@@ -207,12 +207,13 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/transport_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
             android:background="@color/white"
+            android:orientation="horizontal"
             android:visibility="visible">
 
             <ImageView
@@ -227,11 +228,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_10"
                 android:layout_toRightOf="@id/transport_icon"
                 android:text="Transport Facilities BDT 120" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
     </LinearLayout>

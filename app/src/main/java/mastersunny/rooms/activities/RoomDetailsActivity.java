@@ -14,9 +14,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,8 +57,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
     @BindView(R.id.room_images)
     RecyclerView room_images;
 
-    private List<DivisionResponseDto> placeDTOS = new ArrayList<>();
-
     ImageAdapter imageAdapter;
 
     @BindView(R.id.bottom_sheet)
@@ -59,64 +67,76 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_book_room)
     Button btn_book_room;
-//
-//    @BindView(R.id.title)
-//    TextView title;
-//
-//    @BindView(R.id.address)
-//    TextView address;
-//
-//    @BindView(R.id.wifi_layout)
-//    LinearLayout wifi_layout;
-//
-//    @BindView(R.id.tv_layout)
-//    LinearLayout tv_layout;
-//
-//    @BindView(R.id.ac_layout)
-//    LinearLayout ac_layout;
-//
-//    @BindView(R.id.advantage_layout)
-//    LinearLayout advantage_layout;
-//
-//    @BindView(R.id.lunch_layout)
-//    RelativeLayout lunch_layout;
-//
-//    @BindView(R.id.transport_layout)
-//    RelativeLayout transport_layout;
-//
-//    @BindView(R.id.total_cost)
-//    TextView total_cost;
-//
-//    @BindView(R.id.room_details)
-//    TextView room_details;
-//
-//    @BindView(R.id.lunch_checkbox)
-//    CheckBox lunch_checkbox;
-//
-//    @BindView(R.id.transport_checkbox)
-//    CheckBox transport_checkbox;
-//
-//    @BindView(R.id.room_image)
-//    ImageView room_image;
-//
-//    @BindView(R.id.guest_count1)
-//    Button guest_count1;
-//
-//    @BindView(R.id.guest_count2)
-//    Button guest_count2;
-//
-//    @BindView(R.id.guest_count3)
-//    Button guest_count3;
-//
-//    @BindView(R.id.btn_book_room)
-//    Button btn_book_room;
-//
-//    @BindView(R.id.map_layout)
-//    ImageView map_layout;
-//
-//    double amount, guestCount = 1;
-//
-//    private static DecimalFormat df2 = new DecimalFormat(".##");
+
+    @BindView(R.id.title)
+    TextView title;
+
+    @BindView(R.id.address)
+    TextView address;
+
+    @BindView(R.id.wifi_layout)
+    LinearLayout wifi_layout;
+
+    @BindView(R.id.tv_layout)
+    LinearLayout tv_layout;
+
+    @BindView(R.id.ac_layout)
+    LinearLayout ac_layout;
+
+    @BindView(R.id.advantage_layout)
+    LinearLayout advantage_layout;
+
+    @BindView(R.id.lunch_layout)
+    RelativeLayout lunch_layout;
+
+    @BindView(R.id.transport_layout)
+    RelativeLayout transport_layout;
+
+    @BindView(R.id.total_cost)
+    TextView total_cost;
+
+    @BindView(R.id.room_details)
+    TextView room_details;
+
+    @BindView(R.id.lunch_checkbox)
+    CheckBox lunch_checkbox;
+
+    @BindView(R.id.transport_checkbox)
+    CheckBox transport_checkbox;
+
+    @BindView(R.id.guest_count1)
+    Button guest_count1;
+
+    @BindView(R.id.guest_count2)
+    Button guest_count2;
+
+    @BindView(R.id.guest_count3)
+    Button guest_count3;
+
+    @BindView(R.id.map_layout)
+    ImageView map_layout;
+
+    @BindView(R.id.tv_check_in_date)
+    TextView tv_check_in_date;
+
+    @BindView(R.id.tv_check_in_day)
+    TextView tv_check_in_day;
+
+    @BindView(R.id.tv_check_in_year)
+    TextView tv_check_in_year;
+
+    @BindView(R.id.tv_check_out_date)
+    TextView tv_check_out_date;
+
+    @BindView(R.id.tv_check_out_day)
+    TextView tv_check_out_day;
+
+    @BindView(R.id.tv_check_out_year)
+    TextView tv_check_out_year;
+
+    double amount, guestCount = 1;
+
+    NumberFormat formatter = new DecimalFormat("BDT #0");
 
 
     public static void start(Context context, RoomDTO roomDTO) {
@@ -134,6 +154,38 @@ public class RoomDetailsActivity extends AppCompatActivity {
         apiInterface = ApiClient.createService(this, ApiInterface.class);
         getIntentData();
         initLayout();
+        updateLayout();
+        updateTotalCost();
+    }
+
+    private void updateLayout() {
+        title.setText(roomDTO.getTitle());
+        room_details.setText(roomDTO.getDescription());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Constants.startDate);
+
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
+        String dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US);
+        String month = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US);
+
+        tv_check_in_date.setText(dayOfMonth + "");
+        tv_check_in_day.setText(dayOfWeek);
+        tv_check_in_year.setText(month + " " + year);
+
+
+        calendar.setTime(Constants.endDate);
+        dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        year = calendar.get(Calendar.YEAR);
+
+        dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US);
+        month = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US);
+
+        tv_check_out_date.setText(dayOfMonth + "");
+        tv_check_out_day.setText(dayOfWeek);
+        tv_check_out_year.setText(month + " " + year);
     }
 
     private void getIntentData() {
@@ -147,71 +199,63 @@ public class RoomDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_back);
 
-        placeDTOS.add(new DivisionResponseDto("Dhaka", "ঢাকা", "dhaka"));
-        placeDTOS.add(new DivisionResponseDto("Sylhet", "সিলেট", "sylhet"));
-        placeDTOS.add(new DivisionResponseDto("Rajshahi", "রাজশাহী", "rajshahi"));
-        placeDTOS.add(new DivisionResponseDto("Bogura", "বগুড়া", "dhaka"));
-        placeDTOS.add(new DivisionResponseDto("Khulna", "খুলনা", "dhaka"));
-        placeDTOS.add(new DivisionResponseDto("Chottogram", "চট্টগ্রাম", "dhaka"));
-        placeDTOS.add(new DivisionResponseDto("Barishal", "বরিশাল", "dhaka"));
-
         room_images.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        imageAdapter = new ImageAdapter(this, placeDTOS);
+        imageAdapter = new ImageAdapter(this, new ArrayList<DivisionResponseDto>());
         room_images.setAdapter(imageAdapter);
 
-//        title.setText(roomDTO.getNoOfAccommodation() > 1 ? roomDTO.getNoOfAccommodation()
-//                + " Seats Room" : roomDTO.getNoOfAccommodation() + " Seat Room");
-//        address.setText(roomDTO.getAddress());
-//
-//        room_details.setText(roomDTO.getDescription());
-//
-//        if (roomDTO.isWifiAvailable() || roomDTO.isTvAvailable() || roomDTO.isAcAvailable()) {
-//            advantage_layout.setVisibility(View.VISIBLE);
-//            if (roomDTO.isWifiAvailable()) {
-//                wifi_layout.setVisibility(View.VISIBLE);
-//            }
-//
-//            if (roomDTO.isTvAvailable()) {
-//                tv_layout.setVisibility(View.VISIBLE);
-//            }
-//
-//            if (roomDTO.isAcAvailable()) {
-//                ac_layout.setVisibility(View.VISIBLE);
-//            }
-//        }
+        if (roomDTO.getWifiAvailable() == 1
+                || roomDTO.getTvAvailable() == 1
+                || roomDTO.getAcAvailable() == 1) {
+            advantage_layout.setVisibility(View.VISIBLE);
+            if (roomDTO.getWifiAvailable() == 1) {
+                wifi_layout.setVisibility(View.VISIBLE);
+            } else {
+                wifi_layout.setVisibility(View.GONE);
+            }
 
-//        if (roomDTO.isLunchAvailable()) {
-//            lunch_layout.setVisibility(View.VISIBLE);
-//        }
-//
-//        if (roomDTO.isTransportAvailable()) {
-//            transport_layout.setVisibility(View.VISIBLE);
-//        }
-//
-//        amount = roomDTO.getRoomCost();
-//        guest_count1.setSelected(true);
-//        guestCount = 1;
-//        updateTotalCost();
-//
-//        lunch_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                updateTotalCost();
-//            }
-//        });
+            if (roomDTO.getTvAvailable() == 1) {
+                tv_layout.setVisibility(View.VISIBLE);
+            } else {
+                tv_layout.setVisibility(View.GONE);
+            }
 
-//        transport_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                updateTotalCost();
-//            }
-//        });
-//
-//        if (roomDTO.getImages() != null && roomDTO.getImages().size() > 0) {
-//            Constants.loadImage(this, roomDTO.getImages().get(0).getImageUrl(),
-//                    room_image);
-//        }
-//
+            if (roomDTO.getAcAvailable() == 1) {
+                ac_layout.setVisibility(View.VISIBLE);
+            } else {
+                ac_layout.setVisibility(View.GONE);
+            }
+        }
+
+        if (roomDTO.getLunchAvailable() == 1) {
+            lunch_layout.setVisibility(View.VISIBLE);
+        } else {
+            lunch_layout.setVisibility(View.GONE);
+        }
+
+        if (roomDTO.getTransportAvailable() == 1) {
+            transport_layout.setVisibility(View.VISIBLE);
+        } else {
+            transport_layout.setVisibility(View.GONE);
+        }
+
+        amount = roomDTO.getRoomCost();
+        guest_count1.setSelected(true);
+        guestCount = 1;
+
+        lunch_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateTotalCost();
+            }
+        });
+
+        transport_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateTotalCost();
+            }
+        });
+
 //        switch (roomDTO.getNoOfAccommodation()) {
 //            case 1:
 //                guest_count2.setVisibility(View.GONE);
@@ -253,16 +297,16 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void updateTotalCost() {
-//        amount = 0;
-//        if (lunch_checkbox.isChecked()) {
-//            amount += (roomDTO.getLunchCost() * guestCount);
-//        }
-//        if (transport_checkbox.isChecked()) {
-//            amount += (roomDTO.getTransportCost() * guestCount);
-//        }
-//        amount += (roomDTO.getRoomCost() * guestCount);
-//
-//        total_cost.setText("BDT " + df2.format(amount));
+        amount = 0;
+        if (lunch_checkbox.isChecked()) {
+            amount += (roomDTO.getLunchCost() * guestCount);
+        }
+        if (transport_checkbox.isChecked()) {
+            amount += (roomDTO.getTransportCost() * guestCount);
+        }
+        amount += (roomDTO.getRoomCost() * guestCount);
+
+        total_cost.setText(formatter.format(amount));
     }
 
 //    @OnClick({R.id.guest_count1, R.id.guest_count2, R.id.guest_count3, R.id.btn_book_room, R.id.map_layout})

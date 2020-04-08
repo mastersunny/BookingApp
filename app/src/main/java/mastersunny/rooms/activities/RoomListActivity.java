@@ -69,9 +69,17 @@ public class RoomListActivity extends AppCompatActivity {
             public void onItemSelect(Object selectedItem, int action) {
                 switch (action) {
                     case Constants.ACTION_DETAILS:
+                        startRoomDetailsActivity((RoomDTO) selectedItem);
                         break;
                 }
             }
         });
+    }
+
+    private void startRoomDetailsActivity(RoomDTO selectedItem) {
+        Intent intent = new Intent(this, RoomDetailsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(Constants.ROOM_DTO, selectedItem);
+        startActivity(intent);
     }
 }
