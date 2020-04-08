@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.HotelAdapter;
@@ -81,5 +83,14 @@ public class RoomListActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra(Constants.ROOM_DTO, selectedItem);
         startActivity(intent);
+    }
+
+    @OnClick({R.id.img_back})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_back:
+                onBackPressed();
+                break;
+        }
     }
 }
