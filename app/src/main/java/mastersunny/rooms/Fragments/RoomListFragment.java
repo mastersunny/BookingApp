@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +19,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.R;
-import mastersunny.rooms.adapters.PagerAdapter;
-import mastersunny.rooms.adapters.RoomAdapter;
+import mastersunny.rooms.adapters.HotelAdapter;
 import mastersunny.rooms.models.RoomDTO;
-import mastersunny.rooms.utils.Constants;
 
 
 /**
@@ -45,7 +39,7 @@ public class RoomListFragment extends Fragment {
     @BindView(R.id.rv_rooms)
     RecyclerView rv_rooms;
 
-    RoomAdapter roomAdapter;
+    HotelAdapter roomAdapter;
 
     private List<RoomDTO> roomDTOS;
 
@@ -80,7 +74,7 @@ public class RoomListFragment extends Fragment {
     private void initLayout() {
         roomDTOS = new ArrayList<>();
         rv_rooms.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        roomAdapter = new RoomAdapter(mActivity);
+        roomAdapter = new HotelAdapter(mActivity);
         rv_rooms.setAdapter(roomAdapter);
     }
 

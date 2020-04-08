@@ -16,12 +16,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.activities.RoomSearchActivity;
-import mastersunny.rooms.listeners.ClickListener;
+import mastersunny.rooms.listeners.ItemSelectListener;
 import mastersunny.rooms.R;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.utils.Constants;
-import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 /**
  * Created by sunnychowdhury on 1/19/18.
@@ -35,7 +34,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Activity mActivity;
     public static final int HEADER_ITEM = 1;
     public static final int MAIN_ITEM = 2;
-    private ClickListener clickListener;
+    private ItemSelectListener clickListener;
 
     public PlaceAdapter(Activity mActivity) {
         this.mActivity = mActivity;
@@ -67,7 +66,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     @Override
                     public void onClick(View v) {
                         if (clickListener != null)
-                            clickListener.click();
+                            clickListener.onItemSelect("", Constants.ACTION_GPS);
                     }
                 });
                 break;
@@ -131,7 +130,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    public void setClickListener(ClickListener clickListener) {
+    public void setClickListener(ItemSelectListener clickListener) {
         this.clickListener = clickListener;
     }
 }

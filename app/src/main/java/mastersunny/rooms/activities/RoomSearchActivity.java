@@ -35,8 +35,6 @@ import mastersunny.rooms.adapters.MapAdapter;
 import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.gmap.Prediction;
 import mastersunny.rooms.listeners.RoomSearchListener;
-import mastersunny.rooms.models.ApiResponse;
-import mastersunny.rooms.models.DistrictResponseDto;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.rest.ApiClient;
@@ -337,7 +335,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
     }
 
     private void startRoomListActivity() {
-        Intent intent = new Intent(this, RoomListActivity.class);
+        Intent intent = new Intent(this, HotelListActivity.class);
         startActivity(intent);
         this.overridePendingTransition(R.anim.animation_enter,
                 R.anim.animation_leave);

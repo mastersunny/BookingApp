@@ -24,7 +24,7 @@ public class SavedRoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<RoomDTO> roomDTOS = new ArrayList<>();
     private Activity mActivity;
-    private String TAG = "RoomAdapter";
+    private String TAG = "HotelAdapter";
 
     public SavedRoomAdapter(Activity mActivity) {
         this.mActivity = mActivity;

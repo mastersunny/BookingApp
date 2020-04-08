@@ -12,7 +12,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import mastersunny.rooms.R;
-import mastersunny.rooms.listeners.ClickListener;
+import mastersunny.rooms.listeners.ItemSelectListener;
 import mastersunny.rooms.models.DivisionResponseDto;
 
 /**
@@ -25,7 +25,7 @@ public class DealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<DivisionResponseDto> placeDTOS;
     private Activity mActivity;
-    private ClickListener clickListener;
+    private ItemSelectListener clickListener;
 
     public DealAdapter(Activity mActivity, List<DivisionResponseDto> placeDTOS) {
         this.mActivity = mActivity;
@@ -46,7 +46,7 @@ public class DealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                        RoomListActivity.start(v.getContext(), dto.getName(), (ArrayList<ExamDTO>) dto.getExams(), SearchType.TYPE_PLACE.getStatus());
+//                        HotelListActivity.start(v.getContext(), dto.getName(), (ArrayList<ExamDTO>) dto.getExams(), SearchType.TYPE_PLACE.getStatus());
             }
         });
     }
@@ -76,7 +76,7 @@ public class DealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public void setClickListener(ClickListener clickListener) {
+    public void setClickListener(ItemSelectListener clickListener) {
         this.clickListener = clickListener;
     }
 }

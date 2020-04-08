@@ -2,7 +2,6 @@ package mastersunny.rooms.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,13 +19,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import mastersunny.rooms.BuildConfig;
 import mastersunny.rooms.R;
-import mastersunny.rooms.activities.AboutUsActivity;
-import mastersunny.rooms.adapters.RoomAdapter;
 import mastersunny.rooms.adapters.SavedRoomAdapter;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.models.RoomImageDTO;

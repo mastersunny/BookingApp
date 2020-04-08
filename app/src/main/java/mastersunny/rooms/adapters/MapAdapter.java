@@ -13,7 +13,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
-import mastersunny.rooms.activities.RoomListActivity;
+import mastersunny.rooms.activities.HotelListActivity;
 import mastersunny.rooms.gmap.Prediction;
 
 /**
@@ -47,7 +47,7 @@ public class MapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mActivity, RoomListActivity.class);
+                Intent intent = new Intent(mActivity, HotelListActivity.class);
                 intent.putExtra("PLACE_ID", dto.getPlaceId());
                 mActivity.startActivity(intent);
             }

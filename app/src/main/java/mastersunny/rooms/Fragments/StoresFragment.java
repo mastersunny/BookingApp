@@ -110,7 +110,7 @@ public class StoresFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_button:
-//                RoomListActivity.start(v.getContext(), Constants.store_search);
+//                HotelListActivity.start(v.getContext(), Constants.store_search);
                 break;
         }
     }

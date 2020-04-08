@@ -114,7 +114,7 @@ public class TransactionActivity extends AppCompatActivity implements View.OnCli
                 TransactionActivity.this.finish();
                 break;
             case R.id.search_button:
-                startActivity(new Intent(TransactionActivity.this, RoomListActivity.class));
+                startActivity(new Intent(TransactionActivity.this, HotelListActivity.class));
                 break;
         }
     }

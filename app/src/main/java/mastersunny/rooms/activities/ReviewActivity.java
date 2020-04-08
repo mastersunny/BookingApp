@@ -4,12 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,10 +16,7 @@ import butterknife.OnClick;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.ReviewAdapter;
-import mastersunny.rooms.adapters.RoomAdapter;
 import mastersunny.rooms.models.RoomDTO;
-import mastersunny.rooms.models.RoomImageDTO;
-import mastersunny.rooms.utils.Constants;
 
 public class ReviewActivity extends AppCompatActivity {
 

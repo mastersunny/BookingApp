@@ -1,7 +1,6 @@
 package mastersunny.rooms.Fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import mastersunny.rooms.R;
-import mastersunny.rooms.activities.RoomListActivity;
+import mastersunny.rooms.activities.HotelListActivity;
 import mastersunny.rooms.activities.RoomSearchActivity;
 
 public class GuestSelectFragment extends DialogFragment {
@@ -56,8 +55,8 @@ public class GuestSelectFragment extends DialogFragment {
             guestSelectListener = (RoomSearchActivity) context;
             return;
         }
-        if (context instanceof RoomListActivity) {
-            guestSelectListener = (RoomListActivity) context;
+        if (context instanceof HotelListActivity) {
+            guestSelectListener = (HotelListActivity) context;
             return;
         }
 

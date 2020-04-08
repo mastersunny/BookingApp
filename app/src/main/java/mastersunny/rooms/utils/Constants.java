@@ -77,6 +77,9 @@ public class Constants {
     public static final String USER_DTO = "user_dto";
     public static final String USER_NAME = "user_name";
     public static final String CATEGORY_DTO = "category_dto";
+    public static final int ACTION_DETAILS = 1;
+    public static final int ACTION_GPS= 2;
+    public static final String HOTEL_DTO = "hotel_dto";
 
     public static Date startDate = new Date();
     public static Date endDate = new Date();

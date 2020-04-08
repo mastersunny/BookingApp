@@ -16,9 +16,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mastersunny.rooms.R;
-import mastersunny.rooms.listeners.ClickListener;
+import mastersunny.rooms.listeners.ItemSelectListener;
 import mastersunny.rooms.models.DistrictResponseDto;
-import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.rest.ApiClient;
 
 /**
@@ -31,7 +30,7 @@ public class PopularAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private List<DistrictResponseDto> placeDTOS;
     private Activity mActivity;
-    private ClickListener clickListener;
+    private ItemSelectListener clickListener;
 
     public PopularAdapter(Activity mActivity, List<DistrictResponseDto> placeDTOS) {
         this.mActivity = mActivity;
