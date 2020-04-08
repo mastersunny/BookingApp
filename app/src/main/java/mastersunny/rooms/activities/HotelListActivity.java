@@ -107,6 +107,9 @@ public class HotelListActivity extends AppCompatActivity implements OnMapReadyCa
     @BindView(R.id.room_image)
     ImageView room_image;
 
+    @BindView(R.id.no_data_found)
+    TextView no_data_found;
+
     private HotelResponseDto hotelResponseDto;
 
     private HotelAdapter hotelAdapter;
@@ -250,16 +253,12 @@ public class HotelListActivity extends AppCompatActivity implements OnMapReadyCa
         });
     }
 
-    private void notifyPlaceAdapter() {
-        if (hotelAdapter != null) {
-            hotelAdapter.notifyDataSetChanged();
-        }
-//        checkNoData();
-    }
-
-
     private void checkNoData() {
-
+        if (hotelAdapter.getItemCount() <= 0) {
+            no_data_found.setVisibility(View.VISIBLE);
+        } else {
+            no_data_found.setVisibility(View.GONE);
+        }
     }
 
     private void searchHotels() {
@@ -275,7 +274,6 @@ public class HotelListActivity extends AppCompatActivity implements OnMapReadyCa
                     if (response.isSuccessful() && response.body() != null) {
                         Constants.debugLog(TAG, response.body().toString());
                         updateAdapter(response.body().getHotels());
-                        loadMapData();
                     }
                 }
 
@@ -293,6 +291,11 @@ public class HotelListActivity extends AppCompatActivity implements OnMapReadyCa
         hotelResponseDtos.clear();
         hotelResponseDtos.addAll(hotels);
         hotelAdapter.setData(hotelResponseDtos);
+
+        if (hotels != null && hotels.size() > 0) {
+            loadMapData();
+        }
+        checkNoData();
     }
 
     private void loadData() {

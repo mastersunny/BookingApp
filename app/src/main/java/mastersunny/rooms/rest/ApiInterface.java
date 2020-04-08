@@ -135,7 +135,7 @@ public interface ApiInterface {
     @GET("api/districts")
     Call<ApiResponse> getDistricts(@Query("division_id") Long divisionId);
 
-    @GET("api/hotel")
+    @GET("api/hotels")
     Call<ApiResponse> getHotels(@Query("start_date") String startDate,
                                 @Query("end_date") String endDate,
                                 @Query("no_of_guest") int noOfGuest,
