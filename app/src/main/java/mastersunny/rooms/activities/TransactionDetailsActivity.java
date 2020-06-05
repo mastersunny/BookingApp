@@ -135,7 +135,7 @@ public class TransactionDetailsActivity extends AppCompatActivity implements Vie
         offer_details.setText(transactionDTO.getOfferDTO().getOffer());
         client_name.setText(transactionDTO.getUserDTO().getName() + " " + transactionDTO.getUserDTO().getName());
         email.setText(transactionDTO.getUserDTO().getEmail());
-        phone_number.setText(transactionDTO.getUserDTO().getPhoneNumber());
+        phone_number.setText(transactionDTO.getUserDTO().getMobileNo());
         transaction_date.setText(transactionDTO.getTransactionDate());
         total_amount.setText(transactionDTO.getAmount() + "");
     }

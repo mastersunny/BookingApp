@@ -15,7 +15,7 @@ import android.widget.TextView;
 import mastersunny.rooms.adapters.PagerAdapter;
 import mastersunny.rooms.Fragments.DueFragment;
 import mastersunny.rooms.Fragments.PaidFragment;
-import mastersunny.rooms.models.UserDTO;
+import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.R;
 import mastersunny.rooms.utils.Constants;
 
@@ -27,7 +27,7 @@ public class TransactionActivity extends AppCompatActivity implements View.OnCli
     private PagerAdapter pagerAdapter;
     private TextView total_popular_item, total_item;
 
-    public static void start(Context context, UserDTO userDTO) {
+    public static void start(Context context, CustomerResponseDto userDTO) {
         Intent intent = new Intent(context, TransactionActivity.class);
         intent.putExtra(Constants.USER_DTO, userDTO);
         context.startActivity(intent);

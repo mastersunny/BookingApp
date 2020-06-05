@@ -9,7 +9,7 @@ public class RoomBookingDTO implements Serializable {
 
     private Long id;
 
-    private UserDTO user;
+    private CustomerResponseDto user;
 
     private RoomDTO room;
 
@@ -33,11 +33,11 @@ public class RoomBookingDTO implements Serializable {
         this.id = id;
     }
 
-    public UserDTO getUser() {
+    public CustomerResponseDto getUser() {
         return user;
     }
 
-    public void setUser(UserDTO user) {
+    public void setUser(CustomerResponseDto user) {
         this.user = user;
     }
 

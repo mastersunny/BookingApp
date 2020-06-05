@@ -22,6 +22,9 @@ public class ApiResponse implements Serializable {
     @SerializedName("hotels")
     List<HotelResponseDto> hotels;
 
+    @SerializedName("customer")
+    CustomerResponseDto customer;
+
     public String getMessage() {
         return message;
     }
@@ -62,6 +65,14 @@ public class ApiResponse implements Serializable {
         this.hotels = hotels;
     }
 
+    public CustomerResponseDto getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerResponseDto customer) {
+        this.customer = customer;
+    }
+
     @Override
     public String toString() {
         return "ApiResponse{" +
@@ -70,6 +81,7 @@ public class ApiResponse implements Serializable {
                 ", districts=" + districts +
                 ", banners=" + banners +
                 ", hotels=" + hotels +
+                ", customer=" + customer +
                 '}';
     }
 }

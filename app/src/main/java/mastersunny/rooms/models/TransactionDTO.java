@@ -14,7 +14,7 @@ public class TransactionDTO implements Serializable{
     @SerializedName("offer")
     private OfferDTO offerDTO;
     @SerializedName("users")
-    private UserDTO userDTO;
+    private CustomerResponseDto userDTO;
     @SerializedName("status")
     private int paidStatus;
     @SerializedName("created_at")
@@ -54,11 +54,11 @@ public class TransactionDTO implements Serializable{
         this.offerDTO = offerDTO;
     }
 
-    public UserDTO getUserDTO() {
+    public CustomerResponseDto getUserDTO() {
         return userDTO;
     }
 
-    public void setUserDTO(UserDTO userDTO) {
+    public void setUserDTO(CustomerResponseDto userDTO) {
         this.userDTO = userDTO;
     }
 

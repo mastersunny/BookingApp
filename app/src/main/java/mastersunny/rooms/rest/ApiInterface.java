@@ -4,22 +4,17 @@ import java.util.List;
 
 import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.gmap.GooglePlaceDetails;
-import mastersunny.rooms.models.AccessModel;
 import mastersunny.rooms.models.ApiResponse;
-import mastersunny.rooms.models.CategoryDTO;
+import mastersunny.rooms.models.CustomerRequestDto;
+import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.models.ExamDTO;
-import mastersunny.rooms.models.MoviesResponse;
 import mastersunny.rooms.models.OfferDTO;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.RestModel;
 import mastersunny.rooms.models.RoomBookingDTO;
 import mastersunny.rooms.models.RoomDTO;
-import mastersunny.rooms.models.SliderDTO;
 import mastersunny.rooms.models.StoreDTO;
 import mastersunny.rooms.models.TransactionDTO;
-import mastersunny.rooms.models.UserDTO;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -27,9 +22,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -71,11 +64,11 @@ public interface ApiInterface {
 
     @POST(ApiClient.APP_NAME + "api/login")
     @FormUrlEncoded
-    Call<UserDTO> login(@Field("access_token") String accessToken);
+    Call<CustomerResponseDto> login(@Field("access_token") String accessToken);
 
     @POST(ApiClient.APP_NAME + "api/signup")
     @Headers({"Content-Type: application/json;charset=UTF-8"})
-    Call<UserDTO> signup(@Query("access_token") String accessToken, @Body UserDTO userDTO);
+    Call<CustomerResponseDto> signup(@Query("access_token") String accessToken, @Body CustomerResponseDto userDTO);
 
     @POST(ApiClient.APP_NAME + "api/fcmtoken")
     @FormUrlEncoded
@@ -145,5 +138,9 @@ public interface ApiInterface {
 
     @GET("api/popular/districts")
     Call<ApiResponse> getPopularDistricts();
+
+
+    @POST("api/popular/customer-register")
+    Call<ApiResponse> registerCustomer(@Body CustomerRequestDto customerRequestDto);
 
 }

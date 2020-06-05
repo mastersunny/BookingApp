@@ -22,7 +22,7 @@ import butterknife.Unbinder;
 import mastersunny.rooms.R;
 import mastersunny.rooms.activities.LoginActivity;
 import mastersunny.rooms.listeners.LoginListener;
-import mastersunny.rooms.models.UserDTO;
+import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
@@ -114,35 +114,35 @@ public class SignUpFragment extends Fragment {
         } else if (TextUtils.isEmpty(hscRegNo)) {
             hsc_reg_no.setError(message);
         } else {
-            UserDTO userDTO = new UserDTO(userName, emailAddress, nid, sscRegNo, hscRegNo);
-            Constants.debugLog(TAG, userDTO.toString());
-            apiInterface.signup(AccountKit.getCurrentAccessToken().getToken(), userDTO).enqueue(new Callback<UserDTO>() {
-                @Override
-                public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-                    Constants.debugLog(TAG, response + "");
-                    if (response.isSuccessful()) {
-                        UserDTO userDTO = response.body();
-                        Constants.debugLog(TAG, "response " + userDTO);
-
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString(Constants.USER_NAME, userDTO.getName());
-//                        editor.putString(Constants.PHONE_NUMBER, userDTO.getPhoneNumber());
-//                        editor.putString(Constants.EMAIL, userDTO.getEmail());
-//                        editor.putString(Constants.NID, userDTO.getNid());
-//                        editor.putString(Constants.SSC_REG_NO, userDTO.getSscRegNo());
-//                        editor.putString(Constants.HSC_REG_NO, userDTO.getHscRegNo());
-//                        editor.putString(Constants.PROFILE_IMAGE, userDTO.getProfileImage());
-                        editor.commit();
-
-                        loginListener.loginCompleted();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<UserDTO> call, Throwable t) {
-                    Constants.debugLog(TAG, t.getMessage());
-                }
-            });
+//            CustomerResponseDto userDTO = new CustomerResponseDto(userName, emailAddress, nid, sscRegNo, hscRegNo);
+//            Constants.debugLog(TAG, userDTO.toString());
+//            apiInterface.signup(AccountKit.getCurrentAccessToken().getToken(), userDTO).enqueue(new Callback<CustomerResponseDto>() {
+//                @Override
+//                public void onResponse(Call<CustomerResponseDto> call, Response<CustomerResponseDto> response) {
+//                    Constants.debugLog(TAG, response + "");
+//                    if (response.isSuccessful()) {
+//                        CustomerResponseDto userDTO = response.body();
+//                        Constants.debugLog(TAG, "response " + userDTO);
+//
+//                        SharedPreferences.Editor editor = pref.edit();
+//                        editor.putString(Constants.USER_NAME, userDTO.getName());
+////                        editor.putString(Constants.PHONE_NUMBER, userDTO.getMobileNo());
+////                        editor.putString(Constants.EMAIL, userDTO.getEmail());
+////                        editor.putString(Constants.NID, userDTO.getNid());
+////                        editor.putString(Constants.SSC_REG_NO, userDTO.getSscRegNo());
+////                        editor.putString(Constants.HSC_REG_NO, userDTO.getHscRegNo());
+////                        editor.putString(Constants.PROFILE_IMAGE, userDTO.getProfileImage());
+//                        editor.commit();
+//
+//                        loginListener.loginCompleted();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<CustomerResponseDto> call, Throwable t) {
+//                    Constants.debugLog(TAG, t.getMessage());
+//                }
+//            });
         }
 
     }

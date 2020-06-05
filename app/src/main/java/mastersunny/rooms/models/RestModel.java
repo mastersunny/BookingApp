@@ -13,7 +13,7 @@ public class RestModel implements Serializable {
     @SerializedName("meta_data")
     private MetaData metaData;
     @SerializedName("data")
-    private UserDTO userDTO;
+    private CustomerResponseDto userDTO;
 
     public MetaData getMetaData() {
         return metaData;
@@ -23,11 +23,11 @@ public class RestModel implements Serializable {
         this.metaData = metaData;
     }
 
-    public UserDTO getUserDTO() {
+    public CustomerResponseDto getUserDTO() {
         return userDTO;
     }
 
-    public void setUserDTO(UserDTO userDTO) {
+    public void setUserDTO(CustomerResponseDto userDTO) {
         this.userDTO = userDTO;
     }
 

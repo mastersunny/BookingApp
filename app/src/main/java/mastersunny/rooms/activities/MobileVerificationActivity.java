@@ -18,8 +18,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.models.RestModel;
-import mastersunny.rooms.models.UserDTO;
 import mastersunny.rooms.R;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
@@ -221,7 +221,7 @@ public class MobileVerificationActivity extends AppCompatActivity implements Vie
                     if (response != null && response.isSuccessful() && response.body().getMetaData().isSuccess()) {
                         Constants.debugLog(TAG, response.body().getMetaData() + " re " + response.body().getUserDTO());
                         if (response.body().getMetaData().isData()) {
-                            UserDTO userDTO = response.body().getUserDTO();
+                            CustomerResponseDto userDTO = response.body().getUserDTO();
                             Constants.debugLog(TAG, userDTO.toString());
 //                            editor.putString(Constants.ACCESS_TOKEN, userDTO.getEmail());
                             editor.apply();

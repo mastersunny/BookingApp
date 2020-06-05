@@ -10,8 +10,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.models.RestModel;
-import mastersunny.rooms.models.UserDTO;
 import mastersunny.rooms.R;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
@@ -96,7 +96,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         if (response.isSuccessful() && response.body() != null && response.body().getMetaData().isSuccess()) {
             if (response.body().getMetaData().isData()) {
-                UserDTO userDTO = response.body().getUserDTO();
+                CustomerResponseDto userDTO = response.body().getUserDTO();
                 Constants.debugLog(TAG, userDTO.toString());
 //                editor.putInt(Constants.STORE_ID, 1);
 //                editor.putString(Constants.FIRST_NAME, userDTO.getEmail());

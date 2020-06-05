@@ -27,7 +27,7 @@ import com.facebook.accountkit.ui.LoginType;
 import mastersunny.rooms.R;
 import mastersunny.rooms.activities.LoginActivity;
 import mastersunny.rooms.listeners.LoginListener;
-import mastersunny.rooms.models.UserDTO;
+import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
@@ -127,19 +127,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 login_layout.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
                 try {
-                    apiInterface.login(AccountKit.getCurrentAccessToken().getToken()).enqueue(new Callback<UserDTO>() {
+                    apiInterface.login(AccountKit.getCurrentAccessToken().getToken()).enqueue(new Callback<CustomerResponseDto>() {
                         @Override
-                        public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                        public void onResponse(Call<CustomerResponseDto> call, Response<CustomerResponseDto> response) {
                             progressBar.setVisibility(View.GONE);
                             if (response.isSuccessful()) {
-                                UserDTO userDTO = response.body();
+                                CustomerResponseDto userDTO = response.body();
                                 Constants.debugLog(TAG, "response " + userDTO);
 
-                                if (userDTO.getId() != null && userDTO.getPhoneNumber() != null) {
+                                if (userDTO.getId() != null && userDTO.getMobileNo() != null) {
 
                                     SharedPreferences.Editor editor = pref.edit();
                                     editor.putString(Constants.USER_NAME, userDTO.getName());
-//                                    editor.putString(Constants.PHONE_NUMBER, userDTO.getPhoneNumber());
+//                                    editor.putString(Constants.PHONE_NUMBER, userDTO.getMobileNo());
 //                                    editor.putString(Constants.EMAIL, userDTO.getEmail());
 //                                    editor.putString(Constants.NID, userDTO.getNid());
 //                                    editor.putString(Constants.SSC_REG_NO, userDTO.getSscRegNo());
@@ -155,7 +155,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onFailure(Call<UserDTO> call, Throwable t) {
+                        public void onFailure(Call<CustomerResponseDto> call, Throwable t) {
                             progressBar.setVisibility(View.GONE);
                             Constants.debugLog(TAG, t.getMessage());
                         }
