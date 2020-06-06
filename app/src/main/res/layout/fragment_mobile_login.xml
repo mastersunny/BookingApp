@@ -16,7 +16,7 @@
             android:layout_width="@dimen/logo_w_h"
             android:layout_height="@dimen/logo_w_h"
             android:layout_gravity="center_horizontal"
-            android:src="@mipmap/united_icon" />
+            android:src="@drawable/ic_logo" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:foreground="?selectableItemBackground"
-            app:ccp_defaultNameCode="US" />
+            app:ccp_defaultNameCode="BD" />
 
         <EditText
             android:id="@+id/phone_number"

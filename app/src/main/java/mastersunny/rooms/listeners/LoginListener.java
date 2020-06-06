@@ -2,7 +2,16 @@ package mastersunny.rooms.listeners;
 
 public interface LoginListener {
 
-    void loginCompleted();
+    void initLogin();
+
+    void insertPhoneNumber();
+
+    void verifyPhoneNumber(String phoneNumber);
+
+    void loginSuccess();
+
+    void loginCanceled();
 
     void signUp();
+
 }

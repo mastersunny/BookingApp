@@ -63,18 +63,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.2.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
-//    implementation 'com.google.firebase:firebase-iid:16.2.0'
-
-//    implementation 'com.google.firebase:firebase-core:16.0.1'
-//    implementation 'com.google.firebase:firebase-auth:16.0.2'
-//    implementation 'com.google.firebase:firebase-database:16.0.1'
-
-    //epoxy from airbnb
-//    implementation 'com.github.yongbeam:AirCalendar:1.0.0'
     implementation 'com.github.psinetron:slycalendarview:0.0.9'
-
     implementation 'com.google.maps.android:android-maps-utils:0.5+'
-
     implementation 'com.ornach.nobobutton:nobobutton:1.6'
     implementation 'com.ornach.magicicon:magic-icon:1.6'
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
@@ -83,6 +73,10 @@ dependencies {
 
     implementation 'com.github.smarteist:autoimageslider:1.3.2-appcompat'
     implementation 'com.google.firebase:firebase-auth:19.3.1'
+
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
 
 }

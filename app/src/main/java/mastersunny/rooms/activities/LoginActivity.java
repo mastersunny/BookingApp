@@ -7,11 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import butterknife.BindView;
-import mastersunny.rooms.Fragments.LoginFragment;
+import mastersunny.rooms.Fragments.InitLoginFragment;
+import mastersunny.rooms.Fragments.MobileLoginFragment;
+import mastersunny.rooms.Fragments.MobileVerificationFragment;
 import mastersunny.rooms.Fragments.SignUpFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.listeners.LoginListener;
@@ -48,36 +51,66 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         if (!isFinishing()) {
-            LoginFragment fragment = new LoginFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.content, fragment);
-            transaction.commitAllowingStateLoss();
+            initLogin();
         }
     }
 
     @Override
-    public void loginCompleted() {
-        if (FirebaseInstanceId.getInstance().getToken() != null) {
-            progressBar.setVisibility(View.VISIBLE);
-            apiInterface.sendRegistrationToServer(FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    progressBar.setVisibility(View.GONE);
-                    Constants.debugLog(TAG, response + "");
-                    if (response.isSuccessful()) {
-                        Constants.debugLog(TAG, response.body());
-                    }
-                    finish();
-                }
+    public void initLogin() {
+        InitLoginFragment fragment = new InitLoginFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content, fragment);
+        transaction.commitAllowingStateLoss();
+    }
 
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    progressBar.setVisibility(View.GONE);
-                    Constants.debugLog(TAG, t.getMessage());
-                    finish();
-                }
-            });
-        }
+    @Override
+    public void insertPhoneNumber() {
+        MobileLoginFragment mobileLoginFragment = new MobileLoginFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content, mobileLoginFragment);
+        transaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    public void verifyPhoneNumber(String phoneNumber) {
+        Bundle bundle = new Bundle();
+        bundle.putString("phoneNo", phoneNumber);
+        MobileVerificationFragment fragment = new MobileVerificationFragment();
+        fragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content, fragment);
+        transaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    public void loginSuccess() {
+//        if (FirebaseInstanceId.getInstance().getToken() != null) {
+//            progressBar.setVisibility(View.VISIBLE);
+//            apiInterface.sendRegistrationToServer(FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<String>() {
+//                @Override
+//                public void onResponse(Call<String> call, Response<String> response) {
+//                    progressBar.setVisibility(View.GONE);
+//                    Constants.debugLog(TAG, response + "");
+//                    if (response.isSuccessful()) {
+//                        Constants.debugLog(TAG, response.body());
+//                    }
+//                    finish();
+//                }
+//
+//                @Override
+//                public void onFailure(Call<String> call, Throwable t) {
+//                    progressBar.setVisibility(View.GONE);
+//                    Constants.debugLog(TAG, t.getMessage());
+//                    finish();
+//                }
+//            });
+//        }
+    }
+
+    @Override
+    public void loginCanceled() {
+        Toast.makeText(this, "Login cancelled", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override

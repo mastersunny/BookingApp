@@ -147,6 +147,9 @@ public interface ApiInterface {
     @POST("api/popular/room-book")
     Call<ApiResponse> bookRoom(@Body RoomBookingRequestDto roomBookingRequestDto);
 
+    @POST("api/popular/customer-login")
+    Call<ApiResponse> loginCustomer(@Body CustomerRequestDto customerRequestDto);
+
 
 
 }

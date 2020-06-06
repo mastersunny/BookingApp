@@ -1,5 +1,6 @@
 package mastersunny.rooms.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -34,8 +35,10 @@ import mastersunny.rooms.Fragments.ReviewBottomSheetFragment;
 import mastersunny.rooms.Fragments.ProgressDialogFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.ImageAdapter;
+import mastersunny.rooms.entities.CustomerEntity;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.RoomDTO;
+import mastersunny.rooms.repositories.CustomerRepository;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
@@ -137,6 +140,8 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     NumberFormat formatter = new DecimalFormat("BDT #0");
 
+    private CustomerRepository customerRepository;
+
 
     public static void start(Context context, RoomDTO roomDTO) {
         Intent intent = new Intent(context, RoomDetailsActivity.class);
@@ -151,6 +156,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_room_details);
         ButterKnife.bind(this);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
+        customerRepository = new CustomerRepository(getApplication());
         getIntentData();
         initLayout();
         updateLayout();
@@ -268,16 +274,17 @@ public class RoomDetailsActivity extends AppCompatActivity {
         bottom_sheet.setSmoothScrollingEnabled(true);
         final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet);
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @SuppressLint("RestrictedApi")
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 Constants.debugLog(TAG, "newState " + newState);
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    fab.show();
+                    fab.setVisibility(View.VISIBLE);
                     btn_book_room.setVisibility(View.GONE);
                     toolbar.setVisibility(View.GONE);
                 } else {
                     toolbar.setVisibility(View.VISIBLE);
-                    fab.hide();
+                    fab.setVisibility(View.GONE);
                     btn_book_room.setVisibility(View.VISIBLE);
                 }
             }
@@ -308,42 +315,15 @@ public class RoomDetailsActivity extends AppCompatActivity {
         total_cost.setText(formatter.format(amount));
     }
 
-//    @OnClick({R.id.guest_count1, R.id.guest_count2, R.id.guest_count3, R.id.btn_book_room, R.id.map_layout})
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.map_layout:
-//                startGoogleMap();
-//                break;
-//            case R.id.guest_count1:
-//                deselectAll();
-//                guest_count1.setSelected(true);
-//                guestCount = 1;
-//                updateTotalCost();
-//                break;
-//            case R.id.guest_count2:
-//                deselectAll();
-//                guest_count2.setSelected(true);
-//                guestCount = 2;
-//                updateTotalCost();
-//                break;
-//            case R.id.guest_count3:
-//                deselectAll();
-//                guest_count3.setSelected(true);
-//                guestCount = 3;
-//                updateTotalCost();
-//                break;
-//            case R.id.btn_book_room:
-//                bookRoom();
-//                break;
-//        }
-//    }
-
-    @OnClick({R.id.rating_layout})
+    @OnClick({R.id.rating_layout, R.id.btn_book_room})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rating_layout:
                 ReviewBottomSheetFragment reviewBottomSheetFragment = new ReviewBottomSheetFragment();
                 reviewBottomSheetFragment.show(getSupportFragmentManager(), reviewBottomSheetFragment.getTag());
+                break;
+            case R.id.btn_book_room:
+                bookRoom();
                 break;
         }
     }
@@ -372,7 +352,14 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void bookRoom() {
-        showProgressDialog("Booking...");
+        CustomerEntity customerEntity = customerRepository.getFirst();
+        if(customerEntity==null){
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        }
+
+//        showProgressDialog("Booking...");
 //        apiInterface.createBooking(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
 //            @Override
 //            public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
