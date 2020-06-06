@@ -3,12 +3,12 @@ package mastersunny.rooms.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -160,7 +160,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
         mapAdapter = new MapAdapter(this, predictions);
         place_rv.setAdapter(mapAdapter);
 
-        AutoCompleteTextView search_text = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        AutoCompleteTextView search_text = searchView.findViewById(R.id.search_src_text);
         search_text.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.text_size_14));
         searchView.setIconifiedByDefault(false);
         searchView.setQueryHint(getResources().getString(R.string.search_text));
@@ -186,7 +186,7 @@ public class RoomSearchActivity extends AppCompatActivity implements GuestSelect
                 return true;
             }
         });
-        ImageView closeButton = searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
         closeButton.setOnClickListener(new View.OnClickListener() {
 
             @Override

@@ -2,21 +2,16 @@ package mastersunny.rooms.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import mastersunny.rooms.adapters.TransactionAdapter;
 import mastersunny.rooms.models.TransactionDTO;
 import mastersunny.rooms.R;
-import mastersunny.rooms.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by ASUS on 1/23/2018.

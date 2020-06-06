@@ -12,6 +12,7 @@ import mastersunny.rooms.models.OfferDTO;
 import mastersunny.rooms.models.DivisionResponseDto;
 import mastersunny.rooms.models.RestModel;
 import mastersunny.rooms.models.RoomBookingDTO;
+import mastersunny.rooms.models.RoomBookingRequestDto;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.models.StoreDTO;
 import mastersunny.rooms.models.TransactionDTO;
@@ -142,5 +143,10 @@ public interface ApiInterface {
 
     @POST("api/popular/customer-register")
     Call<ApiResponse> registerCustomer(@Body CustomerRequestDto customerRequestDto);
+
+    @POST("api/popular/room-book")
+    Call<ApiResponse> bookRoom(@Body RoomBookingRequestDto roomBookingRequestDto);
+
+
 
 }

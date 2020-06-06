@@ -4,16 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.facebook.accountkit.AccountKit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,13 +20,9 @@ import butterknife.Unbinder;
 import mastersunny.rooms.R;
 import mastersunny.rooms.activities.LoginActivity;
 import mastersunny.rooms.listeners.LoginListener;
-import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SignUpFragment extends Fragment {
 
