@@ -8,6 +8,8 @@ public interface LoginListener {
 
     void verifyPhoneNumber(String phoneNumber);
 
+    void customerLogin(String phoneNumber);
+
     void loginSuccess();
 
     void loginCanceled();

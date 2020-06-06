@@ -23,6 +23,12 @@ public class CustomerRepository {
         });
     }
 
+    public void deleteAll(){
+        BookingDatabase.databaseWriteExecutor.execute(() -> {
+            customerDao.deleteAll();
+        });
+    }
+
     public void delete(final long id) {
         BookingDatabase.databaseWriteExecutor.execute(() -> {
             CustomerEntity customerEntity = customerDao.getById(id);

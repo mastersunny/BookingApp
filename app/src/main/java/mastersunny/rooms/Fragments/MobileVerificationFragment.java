@@ -45,6 +45,8 @@ import mastersunny.rooms.activities.HomeActivity;
 import mastersunny.rooms.activities.LoginActivity;
 import mastersunny.rooms.activities.RegistrationActivity;
 import mastersunny.rooms.listeners.LoginListener;
+import mastersunny.rooms.models.ApiResponse;
+import mastersunny.rooms.models.CustomerRequestDto;
 import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.models.RestModel;
 import mastersunny.rooms.R;
@@ -199,7 +201,7 @@ public class MobileVerificationFragment extends Fragment {
                 // by combining the code with a verification ID.
                 Constants.debugLog(TAG, "onCodeSent:" + verificationId);
 
-                Toast.makeText(mActivity, "Code send to your mobile no", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "Code sent to your mobile no", Toast.LENGTH_SHORT).show();
 
                 // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
@@ -216,11 +218,13 @@ public class MobileVerificationFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        pdLoading.cancel();
                         if(task.isSuccessful()){
-                            Toast.makeText(mActivity, "Code verification success", Toast.LENGTH_SHORT).show();
+                            loginListener.customerLogin(phoneNumber);
                         }else {
-                            Toast.makeText(mActivity, "Code verification failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, "Verification Code is wrong", Toast.LENGTH_SHORT).show();
                             btn_resend_code.setVisibility(View.VISIBLE);
+                            btn_resend_code.setEnabled(true);
                         }
                     }
                 });
@@ -261,7 +265,7 @@ public class MobileVerificationFragment extends Fragment {
         });
     }
 
-    @OnClick
+    @OnClick({R.id.btn_resend_code,R.id.btn_next })
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_resend_code:
@@ -270,18 +274,20 @@ public class MobileVerificationFragment extends Fragment {
             case R.id.btn_next:
                 verifyPhoneNumberWithCode(mVerificationId, one_time_password.getText().toString().trim());
                 break;
-            case R.id.back_button:
-                if (!alreadyRequest) {
-//                    finish();
-                }
         }
     }
 
     private void verifyPhoneNumberWithCode(String verificationId, String code) {
-        // [START verify_with_code]
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-        // [END verify_with_code]
-        signInWithPhoneAuthCredential(credential);
+        try{
+            showProgressDialog("Verifying");
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+            signInWithPhoneAuthCredential(credential);
+        }catch (Exception e){
+            btn_resend_code.setVisibility(View.VISIBLE);
+            btn_resend_code.setEnabled(true);
+            pdLoading.cancel();
+            Toast.makeText(mActivity, "Verification Code is wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void resendVerificationCode(String phoneNumber, PhoneAuthProvider.ForceResendingToken token) {
@@ -294,11 +300,10 @@ public class MobileVerificationFragment extends Fragment {
                 token);             // ForceResendingToken from callbacks
     }
 
-    public void showProgressDialog() {
+    public void showProgressDialog(String message) {
         pdLoading = new ProgressDialog(mActivity);
-        pdLoading.setMessage("Authorizing");
+        pdLoading.setMessage(message);
         pdLoading.setCancelable(false);
         pdLoading.show();
     }
-
 }

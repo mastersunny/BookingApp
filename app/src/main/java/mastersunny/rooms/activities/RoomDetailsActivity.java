@@ -1,6 +1,7 @@
 package mastersunny.rooms.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -36,12 +40,18 @@ import mastersunny.rooms.Fragments.ProgressDialogFragment;
 import mastersunny.rooms.R;
 import mastersunny.rooms.adapters.ImageAdapter;
 import mastersunny.rooms.entities.CustomerEntity;
+import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.models.DivisionResponseDto;
+import mastersunny.rooms.models.RoomBookingDTO;
+import mastersunny.rooms.models.RoomBookingRequestDto;
 import mastersunny.rooms.models.RoomDTO;
 import mastersunny.rooms.repositories.CustomerRepository;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RoomDetailsActivity extends AppCompatActivity {
 
@@ -356,40 +366,51 @@ public class RoomDetailsActivity extends AppCompatActivity {
         if(customerEntity==null){
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-        }
+            startActivityForResult(intent, Constants.REQUEST_FACEBOOK_LOGIN_CODE);
+        } else{
+            try{
+                showProgressDialog("Booking...");
+                RoomBookingRequestDto roomBookingRequestDto = new RoomBookingRequestDto();
+                roomBookingRequestDto.setRoomId(roomDTO.getId());
+                roomBookingRequestDto.setUserId(customerEntity.getCustomerId());
+                roomBookingRequestDto.setGuestNo(Constants.totalGuest);
+                roomBookingRequestDto.setStartDate(Constants.sdf2.format(Constants.startDate));
+                roomBookingRequestDto.setEndDate(Constants.sdf2.format(Constants.endDate));
+                apiInterface.createBooking(roomBookingRequestDto).enqueue(new Callback<RoomBookingDTO>() {
+                    @Override
+                    public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
+                        Constants.debugLog(TAG,response+"");
+                        dismissDialog();
+                        if(response.isSuccessful() && response.body()!=null){
+                            Toast.makeText(RoomDetailsActivity.this, "Room booked successfully",
+                                    Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-//        showProgressDialog("Booking...");
-//        apiInterface.createBooking(Constants.startDate, Constants.endDate, roomDTO.getId(), amount, (int) guestCount).enqueue(new Callback<RoomBookingDTO>() {
-//            @Override
-//            public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
-//
-//                Constants.debugLog(TAG, response + " ");
-//                dismissDialog();
-//
-//                if (response.isSuccessful() && response.body() != null) {
-//                    Constants.debugLog(TAG, response.body().toString());
-//                    if (response.headers().get("status").equals("exists")) {
-//                        RoomBookingActivity.start(RoomDetailsActivity.this, response.body(), true);
-//                        RoomDetailsActivity.this.finish();
-//                    } else {
-//                        RoomBookingActivity.start(RoomDetailsActivity.this, response.body(), false);
-//                        RoomDetailsActivity.this.finish();
-//                    }
-//                } else {
-//                    if (!isFinishing()) {
-//                        Constants.showNotificationDialog(RoomDetailsActivity.this, "Booking", response.message());
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
-//                dismissDialog();
-//                Constants.debugLog(TAG, t.getMessage());
-//                Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+                    @Override
+                    public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
+                        Constants.debugLog(TAG,t.getMessage());
+                        dismissDialog();
+                        Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }catch (Exception e){
+                Constants.debugLog(TAG, e.getMessage());
+                Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constants.REQUEST_FACEBOOK_LOGIN_CODE) {
+                bookRoom();
+            }
+        }
 
     }
 

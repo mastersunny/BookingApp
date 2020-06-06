@@ -94,13 +94,7 @@ public interface ApiInterface {
                                  @Query("guest") int guest);
 
 
-    @POST(ApiClient.APP_NAME + "api/bookings")
-    @FormUrlEncoded
-    Call<RoomBookingDTO> createBooking(@Field("start_date") String startDate,
-                                       @Field("end_date") String endDate,
-                                       @Field("room_id") Long roomId,
-                                       @Field("room_cost") double roomCost,
-                                       @Field("guest_count") int guestCount);
+
 
     @GET(ApiClient.APP_NAME + "api/bookings")
     Call<List<RoomBookingDTO>> getBookings(@Query("page") int page,
@@ -149,6 +143,9 @@ public interface ApiInterface {
 
     @POST("api/popular/customer-login")
     Call<ApiResponse> loginCustomer(@Body CustomerRequestDto customerRequestDto);
+
+    @POST("api/room-book")
+    Call<RoomBookingDTO> createBooking(@Body RoomBookingRequestDto requestDto);
 
 
 

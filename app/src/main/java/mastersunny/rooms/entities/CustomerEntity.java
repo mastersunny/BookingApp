@@ -18,6 +18,8 @@ public class CustomerEntity{
     @NonNull
     private Long id;
 
+    private Long customerId;
+
     private String name;
 
     private String email;
@@ -43,6 +45,14 @@ public class CustomerEntity{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {

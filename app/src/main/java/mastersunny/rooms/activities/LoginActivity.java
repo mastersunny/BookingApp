@@ -1,5 +1,7 @@
 package mastersunny.rooms.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,7 +19,12 @@ import mastersunny.rooms.Fragments.MobileLoginFragment;
 import mastersunny.rooms.Fragments.MobileVerificationFragment;
 import mastersunny.rooms.Fragments.SignUpFragment;
 import mastersunny.rooms.R;
+import mastersunny.rooms.entities.CustomerEntity;
 import mastersunny.rooms.listeners.LoginListener;
+import mastersunny.rooms.models.ApiResponse;
+import mastersunny.rooms.models.CustomerRequestDto;
+import mastersunny.rooms.models.CustomerResponseDto;
+import mastersunny.rooms.repositories.CustomerRepository;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
@@ -29,17 +36,18 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
     private String TAG = "LoginActivity";
     private ApiInterface apiInterface;
-    SharedPreferences pref;
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+
+    CustomerRepository customerRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
-        pref = getSharedPreferences(Constants.prefs, 0);
+        customerRepository = new CustomerRepository(getApplication());
         initLayout();
     }
 
@@ -80,6 +88,51 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, fragment);
         transaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    public void customerLogin(String phoneNumber) {
+        CustomerRequestDto customerRequestDto = new CustomerRequestDto();
+        customerRequestDto.setMobileNo(phoneNumber);
+        apiInterface.loginCustomer(customerRequestDto).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if(response.isSuccessful()&& response.body()!=null){
+                    if(response.body().getCustomer()!=null){
+                        Constants.debugLog(TAG, customerRequestDto.toString());
+                        saveCustomer(response.body().getCustomer());
+                    }else {
+                        signUp();
+                    }
+                }else {
+                    onBackPressed();
+                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+                Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void saveCustomer(CustomerResponseDto customer) {
+        CustomerEntity customerEntity = new CustomerEntity();
+        customerEntity.setMobileNo(customer.getMobileNo());
+        customerEntity.setName(customer.getName());
+        customerEntity.setEmail(customer.getEmail());
+        customerEntity.setCustomerId(customer.getId());
+        customerRepository.deleteAll();
+        customerRepository.insert(customerEntity);
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(CustomerResponseDto.TAG, customer);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+
+
     }
 
     @Override
