@@ -1,13 +1,17 @@
 package mastersunny.rooms.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class RoomImageDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @SerializedName("id")
     private Long id;
 
+    @SerializedName("image_url")
     private String imageUrl;
 
     public RoomImageDTO() {

@@ -46,6 +46,9 @@ public class HotelResponseDto implements Serializable {
     @SerializedName("rooms")
     private List<RoomDTO> roomDTOS;
 
+    @SerializedName("images")
+    private List<RoomImageDTO> images;
+
     public Integer getId() {
         return id;
     }
@@ -150,6 +153,14 @@ public class HotelResponseDto implements Serializable {
         this.roomDTOS = roomDTOS;
     }
 
+    public List<RoomImageDTO> getImages() {
+        return images;
+    }
+
+    public void setImages(List<RoomImageDTO> images) {
+        this.images = images;
+    }
+
     @Override
     public String toString() {
         return "HotelResponseDto{" +
@@ -166,6 +177,7 @@ public class HotelResponseDto implements Serializable {
                 ", isVerified=" + isVerified +
                 ", distance=" + distance +
                 ", roomDTOS=" + roomDTOS +
+                ", images=" + images +
                 '}';
     }
 }

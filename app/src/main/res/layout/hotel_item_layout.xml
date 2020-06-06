@@ -7,7 +7,7 @@
     android:background="@android:color/white">
 
     <ImageView
-        android:id="@+id/room_image"
+        android:id="@+id/hotel_image"
         android:layout_width="match_parent"
         android:layout_height="210dp"
         android:layout_marginStart="3dp"
@@ -19,7 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/room_image"
+        android:layout_alignBottom="@id/hotel_image"
         android:background="@drawable/item_bg"
         android:paddingStart="16dp"
         android:paddingTop="4dp"
@@ -46,7 +46,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/room_image"
+        android:layout_below="@+id/hotel_image"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"

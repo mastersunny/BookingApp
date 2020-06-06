@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +32,7 @@ public class HotelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private String TAG = "HotelAdapter";
     NumberFormat formatter = new DecimalFormat("BDT #0");
     private ItemSelectListener itemSelectListener;
+    Random random = new Random();
 
     public HotelAdapter(Activity mActivity) {
         this.mActivity = mActivity;
@@ -52,12 +54,11 @@ public class HotelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mainHolder.address.setText(hotelResponseDto.getAddress());
         mainHolder.price.setText(formatter.format(hotelResponseDto.getRoomDTOS().get(0).getRoomCost()));
 
-        if (hotelResponseDto.getRoomDTOS().get(0).getImages() != null
-                && hotelResponseDto.getRoomDTOS().get(0).getImages().size() > 0) {
-            Glide.with(mActivity).load(ApiClient.BASE_URL + hotelResponseDto.getRoomDTOS().get(0)
-                    .getImages().get(0).getImageUrl())
+        if (hotelResponseDto.getImages()!=null && hotelResponseDto.getImages().size()>0) {
+            Glide.with(mActivity).load(ApiClient.BASE_URL + hotelResponseDto.getImages()
+                    .get(random.nextInt(hotelResponseDto.getImages().size()-1)).getImageUrl())
                     .placeholder(R.drawable.ic_image)
-                    .into(mainHolder.room_image);
+                    .into(mainHolder.hotel_image);
         }
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +83,8 @@ public class HotelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         @BindView(R.id.title)
         TextView title;
 
-        @BindView(R.id.room_image)
-        ImageView room_image;
+        @BindView(R.id.hotel_image)
+        ImageView hotel_image;
 
         @BindView(R.id.address)
         TextView address;
