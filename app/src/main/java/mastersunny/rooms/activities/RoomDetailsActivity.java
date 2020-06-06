@@ -199,7 +199,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_back);
 
         room_images.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        imageAdapter = new ImageAdapter(this, new ArrayList<DivisionResponseDto>());
+        imageAdapter = new ImageAdapter(this, roomDTO.getImages());
         room_images.setAdapter(imageAdapter);
 
         if (roomDTO.getWifiAvailable() == 1
@@ -272,12 +272,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 Constants.debugLog(TAG, "newState " + newState);
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    fab.setVisibility(View.VISIBLE);
+                    fab.show();
                     btn_book_room.setVisibility(View.GONE);
                     toolbar.setVisibility(View.GONE);
                 } else {
                     toolbar.setVisibility(View.VISIBLE);
-                    fab.setVisibility(View.GONE);
+                    fab.hide();
                     btn_book_room.setVisibility(View.VISIBLE);
                 }
             }
