@@ -46,7 +46,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MainHolder mainHolder = (MainHolder) holder;
         final RoomImageDTO dto = imageDTOS.get(position);
-        Glide.with(mActivity).load(ApiClient.BASE_URL + dto.getImageUrl())
+        Glide.with(mActivity).load(ApiClient.BASE_URL+"file/get?filePath=" + dto.getImageUrl())
                 .placeholder(R.drawable.ic_image)
                 .into(mainHolder.room_image);
         mainHolder.itemView.setOnClickListener(new View.OnClickListener() {

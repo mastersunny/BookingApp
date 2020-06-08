@@ -55,8 +55,9 @@ public class HotelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mainHolder.price.setText(formatter.format(hotelResponseDto.getRoomDTOS().get(0).getRoomCost()));
 
         if (hotelResponseDto.getImages()!=null && hotelResponseDto.getImages().size()>0) {
-            Glide.with(mActivity).load(ApiClient.BASE_URL + hotelResponseDto.getImages()
-                    .get(random.nextInt(hotelResponseDto.getImages().size()-1)).getImageUrl())
+            String url = ApiClient.BASE_URL + "file/get?filePath="+ hotelResponseDto.getImages()
+                    .get(random.nextInt(hotelResponseDto.getImages().size()-1)).getImageUrl();
+            Glide.with(mActivity).load(url)
                     .placeholder(R.drawable.ic_image)
                     .into(mainHolder.hotel_image);
         }

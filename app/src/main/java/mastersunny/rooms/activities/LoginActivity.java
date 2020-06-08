@@ -97,6 +97,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         apiInterface.loginCustomer(customerRequestDto).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                Constants.debugLog(TAG, response+"");
                 if(response.isSuccessful()&& response.body()!=null){
                     if(response.body().getCustomer()!=null){
                         Constants.debugLog(TAG, customerRequestDto.toString());
@@ -112,6 +113,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
+                onBackPressed();
                 Constants.debugLog(TAG, t.getMessage());
                 Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
             }
