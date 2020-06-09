@@ -22,12 +22,14 @@ import mastersunny.rooms.R;
 import mastersunny.rooms.entities.CustomerEntity;
 import mastersunny.rooms.listeners.LoginListener;
 import mastersunny.rooms.models.ApiResponse;
+import mastersunny.rooms.models.CustomerLoginRequestDto;
 import mastersunny.rooms.models.CustomerRequestDto;
 import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.repositories.CustomerRepository;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
+import mastersunny.rooms.utils.ObjectSaveHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,14 +42,11 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    CustomerRepository customerRepository;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
-        customerRepository = new CustomerRepository(getApplication());
         initLayout();
     }
 
@@ -92,15 +91,15 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
     @Override
     public void customerLogin(String phoneNumber) {
-        CustomerRequestDto customerRequestDto = new CustomerRequestDto();
-        customerRequestDto.setMobileNo(phoneNumber);
-        apiInterface.loginCustomer(customerRequestDto).enqueue(new Callback<ApiResponse>() {
+        CustomerLoginRequestDto requestDto = new CustomerLoginRequestDto();
+        requestDto.setMobileNo(phoneNumber);
+        apiInterface.loginCustomer(requestDto).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 Constants.debugLog(TAG, response+"");
                 if(response.isSuccessful()&& response.body()!=null){
+                    Constants.debugLog(TAG, response.body().getCustomer().toString());
                     if(response.body().getCustomer()!=null){
-                        Constants.debugLog(TAG, customerRequestDto.toString());
                         saveCustomer(response.body().getCustomer());
                     }else {
                         signUp();
@@ -126,15 +125,13 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         customerEntity.setName(customer.getName());
         customerEntity.setEmail(customer.getEmail());
         customerEntity.setCustomerId(customer.getId());
-        customerRepository.deleteAll();
-        customerRepository.insert(customerEntity);
+
+        ObjectSaveHelper.getInstance().saveObject(CustomerResponseDto.TAG, customer);
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra(CustomerResponseDto.TAG, customer);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
-
-
     }
 
     @Override

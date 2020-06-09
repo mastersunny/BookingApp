@@ -5,6 +5,7 @@ import java.util.List;
 import mastersunny.rooms.gmap.GooglePlaceDTO;
 import mastersunny.rooms.gmap.GooglePlaceDetails;
 import mastersunny.rooms.models.ApiResponse;
+import mastersunny.rooms.models.CustomerLoginRequestDto;
 import mastersunny.rooms.models.CustomerRequestDto;
 import mastersunny.rooms.models.CustomerResponseDto;
 import mastersunny.rooms.models.ExamDTO;
@@ -142,7 +143,7 @@ public interface ApiInterface {
     Call<ApiResponse> bookRoom(@Body RoomBookingRequestDto roomBookingRequestDto);
 
     @POST("api/customer-login")
-    Call<ApiResponse> loginCustomer(@Body CustomerRequestDto customerRequestDto);
+    Call<ApiResponse> loginCustomer(@Body CustomerLoginRequestDto requestDto);
 
     @POST("api/room-book")
     Call<RoomBookingDTO> createBooking(@Body RoomBookingRequestDto requestDto);

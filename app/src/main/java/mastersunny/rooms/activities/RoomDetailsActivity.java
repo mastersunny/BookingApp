@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -49,6 +52,7 @@ import mastersunny.rooms.repositories.CustomerRepository;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
+import mastersunny.rooms.utils.ObjectSaveHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -150,8 +154,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     NumberFormat formatter = new DecimalFormat("BDT #0");
 
-    private CustomerRepository customerRepository;
-
 
     public static void start(Context context, RoomDTO roomDTO) {
         Intent intent = new Intent(context, RoomDetailsActivity.class);
@@ -166,7 +168,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_room_details);
         ButterKnife.bind(this);
         apiInterface = ApiClient.createService(this, ApiInterface.class);
-        customerRepository = new CustomerRepository(getApplication());
         getIntentData();
         initLayout();
         updateLayout();
@@ -362,45 +363,44 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void bookRoom() {
-        CustomerEntity customerEntity = customerRepository.getFirst();
-        if(customerEntity==null){
+        CustomerResponseDto customerResponseDto = (CustomerResponseDto) ObjectSaveHelper.getInstance().loadObject(CustomerResponseDto.TAG);
+        if (customerResponseDto == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivityForResult(intent, Constants.REQUEST_FACEBOOK_LOGIN_CODE);
-        } else{
-            try{
-                showProgressDialog("Booking...");
-                RoomBookingRequestDto roomBookingRequestDto = new RoomBookingRequestDto();
-                roomBookingRequestDto.setRoomId(roomDTO.getId());
-                roomBookingRequestDto.setUserId(customerEntity.getCustomerId());
-                roomBookingRequestDto.setGuestNo(Constants.totalGuest);
-                roomBookingRequestDto.setStartDate(Constants.sdf2.format(Constants.startDate));
-                roomBookingRequestDto.setEndDate(Constants.sdf2.format(Constants.endDate));
-                apiInterface.createBooking(roomBookingRequestDto).enqueue(new Callback<RoomBookingDTO>() {
-                    @Override
-                    public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
-                        Constants.debugLog(TAG,response+"");
-                        dismissDialog();
-                        if(response.isSuccessful() && response.body()!=null){
-                            Toast.makeText(RoomDetailsActivity.this, "Room booked successfully",
-                                    Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+        }else {
+            bookRoom(customerResponseDto);
+        }
+    }
 
-                    @Override
-                    public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
-                        Constants.debugLog(TAG,t.getMessage());
-                        dismissDialog();
-                        Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }catch (Exception e){
-                Constants.debugLog(TAG, e.getMessage());
+    private void bookRoom(CustomerResponseDto customerResponseDto) {
+//        showProgressDialog("Booking...");
+        RoomBookingRequestDto roomBookingRequestDto = new RoomBookingRequestDto();
+        roomBookingRequestDto.setRoomId(roomDTO.getId());
+        roomBookingRequestDto.setUserId(customerResponseDto.getId());
+        roomBookingRequestDto.setGuestNo(Constants.totalGuest);
+        roomBookingRequestDto.setStartDate(Constants.sdf2.format(Constants.startDate));
+        roomBookingRequestDto.setEndDate(Constants.sdf2.format(Constants.endDate));
+        apiInterface.createBooking(roomBookingRequestDto).enqueue(new Callback<RoomBookingDTO>() {
+            @Override
+            public void onResponse(Call<RoomBookingDTO> call, Response<RoomBookingDTO> response) {
+                Constants.debugLog(TAG, response + "");
+//                dismissDialog();
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(RoomDetailsActivity.this, "Room booked successfully",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RoomBookingDTO> call, Throwable t) {
+                Constants.debugLog(TAG, t.getMessage());
+//                dismissDialog();
                 Toast.makeText(RoomDetailsActivity.this, "Cannot make booking", Toast.LENGTH_SHORT).show();
             }
-        }
+        });
     }
 
     @Override
@@ -408,24 +408,26 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == Constants.REQUEST_FACEBOOK_LOGIN_CODE) {
-                bookRoom();
+                CustomerResponseDto customerResponseDto = (CustomerResponseDto)
+                        ObjectSaveHelper.getInstance().loadObject(CustomerResponseDto.TAG);
+                bookRoom(customerResponseDto);
             }
         }
 
     }
 
-    protected synchronized void showProgressDialog(String message) {
-        if (progressDialogFragment != null && progressDialogFragment.isVisible()) {
-            progressDialogFragment.dismissAllowingStateLoss();
-        }
-        progressDialogFragment = null;
-        progressDialogFragment = new ProgressDialogFragment(message);
-        progressDialogFragment.show(getSupportFragmentManager(), ProgressDialogFragment.class.toString());
-    }
-
-    protected synchronized void dismissDialog() {
-        progressDialogFragment.dismissAllowingStateLoss();
-    }
+//    protected synchronized void showProgressDialog(String message) {
+//        if (progressDialogFragment != null && progressDialogFragment.isVisible()) {
+//            progressDialogFragment.dismissAllowingStateLoss();
+//        }
+//        progressDialogFragment = null;
+//        progressDialogFragment = new ProgressDialogFragment(message);
+//        progressDialogFragment.show(getSupportFragmentManager(), "dialog");
+//    }
+//
+//    protected synchronized void dismissDialog() {
+//        progressDialogFragment.dismissAllowingStateLoss();
+//    }
 
 //    @OnClick({R.id.img_back})
 //    public void onClick(View v) {

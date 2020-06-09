@@ -1,9 +1,6 @@
 package mastersunny.rooms.repositories;
 
 import android.app.Application;
-
-import java.util.List;
-
 import mastersunny.rooms.config.BookingDatabase;
 import mastersunny.rooms.dao.CustomerDao;
 import mastersunny.rooms.entities.CustomerEntity;
@@ -45,11 +42,7 @@ public class CustomerRepository {
     CustomerEntity customerEntity=null;
 
     public CustomerEntity getFirst(){
-
-        BookingDatabase.databaseWriteExecutor.execute(() -> {
-             customerEntity = customerDao.getFirst();
-        });
-        return customerEntity;
+        return null;
     }
 
 
