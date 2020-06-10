@@ -79,6 +79,7 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
     implementation 'com.github.GrenderG:Toasty:1.4.2'
+    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
 
 
 }

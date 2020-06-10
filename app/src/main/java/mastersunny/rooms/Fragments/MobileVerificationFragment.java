@@ -30,6 +30,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.mukesh.OnOtpCompletionListener;
+import com.mukesh.OtpView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -41,6 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import es.dmoral.toasty.Toasty;
 import mastersunny.rooms.activities.HomeActivity;
 import mastersunny.rooms.activities.LoginActivity;
 import mastersunny.rooms.activities.RegistrationActivity;
@@ -61,8 +64,8 @@ public class MobileVerificationFragment extends Fragment {
 
     public String TAG = "MobileVerificationFragment";
 
-    @BindView(R.id.one_time_password)
-    EditText one_time_password;
+    @BindView(R.id.otp_view)
+    OtpView otpView;
 
     @BindView(R.id.phone_number)
     TextView phone_number;
@@ -215,17 +218,16 @@ public class MobileVerificationFragment extends Fragment {
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        pdLoading.cancel();
-                        if(task.isSuccessful()){
-                            loginListener.customerLogin(phoneNumber);
-                        }else {
-                            Toast.makeText(mActivity, "Verification Code is wrong", Toast.LENGTH_SHORT).show();
-                            btn_resend_code.setVisibility(View.VISIBLE);
-                            btn_resend_code.setEnabled(true);
-                        }
+                .addOnCompleteListener(task -> {
+                    pdLoading.cancel();
+                    if(task.isSuccessful()){
+                        Toasty.success(mActivity, "Verification successful", Toasty.LENGTH_SHORT).show();
+                        loginListener.customerLogin(phoneNumber);
+                    }else {
+                        Toasty.error(mActivity, "Verification Code is wrong", Toasty.LENGTH_SHORT).show();
+                        btn_resend_code.setVisibility(View.VISIBLE);
+                        btn_resend_code.setAlpha(1);
+                        btn_resend_code.setClickable(true);
                     }
                 });
     }
@@ -243,25 +245,9 @@ public class MobileVerificationFragment extends Fragment {
 
         pdLoading = new ProgressDialog(mActivity);
 
-        one_time_password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    btn_next.setAlpha(1);
-                    btn_next.setClickable(true);
-                } else {
-                    btn_next.setAlpha(0.4f);
-                    btn_next.setClickable(false);
-                }
-            }
+        otpView.setOtpCompletionListener(otp -> {
+            btn_next.setAlpha(1);
+            btn_next.setClickable(true);
         });
     }
 
@@ -272,7 +258,7 @@ public class MobileVerificationFragment extends Fragment {
                 resendVerificationCode(phoneNumber, mResendToken);
                 break;
             case R.id.btn_next:
-                verifyPhoneNumberWithCode(mVerificationId, one_time_password.getText().toString().trim());
+                verifyPhoneNumberWithCode(mVerificationId, otpView.getText().toString());
                 break;
         }
     }
@@ -283,10 +269,11 @@ public class MobileVerificationFragment extends Fragment {
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
             signInWithPhoneAuthCredential(credential);
         }catch (Exception e){
+            btn_resend_code.setAlpha(1);
             btn_resend_code.setVisibility(View.VISIBLE);
-            btn_resend_code.setEnabled(true);
+            btn_resend_code.setClickable(true);
             pdLoading.cancel();
-            Toast.makeText(mActivity, "Verification Code is wrong", Toast.LENGTH_SHORT).show();
+            Toasty.error(mActivity, "Verification Code is wrong", Toasty.LENGTH_SHORT).show();
         }
     }
 

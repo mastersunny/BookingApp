@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_20"
-            android:text="Enter the code sent to"
+            android:text="Please type the verification code sent to"
             android:textSize="@dimen/text_size_16" />
 
         <TextView
@@ -33,37 +33,36 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/margin_20"
             android:layout_marginTop="@dimen/margin_5"
-            android:text="01629******"
+            android:text="+xxxxxxxxxxx"
             android:textSize="@dimen/text_size_16" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/one_time_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="@string/hint_code"
-                android:inputType="number"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/black" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <com.mukesh.OtpView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/otp_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:inputType="number"
+            android:itemBackground="@color/colorPrimary"
+            android:textColor="@android:color/black"
+            app:itemCount="6"
+            app:lineColor="@color/colorPrimary"
+            app:viewType="line"
+            />
 
         <!-- Login Button -->
 
         <Button
+            android:layout_marginTop="30dp"
             android:id="@+id/btn_next"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/margin_10"
-            android:background="@color/colorAccent"
-            android:text="@string/text_next"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white" />
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/background_color"
+            android:text="Validate"
+            android:textSize="12sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
