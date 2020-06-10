@@ -135,12 +135,8 @@ public interface ApiInterface {
     @GET("api/popular/districts")
     Call<ApiResponse> getPopularDistricts();
 
-
-    @POST("api/popular/customer-register")
+    @POST("api/customer-register")
     Call<ApiResponse> registerCustomer(@Body CustomerRequestDto customerRequestDto);
-
-    @POST("api/popular/room-book")
-    Call<ApiResponse> bookRoom(@Body RoomBookingRequestDto roomBookingRequestDto);
 
     @POST("api/customer-login")
     Call<ApiResponse> loginCustomer(@Body CustomerLoginRequestDto requestDto);

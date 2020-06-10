@@ -10,9 +10,6 @@ public class CustomerRequestDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @SerializedName("id")
-    private Long id;
-
     @SerializedName("name")
     private String name;
 
@@ -37,15 +34,30 @@ public class CustomerRequestDto implements Serializable {
     @SerializedName("nid")
     private String nid;
 
+    @SerializedName("gender")
+    private String gender;
+
+    @SerializedName("date_of_birth")
+    private String dateOfBirth;
+
+    @SerializedName("image")
+    private String image="";
+
     public CustomerRequestDto() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public CustomerRequestDto(String name, String email, String mobileNo, String address, int age, String city, String country, String nid, String gender, String dateOfBirth, String image) {
+        this.name = name;
+        this.email = email;
+        this.mobileNo = mobileNo;
+        this.address = address;
+        this.age = age;
+        this.city = city;
+        this.country = country;
+        this.nid = nid;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.image = image;
     }
 
     public String getName() {
@@ -112,11 +124,38 @@ public class CustomerRequestDto implements Serializable {
         this.nid = nid;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
-        return "CustomerResponseDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "CustomerRequestDto{" +
+                "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", mobileNo='" + mobileNo + '\'' +
                 ", address='" + address + '\'' +
@@ -124,6 +163,9 @@ public class CustomerRequestDto implements Serializable {
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
                 ", nid='" + nid + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

@@ -78,6 +78,8 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
+
 
 }
 apply plugin: 'com.google.gms.google-services'

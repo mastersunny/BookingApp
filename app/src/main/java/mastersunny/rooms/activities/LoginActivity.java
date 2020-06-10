@@ -2,16 +2,13 @@ package mastersunny.rooms.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.view.View;
+
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import butterknife.BindView;
 import mastersunny.rooms.Fragments.InitLoginFragment;
@@ -23,9 +20,7 @@ import mastersunny.rooms.entities.CustomerEntity;
 import mastersunny.rooms.listeners.LoginListener;
 import mastersunny.rooms.models.ApiResponse;
 import mastersunny.rooms.models.CustomerLoginRequestDto;
-import mastersunny.rooms.models.CustomerRequestDto;
 import mastersunny.rooms.models.CustomerResponseDto;
-import mastersunny.rooms.repositories.CustomerRepository;
 import mastersunny.rooms.rest.ApiClient;
 import mastersunny.rooms.rest.ApiInterface;
 import mastersunny.rooms.utils.Constants;
@@ -102,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
                     if(response.body().getCustomer()!=null){
                         saveCustomer(response.body().getCustomer());
                     }else {
-                        signUp();
+                        signUp(phoneNumber);
                     }
                 }else {
                     onBackPressed();
@@ -135,44 +130,27 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     }
 
     @Override
-    public void loginSuccess() {
-//        if (FirebaseInstanceId.getInstance().getToken() != null) {
-//            progressBar.setVisibility(View.VISIBLE);
-//            apiInterface.sendRegistrationToServer(FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<String>() {
-//                @Override
-//                public void onResponse(Call<String> call, Response<String> response) {
-//                    progressBar.setVisibility(View.GONE);
-//                    Constants.debugLog(TAG, response + "");
-//                    if (response.isSuccessful()) {
-//                        Constants.debugLog(TAG, response.body());
-//                    }
-//                    finish();
-//                }
-//
-//                @Override
-//                public void onFailure(Call<String> call, Throwable t) {
-//                    progressBar.setVisibility(View.GONE);
-//                    Constants.debugLog(TAG, t.getMessage());
-//                    finish();
-//                }
-//            });
-//        }
-    }
-
-    @Override
     public void loginCanceled() {
         Toast.makeText(this, "Login cancelled", Toast.LENGTH_SHORT).show();
         finish();
     }
 
     @Override
-    public void signUp() {
+    public void signUp(String phoneNumber) {
         if (!isFinishing()) {
+            Bundle bundle = new Bundle();
+            bundle.putString("phoneNo", phoneNumber);
             SignUpFragment fragment = new SignUpFragment();
+            fragment.setArguments(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.content, fragment);
             transaction.commitAllowingStateLoss();
         }
+    }
+
+    @Override
+    public void customerRegister(CustomerResponseDto customerResponseDto) {
+        saveCustomer(customerResponseDto);
     }
 
     @Override

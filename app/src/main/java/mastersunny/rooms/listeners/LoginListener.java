@@ -1,5 +1,7 @@
 package mastersunny.rooms.listeners;
 
+import mastersunny.rooms.models.CustomerResponseDto;
+
 public interface LoginListener {
 
     void initLogin();
@@ -10,10 +12,12 @@ public interface LoginListener {
 
     void customerLogin(String phoneNumber);
 
-    void loginSuccess();
+    void signUp(String phoneNumber);
+
+    void customerRegister(CustomerResponseDto customerResponseDto);
 
     void loginCanceled();
 
-    void signUp();
+
 
 }
