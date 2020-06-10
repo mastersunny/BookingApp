@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.hbb20.CountryCodePicker;
+import com.ornach.richtext.RichEditText;
 
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +45,7 @@ public class MobileLoginFragment extends Fragment {
     public static final String TAG = "MobileLoginFragment";
 
     private Activity mActivity;
-    private EditText phone_number;
+    private RichEditText phone_number;
     private Button btn_send_code;
     private CountryCodePicker countryCodePicker;
     private View view;

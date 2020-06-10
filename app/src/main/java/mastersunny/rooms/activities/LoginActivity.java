@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 import mastersunny.rooms.Fragments.InitLoginFragment;
 import mastersunny.rooms.Fragments.MobileLoginFragment;
 import mastersunny.rooms.Fragments.MobileVerificationFragment;
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
                     }
                 }else {
                     onBackPressed();
-                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                    Toasty.error(LoginActivity.this, "Login failed", Toasty.LENGTH_SHORT).show();
                 }
             }
 
@@ -109,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
             public void onFailure(Call<ApiResponse> call, Throwable t) {
                 onBackPressed();
                 Constants.debugLog(TAG, t.getMessage());
-                Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                Toasty.error(LoginActivity.this, "Login failed", Toasty.LENGTH_SHORT).show();
             }
         });
     }
